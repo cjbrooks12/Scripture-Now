@@ -43,13 +43,27 @@
 <h3>
 <a name="hows-it-doing" class="anchor" href="#hows-it-doing"><span class="octicon octicon-link"></span></a>How's it Doing?</h3>
 
-<p>Scripture Memory Notifications is currently in V2.0, which means it recently had a major overhaul of the UI and the addition of a bunch of new features. Among these include:</p>
+<p>Scripture Memory Notifications is currently in V2.4. Over the course of this summer, I have added many new features, include:</p>
 
 <ul>
-<li>Ability to share verses from another app, such as Bible Gateway or Youversion (or any app that sends plain text). This allows for faster addition of verses to your collection.</li>
-<li>Ability to share a verse in your collection to social media, like Twitter.</li>
-<li>A new app icon, which was made entirely by me, as opposed to the old one which was taken from somewhere on the web and changed slightly (I'm still not entirely sure how OK that was). I am working to create a stronger brand on this app, and part of it includes the new icon and the app's color scheme to match.</li>
-</ul><p>Beyond that, the app has seen more than 1200 downloads and has an average rating of 4.13/5 from 15 reviews on the Google Play Store. I am currently looking into adding it to the Amazon Appstore as well.</p>
+<li>Verse of the Day notifications, and able to be shown in many different Bible translations</li>
+<li>Homescreen and lockscreen widgets for both the main notification verse and the Verse of the Day</li>
+<li>Change how the text in the notification is displayed (dashes instead of letters, only the first letter of each word, or a combination of both) for stronger memorization</li>
+<li>Improved graphics and animations, to make the UX much more enjoyable</li>
+<li>A dark theme in addition to the original light theme</li>
+</ul><p>Beyond that, the app has seen more than 2500 downloads and has an average rating of 4.2/5 from 33 reviews on the Google Play Store.</p>
+
+<h3>
+<a name="current-work" class="anchor" href="#current-work"><span class="octicon octicon-link"></span></a>What am I working on now?</h3>
+<p>My main project for this lately has been a complete redesign of the data structures on the backend. Previously, the data was very simple, and while it did what I wanted it to do, that was really all it could do. I am creating a library called AndroidBibleTools which is seeks to change this by making the data more closely reflect Verses as we perceive them in the real world. This allows me to do much more with it, including:</p>
+
+<ul>
+  <li>Make getting and using Bible verses in any app dead-simple. A Verse object behaves exactly as you would expect: as a single verse from the Bible, which may be in any translation. Same with a passage, which is a collection of single verses</li>
+  <li>Create data structures that make using these verses in groups easy, and scalable. They will support searching, sorting, and dynamic loading of data to give what is needed quickly without overloading the memory buffer</li>
+  <li>Write Verses to a file in a way that is easily shared and recovered, not only with my app but with others. It is based on the format created by RememberMe, but builds on it to add just a bit more</li>
+  <li>Download verses from the Internet very easily, without needing to know anything about HTML retrieval and parsing</li>
+  <li>Share verses directly to other Android apps in a way that creates a unified connumity of Christian software. Any app can use this library to send a verse to any other app using the library, but lacking any apps to send it to using the library will send it as a normal verse to anything</li>
+</ul><p>This library has been my main focus for a while now, and it is as of yet unfinished, but a good portion of it is working correctly. As soon as I finish it, I will begin to contact other Android developers and companies to encourage them to join this new sharing system to bring us all together in one community.</p>
 
 <h3>
 <a name="whats-next" class="anchor" href="#whats-next"><span class="octicon octicon-link"></span></a>What's Next?</h3>
@@ -57,13 +71,11 @@
 <p>This app is still very-much under development, meaning I am adding new features all the time. However, I am just one man, and a college student at that, and so updates will likely not be as often as I would wish, due to my schedule and other obligations. But below is a list of some features I am planning on implementing in the near-future:</p>
 
 <ul>
-<li>Multiple themes</li>
 <li>Translation for other languages</li>
 <li>In-app verse lookup</li>
 <li>Tag verses and add them to custom lists</li>
 <li>In-app purchases of verse lists</li>
-<li>Homescreen widgets for the current notification verse and the Verse of the Day</li>
-<li>Additional tools to aid in memorization</li>
+<li>Yet more tools to aid in memorization</li>
 </ul><h3>
 <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
