@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/attrs.xml -->
+    <eat-comment />
+
+    <attr name="bg_card" format="reference" />
+    <attr name="bg_transparent" format="reference" />
+    <attr name="color_background" format="color" />
+    <attr name="drawer_shadow" format="reference" />
+    <attr name="ic_action_accept" format="reference" />
+    <attr name="ic_action_back" format="reference" />
+    <attr name="ic_action_call" format="reference" />
+    <attr name="ic_action_cancel" format="reference" />
+    <attr name="ic_action_collapse" format="reference" />
+    <attr name="ic_action_copy" format="reference" />
+    <attr name="ic_action_cut" format="reference" />
+    <attr name="ic_action_discard" format="reference" />
+    <attr name="ic_action_edit" format="reference" />
+    <attr name="ic_action_expand" format="reference" />
+    <attr name="ic_action_forward" format="reference" />
+    <attr name="ic_action_go_to_today" format="reference" />
+    <attr name="ic_action_make_available_offline" format="reference" />
+    <attr name="ic_action_new" format="reference" />
+    <attr name="ic_action_new_event" format="reference" />
+    <attr name="ic_action_next_item" format="reference" />
+    <attr name="ic_action_overflow" format="reference" />
+    <attr name="ic_action_paste" format="reference" />
+    <attr name="ic_action_play" format="reference" />
+    <attr name="ic_action_previous" format="reference" />
+    <attr name="ic_action_refresh" format="reference" />
+    <attr name="ic_action_remove" format="reference" />
+    <attr name="ic_action_save" format="reference" />
+    <attr name="ic_action_search" format="reference" />
+    <attr name="ic_action_select" format="reference" />
+    <attr name="ic_action_share" format="reference" />
+    <attr name="ic_action_undo" format="reference" />
+    <attr name="ic_drawer" format="reference" />
+    <attr name="theme_name" format="string" />
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_basedark.xml -->
+    <eat-comment />
+
+    <color name="actionbar_dark">#2C2C2C</color>
+    <color name="actionbar_highlight_dark">#3C3C3C</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_baselight.xml -->
+    <eat-comment />
+
+    <color name="actionbar_highlight_light">#CECECE</color>
+    <color name="actionbar_light">#F0F0F0</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_basedark.xml -->
+    <eat-comment />
+
+    <color name="background_dark">#2C2C2C</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_baselight.xml -->
+    <eat-comment />
+
+    <color name="background_light">#F0F0F0</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_basedark.xml -->
+    <eat-comment />
+
+    <color name="card_border_dark">#666666</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_baselight.xml -->
+    <eat-comment />
+
+    <color name="card_border_light">#C0C0C0</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_basedark.xml -->
+    <eat-comment />
+
+    <color name="card_dark">#444444</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_baselight.xml -->
+    <eat-comment />
+
+    <color name="card_light">#FFFFFF</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <color name="card_selected_dark">#75508A4C</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <color name="card_selected_light">#75508A4C</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/colors.xml -->
+    <eat-comment />
+
+    <color name="holo_blue_bright">#FF00DDFF</color>
+    <color name="holo_blue_dark">#FF0099CC</color>
+    <color name="holo_blue_light">#FF33B5E5</color>
+    <color name="holo_gray_bright">#33CCCCCC</color>
+    <color name="holo_gray_light">#33999999</color>
+    <color name="holo_green_dark">#FF669900</color>
+    <color name="holo_green_light">#FF99CC00</color>
+    <color name="holo_orange_dark">#FFFF8800</color>
+    <color name="holo_orange_light">#FFFFBB33</color>
+    <color name="holo_purple">#FFAA66CC</color>
+    <color name="holo_red_dark">#FFCC0000</color>
+    <color name="holo_red_light">#FFFF4444</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <color name="scripturememorydark_color">#508A4C</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <color name="scripturememorylight_color">#508a4c</color>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/attrs_card_view.xml -->
+    <eat-comment />
+
+    <declare-styleable name="CardView">
+        <attr name="exampleString" format="string" />
+        <attr name="exampleDimension" format="dimension" />
+        <attr name="exampleColor" format="color" />
+        <attr name="exampleDrawable" format="color|reference" />
+    </declare-styleable>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/dimens.xml -->
+    <eat-comment />
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <dimen name="tab_host_default_height">48dp</dimen>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="action_reply">Reply</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
+    <string name="app_name">ThemePractice</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="new_message_notification_placeholder_text_template">You said %1$s and lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non enim magna. Morbi dictum, velit vel semper venenatis, magna odio volutpat velit, at ullamcorper nulla lacus sed turpis. Pellentesque vitae metus elit, nec tincidunt tellus. Integer sed nisl sem, ullamcorper ornare lacus. Duis ac mauris sed massa congue volutpat. Donec sed erat sit amet turpis viverra rhoncus sit amet nec magna. Donec lacinia ligula at libero volutpat volutpat nec nec tortor.</string>
+    <string name="new_message_notification_title_template">New message: %1$s</string>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="ActionBar.Solid.Basedark" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="background">@drawable/bg_actionbar_dark</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_basedark</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_basedark</item>
+        <item name="progressBarStyle">@style/ProgressBar.Basedark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="ActionBar.Solid.Baselight" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@drawable/bg_actionbar_light</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_baselight</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_baselight</item>
+        <item name="progressBarStyle">@style/ProgressBar.Baselight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="ActionBar.Solid.Scripturememorydark" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="background">@drawable/bg_actionbar_dark</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_scripturememorydark</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_scripturememorydark</item>
+        <item name="progressBarStyle">@style/ProgressBar.Scripturememorydark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="ActionBar.Solid.Scripturememorylight" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="background">@drawable/bg_actionbar_light</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_scripturememorylight</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_scripturememorylight</item>
+        <item name="progressBarStyle">@style/ProgressBar.Scripturememorylight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="ActionBar.Transparent.Basedark" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@drawable/bg_actionbar_dark</item>
+        <item name="progressBarStyle">@style/ProgressBar.Basedark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="ActionBar.Transparent.Baselight" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">@drawable/bg_actionbar_dark</item>
+        <item name="progressBarStyle">@style/ProgressBar.Baselight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="ActionBar.Transparent.Scripturememorydark" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@drawable/bg_actionbar_dark</item>
+        <item name="progressBarStyle">@style/ProgressBar.Scripturememorydark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="ActionBar.Transparent.Scripturememorylight" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@drawable/bg_actionbar_light</item>
+        <item name="progressBarStyle">@style/ProgressBar.Scripturememorylight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="ActionBarTabStyle.Basedark" parent="@style/Widget.AppCompat.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_basedark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="ActionBarTabStyle.Baselight" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_baselight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="ActionBarTabStyle.Scripturememorydark" parent="@style/Widget.AppCompat.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_scripturememorydark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="ActionBarTabStyle.Scripturememorylight" parent="@style/Widget.AppCompat.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_scripturememorylight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="ActionButton.CloseMode.Basedark" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_basedark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="ActionButton.CloseMode.Baselight" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_baselight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="ActionButton.CloseMode.Scripturememorydark" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_scripturememorydark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="ActionButton.CloseMode.Scripturememorylight" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_scripturememorylight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="AutoCompleteTextViewScriptureMemoryDark" parent="android:Widget.AutoCompleteTextView">
+        <item name="android:dropDownSelector">@drawable/scripturememorydark_list_selector_holo_dark</item>
+        <item name="android:background">@drawable/scripturememorydark_edit_text_holo_dark</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="AutoCompleteTextViewScriptureMemoryLight" parent="android:Widget.AutoCompleteTextView">
+        <item name="android:dropDownSelector">@drawable/scripturememorylight_list_selector_holo_light</item>
+        <item name="android:background">@drawable/scripturememorylight_edit_text_holo_light</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="ButtonScriptureMemoryDark" parent="android:Widget.Button">
+        <item name="android:background">@drawable/scripturememorydark_btn_default_holo_dark</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="ButtonScriptureMemoryLight" parent="android:Widget.Button">
+        <item name="android:background">@drawable/scripturememorylight_btn_default_holo_light</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="CheckBoxScriptureMemoryDark" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/scripturememorydark_btn_check_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="CheckBoxScriptureMemoryLight" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/scripturememorylight_btn_check_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="DropDownListView.Basedark" parent="@style/Widget.AppCompat.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_basedark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="DropDownListView.Baselight" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_baselight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="DropDownListView.Scripturememorydark" parent="@style/Widget.AppCompat.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_scripturememorydark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="DropDownListView.Scripturememorylight" parent="@style/Widget.AppCompat.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_scripturememorylight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="DropDownNav.Basedark" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_basedark</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_basedark</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_basedark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="DropDownNav.Baselight" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_baselight</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_baselight</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_baselight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="DropDownNav.Scripturememorydark" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_scripturememorydark</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_scripturememorydark</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_scripturememorydark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="DropDownNav.Scripturememorylight" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_scripturememorylight</item>
+        <item name="android:popupBackground">@drawable/abc_menu_dropdown_panel_holo_light</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_scripturememorylight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="EditTextScriptureMemoryDark" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/scripturememorydark_edit_text_holo_dark</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="EditTextScriptureMemoryLight" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/scripturememorylight_edit_text_holo_light</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="ImageButtonScriptureMemoryDark" parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/scripturememorydark_btn_default_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="ImageButtonScriptureMemoryLight" parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/scripturememorylight_btn_default_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="ListViewScriptureMemoryDark" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/scripturememorydark_list_selector_holo_dark</item>
+    </style>
+
+    <style name="ListViewScriptureMemoryDark.White" parent="android:Widget.ListView.White">
+        <item name="android:listSelector">@drawable/scripturememorydark_list_selector_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="ListViewScriptureMemoryLight" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/scripturememorylight_list_selector_holo_light</item>
+    </style>
+
+    <style name="ListViewScriptureMemoryLight.White" parent="android:Widget.ListView.White">
+        <item name="android:listSelector">@drawable/scripturememorylight_list_selector_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="PopupMenu.Basedark" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_basedark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="PopupMenu.Baselight" parent="@style/Widget.AppCompat.Light.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_baselight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="PopupMenu.Scripturememorydark" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_scripturememorydark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="PopupMenu.Scripturememorylight" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_scripturememorylight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="ProgressBar.Basedark" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_basedark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="ProgressBar.Baselight" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_baselight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="ProgressBar.Scripturememorydark" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_scripturememorydark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="ProgressBar.Scripturememorylight" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_scripturememorylight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="ProgressBarScriptureMemoryDark" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/scripturememorydark_progress_horizontal_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorydark_progress_indeterminate_horizontal_holo_dark</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="ProgressBarScriptureMemoryLight" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/scripturememorylight_progress_horizontal_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorylight_progress_indeterminate_horizontal_holo_light</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="RadioButtonScriptureMemoryDark" parent="android:Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/scripturememorydark_btn_radio_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="RadioButtonScriptureMemoryLight" parent="android:Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/scripturememorylight_btn_radio_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="RatingBarBigScriptureMemoryDark">
+        <item name="android:progressDrawable">@drawable/scripturememorydark_ratingbar_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorydark_ratingbar_holo_dark</item>
+        <item name="android:minHeight">35dip</item>
+        <item name="android:maxHeight">35dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="RatingBarBigScriptureMemoryLight">
+        <item name="android:progressDrawable">@drawable/scripturememorylight_ratingbar_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorylight_ratingbar_holo_light</item>
+        <item name="android:minHeight">35dip</item>
+        <item name="android:maxHeight">35dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="RatingBarScriptureMemoryDark" parent="android:Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/scripturememorydark_ratingbar_full_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorydark_ratingbar_full_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="RatingBarScriptureMemoryLight" parent="android:Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/scripturememorylight_ratingbar_full_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorylight_ratingbar_full_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="RatingBarSmallScriptureMemoryDark">
+        <item name="android:progressDrawable">@drawable/scripturememorydark_ratingbar_small_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorydark_ratingbar_small_holo_dark</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="RatingBarSmallScriptureMemoryLight">
+        <item name="android:progressDrawable">@drawable/scripturememorylight_ratingbar_small_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorylight_ratingbar_small_holo_light</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="SeekBarScriptureMemoryDark" parent="android:Widget.SeekBar">
+        <item name="android:progressDrawable">@drawable/scripturememorydark_scrubber_progress_horizontal_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorydark_scrubber_progress_horizontal_holo_dark</item>
+        <item name="android:minHeight">13dip</item>
+        <item name="android:maxHeight">13dip</item>
+        <item name="android:thumb">@drawable/scripturememorydark_scrubber_control_selector_holo_dark</item>
+        <item name="android:thumbOffset">16dip</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="SeekBarScriptureMemoryLight" parent="android:Widget.SeekBar">
+        <item name="android:progressDrawable">@drawable/scripturememorylight_scrubber_progress_horizontal_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorylight_scrubber_progress_horizontal_holo_light</item>
+        <item name="android:minHeight">13dip</item>
+        <item name="android:maxHeight">13dip</item>
+        <item name="android:thumb">@drawable/scripturememorylight_scrubber_control_selector_holo_light</item>
+        <item name="android:thumbOffset">16dip</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="SpinnerDropDownItemScriptureMemoryDark" parent="android:Widget.DropDownItem.Spinner">
+        <item name="android:checkMark">@null</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="SpinnerDropDownItemScriptureMemoryLight" parent="android:Widget.DropDownItem.Spinner">
+        <item name="android:checkMark">@null</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="SpinnerItemScriptureMemoryDark" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="SpinnerItemScriptureMemoryLight" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">#000000</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="SpinnerScriptureMemoryDark" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/scripturememorydark_spinner_background_holo_dark</item>
+        <item name="android:dropDownSelector">@drawable/scripturememorydark_list_selector_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="SpinnerScriptureMemoryLight" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/scripturememorylight_spinner_background_holo_light</item>
+        <item name="android:dropDownSelector">@drawable/scripturememorylight_list_selector_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="TabScriptureMemoryDark">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+        <item name="android:background">@drawable/scripturememorydark_tab_indicator_holo</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:minWidth">80dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="TabScriptureMemoryLight">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+        <item name="android:background">@drawable/scripturememorylight_tab_indicator_holo</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:minWidth">80dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="TabTextScriptureMemoryDark">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <!-- v14 <item name="android:textAllCaps">true</item> -->
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:maxWidth">180dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="TabTextScriptureMemoryLight">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <!-- v14 <item name="android:textAllCaps">true</item> -->
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:maxWidth">180dip</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_basedark.xml -->
+    <eat-comment />
+
+    <style name="Theme.BaseDark" parent="Theme.AppCompat">
+
+        <!-- ActionBar Icons -->
+        <item name="ic_action_accept">@drawable/ic_action_accept_dark</item>
+        <item name="ic_action_back">@drawable/ic_action_back_dark</item>
+        <item name="ic_action_call">@drawable/ic_action_call_dark</item>
+        <item name="ic_action_cancel">@drawable/ic_action_cancel_dark</item>
+        <item name="ic_action_collapse">@drawable/ic_action_collapse_dark</item>
+        <item name="ic_action_copy">@drawable/ic_action_copy_dark</item>
+        <item name="ic_action_cut">@drawable/ic_action_cut_dark</item>
+        <item name="ic_action_discard">@drawable/ic_action_discard_dark</item>
+        <item name="ic_action_edit">@drawable/ic_action_edit_dark</item>
+        <item name="ic_action_expand">@drawable/ic_action_expand_dark</item>
+        <item name="ic_action_forward">@drawable/ic_action_forward_dark</item>
+        <item name="ic_action_go_to_today">@drawable/ic_action_go_to_today_dark</item>
+        <item name="ic_action_make_available_offline">@drawable/ic_action_make_available_offline_dark</item>
+        <item name="ic_action_new">@drawable/ic_action_new_dark</item>
+        <item name="ic_action_new_event">@drawable/ic_action_new_event_dark</item>
+        <item name="ic_action_next_item">@drawable/ic_action_next_item_dark</item>
+        <item name="ic_action_overflow">@drawable/ic_action_overflow_dark</item>
+        <item name="ic_action_paste">@drawable/ic_action_paste_dark</item>
+        <item name="ic_action_play">@drawable/ic_action_play_dark</item>
+        <item name="ic_action_previous">@drawable/ic_action_previous_item_dark</item>
+        <item name="ic_action_refresh">@drawable/ic_action_refresh_dark</item>
+        <item name="ic_action_remove">@drawable/ic_action_remove_dark</item>
+        <item name="ic_action_save">@drawable/ic_action_save_dark</item>
+        <item name="ic_action_search">@drawable/ic_action_search_dark</item>
+        <item name="ic_action_select">@drawable/ic_action_select_all_dark</item>
+        <item name="ic_action_share">@drawable/ic_action_share_dark</item>
+        <item name="ic_action_undo">@drawable/ic_action_undo_dark</item>
+        <item name="ic_drawer">@drawable/ic_drawer_dark</item>
+        <item name="drawer_shadow">@drawable/drawer_shadow_dark</item>
+
+        <!-- Colors -->
+        <item name="color_background">@color/background_dark</item>
+
+        <!-- Views -->
+        <item name="bg_card">@drawable/bg_card_dark</item>
+        <item name="bg_transparent">@drawable/bg_transparent_dark</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="theme_name">Dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_baselight.xml -->
+    <eat-comment />
+
+    <style name="Theme.BaseLight" parent="@style/Theme.AppCompat.Light">
+
+        <!-- ActionBar Icons -->
+        <item name="ic_action_accept">@drawable/ic_action_accept_light</item>
+        <item name="ic_action_back">@drawable/ic_action_back_light</item>
+        <item name="ic_action_call">@drawable/ic_action_call_light</item>
+        <item name="ic_action_cancel">@drawable/ic_action_cancel_light</item>
+        <item name="ic_action_collapse">@drawable/ic_action_collapse_light</item>
+        <item name="ic_action_copy">@drawable/ic_action_copy_light</item>
+        <item name="ic_action_cut">@drawable/ic_action_cut_light</item>
+        <item name="ic_action_discard">@drawable/ic_action_discard_light</item>
+        <item name="ic_action_edit">@drawable/ic_action_edit_light</item>
+        <item name="ic_action_expand">@drawable/ic_action_expand_light</item>
+        <item name="ic_action_forward">@drawable/ic_action_forward_light</item>
+        <item name="ic_action_go_to_today">@drawable/ic_action_go_to_today_light</item>
+        <item name="ic_action_make_available_offline">@drawable/ic_action_make_available_offline_light</item>
+        <item name="ic_action_new">@drawable/ic_action_new_light</item>
+        <item name="ic_action_new_event">@drawable/ic_action_new_event_light</item>
+        <item name="ic_action_next_item">@drawable/ic_action_next_item_light</item>
+        <item name="ic_action_overflow">@drawable/ic_action_overflow_light</item>
+        <item name="ic_action_paste">@drawable/ic_action_paste_light</item>
+        <item name="ic_action_play">@drawable/ic_action_play_light</item>
+        <item name="ic_action_previous">@drawable/ic_action_previous_item_light</item>
+        <item name="ic_action_refresh">@drawable/ic_action_refresh_light</item>
+        <item name="ic_action_remove">@drawable/ic_action_remove_light</item>
+        <item name="ic_action_save">@drawable/ic_action_save_light</item>
+        <item name="ic_action_search">@drawable/ic_action_search_light</item>
+        <item name="ic_action_select">@drawable/ic_action_select_all_light</item>
+        <item name="ic_action_share">@drawable/ic_action_share_light</item>
+        <item name="ic_action_undo">@drawable/ic_action_undo_light</item>
+        <item name="ic_drawer">@drawable/ic_drawer_light</item>
+        <item name="drawer_shadow">@drawable/drawer_shadow_light</item>
+
+        <!-- Colors -->
+        <item name="color_background">@color/background_light</item>
+
+        <!-- Views -->
+        <item name="bg_card">@drawable/bg_card_light</item>
+        <item name="bg_transparent">@drawable/bg_transparent_light</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/background_light</item>
+        <item name="theme_name">Light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="Theme.Basedark.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Basedark</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Basedark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="Theme.Baselight.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Baselight</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Baselight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="Theme.CaseyBrooks.ActionBarDark" parent="@style/Theme.BaseDark">
+        <item name="actionBarItemBackground">@drawable/selectable_background_basedark</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Basedark</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Basedark</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Basedark</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Basedark</item>
+        <item name="actionBarStyle">@style/ActionBar.Transparent.Basedark</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_basedark</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_basedark</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Basedark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_caseybrooks_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="Theme.CaseyBrooks.ActionBarLight" parent="@style/Theme.BaseLight">
+        <item name="actionBarItemBackground">@drawable/selectable_background_baselight</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Baselight</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Baselight</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Baselight</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Baselight</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Baselight</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_baselight</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_baselight</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Baselight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="Theme.ScriptureMemory.ActionBarDark" parent="@style/Theme.BaseDark">
+        <item name="actionBarItemBackground">@drawable/selectable_background_scripturememorydark</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Scripturememorydark</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Scripturememorydark</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Scripturememorydark</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Scripturememorydark</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Scripturememorydark</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_scripturememorydark</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_scripturememorydark</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Scripturememorydark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="Theme.ScriptureMemory.ActionBarLight" parent="@style/Theme.BaseLight">
+        <item name="actionBarItemBackground">@drawable/selectable_background_scripturememorylight</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Scripturememorylight</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Scripturememorylight</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Scripturememorylight</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Scripturememorylight</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Scripturememorylight</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_scripturememorylight</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_scripturememorylight</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Scripturememorylight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="Theme.ScriptureMemory.Dark" parent="@style/Theme.ScriptureMemory.ActionBarDark">
+        <item name="android:editTextStyle">@style/EditTextScriptureMemoryDark</item>
+        <item name="android:textColorHighlight">#99508a4c</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewScriptureMemoryDark</item>
+        <item name="android:checkboxStyle">@style/CheckBoxScriptureMemoryDark</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonScriptureMemoryDark</item>
+        <item name="android:buttonStyle">@style/ButtonScriptureMemoryDark</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonScriptureMemoryDark</item>
+        <item name="android:spinnerStyle">@style/SpinnerScriptureMemoryDark</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemScriptureMemoryDark</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarScriptureMemoryDark</item>
+        <item name="android:seekBarStyle">@style/SeekBarScriptureMemoryDark</item>
+        <item name="android:ratingBarStyle">@style/RatingBarScriptureMemoryDark</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigScriptureMemoryDark</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallScriptureMemoryDark</item>
+        <item name="android:buttonStyleToggle">@style/ToggleScriptureMemoryDark</item>
+        <item name="android:listViewStyle">@style/ListViewScriptureMemoryDark</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewScriptureMemoryDark.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemScriptureMemoryDark</item>
+        <item name="popupMenuStyle">@style/popupMenuStyleDark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="Theme.ScriptureMemory.Light" parent="@style/Theme.ScriptureMemory.ActionBarLight">
+        <item name="android:editTextStyle">@style/EditTextScriptureMemoryLight</item>
+        <item name="android:textColorHighlight">#99508a4c</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewScriptureMemoryLight</item>
+        <item name="android:checkboxStyle">@style/CheckBoxScriptureMemoryLight</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonScriptureMemoryLight</item>
+        <item name="android:buttonStyle">@style/ButtonScriptureMemoryLight</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonScriptureMemoryLight</item>
+        <item name="android:spinnerStyle">@style/SpinnerScriptureMemoryLight</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemScriptureMemoryLight</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarScriptureMemoryLight</item>
+        <item name="android:seekBarStyle">@style/SeekBarScriptureMemoryLight</item>
+        <item name="android:ratingBarStyle">@style/RatingBarScriptureMemoryLight</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigScriptureMemoryLight</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallScriptureMemoryLight</item>
+        <item name="android:buttonStyleToggle">@style/ToggleScriptureMemoryLight</item>
+        <item name="android:listViewStyle">@style/ListViewScriptureMemoryLight</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewScriptureMemoryLight.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemScriptureMemoryLight</item>
+        <item name="popupMenuStyle">@style/popupMenuStyleLight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbardark.xml -->
+    <eat-comment />
+
+    <style name="Theme.Scripturememorydark.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Scripturememorydark</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Scripturememorydark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_actionbarlight.xml -->
+    <eat-comment />
+
+    <style name="Theme.Scripturememorylight.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Scripturememorylight</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Scripturememorylight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="ToggleScriptureMemoryDark" parent="android:Widget.Button.Toggle">
+        <item name="android:background">@drawable/scripturememorydark_btn_toggle_holo_dark</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="ToggleScriptureMemoryLight" parent="android:Widget.Button.Toggle">
+        <item name="android:background">@drawable/scripturememorylight_btn_toggle_holo_light</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="popupMenuStyleDark" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/abc_menu_dropdown_panel_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/values/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="popupMenuStyleLight" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/abc_menu_dropdown_panel_holo_light</item>
+    </style>
+
+</resources>
