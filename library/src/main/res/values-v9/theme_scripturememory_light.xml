@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+  <style name="Theme.ScriptureMemory.Light" parent="@style/Theme.ScriptureMemory.ActionBarLight">
+    <item name="android:textSelectHandleLeft">@drawable/scripturememorylight_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/scripturememorylight_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/scripturememorylight_text_select_handle_middle</item>
+  	<item name="android:editTextStyle">@style/EditTextScriptureMemoryLight</item>
+    <item name="android:textColorHighlight">#99508a4c</item>
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewScriptureMemoryLight</item>
+    <item name="android:checkboxStyle">@style/CheckBoxScriptureMemoryLight</item>
+    <item name="android:radioButtonStyle">@style/RadioButtonScriptureMemoryLight</item>
+    <item name="android:buttonStyle">@style/ButtonScriptureMemoryLight</item>
+    <item name="android:imageButtonStyle">@style/ImageButtonScriptureMemoryLight</item>
+    <item name="android:spinnerStyle">@style/SpinnerScriptureMemoryLight</item>
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemScriptureMemoryLight</item>
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarScriptureMemoryLight</item>
+    <item name="android:seekBarStyle">@style/SeekBarScriptureMemoryLight</item>
+    <item name="android:ratingBarStyle">@style/RatingBarScriptureMemoryLight</item>
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigScriptureMemoryLight</item>
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallScriptureMemoryLight</item>
+    <item name="android:buttonStyleToggle">@style/ToggleScriptureMemoryLight</item>
+    <item name="android:listViewStyle">@style/ListViewScriptureMemoryLight</item>
+    <item name="android:listViewWhiteStyle">@style/ListViewScriptureMemoryLight.White</item>
+    <item name="android:spinnerItemStyle">@style/SpinnerItemScriptureMemoryLight</item>
+    <item name="popupMenuStyle">@style/popupMenuStyleLight</item>
+    
+  </style>
+</resources>
