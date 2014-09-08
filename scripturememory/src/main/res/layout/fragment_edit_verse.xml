@@ -1,0 +1,60 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/color_background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+	android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".EditVerse" >
+    
+    <RelativeLayout
+        android:id="@+id/edit_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+	    <TextView
+	        android:id="@+id/reference"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:fontFamily="sans_serif_light"
+	        android:text="Reference" />
+	
+	    <EditText
+	        android:id="@+id/updateReference"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:fontFamily="sans_serif_light"
+	        android:layout_below="@id/reference"
+	        android:ems="10" />
+	
+	    <TextView
+	        android:id="@+id/verse"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:fontFamily="sans_serif_light"
+	        android:layout_below="@id/updateReference"
+	        android:text="Verse" />
+	
+	    <EditText
+	        android:id="@+id/updateVerse"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:fontFamily="sans_serif_light"
+	        android:layout_below="@id/verse"
+	        android:ems="10"
+	        android:inputType="textMultiLine" />
+     
+    </RelativeLayout>
+
+</ScrollView>

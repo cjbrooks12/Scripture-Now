@@ -1,0 +1,115 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/bg_card"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-light"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/notification_verse"
+            android:textSize="@dimen/title_text_size" />
+
+        <ImageButton
+            android:id="@+id/contextMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="?attr/bg_transparent"
+            android:src="?attr/ic_action_overflow" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/notificationVerseLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="4dp" >
+
+        <View
+            android:id="@+id/hline"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/notificationReference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/hline"
+            android:fontFamily="sans-serif-light"
+            android:paddingBottom="@dimen/card_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/card_vertical_margin"
+            android:text="@string/reference"
+            android:textSize="@dimen/title_text_size" />
+
+        <TextView
+            android:id="@+id/notificationVerse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/notificationReference"
+            android:fontFamily="sans-serif-light"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/verse" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/expandedLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <View
+            android:id="@+id/expandedhline"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+        
+        <RadioGroup
+	        android:layout_below="@id/expandedhline"
+	        android:id="@+id/expandedDisplayOptionsGroup"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	        
+	        <RadioButton
+	            android:id="@+id/radioNormal"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:checked="true"
+	            android:text="Normal" />
+	
+	        <RadioButton
+	            android:id="@+id/radioDashes"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Dashes" />
+	
+	        <RadioButton
+	            android:id="@+id/radioLetters"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="First Letters" />
+	
+	        <RadioButton
+	            android:id="@+id/radioLetteredDashes"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Dashes with First Letters" />
+	    </RadioGroup>
+    </RelativeLayout>
+
+</LinearLayout><!-- From: file:/C:/Users/Casey/Documents/workspace/android/scripturememory/src/main/res/layout/card_notification_verse.xml -->

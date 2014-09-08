@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@drawable/widget_light_selected" />
+    <item android:drawable="@drawable/widget_light" />
+</selector><!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/drawable/bg_widget_light.xml --><!-- From: file:/C:/Users/Casey/Documents/workspace/android/scripturememory/build/intermediates/exploded-aar/android/library/unspecified/res/drawable/bg_widget_light.xml -->
