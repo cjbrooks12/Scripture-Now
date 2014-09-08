@@ -1,37 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <title>Scripturememory by cjbrooks12</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Scripturememory by cjbrooks12</title>
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
-
-        <header>
-          <h1>Scripturememory</h1>
-          <h2>My personal Android application project</h2>
-        </header>
-
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/cjbrooks12/scripturememory/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/cjbrooks12/scripturememory/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/cjbrooks12/scripturememory" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <p>This is the official webpage for Scripture Memory Notifications, an Android application to help Christians memorize Bible verses. This application is completely open-source. To obtain the source and start working on it for yourself, fork this repo and get to work!</p>
+    <div class="wrapper">
+      <header>
+        <h1>Scripturememory</h1>
+        <p>My personal Android application project</p>
+        <p class="view"><a href="https://github.com/cjbrooks12/scripturememory">View the Project on GitHub <small>cjbrooks12/scripturememory</small></a></p>
+        <ul>
+          <li><a href="https://github.com/cjbrooks12/scripturememory/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/cjbrooks12/scripturememory/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/cjbrooks12/scripturememory">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>This is the official webpage for Scripture Memory Notifications, an Android application to help Christians memorize Bible verses. This application is completely open-source. To obtain the source and start working on it for yourself, fork this repo and get to work!</p>
 
 <p>Alternatively, if you don't want to help with this project you can simply download it from the <a href="https://play.google.com/store/apps/details?id=com.caseybrooks.scripturememory">Google Play Store</a></p>
 
@@ -43,27 +39,7 @@
 <h3>
 <a name="hows-it-doing" class="anchor" href="#hows-it-doing"><span class="octicon octicon-link"></span></a>How's it Doing?</h3>
 
-<p>Scripture Memory Notifications is currently in V2.4. Over the course of this summer, I have added many new features, include:</p>
-
-<ul>
-<li>Verse of the Day notifications, and able to be shown in many different Bible translations</li>
-<li>Homescreen and lockscreen widgets for both the main notification verse and the Verse of the Day</li>
-<li>Change how the text in the notification is displayed (dashes instead of letters, only the first letter of each word, or a combination of both) for stronger memorization</li>
-<li>Improved graphics and animations, to make the UX much more enjoyable</li>
-<li>A dark theme in addition to the original light theme</li>
-</ul><p>Beyond that, the app has seen more than 2500 downloads and has an average rating of 4.2/5 from 33 reviews on the Google Play Store.</p>
-
-<h3>
-<a name="current-work" class="anchor" href="#current-work"><span class="octicon octicon-link"></span></a>What am I working on now?</h3>
-<p>My main project for this lately has been a complete redesign of the data structures on the backend. Previously, the data was very simple, and while it did what I wanted it to do, that was really all it could do. I am creating a library called AndroidBibleTools which is seeks to change this by making the data more closely reflect Verses as we perceive them in the real world. This allows me to do much more with it, including:</p>
-
-<ul>
-  <li>Make getting and using Bible verses in any app dead-simple. A Verse object behaves exactly as you would expect: as a single verse from the Bible, which may be in any translation. Same with a passage, which is a collection of single verses</li>
-  <li>Create data structures that make using these verses in groups easy, and scalable. They will support searching, sorting, and dynamic loading of data to give what is needed quickly without overloading the memory buffer</li>
-  <li>Write Verses to a file in a way that is easily shared and recovered, not only with my app but with others. It is based on the format created by RememberMe, but builds on it to add just a bit more</li>
-  <li>Download verses from the Internet very easily, without needing to know anything about HTML retrieval and parsing</li>
-  <li>Share verses directly to other Android apps in a way that creates a unified connumity of Christian software. Any app can use this library to send a verse to any other app using the library, but lacking any apps to send it to using the library will send it as a normal verse to anything</li>
-</ul><p>This library has been my main focus for a while now, and it is as of yet unfinished, but a good portion of it is working correctly. As soon as I finish it, I will begin to contact other Android developers and companies to encourage them to join this new sharing system to bring us all together in one community.</p>
+<p>Scripture Memory Notifications is currently in V2.5. It has seen a total of more than 2500 downloads and 35 ratings from the Google Play Store.</p>
 
 <h3>
 <a name="whats-next" class="anchor" href="#whats-next"><span class="octicon octicon-link"></span></a>What's Next?</h3>
@@ -72,30 +48,27 @@
 
 <ul>
 <li>Translation for other languages</li>
-<li>In-app verse lookup</li>
 <li>Tag verses and add them to custom lists</li>
 <li>In-app purchases of verse lists</li>
-<li>Yet more tools to aid in memorization</li>
+<li>Additional tools to aid in memorization</li>
 </ul><h3>
 <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<p>I work alone on this project, but that's OK, because it helps me to more fully understand the Android environment, as well as good programming practices and application design. </p>
+<p>I work alone on this project, but that's OK, because it helps me to more fully understand the Android environment, as well as good programming practices and application design. If I alone work on the app, then I am forced to learn about everything, and cannot delegate a part I find difficult or annoying. Such as much to do with the UI, graphics, and animation. I don't like these nearly as much as working with the data behind the scenes, but it is something I must learn, because I believe that I should work as for the Lord with everything I do, even the things I don't enjoy as much. </p>
 
 <h3>
 <a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
-<p>Want to help with this project? Or maybe you have an idea for an awesome feature but don't know how to code? Perhaps you just want to say hi, ask for prayer, or inquire about Jesus. All are highly encouraged, just drop me an email at <a href="mailto:cjbrooks12@gmail.com">cjbrooks12@gmail.com</a> and I will respond promptly.</p>
+<p>Want to help with this project? Or maybe you have an idea for an awesome feature but don't know how to code? Perhaps you just want to say hi, ask for prayer, or inquire about Jesus. All are highly encouraged, just drop me an email at <a href="mailto:scripture.memory.app@gmail.com">scripture.memory.app@gmail.com</a> and I will respond promptly.</p>
 
 <p>And finally, thank you for all the support.</p>
-        </section>
-
-        <footer>
-          Scripturememory is maintained by <a href="https://github.com/cjbrooks12">cjbrooks12</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
+      </section>
     </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/cjbrooks12">cjbrooks12</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
   </body>
 </html>
