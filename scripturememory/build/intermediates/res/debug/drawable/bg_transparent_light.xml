@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?> 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">     
-    <item android:state_pressed="true" android:drawable="@color/card_selected_light" />
-    <item android:drawable="@android:color/transparent" />
-</selector><!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/drawable/bg_transparent_light.xml --><!-- From: file:/C:/Users/Casey/Documents/workspace/android/scripturememory/build/intermediates/exploded-aar/android/library/unspecified/res/drawable/bg_transparent_light.xml -->
