@@ -1,0 +1,67 @@
+Android Bible Tools 
+
+What is it?
+--------------------------------------------------------------------------------
+	
+Android Bible Tools seeks to simplify the process of finding and using Bible
+verses in your app. It also seeks to unify sharing verses among the Android
+ecosystem.
+
+
+The Problem
+	While it can be quite simple to package a few Strings for the reference and 
+	the text of a verse in an object, you are left with an issue of how to make
+	it more extensible. How do you find which verse comes next? Are these two 
+	verses in the same chapter or book? How can a collection of verses be sorted,
+	tagged, downloaded, or printed? And more more importantly, how can this be 
+	done in a way that is simple, intuitive, and transparent to the programmer.
+
+The Solution
+	Of course, the most intuitive way to use verses in an app are to use them as 
+	you would any other time. To this end, there are several basic objects and 
+	collections that make using verses very simple. There are single Verse objects, 
+	which correspond to a single verse in the Bible. A verse will always "point" 
+	to the same verse, no matter which translation it is or how it should be 
+	displayed. Likewise, a Passage is a set of Verses that are consecutive and
+	in the same Book of the Bible. Creating and using the Verses is just as easy
+	as you would expect:
+
+	Verse(String reference)
+	Verse(Book book, int chapter, int versenum)
+	Passage(String reference)
+	Passage(Verse start, Verse end)
+		*any constructor can optionally set the Version as the first argument. The
+		default Version is KJV
+
+	The following are some of the methods that can be called on these objects
+	next()
+	previous()
+	getReference()
+	getText()
+	compareTo(Verse verse)
+
+
+How to Install
+--------------------------------------------------------------------------------
+	
+	-- Dependencies --
+JSOUP, which can be dowloaded from http://jsoup.org/. The current version as of writing
+this is 1.7.3. 
+
+In Android Studio, you must import this project as a new module. Then add the 
+	jsoup JAR to the /lib folder in the module, and make sure the build.gradle 
+	has the following added:
+
+	dependencies {
+		compile files('lib/jsoup-1.7.3.jar')
+	}
+
+	And then whichever modules you need to use the library must have the following
+	in their build.gradle:
+
+	dependencies {
+	    compile project(':AndroidBibleTools')
+    }
+
+Created by:
+	Casey Brooks, developer of Scripture Memory Notifications (http://goo.gl/H1NhOI)

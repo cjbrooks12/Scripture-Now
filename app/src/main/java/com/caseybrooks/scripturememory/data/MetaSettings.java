@@ -1,0 +1,128 @@
+package com.caseybrooks.scripturememory.data;
+
+import android.content.Context;
+import android.preference.PreferenceManager;
+
+import com.caseybrooks.androidbibletools.enumeration.Version;
+import com.caseybrooks.scripturememory.R;
+
+public class MetaSettings {
+    public static final String settings_file = "my_settings";
+
+    //settings saved through app preferences
+    public static final String PERSIST_MAIN_NOTIFICATION = "PREF_PERSIST_NOTIFICATION";
+    public static final String VOTD_SHOW_NOTIFICATION = "PREF_VOTD_NOTIFICATION";
+    public static final String VOTD_NOTIFY_TIME = "PREF_VOTD_TIME";
+    public static final String VOTD_NOTIFICATION_SOUND = "PREF_VOTD_SOUND";
+    public static final String APP_THEME = "PREF_SELECTED_THEME";
+    public static final String WIDGET_THEME = "PREF_WIDGET_THEME";
+    public static final String DEFAULT_SCREEN = "PREF_DEFAULT_SCREEN";
+    public static final String BIBLE_VERSION = "PREF_SELECTED_VERSION";
+
+    //settings set throughout app
+    public static final String FIRST_TIME = "FIRST_TIME";
+	public static final String PROMPT_ON_START = "PROMPT_ON_START";
+    public static final String PROMPT_ON_START_INT = "PROMPT_ON_START_INT";
+    public static final String MAIN_NOTIFICATION_ACTIVE = "ACTIVE";
+    public static final String VERSE_ID = "SQL_ID";
+//    public static final String RADIO_ID = "CHECKED_RADIO_ID";
+    public static final String VERSE_DISPLAY_MODE = "VERSE_DISPLAY_MODE";
+	public static final String SORT_BY = "SORT_BY";
+//    public static final String CACHE_LAST_UPDATE = "CACHE_LAST_UPDATE";
+//    public static final String CACHE_VERSE = "CACHE_VERSE";
+
+//Display preferences
+//------------------------------------------------------------------------------
+    public static int getAppTheme(Context context) {
+        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(APP_THEME, "0"));
+    }
+
+    public static int getWidgetTheme(Context context) {
+        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(WIDGET_THEME, "0"));
+    }
+
+    public static Version getBibleVersion(Context context) {
+        String version = PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION, "King James Version");
+        return Version.fromString(version);
+    }
+
+    public static int getDefaultScreen(Context context) {
+        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(DEFAULT_SCREEN, "0"));
+    }
+
+//Notification Preferences
+//------------------------------------------------------------------------------
+    public static boolean getNotificationPersist(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PERSIST_MAIN_NOTIFICATION, true);
+    }
+
+    public static boolean getVOTDShow(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(VOTD_SHOW_NOTIFICATION, false);
+    }
+
+    public static long getVOTDTime(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getLong(VOTD_NOTIFY_TIME, 0);
+    }
+
+    public static String getVOTDSound(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(VOTD_NOTIFICATION_SOUND, "DEFAULT_SOUND");
+    }
+
+//App settings
+//------------------------------------------------------------------------------
+    public static boolean getFirstTime(Context context) {
+        return context.getSharedPreferences(settings_file, 0).getBoolean(FIRST_TIME, true);
+    }
+
+    public static void putFirstTime(Context context, boolean value) {
+        context.getSharedPreferences(settings_file, 0).edit().putBoolean(FIRST_TIME, value).commit();
+    }
+
+	public static int getPromptOnStart(Context context) {
+		return context.getSharedPreferences(settings_file, 0).getInt(PROMPT_ON_START_INT, 1);
+	}
+
+	public static void putPromptOnStart(Context context, int value) {
+		context.getSharedPreferences(settings_file, 0).edit().putInt(PROMPT_ON_START_INT, value).commit();
+	}
+
+    public static int getVerseId(Context context) {
+        return context.getSharedPreferences(settings_file, 0).getInt(VERSE_ID, -1);
+    }
+
+    public static void putVerseId(Context context, int value) {
+        context.getSharedPreferences(settings_file, 0).edit().putInt(VERSE_ID, value).commit();
+    }
+
+    public static boolean getNotificationActive(Context context) {
+        return context.getSharedPreferences(settings_file, 0).getBoolean(MAIN_NOTIFICATION_ACTIVE, false);
+    }
+
+    public static void putNotificationActive(Context context, boolean value) {
+        context.getSharedPreferences(settings_file, 0).edit().putBoolean(MAIN_NOTIFICATION_ACTIVE, value).commit();
+    }
+
+//    public static int getRadioId(Context context) {
+//        return context.getSharedPreferences(settings_file, 0).getInt(RADIO_ID, R.id.radioNormal);
+//    }
+//
+//    public static void putRadioId(Context context, int value) {
+//        context.getSharedPreferences(settings_file, 0).edit().putInt(RADIO_ID, value).commit();
+//    }
+
+    public static int getVerseDisplayMode(Context context) {
+        return context.getSharedPreferences(settings_file, 0).getInt(VERSE_DISPLAY_MODE, R.id.radioNormal);
+    }
+
+    public static void putVerseDisplayMode(Context context, int value) {
+        context.getSharedPreferences(settings_file, 0).edit().putInt(VERSE_DISPLAY_MODE, value).commit();
+    }
+
+	public static int getSortBy(Context context) {
+		return context.getSharedPreferences(settings_file, 0).getInt(SORT_BY, 0);
+	}
+
+	public static void putSortBy(Context context, int value) {
+		context.getSharedPreferences(settings_file, 0).edit().putInt(SORT_BY, value).commit();
+	}
+}

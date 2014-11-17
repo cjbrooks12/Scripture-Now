@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="AutoCompleteTextViewScriptureMemoryDark" parent="android:Widget.Holo.AutoCompleteTextView">
+        <item name="android:dropDownSelector">@drawable/scripturememorydark_list_selector_holo_dark</item>
+        <item name="android:background">@drawable/scripturememorydark_edit_text_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="AutoCompleteTextViewScriptureMemoryLight" parent="android:Widget.Holo.Light.AutoCompleteTextView">
+        <item name="android:dropDownSelector">@drawable/scripturememorylight_list_selector_holo_light</item>
+        <item name="android:background">@drawable/scripturememorylight_edit_text_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="ButtonScriptureMemoryDark" parent="android:Widget.Holo.Button">
+        <item name="android:background">@drawable/scripturememorydark_btn_default_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="ButtonScriptureMemoryLight" parent="android:Widget.Holo.Light.Button">
+        <item name="android:background">@drawable/scripturememorylight_btn_default_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="ImageButtonScriptureMemoryDark" parent="android:Widget.Holo.ImageButton">
+        <item name="android:background">@drawable/scripturememorydark_btn_default_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="ImageButtonScriptureMemoryLight" parent="android:Widget.Holo.Light.ImageButton">
+        <item name="android:background">@drawable/scripturememorylight_btn_default_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="ProgressBarScriptureMemoryDark" parent="android:Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/scripturememorydark_progress_horizontal_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorydark_progress_indeterminate_horizontal_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="ProgressBarScriptureMemoryLight" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/scripturememorylight_progress_horizontal_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorylight_progress_indeterminate_horizontal_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="RatingBarBigScriptureMemoryDark" parent="android:Widget.Holo.RatingBar.Indicator">
+        <item name="android:progressDrawable">@drawable/scripturememorydark_ratingbar_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorydark_ratingbar_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="RatingBarBigScriptureMemoryLight" parent="android:Widget.Holo.Light.RatingBar.Indicator">
+        <item name="android:progressDrawable">@drawable/scripturememorylight_ratingbar_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorylight_ratingbar_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="RatingBarScriptureMemoryDark" parent="android:Widget.Holo.RatingBar">
+        <item name="android:progressDrawable">@drawable/scripturememorydark_ratingbar_full_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorydark_ratingbar_full_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="RatingBarScriptureMemoryLight" parent="android:Widget.Holo.Light.RatingBar">
+        <item name="android:progressDrawable">@drawable/scripturememorylight_ratingbar_full_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorylight_ratingbar_full_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="RatingBarSmallScriptureMemoryDark" parent="android:Widget.Holo.RatingBar.Small">
+        <item name="android:progressDrawable">@drawable/scripturememorydark_ratingbar_small_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorydark_ratingbar_small_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="RatingBarSmallScriptureMemoryLight" parent="android:Widget.Holo.Light.RatingBar.Small">
+        <item name="android:progressDrawable">@drawable/scripturememorylight_ratingbar_small_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorylight_ratingbar_small_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="SeekBarScriptureMemoryDark" parent="android:Widget.Holo.SeekBar">
+        <item name="android:progressDrawable">@drawable/scripturememorydark_scrubber_progress_horizontal_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorydark_scrubber_progress_horizontal_holo_dark</item>
+        <item name="android:thumb">@drawable/scripturememorydark_scrubber_control_selector_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="SeekBarScriptureMemoryLight" parent="android:Widget.Holo.Light.SeekBar">
+        <item name="android:progressDrawable">@drawable/scripturememorylight_scrubber_progress_horizontal_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/scripturememorylight_scrubber_progress_horizontal_holo_light</item>
+        <item name="android:thumb">@drawable/scripturememorylight_scrubber_control_selector_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="SpinnerScriptureMemoryDark" parent="android:Widget.Holo.Spinner">
+        <item name="android:background">@drawable/scripturememorydark_spinner_background_holo_dark</item>
+        <item name="android:dropDownSelector">@drawable/scripturememorydark_list_selector_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="SpinnerScriptureMemoryLight" parent="android:Widget.Holo.Light.Spinner">
+        <item name="android:background">@drawable/scripturememorylight_spinner_background_holo_light</item>
+        <item name="android:dropDownSelector">@drawable/scripturememorylight_list_selector_holo_light</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="Theme.ScriptureMemory.Dark" parent="@style/Theme.ScriptureMemory.ActionBarDark">
+
+        <!-- <item name="android:editTextBackground">@drawable/scripturememorydark_edit_text_holo_dark</item> -->
+        <!-- <item name="android:textColorHighlight">#99508a4c</item> -->
+        <!-- <item name="android:textSelectHandleLeft">@drawable/scripturememorydark_text_select_handle_left</item> -->
+        <!-- <item name="android:textSelectHandleRight">@drawable/scripturememorydark_text_select_handle_right</item> -->
+        <!-- <item name="android:textSelectHandle">@drawable/scripturememorydark_text_select_handle_middle</item> -->
+        <!-- <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewScriptureMemoryDark</item> -->
+        <!-- <item name="android:listChoiceIndicatorMultiple">@drawable/scripturememorydark_btn_check_holo_dark</item> -->
+        <!-- <item name="android:listChoiceIndicatorSingle">@drawable/scripturememorydark_btn_radio_holo_dark</item> -->
+        <!-- <item name="android:buttonStyle">@style/ButtonScriptureMemoryDark</item> -->
+        <!-- <item name="android:imageButtonStyle">@style/ImageButtonScriptureMemoryDark</item> -->
+        <!-- <item name="android:dropDownSpinnerStyle">@style/SpinnerScriptureMemoryDark</item> -->
+        <!-- <item name="android:progressBarStyleHorizontal">@style/ProgressBarScriptureMemoryDark</item> -->
+        <!-- <item name="android:seekBarStyle">@style/SeekBarScriptureMemoryDark</item> -->
+        <!-- <item name="android:ratingBarStyle">@style/RatingBarScriptureMemoryDark</item> -->
+        <!-- <item name="android:ratingBarStyleIndicator">@style/RatingBarBigScriptureMemoryDark</item> -->
+        <!-- <item name="android:ratingBarStyleSmall">@style/RatingBarSmallScriptureMemoryDark</item> -->
+        <!-- <item name="android:buttonStyleToggle">@style/ToggleScriptureMemoryDark</item> -->
+        <!-- <item name="android:listChoiceBackgroundIndicator">@drawable/scripturememorydark_list_selector_holo_dark</item> -->
+        <!-- <item name="android:activatedBackgroundIndicator">@drawable/scripturememorydark_activated_background_holo_dark</item> -->
+        <!-- <item name="android:fastScrollThumbDrawable">@drawable/scripturememorydark_fastscroll_thumb_holo</item> -->
+
+        <item name="android:textSelectHandleLeft">@drawable/scripturememorydark_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/scripturememorydark_text_select_handle_right</item>
+        <item name="android:textSelectHandle">@drawable/scripturememorydark_text_select_handle_middle</item>
+        <item name="android:editTextStyle">@style/EditTextScriptureMemoryDark</item>
+        <item name="android:textColorHighlight">#99508a4c</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewScriptureMemoryDark</item>
+        <item name="android:checkboxStyle">@style/CheckBoxScriptureMemoryDark</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonScriptureMemoryDark</item>
+        <item name="android:buttonStyle">@style/ButtonScriptureMemoryDark</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonScriptureMemoryDark</item>
+        <item name="android:spinnerStyle">@style/SpinnerScriptureMemoryDark</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemScriptureMemoryDark</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarScriptureMemoryDark</item>
+        <item name="android:seekBarStyle">@style/SeekBarScriptureMemoryDark</item>
+        <item name="android:ratingBarStyle">@style/RatingBarScriptureMemoryDark</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigScriptureMemoryDark</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallScriptureMemoryDark</item>
+        <item name="android:buttonStyleToggle">@style/ToggleScriptureMemoryDark</item>
+        <item name="android:listViewStyle">@style/ListViewScriptureMemoryDark</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewScriptureMemoryDark.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemScriptureMemoryDark</item>
+        <item name="popupMenuStyle">@style/popupMenuStyleDark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="Theme.ScriptureMemory.Light" parent="@style/Theme.ScriptureMemory.ActionBarLight">
+
+        <!-- <item name="android:editTextBackground">@drawable/scripturememorylight_edit_text_holo_light</item> -->
+        <!-- <item name="android:textColorHighlight">#99508a4c</item> -->
+        <!-- <item name="android:textSelectHandleLeft">@drawable/scripturememorylight_text_select_handle_left</item> -->
+        <!-- <item name="android:textSelectHandleRight">@drawable/scripturememorylight_text_select_handle_right</item> -->
+        <!-- <item name="android:textSelectHandle">@drawable/scripturememorylight_text_select_handle_middle</item> -->
+        <!-- <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewScriptureMemoryLight</item> -->
+        <!-- <item name="android:listChoiceIndicatorMultiple">@drawable/scripturememorylight_btn_check_holo_light</item> -->
+        <!-- <item name="android:listChoiceIndicatorSingle">@drawable/scripturememorylight_btn_radio_holo_light</item> -->
+        <!-- <item name="android:buttonStyle">@style/ButtonScriptureMemoryLight</item> -->
+        <!-- <item name="android:imageButtonStyle">@style/ImageButtonScriptureMemoryLight</item> -->
+        <!-- <item name="android:dropDownSpinnerStyle">@style/SpinnerScriptureMemoryLight</item> -->
+        <!-- <item name="android:progressBarStyleHorizontal">@style/ProgressBarScriptureMemoryLight</item> -->
+        <!-- <item name="android:seekBarStyle">@style/SeekBarScriptureMemoryLight</item> -->
+        <!-- <item name="android:ratingBarStyle">@style/RatingBarScriptureMemoryLight</item> -->
+        <!-- <item name="android:ratingBarStyleIndicator">@style/RatingBarBigScriptureMemoryLight</item> -->
+        <!-- <item name="android:ratingBarStyleSmall">@style/RatingBarSmallScriptureMemoryLight</item> -->
+        <!-- <item name="android:buttonStyleToggle">@style/ToggleScriptureMemoryLight</item> -->
+
+        <item name="android:listChoiceBackgroundIndicator">@drawable/scripturememorylight_list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/scripturememorylight_activated_background_holo_light</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/scripturememorylight_fastscroll_thumb_holo</item>
+        <item name="android:textSelectHandleLeft">@drawable/scripturememorylight_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/scripturememorylight_text_select_handle_right</item>
+        <item name="android:textSelectHandle">@drawable/scripturememorylight_text_select_handle_middle</item>
+        <item name="android:editTextStyle">@style/EditTextScriptureMemoryLight</item>
+        <item name="android:textColorHighlight">#99508a4c</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewScriptureMemoryLight</item>
+        <item name="android:checkboxStyle">@style/CheckBoxScriptureMemoryLight</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonScriptureMemoryLight</item>
+        <item name="android:buttonStyle">@style/ButtonScriptureMemoryLight</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonScriptureMemoryLight</item>
+        <item name="android:spinnerStyle">@style/SpinnerScriptureMemoryLight</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemScriptureMemoryLight</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarScriptureMemoryLight</item>
+        <item name="android:seekBarStyle">@style/SeekBarScriptureMemoryLight</item>
+        <item name="android:ratingBarStyle">@style/RatingBarScriptureMemoryLight</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigScriptureMemoryLight</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallScriptureMemoryLight</item>
+        <item name="android:buttonStyleToggle">@style/ToggleScriptureMemoryLight</item>
+        <item name="android:listViewStyle">@style/ListViewScriptureMemoryLight</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewScriptureMemoryLight.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemScriptureMemoryLight</item>
+        <item name="android:popupMenuStyle">@style/popupMenuStyleLight</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_dark.xml -->
+    <eat-comment />
+
+    <style name="ToggleScriptureMemoryDark" parent="android:Widget.Holo.Button.Toggle">
+        <item name="android:background">@drawable/scripturememorydark_btn_toggle_holo_dark</item>
+    </style>
+    <!-- From: file:/C:/Users/Casey/Documents/workspace/scripturememory/library/src/main/res/values-v11/theme_scripturememory_light.xml -->
+    <eat-comment />
+
+    <style name="ToggleScriptureMemoryLight" parent="android:Widget.Holo.Light.Button.Toggle">
+        <item name="android:background">@drawable/scripturememorylight_btn_toggle_holo_light</item>
+    </style>
+
+</resources>

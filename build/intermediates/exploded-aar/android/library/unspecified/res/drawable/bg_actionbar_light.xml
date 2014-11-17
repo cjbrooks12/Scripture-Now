@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Bottom Line -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/actionbar_highlight_light" />
+        </shape>
+    </item>
+
+    <!-- Color of your action bar -->
+    <item android:bottom="2dip">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/actionbar_light" />
+        </shape>
+    </item>
+</layer-list><!-- From: file:/C:/Users/Casey/Documents/workspace/android/library/src/main/res/drawable/bg_actionbar_light.xml -->

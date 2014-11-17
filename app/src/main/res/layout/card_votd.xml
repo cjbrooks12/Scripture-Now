@@ -1,0 +1,77 @@
+<android.support.v7.widget.CardView
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    cardView:cardBackgroundColor="?attr/color_card"
+    cardView:cardCornerRadius="4dp"
+    android:layout_margin="4dp">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/title_text_size"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/votd_title"
+                android:text="@string/verse_of_the_day" />
+
+            <ImageButton
+                android:id="@+id/contextMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/bg_transparent"
+                android:src="?attr/ic_mtrl_overflow"
+                android:contentDescription="@string/remove" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="4dp"
+            android:orientation="vertical"
+            android:id="@+id/votdLayout" >
+
+            <View
+                android:background="@android:color/darker_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/hline" />
+
+            <TextView
+                android:id="@+id/votdReference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/card_vertical_margin"
+                android:paddingBottom="@dimen/card_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:textSize="@dimen/title_text_size"
+                android:fontFamily="sans-serif-light" />
+
+            <TextView
+                android:id="@+id/votdVerse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:fontFamily="sans-serif-light"
+                android:text="" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

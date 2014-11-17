@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/chip"
+        android:state_pressed="false"
+        android:state_focused="false"
+        android:state_selected="false"
+        android:state_checked="false"
+        android:state_activated="false" />
+
+    <item android:drawable="@drawable/chip"
+        android:state_pressed="true"
+        android:state_focused="true"
+        android:state_selected="true"
+        android:state_checked="true"
+        android:state_activated="true" />
+
+    <item android:drawable="@drawable/chip" />
+
+</selector><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/app/src/main/res/drawable/bg_chip.xml -->
