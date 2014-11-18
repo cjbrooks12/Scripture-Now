@@ -2,9 +2,9 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="C:\Users\Casey\Desktop\github\scripturememory\app\src\androidTest\res" />
-        <source path="C:\Users\Casey\Desktop\github\scripturememory\app\build\generated\res\rs\test\debug" />
-        <source path="C:\Users\Casey\Desktop\github\scripturememory\app\build\generated\res\generated\test\debug" />
+        <source path="C:\Users\Casey\Desktop\github\scripturememory\App\src\androidTest\res" />
+        <source path="C:\Users\Casey\Desktop\github\scripturememory\App\build\generated\res\rs\test\debug" />
+        <source path="C:\Users\Casey\Desktop\github\scripturememory\App\build\generated\res\generated\test\debug" />
     </dataSet>
 
 </merger>

@@ -13,4 +13,4 @@
         android:id="@+id/context_list_card_delete"
         android:title="Delete"/>
 </menu>
-<!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/app/src/main/res/menu/context_list_card.xml -->
+<!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/menu/context_list_card.xml -->

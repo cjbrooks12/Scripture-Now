@@ -89,4 +89,4 @@ android:orientation="vertical" >
         android:text="@string/android_actionbar_style" />
 </RelativeLayout>
 </ScrollView>
-<!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/app/src/main/res/layout/activity_about.xml -->
+<!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/activity_about.xml -->

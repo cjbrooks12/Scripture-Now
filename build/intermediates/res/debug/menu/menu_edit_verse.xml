@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+	<item
+        android:id="@+id/menu_edit_set_notification"
+        app:showAsAction="never"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Set as Notification" />
+	<item
+        android:id="@+id/menu_edit_save_changes"
+        app:showAsAction="never"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Save Changes" />
+    <item
+        android:id="@+id/menu_edit_delete"
+        app:showAsAction="never"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Delete" />
+    <item
+        android:id="@+id/menu_edit_change_list"
+        app:showAsAction="never"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Change List" />
+    <item
+        android:id="@+id/menu_edit_share"
+        app:showAsAction="never"
+        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        android:title="Share..." />
+</menu>
+<!-- From: file:/C:/Users/Casey/Documents/workspace/android/scripturememory/src/main/res/menu/menu_edit_verse.xml -->

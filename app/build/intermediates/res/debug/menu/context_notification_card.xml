@@ -7,4 +7,4 @@
         android:id="@+id/context_notification_card_toggle"
         android:title="Toggle"/>
 </menu>
-<!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/app/src/main/res/menu/context_notification_card.xml -->
+<!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/menu/context_notification_card.xml -->

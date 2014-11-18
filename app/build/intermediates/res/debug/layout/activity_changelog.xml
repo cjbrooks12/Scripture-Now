@@ -9,4 +9,4 @@
     android:orientation="vertical"
     tools:context=".Changelog" 
     android:id="@+id/changelogListview" >
-</ListView><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/app/src/main/res/layout/activity_changelog.xml -->
+</ListView><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/activity_changelog.xml -->

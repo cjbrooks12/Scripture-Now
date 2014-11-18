@@ -1,1 +1,1 @@
-include ':AndroidBibleTools', ':app'
+include ':AndroidBibleTools', ':App'

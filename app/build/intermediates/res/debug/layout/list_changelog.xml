@@ -28,4 +28,4 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:fontFamily="sans-serif-light"
         android:text="Detail" />
-</LinearLayout><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/app/src/main/res/layout/list_changelog.xml -->
+</LinearLayout><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/list_changelog.xml -->
