@@ -2472,6 +2472,7 @@
         <item name="colorPrimary">#508a4c</item>
         <item name="colorPrimaryDark">#325730</item>
         <item name="colorAccent">#B9D6B6</item>
+        <item name="windowActionModeOverlay">true</item>
 
         <!-- ActionBar Icons -->
 
@@ -2492,6 +2493,7 @@
         <item name="colorPrimary">#508a4c</item>
         <item name="colorPrimaryDark">#325730</item>
         <item name="colorAccent">#B9D6B6</item>
+        <item name="windowActionModeOverlay">true</item>
 
         <!-- ActionBar Icons -->
 

@@ -5,7 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +21,11 @@ import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.scripturememory.R;
 
 public class BibleVerseAdapter extends BaseAdapter {
-    private static class ViewHolder {
-        Passage passage;
-        int position;
+    public static class ViewHolder {
+        public Passage passage;
+        public int position;
+
+        CardView cardview;
 
         TextView reference;
         TextView verseText;
@@ -35,15 +37,57 @@ public class BibleVerseAdapter extends BaseAdapter {
 
         ImageView overflow;
         LinearLayout tagsLayout;
+
+        ViewHolder(View inflater) {
+            cardview = (CardView) inflater.findViewById(R.id.verse_list_card_view);
+
+            reference = (TextView) inflater.findViewById(R.id.item_reference);
+            verseText = (TextView) inflater.findViewById(R.id.item_verse);
+            version = (TextView) inflater.findViewById(R.id.version);
+
+            iconBackground = (ImageView) inflater.findViewById(R.id.ref_icon_background);
+            iconText = (TextView) inflater.findViewById(R.id.ref_icon_text);
+
+            overflow = (ImageView) inflater.findViewById(R.id.overflow);
+            tagsLayout = (LinearLayout) inflater.findViewById(R.id.tags_layout);
+        }
+    }
+
+    public static interface OnMultiSelectListener {
+        void onMultiSelect(View view, int position);
+    }
+
+    public static interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public static interface OnOverflowClickListener {
+        void onOverflowClick(View view, int position);
     }
 
     Context context;
     Verses<Passage> items;
+    OnMultiSelectListener multiSelectListener;
+    OnItemClickListener itemClickListener;
+    OnOverflowClickListener overflowClickListener;
 
     public BibleVerseAdapter(Context context, Verses<Passage> items) {
         this.context = context;
         this.items = items;
     }
+
+    public void setOnMultiSelectListener(OnMultiSelectListener listener) {
+        this.multiSelectListener = listener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
+
+    public void setOnOverflowClickListener(OnOverflowClickListener listener) {
+        this.overflowClickListener = listener;
+    }
+
 
     @Override
     public int getCount() {
@@ -66,18 +110,8 @@ public class BibleVerseAdapter extends BaseAdapter {
         View view = convertView;
         if(view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.list_card_new, parent, false);
-            vh = new ViewHolder();
-
-            vh.reference = (TextView) view.findViewById(R.id.item_reference);
-            vh.verseText = (TextView) view.findViewById(R.id.item_verse);
-            vh.version = (TextView) view.findViewById(R.id.version);
-
-            vh.iconBackground = (ImageView) view.findViewById(R.id.ref_icon_background);
-            vh.iconText = (TextView) view.findViewById(R.id.ref_icon_text);
+            vh = new ViewHolder(view);
             vh.circle = context.getResources().getDrawable(R.drawable.circle);
-
-            vh.overflow = (ImageView) view.findViewById(R.id.overflow);
-            vh.tagsLayout = (LinearLayout) view.findViewById(R.id.tags_layout);
             view.setTag(vh);
         }
         else {
@@ -90,6 +124,11 @@ public class BibleVerseAdapter extends BaseAdapter {
         //setup bookkeeping information
         vh.position = position;
         vh.passage = passage;
+        vh.cardview.setOnLongClickListener(longClick);
+        vh.cardview.setOnClickListener(cardClick);
+        vh.cardview.setTag(R.id.ref_icon_background, vh);
+
+        vh.overflow.setOnClickListener(overflowClick);
 
         //setup main content of ListItem
         vh.reference.setText(passage.getReference());
@@ -98,25 +137,17 @@ public class BibleVerseAdapter extends BaseAdapter {
 
         //setup icon of ListItem
         String passageBookCode = passage.getVerses()[0].getBook().getCode();
-        String first_letter = passageBookCode.substring(0, 1);
-        if(first_letter.equals("1") || first_letter.equals("2") || first_letter.equals("3")) {
-            vh.iconText.setText(passageBookCode.replaceFirst("(\\d)", "$1 "));
-        }
-        else {
-            vh.iconText.setText(passageBookCode);
-        }
+        vh.iconText.setText(passageBookCode.replaceFirst("(\\d)", "$1 "));
 
         if(vh.passage.isChecked()) {
             TypedArray a = context.getTheme().obtainStyledAttributes(R.style.Theme_BaseLight, new int[]{R.attr.colorAccent});
             int selectedColor = a.getColor(0, 0);
             a.recycle();
-//            Log.e("INITIALIZE PASSAGE", passage.getReference() + " checked");
             vh.circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
             vh.iconBackground.setImageDrawable(vh.circle);
         }
         else {
             int selectedColor = db.getStateColor(passage.getState());
-//            Log.e("INITIALIZE PASSAGE", passage.getReference() + " not checked");
             vh.circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
             vh.iconBackground.setImageDrawable(vh.circle);
 
@@ -150,11 +181,42 @@ public class BibleVerseAdapter extends BaseAdapter {
         return view;
     }
 
+//Click listeners
+//------------------------------------------------------------------------------
+
+    View.OnClickListener cardClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            final ViewHolder vh = (ViewHolder)v.getTag(R.id.ref_icon_background);
+            if(itemClickListener != null) itemClickListener.onItemClick(v, vh.position);
+        }
+    };
+
+    View.OnClickListener overflowClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            final ViewHolder vh = (ViewHolder)v.getTag(R.id.ref_icon_background);
+            if(overflowClickListener != null) overflowClickListener.onOverflowClick(v, vh.position);
+        }
+    };
+
+    //enter multi-selection mode by either clicking the icon (primary) or long-pressing card (secondary)
+    View.OnLongClickListener longClick = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            iconClick.onClick(v);
+
+            return true;
+        }
+    };
+
     View.OnClickListener iconClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             final ViewHolder vh = (ViewHolder)v.getTag(R.id.ref_icon_background);
-            Log.i("ICON CLICKED POSITION", "" + vh.position);
+
+            //notify that this item has been put into multi-select mode by clicking the icon
+            if(multiSelectListener != null) multiSelectListener.onMultiSelect(v, vh.position);
 
             final Animation a = AnimationUtils.loadAnimation(context, R.anim.flip_to_middle);
             final Animation b = AnimationUtils.loadAnimation(context, R.anim.flip_from_middle);

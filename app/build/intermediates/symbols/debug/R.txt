@@ -456,7 +456,6 @@ int id b_tv 0x7f0b0075
 int id beginning 0x7f0b0013
 int id bookSpinner 0x7f0b0096
 int id book_spinner 0x7f0b0083
-int id card_view 0x7f0b004f
 int id changelogListview 0x7f0b0048
 int id chapterSpinner 0x7f0b0097
 int id chapter_spinner 0x7f0b0082
@@ -578,6 +577,7 @@ int id updateVerse 0x7f0b006f
 int id useLogo 0x7f0b0012
 int id verse 0x7f0b006e
 int id verseSpinner 0x7f0b0098
+int id verse_list_card_view 0x7f0b004f
 int id verse_spinner 0x7f0b0081
 int id version 0x7f0b0090
 int id versionSpinner 0x7f0b0095

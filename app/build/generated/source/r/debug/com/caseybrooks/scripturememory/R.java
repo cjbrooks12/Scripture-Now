@@ -1900,7 +1900,6 @@ containing a value of this type.
         public static final int beginning=0x7f0b0013;
         public static final int bookSpinner=0x7f0b0096;
         public static final int book_spinner=0x7f0b0083;
-        public static final int card_view=0x7f0b004f;
         public static final int changelogListview=0x7f0b0048;
         public static final int chapterSpinner=0x7f0b0097;
         public static final int chapter_spinner=0x7f0b0082;
@@ -2022,6 +2021,7 @@ containing a value of this type.
         public static final int useLogo=0x7f0b0012;
         public static final int verse=0x7f0b006e;
         public static final int verseSpinner=0x7f0b0098;
+        public static final int verse_list_card_view=0x7f0b004f;
         public static final int verse_spinner=0x7f0b0081;
         public static final int version=0x7f0b0090;
         public static final int versionSpinner=0x7f0b0095;

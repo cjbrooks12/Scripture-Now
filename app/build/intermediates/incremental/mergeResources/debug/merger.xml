@@ -7428,12 +7428,12 @@ true
                     msgid="2550479030709304392" >"Որոնման հարցում"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Տարածել"
-                </string>
-                <string
                     name="abc_action_bar_home_description_format"
                     msgid="1397052879051804371" >"%1$s, %2$s"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Տարածել"
                 </string>
                 <string
                     name="abc_searchview_description_clear"
@@ -8598,16 +8598,16 @@ true
                     msgid="7165123711973476752" >"%s-тай хуваалцах"
                 </string>
                 <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"Нүүр хуудас руу шилжих"
-                </string>
-                <string
                     name="abc_action_bar_home_description_format"
                     msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"Бүгдийг харах"
+                </string>
+                <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"Нүүр хуудас руу шилжих"
                 </string>
                 <string
                     name="abc_searchview_description_submit"
@@ -8902,20 +8902,20 @@ true
                     msgid="7468859129482906941" >"सबै हेर्नुहोस्"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"%s सँग साझेदारी गर्नुहोस्"
-                </string>
-                <string
                     name="abc_action_bar_home_description"
                     msgid="4600421777120114993" >"गृह खोज्नुहोस्"
                 </string>
                 <string
-                    name="abc_searchview_description_voice"
-                    msgid="893419373245838918" >"भ्वाइस खोजी"
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"%s सँग साझेदारी गर्नुहोस्"
                 </string>
                 <string
                     name="abc_searchview_description_clear"
                     msgid="3691816814315814921" >"प्रश्‍न हटाउनुहोस्"
+                </string>
+                <string
+                    name="abc_searchview_description_voice"
+                    msgid="893419373245838918" >"भ्वाइस खोजी"
                 </string>
                 <string
                     name="abc_searchview_description_query"
@@ -9006,24 +9006,24 @@ true
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-pl\values.xml"
                 qualifiers="pl" >
                 <string
-                    name="abc_action_menu_overflow_description"
-                    msgid="3588849162933574182" >"Więcej opcji"
-                </string>
-                <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"Zobacz wszystkie"
+                </string>
+                <string
+                    name="abc_action_menu_overflow_description"
+                    msgid="3588849162933574182" >"Więcej opcji"
                 </string>
                 <string
                     name="abc_action_bar_home_description_format"
                     msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
-                    name="abc_action_bar_up_description"
-                    msgid="1594238315039666878" >"Przejdź wyżej"
-                </string>
-                <string
                     name="abc_searchview_description_query"
                     msgid="2550479030709304392" >"Wyszukiwane hasło"
+                </string>
+                <string
+                    name="abc_action_bar_up_description"
+                    msgid="1594238315039666878" >"Przejdź wyżej"
                 </string>
                 <string
                     name="abc_activitychooserview_choose_application"
@@ -9046,12 +9046,12 @@ true
                     msgid="8928215447528550784" >"Wyślij zapytanie"
                 </string>
                 <string
-                    name="abc_action_bar_home_subtitle_description_format"
-                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
-                </string>
-                <string
                     name="abc_searchview_description_clear"
                     msgid="3691816814315814921" >"Wyczyść zapytanie"
+                </string>
+                <string
+                    name="abc_action_bar_home_subtitle_description_format"
+                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
                 </string>
                 <string
                     name="abc_shareactionprovider_share_with"
@@ -10032,16 +10032,16 @@ false
                     msgid="4076576682505996667" >"Tamamlandı"
                 </string>
                 <string
-                    name="abc_action_bar_up_description"
-                    msgid="1594238315039666878" >"Yukarı git"
-                </string>
-                <string
                     name="abc_searchview_description_clear"
                     msgid="3691816814315814921" >"Sorguyu temizle"
                 </string>
                 <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"Ara"
+                </string>
+                <string
+                    name="abc_action_bar_up_description"
+                    msgid="1594238315039666878" >"Yukarı git"
                 </string>
                 <string
                     name="abc_searchview_description_voice"
@@ -13168,6 +13168,9 @@ V2.5 - August 25, 2014
                     <item name="colorAccent">
 #B9D6B6
                     </item>
+                    <item name="windowActionModeOverlay">
+true
+                    </item>
 
                     <!-- ActionBar Icons -->
 
@@ -13215,6 +13218,9 @@ Light
                     </item>
                     <item name="colorAccent">
 #B9D6B6
+                    </item>
+                    <item name="windowActionModeOverlay">
+true
                     </item>
 
                     <!-- ActionBar Icons -->
