@@ -17,6 +17,7 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 	protected EnumSet<Flags> flags;
     protected long millis;
     protected int state;
+    protected boolean checked;
 
 	public AbstractVerse() {
 		version = Version.KJV;
@@ -47,6 +48,20 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 
     public AbstractVerse setState(int state) {
         this.state = state;
+        return this;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public AbstractVerse setChecked(boolean checked) {
+        this.checked = checked;
+        return this;
+    }
+
+    public AbstractVerse toggle() {
+        setChecked(!checked);
         return this;
     }
 

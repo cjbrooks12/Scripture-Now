@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     cardView:cardBackgroundColor="?attr/color_card"
+    android:foreground="@drawable/bg_transparent"
     cardView:cardCornerRadius="4dp"
-    android:layout_margin="4dp">
+    android:layout_margin="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,14 +23,14 @@
             android:layout_margin="4dp" >
 
             <ImageView
-                android:id="@+id/ref_icon_circle"
+                android:id="@+id/ref_icon_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:src="@drawable/circle"/>
 
             <TextView
-                android:id="@+id/ref_icon"
+                android:id="@+id/ref_icon_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
@@ -95,7 +96,7 @@
             </HorizontalScrollView>
 
             <ImageView
-                android:id="@+id/list_overflow_button"
+                android:id="@+id/overflow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

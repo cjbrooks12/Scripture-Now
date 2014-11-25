@@ -58,6 +58,9 @@ public class Util {
 
     public static class Drawables {
         public static Drawable circle(int color) {
+
+
+
             GradientDrawable circle = new GradientDrawable();
             circle.setColor(Color.WHITE);
             circle.setShape(GradientDrawable.OVAL);

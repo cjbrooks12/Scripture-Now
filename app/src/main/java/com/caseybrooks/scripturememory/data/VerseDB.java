@@ -317,7 +317,7 @@ public class VerseDB {
 
     public long getTagID(String tag) {
         String selectQuery =
-                "SELECT *" +
+                "SELECT " + KEY_TAGS_ID +
                 " FROM " + TABLE_TAGS +
                 " WHERE " + KEY_TAGS_TAG + " LIKE \"" + tag + "\"";
 
@@ -327,19 +327,6 @@ public class VerseDB {
 
         return c.getInt(c.getColumnIndex(KEY_TAGS_ID));
     }
-
-//    public int getTagColor(long id) {
-//        String selectQuery =
-//                "SELECT *" +
-//                " FROM " + TABLE_TAGS +
-//                " WHERE " + KEY_TAGS_ID + " = " + id;
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//        if (c != null && c.getCount() > 0) c.moveToFirst();
-//        else Color.parseColor("#508A4C");
-//
-//        return Color.parseColor(c.getString(c.getColumnIndex(KEY_TAGS_COLOR)));
-//    }
 
     public int getTagColor(String tag) {
         String selectQuery =

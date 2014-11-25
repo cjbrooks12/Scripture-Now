@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0/res/values-v11/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values-v11/values.xml -->
     <eat-comment />
 
     <style name="Base.TextAppearance.AppCompat.Inverse">
@@ -27,6 +27,20 @@
 
     <style name="Base.TextAppearance.AppCompat.Small.Inverse">
         <item name="android:textColor">?android:attr/textColorTertiaryInverse</item>
+        <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
+        <item name="android:textColorHighlight">?android:attr/textColorHighlightInverse</item>
+        <item name="android:textColorLink">?android:attr/textColorLinkInverse</item>
+    </style>
+
+    <style name="Base.TextAppearance.AppCompat.Subhead.Inverse">
+        <item name="android:textColor">?android:attr/textColorSecondaryInverse</item>
+        <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
+        <item name="android:textColorHighlight">?android:attr/textColorHighlightInverse</item>
+        <item name="android:textColorLink">?android:attr/textColorLinkInverse</item>
+    </style>
+
+    <style name="Base.TextAppearance.AppCompat.Title.Inverse">
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
         <item name="android:textColorHighlight">?android:attr/textColorHighlightInverse</item>
         <item name="android:textColorLink">?android:attr/textColorLinkInverse</item>
