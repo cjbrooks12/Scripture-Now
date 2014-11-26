@@ -4,50 +4,38 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
+import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.data.VersesDatabase;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment.onDashboardEditListener;
+import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment.onListEditListener;
 
 import java.lang.reflect.Field;
 
 public class MainActivity extends ActionBarActivity
-		implements onListEditListener, onDashboardEditListener {
+		implements onListEditListener, onDashboardEditListener,
+        NavigationDrawerFragment.NavigationDrawerCallbacks {
 //Data members
 //------------------------------------------------------------------------------		
     Toolbar tb;
     Context context;
 
-	private String[] drawerItems;
-    private DrawerLayout drawerLayout;
-    private ListView drawerList;
-    private ActionBarDrawerToggle drawerToggle;
-    private CharSequence drawerTitle;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence title;
 
 //Lifecycle and Initialization
@@ -62,40 +50,34 @@ public class MainActivity extends ActionBarActivity
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+        title = getTitle();
+
+        // Set up the drawer.
+        tb = (Toolbar) findViewById(R.id.activity_toolbar);
+        setSupportActionBar(tb);
+
+        mNavigationDrawerFragment = new NavigationDrawerFragment();
+
+        mNavigationDrawerFragment.setUp(this, tb,  findViewById(R.id.navigation_drawer_container),
+                (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(R.id.navigation_drawer_container, mNavigationDrawerFragment)
+                .commit();
+
+        VerseListFragment.setOnListEditListener(this);
+        DashboardFragment.setOnDashboardEditListener(this);
+
 		getOverflowMenu();
 		setupActionBar();
 		showFirstTime();
 		showPrompt();
-		Fragment fragment = new DashboardFragment();
-		Bundle data = new Bundle();
 
         int defaultScreen = MetaSettings.getDefaultScreen(context);
 
-        if(defaultScreen == 0) {
-        	fragment = new DashboardFragment();
-        	this.title = "Dashboard";
-    		tb.setTitle(title);
-        }
-        else if(defaultScreen == 1) {
-        	fragment = new VerseListFragment();
-	    	data.putString("KEY_LIST", "current");
-	    	fragment.setArguments(data);
-	    	this.title = "Current Verses";
-			tb.setTitle(title);
-        }
-        else if(defaultScreen == 2) {
-        	fragment = new VerseListFragment();
-	    	data.putString("KEY_LIST", "memorized");
-	    	fragment.setArguments(data);
-	    	this.title = "Memorized Verses";
-			tb.setTitle(title);
-        }
-		setFragment(fragment);
-
-		VerseListFragment.setOnListEditListener(this);
-		DashboardFragment.setOnDashboardEditListener(this);
-
-		setupNavDrawer();
+        onNavigationDrawerItemSelected(defaultScreen, 0);
 		receiveImplicitIntent();
     }
 	
@@ -212,146 +194,15 @@ public class MainActivity extends ActionBarActivity
 	}
 
 	private void setupActionBar() {
-        tb = (Toolbar) findViewById(R.id.activity_toolbar);
-        setSupportActionBar(tb);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setHomeButtonEnabled(true);
-    	ab.setDisplayHomeAsUpEnabled(true);
 	}
 
-	@Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.menu_dashboard_add).setVisible(false);
-        menu.findItem(R.id.menu_dashboard_votd).setVisible(false);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.menu_dashboard, menu);
-	    return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	    case android.R.id.home:
-	    	if(drawerLayout.isDrawerOpen(drawerList)) {
-	    		drawerLayout.closeDrawer(drawerList);
-		    }
-	    	else {
-	    		drawerLayout.openDrawer(drawerList);
-	    	}
-	    	return true;
-        default:
-            return super.onOptionsItemSelected(item);
-	    }
-	}
-
-//Navigation Drawer
-//------------------------------------------------------------------------------
-	private void setupNavDrawer() {
-		drawerItems = getResources().getStringArray(R.array.drawer_items);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerList = (ListView) findViewById(R.id.left_drawer);
-
-        drawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, drawerItems));
-        drawerList.setOnItemClickListener(new MainActivity.DrawerItemClickListener());
-
-        title = drawerTitle = getTitle();
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerToggle = new ActionBarDrawerToggle(
-        		this,
-        		drawerLayout,
-                tb,
-                R.string.drawer_open,
-                R.string.drawer_close) {
-
-            public void onDrawerClosed(View view) {
-                tb.setTitle(title);
-                supportInvalidateOptionsMenu();
-            }
-
-			public void onDrawerOpened(View drawerView) {
-                tb.setTitle(drawerTitle);
-                supportInvalidateOptionsMenu();
-            }
-        };
-        drawerLayout.setDrawerListener(drawerToggle);
-        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-    }
-
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-
-	    @Override
-	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	        selectItem(position);
-	    }
-	}
-
-	private void selectItem(int position) {
-	    Fragment fragment = new DashboardFragment();
-	    Bundle data = new Bundle();
-
-	    switch(position) {
-	    case 0:
-	    	fragment = new DashboardFragment();
-	    	break;
-//        case 1:
-//            fragment = new SearchFragment();
-//            break;
-	    case 1:
-	    	fragment = new VerseListFragment();
-	    	data.putString("KEY_LIST", "current");
-	    	break;
-	    case 2:
-	    	fragment = new VerseListFragment();
-	    	data.putString("KEY_LIST", "memorized");
-//			fragment = new SearchFragment();
-	    	break;
-	    case 3:
-	    	Intent settings = new Intent(MainActivity.this, Settings.class);
-            startActivity(settings);
-            finish();
-            break;
-	    default:
-	    }
-
-	    fragment.setArguments(data);
-	    setFragment(fragment);
-	    drawerList.setItemChecked(position, true);
-	    setTitle(drawerItems[position]);
-	    drawerLayout.closeDrawer(drawerList);
-	}
-
-	public void setFragment(Fragment fragment) {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-	    fragmentManager.beginTransaction()
-	    			   .setCustomAnimations(R.anim.push_up_in, 0)
-	                   .replace(R.id.mainFragmentContainer, fragment)
-	                   .commit();
-	}
 
 	@Override
 	public void setTitle(CharSequence title) {
 	    this.title = title;
 		tb.setTitle(title);
 	}
-
-	@Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
 
 //Fragment Communication Interface
 //------------------------------------------------------------------------------
@@ -362,5 +213,69 @@ public class MainActivity extends ActionBarActivity
 
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.none);
+    }
+
+
+
+//Everything to do with new NavDrawerFragment
+//------------------------------------------------------------------------------
+
+    public void setFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.push_up_in, 0)
+                .replace(R.id.mainFragmentContainer, fragment)
+                .commit();
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int group, int position) {
+        Fragment fragment = new DashboardFragment();
+
+        switch(group) {
+            case 0:
+                fragment = new DashboardFragment();
+                break;
+            case 1:
+                int stateId;
+                if(position == 0) stateId = 0;
+                else if(position == 1) stateId = 0;
+                else if(position == 2) stateId = 5;
+                else stateId = position;
+                fragment = VerseListFragment.newInstance(VerseListFragment.STATE, stateId);
+                break;
+            case 2:
+                VerseDB db = new VerseDB(context).open();
+                String[] allTags = db.getAllTagNames();
+                int tagId = (int) db.getTagID(allTags[position]);
+                fragment = VerseListFragment.newInstance(VerseListFragment.TAGS, tagId);
+                db.close();
+                break;
+            case 3:
+                Intent settings = new Intent(MainActivity.this, Settings.class);
+                startActivity(settings);
+                finish();
+                break;
+            default:
+        }
+
+        setFragment(fragment);
+    }
+
+    public void onSectionAttached(int number) {
+        switch (number) {
+            case 0:
+                title = "Dashboard";
+                break;
+            case 1:
+                title = "State";
+                break;
+            case 2:
+                title = "Tags";
+                break;
+            case 3:
+                title = "Settings";
+                break;
+        }
     }
 }

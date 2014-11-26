@@ -3,11 +3,11 @@ package com.caseybrooks.scripturememory.fragments;
 import android.content.Context;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,21 +18,35 @@ import android.widget.SpinnerAdapter;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 public class VerseListFragment extends ListFragment {
+//enums for creating new fragment
+//------------------------------------------------------------------------------
+    public static final int TAGS = 0;
+    public static final int STATE = 1;
+
+    public static Fragment newInstance(int type, int id) {
+        Fragment fragment = new VerseListFragment();
+        Bundle data = new Bundle();
+        data.putInt("KEY_LIST_TYPE", type);
+        data.putInt("KEY_LIST_ID", id);
+        fragment.setArguments(data);
+        return fragment;
+    }
+
 //Data members
 //------------------------------------------------------------------------------
 	Context context;
     ActionBar ab;
-    Toolbar tb;
     ActionMode mActionMode;
 
 	BibleVerseAdapter bibleVerseAdapter;
-	String list;
-    int state;
+	int listType;
+    int listId;
 
     VerseDB db;
 	
@@ -50,24 +64,19 @@ public class VerseListFragment extends ListFragment {
 		
 		context = getActivity();
 		Bundle extras = getArguments();
-		if(extras.containsKey("KEY_LIST")) {
-			list = extras.getString("KEY_LIST");
-		}
-		else {
-			list = "current";
-		}
+        listType = extras.getInt("KEY_LIST_TYPE");
+        listId = extras.getInt("KEY_LIST_ID");
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
         db = new VerseDB(context);
-        db.open();
 
 		SpinnerAdapter spinnerAdapter = ArrayAdapter.createFromResource(context,
 							   R.array.sort_methods, android.R.layout.simple_spinner_dropdown_item);
 
-		ab = ((ActionBarActivity) context).getSupportActionBar();
+		ab = ((MainActivity) context).getSupportActionBar();
 		ab.setHomeButtonEnabled(true);
 		ab.setDisplayHomeAsUpEnabled(true);
 		ab.setListNavigationCallbacks(spinnerAdapter, navigationListener);
@@ -81,7 +90,6 @@ public class VerseListFragment extends ListFragment {
 	public void onPause() {
 		super.onPause();
 		((ActionBarActivity) context).getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        db.close();
     }
 
     BibleVerseAdapter.OnMultiSelectListener iconClick = new BibleVerseAdapter.OnMultiSelectListener() {
@@ -105,14 +113,27 @@ public class VerseListFragment extends ListFragment {
 
 	private void populateBibleVerses() {
 		Verses<Passage> verses;
-		VerseDB db = new VerseDB(context);
-        state = (list.equals("memorized")) ? 5 : 1;
-		
+        MainActivity mainActivity = (MainActivity) getActivity();
+
 		db.open();
-        if(state == 5)
-		    verses = db.getStateVerses(state);
-        else
+        if(listType == TAGS) {
+            verses = db.getTaggedVerses(listId);
+            mainActivity.setTitle(db.getTagName(listId));
+        }
+        else if(listType == STATE) {
+            if(listId != 0) {
+                verses = db.getStateVerses(listId);
+                mainActivity.setTitle(db.getStateName(listId));
+            }
+            else {
+                verses = db.getAllCurrentVerses();
+                mainActivity.setTitle("All");
+            }
+        }
+        else {
             verses = db.getAllCurrentVerses();
+            mainActivity.setTitle("All");
+        }
 		db.close();
 
         switch(MetaSettings.getSortBy(context)) {

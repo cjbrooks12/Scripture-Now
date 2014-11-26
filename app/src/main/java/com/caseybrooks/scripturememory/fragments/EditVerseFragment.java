@@ -119,10 +119,10 @@ public class EditVerseFragment extends Fragment {
         inflater = ((ActionBarActivity) context).getMenuInflater();
 	    inflater.inflate(R.menu.menu_edit_verse, menu);
         if(passage != null) {
-            if (passage.getState() == 4) {
-                menu.findItem(R.id.menu_edit_change_list).setTitle("Move to Current");
-            } else {
+            if (passage.getState() != 5) {
                 menu.findItem(R.id.menu_edit_change_list).setTitle("Move to Memorized");
+            } else {
+                menu.findItem(R.id.menu_edit_change_list).setTitle("Move to Current");
             }
         }
 	}
@@ -163,12 +163,12 @@ public class EditVerseFragment extends Fragment {
 	    case R.id.menu_edit_change_list:
             if(passage != null) {
                 db.open();
-                if (passage.getState() == 4) {
-                    passage.setState(1);
+                if (passage.getState() != 5) {
+                    passage.setState(5);
                     db.updateVerse(passage);
                 }
                 else {
-                    passage.setState(4);
+                    passage.setState(1+(int)(Math.random()*4));
                     db.updateVerse(passage);
                 }
                 db.close();

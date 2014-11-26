@@ -370,8 +370,8 @@ public final class R {
 		public static final int activity_chooser_view_content = 0x7f0b0021;
 		public static final int always = 0x7f0b0016;
 		public static final int beginning = 0x7f0b0013;
-		public static final int bookSpinner = 0x7f0b0096;
-		public static final int chapterSpinner = 0x7f0b0097;
+		public static final int bookSpinner = 0x7f0b009a;
+		public static final int chapterSpinner = 0x7f0b009b;
 		public static final int checkbox = 0x7f0b0029;
 		public static final int collapseActionView = 0x7f0b0017;
 		public static final int decor_content_parent = 0x7f0b002f;
@@ -417,8 +417,8 @@ public final class R {
 		public static final int title = 0x7f0b0027;
 		public static final int up = 0x7f0b0008;
 		public static final int useLogo = 0x7f0b0012;
-		public static final int verseSpinner = 0x7f0b0098;
-		public static final int versionSpinner = 0x7f0b0095;
+		public static final int verseSpinner = 0x7f0b009c;
+		public static final int versionSpinner = 0x7f0b0099;
 		public static final int withText = 0x7f0b001a;
 		public static final int wrap_content = 0x7f0b001d;
 	}
@@ -449,8 +449,8 @@ public final class R {
 		public static final int abc_search_dropdown_item_icons_2line = 0x7f030014;
 		public static final int abc_search_view = 0x7f030015;
 		public static final int abc_simple_dropdown_hint = 0x7f030016;
-		public static final int support_simple_spinner_dropdown_item = 0x7f030028;
-		public static final int versepicker = 0x7f030029;
+		public static final int support_simple_spinner_dropdown_item = 0x7f030029;
+		public static final int versepicker = 0x7f03002a;
 	}
 	public static final class string {
 		public static final int abc_action_bar_home_description = 0x7f0d0000;
@@ -469,7 +469,7 @@ public final class R {
 		public static final int abc_shareactionprovider_share_with = 0x7f0d000d;
 		public static final int abc_shareactionprovider_share_with_application = 0x7f0d000e;
 		public static final int abc_toolbar_collapse_description = 0x7f0d000f;
-		public static final int app_name = 0x7f0d0016;
+		public static final int app_name = 0x7f0d0017;
 	}
 	public static final class style {
 		public static final int Base_TextAppearance_AppCompat = 0x7f0e0000;

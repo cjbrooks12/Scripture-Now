@@ -10,5 +10,7 @@
     <dimen name="card_button_height">70dp</dimen>
     <dimen name="tab_host_default_height">48dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
+    <dimen name="navigation_drawer_width">280dp</dimen>
+
 
 </resources>

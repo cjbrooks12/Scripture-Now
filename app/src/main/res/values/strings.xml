@@ -24,7 +24,7 @@
     <!-- String Arrays -->
     <string-array name="drawer_items">
         <item>Dashboard</item>
-        <!--<item>Search</item>-->
+        <!-- <item>Search</item> -->
         <item>Current Verses</item>
         <item>Memorized Verses</item>
         <item>Settings</item>
@@ -82,5 +82,12 @@
     <string name="title_activity_widget_configuration">WidgetConfiguration</string>
     <string name="hello_world">Hello world!</string>
     <string name="share_message">Are you looking for a new way to memorize Scripture? You should try this new app called Scripture Memory Notifications! You can add your favorite verses or try to memorize the Verse of the Day. You can even challenge yourself with just the first letter of each word, and much more, all from your phone\'s notification drawer!\n\nLearn more at https://play.google.com/store/apps/details?id=com.caseybrooks.scripturememory</string>
+    <string name="title_activity_dummy">DummyActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
 
 </resources>

@@ -237,31 +237,31 @@ public class Settings extends PreferenceActivity {
 			builder.setMessage("Backup verses? This will overwrite existing backup file.");
 			builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-//					VersesDatabase db = new VersesDatabase(getBaseContext());
-//					db.open();
-//					try {
-//						String state = Environment.getExternalStorageState();
-//						if (Environment.MEDIA_MOUNTED.equals(state)) {
-//							String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
-//							File folder = new File(path);
-//
-//							if(!folder.exists()) {
-//								folder.mkdirs();
-//							}
-//							if(folder.exists()) {
-//								File externalStorage = new File(path, "backup.csv");
-//								//db.exportToCSV(externalStorage);
-//								Toast.makeText(getBaseContext(), "Backup Successful", Toast.LENGTH_LONG).show();
-//							}
-//						}
-//						else {
-//							Toast.makeText(getBaseContext(), "Unable to open external storage. Check if SD card is installed properly", Toast.LENGTH_LONG).show();
-//						}
-//					}
-//					catch(IOException e) {
-//						Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-//					}
-//					db.close();
+					VersesDatabase db = new VersesDatabase(getBaseContext());
+					db.open();
+					try {
+						String state = Environment.getExternalStorageState();
+						if (Environment.MEDIA_MOUNTED.equals(state)) {
+							String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
+							File folder = new File(path);
+
+							if(!folder.exists()) {
+								folder.mkdirs();
+							}
+							if(folder.exists()) {
+								File externalStorage = new File(path, "backup.csv");
+								db.exportToCSV(externalStorage);
+								Toast.makeText(getBaseContext(), "Backup Successful", Toast.LENGTH_LONG).show();
+							}
+						}
+						else {
+							Toast.makeText(getBaseContext(), "Unable to open external storage. Check if SD card is installed properly", Toast.LENGTH_LONG).show();
+						}
+					}
+					catch(IOException e) {
+						Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+					}
+					db.close();
 				}
 			});
 			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -297,6 +297,7 @@ public class Settings extends PreferenceActivity {
 									VersesDatabase db = new VersesDatabase(getBaseContext());
 									db.open();
 									db.importFromCSV(externalStorage);
+                                    db.migrate();
 									db.close();
 									Toast.makeText(getBaseContext(), "Restore Successful", Toast.LENGTH_LONG).show();
 								}

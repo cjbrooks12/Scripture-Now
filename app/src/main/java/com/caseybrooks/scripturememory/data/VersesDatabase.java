@@ -12,11 +12,11 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Random;
 
 public class VersesDatabase {
 //Database Information
@@ -99,6 +99,8 @@ public class VersesDatabase {
         verseDB.clear();
         verseDB.open();
 
+        long id = 0;
+
         Cursor c = database.rawQuery("SELECT * FROM " + DATABASE_TABLE, null);
 
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
@@ -110,11 +112,10 @@ public class VersesDatabase {
                 passage.setState(5);
             }
             else {
-                passage.setState(1);
+                passage.setState(1+(int)(Math.random()*4));
             }
 
-            Random random = new Random();
-            while(passage.getTags().length < 3) {
+            while(passage.getTags().length < 1+(int)(Math.random()*6)) {
                 int rand = 1+(int)(Math.random()*8);
                 switch(rand) {
                     case 1: passage.addTag("Tag A"); break;
@@ -131,22 +132,25 @@ public class VersesDatabase {
 
             Log.i("RANDOM TAGS", passage.getTags().length + " tags");
 
-            verseDB.insertVerse(passage);
+            id = verseDB.insertVerse(passage);
         }
+
+        MetaSettings.putVerseId(context, (int)id);
+
 
         verseDB.close();
     }
 
 //Manipulate database entries
 //------------------------------------------------------------------------------
-//	public long createEntry(String reference, String verse, String list) {
-//		ContentValues cv = new ContentValues();
-//		cv.put(KEY_REFERENCE, reference);
-//		cv.put(KEY_VERSE, verse);
-//		cv.put(KEY_LIST, list);
-//
-//		return database.insert(DATABASE_TABLE, null, cv);
-//	}
+	public long createEntry(String reference, String verse, String list) {
+		ContentValues cv = new ContentValues();
+		cv.put(KEY_REFERENCE, reference);
+		cv.put(KEY_VERSE, verse);
+		cv.put(KEY_LIST, list);
+
+		return database.insert(DATABASE_TABLE, null, cv);
+	}
 //
 //	//Can set arguments to null to specify that they will not change
 //	public void updateEntry(int id, String reference, String verse, String list) {
@@ -212,11 +216,14 @@ public class VersesDatabase {
 //	}
 //
 //	public Passage getEntryAt(long id) throws SQLException {
-//		String[] columns = new String[] {KEY_ROWID, KEY_REFERENCE, KEY_VERSE, KEY_LIST};
-//		Cursor c = database.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + id, null, null, null, null);
+//        String[] columns = new String[]{KEY_ROWID, KEY_REFERENCE, KEY_VERSE, KEY_LIST};
+//        Cursor c = database.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + id, null, null, null, null);
 //        int iRow = c.getColumnIndex(KEY_ROWID);
 //        int iReference = c.getColumnIndex(KEY_REFERENCE);
 //        int iVerse = c.getColumnIndex(KEY_VERSE);
+//
+//        return null;
+//    }
 //
 //	public Passage getEntryAfter(long id, String list) throws SQLException {
 //		Verses<Passage> verses = getVerseList(list);
@@ -247,38 +254,38 @@ public class VersesDatabase {
 //        if(verses.size() > 0) return verses.get(0);
 //		else throw new SQLException("(getFirstEntry) No entries in list '" + list + "'");
 //	}
+//
+//Import and export entire database
+//------------------------------------------------------------------------------
+	public void exportToCSV(File filename) throws IOException {
+		String text = "";
 
-////Import and export entire database
-////------------------------------------------------------------------------------
-//	public void exportToCSV(File filename) throws IOException {
-//		String text = "";
-//
-//		String[] columns = new String[] {KEY_ROWID, KEY_REFERENCE, KEY_VERSE, KEY_LIST};
-//		Cursor c = database.query(DATABASE_TABLE, columns, null, null, null, null, null);
-//
-//		int iRow = c.getColumnIndex(KEY_ROWID);
-//		int iReference = c.getColumnIndex(KEY_REFERENCE);
-//		int iVerse = c.getColumnIndex(KEY_VERSE);
-//		int iList = c.getColumnIndex(KEY_LIST);
-//
-//		for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-//			text = text + c.getString(iRow) + "\t" +
-//					c.getString(iReference) + "\t" +
-//					c.getString(iVerse) + "\t" +
-//					c.getString(iList) + "\n";
-//		}
-//
-//		FileOutputStream fos = new FileOutputStream(filename);
-//		fos.write(text.getBytes());
-//		fos.close();
-//	}
-//
+		String[] columns = new String[] {KEY_ROWID, KEY_REFERENCE, KEY_VERSE, KEY_LIST};
+		Cursor c = database.query(DATABASE_TABLE, columns, null, null, null, null, null);
+
+		int iRow = c.getColumnIndex(KEY_ROWID);
+		int iReference = c.getColumnIndex(KEY_REFERENCE);
+		int iVerse = c.getColumnIndex(KEY_VERSE);
+		int iList = c.getColumnIndex(KEY_LIST);
+
+		for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+			text = text + c.getString(iRow) + "\t" +
+					c.getString(iReference) + "\t" +
+					c.getString(iVerse) + "\t" +
+					c.getString(iList) + "\n";
+		}
+
+		FileOutputStream fos = new FileOutputStream(filename);
+		fos.write(text.getBytes());
+		fos.close();
+	}
+
 	public void importFromCSV(File filename) throws SQLException, IOException {
-		//database.delete(DATABASE_TABLE, null, null);
+		database.delete(DATABASE_TABLE, null, null);
 
-        VerseDB verseDB = new VerseDB(context);
-        verseDB.clear();
-        verseDB.open();
+//        VerseDB verseDB = new VerseDB(context);
+//        verseDB.clear();
+//        verseDB.open();
 
         int id = 0;
 
@@ -295,11 +302,11 @@ public class VersesDatabase {
             else
                 passage.setState(1);
 
-            id = verseDB.insertVerse(passage);
+//            id = verseDB.insertVerse(passage);
+            id = (int) createEntry(str[1], str[2], str[3]);
 		}
 		buffer.close();
-
-        MetaSettings.putVerseId(context, id);
+//        MetaSettings.putVerseId(context, id);
 	}
 }
 

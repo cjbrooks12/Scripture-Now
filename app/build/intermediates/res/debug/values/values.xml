@@ -175,7 +175,7 @@
     <eat-comment />
 
     <color name="card_light">#FFFFFF</color>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml -->
     <eat-comment />
 
     <color name="cardview_dark_background">#FF202020</color>
@@ -361,7 +361,7 @@
         <attr name="exampleColor" format="color" />
         <attr name="exampleDrawable" format="color|reference" />
     </declare-styleable>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="CardView">
@@ -1187,7 +1187,7 @@
     <dimen name="button_text_size">16dp</dimen>
     <dimen name="card_button_height">70dp</dimen>
     <dimen name="card_vertical_margin">4dp</dimen>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml -->
     <eat-comment />
 
     <dimen name="cardview_compat_inset_shadow">1dp</dimen>
@@ -1205,6 +1205,7 @@
     <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/values/dimens.xml -->
     <eat-comment />
 
+    <dimen name="navigation_drawer_width">280dp</dimen>
     <dimen name="tab_host_default_height">48dp</dimen>
     <dimen name="title_text_size">22dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
@@ -1242,6 +1243,7 @@
     <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/values/strings.xml -->
     <eat-comment />
 
+    <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
     <string name="add_new_verse">Add New Verse</string>
     <string name="add_verse">Add Verse</string>
@@ -1286,14 +1288,20 @@
     <string name="hello_world">Hello world!</string>
     <string name="input_verse">Input Verse</string>
     <string name="loading">Loading verse…</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="notification_verse">Notification Verse</string>
     <string name="reference">Reference</string>
     <string name="remove">Remove</string>
     <string name="share_message">Are you looking for a new way to memorize Scripture? You should try this new app called Scripture Memory Notifications! You can add your favorite verses or try to memorize the Verse of the Day. You can even challenge yourself with just the first letter of each word, and much more, all from your phone\'s notification drawer!\n\nLearn more at https://play.google.com/store/apps/details?id=com.caseybrooks.scripturememory</string>
     <string name="title_activity_changelog">Changelog</string>
+    <string name="title_activity_dummy">DummyActivity</string>
     <string name="title_activity_edit_verse">Edit</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_widget_configuration">WidgetConfiguration</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
     <string name="toggle_notification">Toggle Notification</string>
     <string name="verse">Verse</string>
     <string name="verse_of_the_day">Verse Of The Day</string>
@@ -2148,7 +2156,7 @@
         <item name="android:scaleType">center</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml -->
     <eat-comment />
 
     <style name="CardView">

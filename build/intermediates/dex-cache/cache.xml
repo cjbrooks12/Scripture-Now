@@ -2,23 +2,11 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-d08c58db55d20385201eebd04529e9502aaea3f6.jar"
-        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\classes.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3"/>
-    <item
         dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\jsoup-1.7.2-02eba155ee547721bc187da4cbecf1d649a264de.jar"
         jar="C:\Users\Casey\.gradle\caches\modules-2\files-2.1\org.jsoup\jsoup\1.7.2\d7e275ba05aa380ca254f72d0c0ffebaedc3adcf\jsoup-1.7.2.jar"
         jumboMode="false"
         revision="21.0.2"
         sha1="d7e275ba05aa380ca254f72d0c0ffebaedc3adcf"/>
-    <item
-        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-52738ff3c5d09b98d8b48cbf8f0b6fad68a57223.jar"
-        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\palette-v7\21.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="b65c2fede61220ed2b6a063f11ca13160910089e"/>
     <item
         dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-5a47421e6a0bfe5a864945bfe29640d4ebb74119.jar"
         jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\libs\internal_impl-21.0.2.jar"
@@ -32,11 +20,29 @@
         revision="21.0.2"
         sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6"/>
     <item
-        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-b79414a3caa05ed88e2874a9651abf99931290e9.jar"
-        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.0\classes.jar"
+        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-d08c58db55d20385201eebd04529e9502aaea3f6.jar"
+        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\classes.jar"
         jumboMode="false"
         revision="21.0.2"
-        sha1="7d2525cba8ed61fff102977caed964fc22061e34"/>
+        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3"/>
+    <item
+        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-e212c20968558e1d171375239f9b8636c2088d1d.jar"
+        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="b017100da14f9c158c9f5f2f508333c224b24a7c"/>
+    <item
+        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-deb28ef767408d48fa3a2aac4c477de62e9b3615.jar"
+        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\palette-v7\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="44eafdf5e2d61a2e38a0e9dceaf2e901abc5f6b2"/>
+    <item
+        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-7d06631f0607ae988d3dcbb914353816e1a6b8f4.jar"
+        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="4796f18d3750bf2bfa078407a94a7f9db35b440d"/>
     <item
         dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-63f735c8f5dde0eec50e18e9d514eb374eef0c72.jar"
         jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\classes.jar"
@@ -44,16 +50,10 @@
         revision="21.0.2"
         sha1="7ae2d38807a43b2f2185ff4089a92c790b579e54"/>
     <item
-        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-2e150088c90ba37b9b5cf0ce7f14733e588adecc.jar"
-        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="efeda77c808750cb670ee9c48d8a1835d89dbcb2"/>
-    <item
         dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-3d1ab864938a204ef1f04468badf825ca950bde5.jar"
         jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\scripturememory\AndroidBibleTools\unspecified\classes.jar"
         jumboMode="false"
         revision="21.0.2"
-        sha1="58d49199ece83af0f77a55dce8da01f8450a6040"/>
+        sha1="4502fa98cc94bcc910ef032dd06b17726c00e9d8"/>
 
 </pre-dex-items>
