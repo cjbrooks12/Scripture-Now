@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>	
-	<!-- Background -->
+	<!-- Original main colors -->
 	<color name="forest_green">#508a4c</color>
+    <color name="forest_green_light">#B9D6B6</color>
+
+    <!-- Colors for the memorization state -->
+    <color name="all_verses">#555555</color>
+    <color name="all_current_verses">#559955</color>
+    <color name="current_none">#DF5A49</color>
+    <color name="current_some">#E27A3F</color>
+    <color name="current_most">#EFC94C</color>
+    <color name="current_all">#937AED</color>
+    <color name="memorized">#45B29D</color>
+
+    <!-- Background colors -->
+    <color name="background_light">#F0F0F0</color>
+    <color name="card_light">#FFFFFF</color>
+    <color name="background_dark">#404040</color>
+    <color name="card_dark">#505050</color>
+
+    <!-- Toolbar Colors (Current main colors) -->
+    <color name="primary">#009688</color>
+    <color name="primary_dark">#00796B</color>
+    <color name="primary_accent">#D32F2F</color>
+
+
+
 </resources>

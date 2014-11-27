@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- - - - - - - - - Theme Colors - - - - - - - - -->
-    <color name="background_light">#F0F0F0</color>
-    <color name="card_light">#FFFFFF</color>
-
     <!-- - - - - - - - - Theme Header Section - - - - - - - - -->
     <style name="Theme.BaseLight" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#508a4c</item>
-        <item name="colorPrimaryDark">#325730</item>
-        <item name="colorAccent">#B9D6B6</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/forest_green_light</item>
         <item name="windowActionModeOverlay">true</item>
 
         <!-- ActionBar Icons -->

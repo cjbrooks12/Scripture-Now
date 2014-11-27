@@ -12,10 +12,11 @@ import android.util.Log;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.androidbibletools.enumeration.Version;
+import com.caseybrooks.scripturememory.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 
 /**
  * Redesigned verses database, designed to replace VersesDatabase class
@@ -58,79 +59,88 @@ public class VerseDB {
     private static final String TABLE_TAGS = "tags";
     public static final String KEY_TAGS_ID = "_id";
     public static final String KEY_TAGS_TAG = "tag";
-    public static final String KEY_TAGS_VERSEIDS = "verse_ids";
     public static final String KEY_TAGS_COLOR = "color";
 
     private static final String CREATE_TABLE_TAGS =
             "CREATE TABLE " + TABLE_TAGS + "(" +
                     KEY_TAGS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     KEY_TAGS_TAG + " TEXT NOT NULL unique, " +
-                    KEY_TAGS_VERSEIDS + " TEXT, " +
                     KEY_TAGS_COLOR + " TEXT NOT NULL);";
 
     //fields for state table
     private static final String TABLE_STATE = "state";
     public static final String KEY_STATE_ID = "_id";
     public static final String KEY_STATE_STATE = "state";
-    public static final String KEY_STATE_VERSEIDS = "verse_ids";
     public static final String KEY_STATE_COLOR = "color";
 
     private static final String CREATE_TABLE_STATE =
             "CREATE TABLE " + TABLE_STATE + "(" +
                     KEY_STATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     KEY_STATE_STATE + " TEXT NOT NULL unique, " +
-                    KEY_STATE_VERSEIDS + " TEXT, " +
                     KEY_STATE_COLOR + " TEXT NOT NULL);";
 
-//Database helper class
+    public static final int CURRENT_NONE = 1;
+    public static final int CURRENT_SOME = 2;
+    public static final int CURRENT_MOST = 3;
+    public static final int CURRENT_ALL = 4;
+    public static final int MEMORIZED = 5;
+    public static final int DELETED = 6;
+    public static final int ALL_VERSES = -1;
+    public static final int CURRENT = -2;
+
+    //Database helper class
 //--------------------------------------------------------------------------
     private static class DbHelper extends SQLiteOpenHelper {
+        Context context;
 
         public DbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
+            this.context = context;
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
+
             // creating required tables
             db.execSQL(CREATE_TABLE_VERSES);
             db.execSQL(CREATE_TABLE_TAGS);
             db.execSQL(CREATE_TABLE_STATE);
 
             ContentValues current_none = new ContentValues();
-            current_none.put(KEY_STATE_STATE, "current_none");
-            current_none.put(KEY_STATE_COLOR, "#FF0000");
+            current_none.put(KEY_STATE_STATE, "Current - None");
+            String colorNone = String.format("#%06X", (0xFFFFFF & context.getResources().getColor(R.color.current_none)));
+            current_none.put(KEY_STATE_COLOR, colorNone);
             db.insert(TABLE_STATE, null, current_none);
 
             ContentValues current_some = new ContentValues();
-            current_some.put(KEY_STATE_STATE, "current_some");
-            current_some.put(KEY_STATE_COLOR, "#FF8800");
+            current_some.put(KEY_STATE_STATE, "Current - Some");
+            String colorSome = String.format("#%06X", (0xFFFFFF & context.getResources().getColor(R.color.current_some)));
+            current_some.put(KEY_STATE_COLOR, colorSome);
             db.insert(TABLE_STATE, null, current_some);
 
             ContentValues current_most = new ContentValues();
-            current_most.put(KEY_STATE_STATE, "current_most");
-            current_most.put(KEY_STATE_COLOR, "#FFFF00");
+            current_most.put(KEY_STATE_STATE, "Current - Most");
+            String colorMost = String.format("#%06X", (0xFFFFFF & context.getResources().getColor(R.color.current_most)));
+            current_most.put(KEY_STATE_COLOR, colorMost);
             db.insert(TABLE_STATE, null, current_most);
 
             ContentValues current_all = new ContentValues();
-            current_all.put(KEY_STATE_STATE, "current_all");
-            current_all.put(KEY_STATE_COLOR, "#88FF00");
+            current_all.put(KEY_STATE_STATE, "Current - All");
+            String colorAll = String.format("#%06X", (0xFFFFFF & context.getResources().getColor(R.color.current_all)));
+            current_all.put(KEY_STATE_COLOR, colorAll);
             db.insert(TABLE_STATE, null, current_all);
 
             ContentValues memorized = new ContentValues();
-            memorized.put(KEY_STATE_STATE, "memorized");
-            memorized.put(KEY_STATE_COLOR, "#00FF00");
+            memorized.put(KEY_STATE_STATE, "Memorized");
+            String colorMemorized = String.format("#%06X", (0xFFFFFF & context.getResources().getColor(R.color.memorized)));
+            memorized.put(KEY_STATE_COLOR, colorMemorized);
             db.insert(TABLE_STATE, null, memorized);
 
-            ContentValues archived = new ContentValues();
-            archived.put(KEY_STATE_STATE, "archived");
-            archived.put(KEY_STATE_COLOR, "#8888ff");
-            db.insert(TABLE_STATE, null, archived);
-
             ContentValues deleted = new ContentValues();
-            deleted.put(KEY_STATE_STATE, "deleted");
+            deleted.put(KEY_STATE_STATE, "Deleted");
             deleted.put(KEY_STATE_COLOR, "#666688");
             db.insert(TABLE_STATE, null, deleted);
+
         }
 
         @Override
@@ -169,13 +179,6 @@ public class VerseDB {
         db = helper.getWritableDatabase();
         db.delete(TABLE_VERSES, null, null);
         db.delete(TABLE_TAGS, null, null);
-        ContentValues state_values = new ContentValues();
-        state_values.put(KEY_STATE_VERSEIDS, "");
-        db.update(
-                TABLE_STATE,
-                state_values,
-                null,
-                null);
         helper.close();
     }
 
@@ -223,7 +226,7 @@ public class VerseDB {
         values.put(KEY_VERSES_VERSE, passage.getText());
         values.put(KEY_VERSES_VERSION, passage.getVersion().getCode());
         values.put(KEY_VERSES_DATE_ADDED, Calendar.getInstance().getTimeInMillis());
-        //values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
+        values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_STATE, passage.getState());
 
         //ensure tags on this verse are up-to-date
@@ -241,17 +244,7 @@ public class VerseDB {
         }
         values.put(KEY_VERSES_TAGS, tag_string);
 
-        int newVerseID = (int) db.insert(TABLE_VERSES, null, values);
-
-//        //add new verse's id to each of its tags
-//        for(String tag : tags) {
-//            addVerseToTag(getTagID(tag), newVerseID);
-//        }
-//
-//        //add new verse's id to state
-//        addVerseToState(passage.getState(), newVerseID);
-
-        return newVerseID;
+        return (int) db.insert(TABLE_VERSES, null, values);
     }
 
     public void updateVerse(Passage passage) {
@@ -279,40 +272,9 @@ public class VerseDB {
         values.put(KEY_VERSES_TAGS, tag_string);
 
         db.update(TABLE_VERSES, values, KEY_VERSES_ID + "=" + passage.getId(), null);
-
-
-//        //ensure verse isn't listed in any other tags
-//        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_TAGS, null);
-//        if(c != null && c.getCount() > 0) {
-//            c.moveToFirst();
-//            do {
-//                long tagId = c.getLong(c.getColumnIndex(KEY_TAGS_ID));
-//                removeVerseFromTag(tagId, passage.getId());
-//            }
-//            while(c.moveToNext());
-//        }
-//
-//        //add new verse's id to each tag
-//        for(String tag : tags) {
-//            addVerseToTag(getTagID(tag), passage.getId());
-//        }
-//
-//        //ensure verse isn't listed in any other tags
-//        c = db.rawQuery("SELECT * FROM " + TABLE_STATE, null);
-//        if(c != null && c.getCount() > 0) {
-//            c.moveToFirst();
-//            do {
-//                long stateId = c.getLong(c.getColumnIndex(KEY_STATE_ID));
-//                removeVerseFromState(stateId, passage.getId());
-//            }
-//            while(c.moveToNext());
-//        }
-//
-//        //add new verse's id to state
-//        addVerseToState(passage.getState(), passage.getId());
     }
 
-    public String[] getAllTagNames() {
+    public int[] getAllTagIds() {
         String selectQuery =
                 "SELECT *" +
                 " FROM " + TABLE_TAGS;
@@ -321,12 +283,21 @@ public class VerseDB {
         if (c != null && c.getCount() > 0) c.moveToFirst();
         else return null;
 
-        ArrayList<String> tagsList = new ArrayList<String>();
+        ArrayList<Integer> tagsList = new ArrayList<Integer>();
+        ArrayList<String> tagNames = new ArrayList<String>();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-            tagsList.add(c.getString(c.getColumnIndex(KEY_TAGS_TAG)));
+            tagsList.add(c.getInt(c.getColumnIndex(KEY_TAGS_ID)));
+            tagNames.add(c.getString(c.getColumnIndex(KEY_TAGS_TAG)));
         }
 
-        return tagsList.toArray(new String[c.getCount()]);
+        Collections.sort(tagNames);
+
+        int[] tagIds = new int[tagNames.size()];
+        for(int i = 0; i < tagsList.size(); i++) {
+            tagIds[i] = (int)getTagID(tagNames.get(i));
+        }
+
+        return tagIds;
     }
 
     //Get information about tags
@@ -403,43 +374,17 @@ public class VerseDB {
         return verses;
     }
 
-//    public long[] getTaggedVersesIDs(String tag) {
-//        String selectQuery =
-//                "SELECT " + KEY_TAGS_COLOR +
-//                " FROM " + TABLE_TAGS +
-//                " WHERE " + KEY_TAGS_TAG + " LIKE \"" + tag + "\"";
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//        if (c != null && c.getCount() > 0) c.moveToFirst();
-//        else return new long[0];
-//
-//        String[] verseIDsString = c.getString(c.getColumnIndex(KEY_TAGS_VERSEIDS)).split(",");
-//        long[] verseIDs = new long[verseIDsString.length];
-//        for(int i = 0; i < verseIDsString.length; i++) {
-//            verseIDs[i] = Integer.parseInt(verseIDsString[i]);
-//        }
-//
-//        return verseIDs;
-//    }
-//
-//    public long[] getTaggedVersesIDs(long id) {
-//        String selectQuery =
-//                "SELECT *" +
-//                " FROM " + TABLE_TAGS +
-//                " WHERE " + KEY_TAGS_ID + " = " + id;
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//        if (c != null && c.getCount() > 0) c.moveToFirst();
-//        else return new long[0];
-//
-//        String[] verseIDsString = c.getString(c.getColumnIndex(KEY_TAGS_VERSEIDS)).split(",");
-//        long[] verseIDs = new long[verseIDsString.length];
-//        for(int i = 0; i < verseIDsString.length; i++) {
-//            verseIDs[i] = Integer.parseInt(verseIDsString[i]);
-//        }
-//
-//        return verseIDs;
-//    }
+    public int getTagCount(int tagId) {
+        String selectQuery =
+                "SELECT *" +
+                " FROM " + TABLE_VERSES +
+                " WHERE " + KEY_VERSES_TAGS + " LIKE '%," + tagId + ",%'";
+
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null && c.getCount() > 0) return c.getCount();
+        else return 0;
+    }
 
     public long addTag(String tagName, String hexColor) {
         ContentValues tag_values = new ContentValues();
@@ -458,123 +403,73 @@ public class VerseDB {
 
         return db.insert(TABLE_TAGS, null, tag_values);
     }
-//
-//    private void addVerseToTag(long tag, long verseID) {
-//        String selectQuery =
-//                "SELECT *" +
-//                " FROM " + TABLE_TAGS +
-//                " WHERE " + KEY_TAGS_ID + " = " + tag;
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//        if(c != null && c.getCount() > 0) {
-//            String tagVerseIds = c.getString(c.getColumnIndex(KEY_TAGS_VERSEIDS));
-//
-//            if(tagVerseIds == null || tagVerseIds.length() == 0) {
-//                tagVerseIds = verseID + ",";
-//                ContentValues tag_values = new ContentValues();
-//                tag_values.put(KEY_STATE_VERSEIDS, tagVerseIds);
-//                db.update(
-//                        TABLE_TAGS,
-//                        tag_values,
-//                        KEY_TAGS_ID + "=" + tag,
-//                        null);
-//            }
-//            //tag exists in table, but it does not contain this verse's id
-//            else {
-//                String[] ids = tagVerseIds.split(",");
-//
-//                boolean found = false;
-//                for(String id : ids) {
-//                    if(Long.parseLong(id) == verseID) {
-//                        found = true;
-//                        break;
-//                    }
-//                }
-//
-//                if(!found) {
-//                    //rebuild string for verses in state
-//                    tagVerseIds = "";
-//                    for(String id : ids) {
-//                        tagVerseIds += id + ",";
-//                    }
-//                    //add this verse to this state
-//                    tagVerseIds += verseID + ",";
-//
-//                    //update table
-//                    ContentValues tag_values = new ContentValues();
-//                    tag_values.put(KEY_STATE_VERSEIDS, tagVerseIds);
-//                    db.update(
-//                            TABLE_STATE,
-//                            tag_values,
-//                            KEY_TAGS_ID + "=" + tag,
-//                            null);
-//                }
-//            }
-//        }
-//    }
-//
-//    private void removeVerseFromTag(long tag, long verseID) {
-//        String selectQuery =
-//                "SELECT *" +
-//                " FROM " + TABLE_TAGS +
-//                " WHERE " + KEY_TAGS_ID + " = " + tag;
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//        if(c != null && c.getCount() > 0) {
-//            String tag_verse_ids = c.getString(c.getColumnIndex(KEY_TAGS_VERSEIDS));
-//
-//            //state has no tags associated with it. How did we get here...?
-//            if(tag_verse_ids == null || tag_verse_ids.length() == 0) {
-//                Log.wtf("RemoveVerseFromTag", "ID bookkeeping messed up...");
-//            }
-//            else {
-//                String[] ids = tag_verse_ids.split(",");
-//                tag_verse_ids = "";
-//
-//                for(String id : ids) {
-//                    //only add in the tags that are not this one
-//                    if(Long.parseLong(id) != verseID) {
-//                        tag_verse_ids += id + ",";
-//                    }
-//                }
-//
-//                //update table
-//                ContentValues tag_values = new ContentValues();
-//                tag_values.put(KEY_TAGS_VERSEIDS, tag_verse_ids);
-//                db.update(
-//                        TABLE_TAGS,
-//                        tag_values,
-//                        KEY_TAGS_ID + "=" + tag,
-//                        null);
-//            }
-//        }
-//    }
 
     //get information about the state of a verses
     public String getStateName(int id) {
-        String selectQuery =
-                "SELECT *" +
-                " FROM " + TABLE_STATE +
-                " WHERE " + KEY_STATE_ID + " = " + id;
+        if(id == ALL_VERSES) return "All Verses";
+        else if(id == CURRENT) return "Current";
+        else {
+            String selectQuery =
+                    "SELECT *" +
+                            " FROM " + TABLE_STATE +
+                            " WHERE " + KEY_STATE_ID + " = " + id;
 
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null && c.getCount() > 0) c.moveToFirst();
-        else return "";
+            Cursor c = db.rawQuery(selectQuery, null);
+            if (c != null && c.getCount() > 0) c.moveToFirst();
+            else return "";
 
-        return c.getString(c.getColumnIndex(KEY_STATE_STATE));
+            return c.getString(c.getColumnIndex(KEY_STATE_STATE));
+        }
     }
 
     public int getStateColor(int id) {
+        if(id == ALL_VERSES) return context.getResources().getColor(R.color.all_verses);
+        else if(id == CURRENT) return context.getResources().getColor(R.color.all_current_verses);
+        else {
+            String selectQuery =
+                    "SELECT *" +
+                            " FROM " + TABLE_STATE +
+                            " WHERE " + KEY_STATE_ID + " = " + id;
+
+            Cursor c = db.rawQuery(selectQuery, null);
+            if (c != null && c.getCount() > 0) c.moveToFirst();
+            else return Color.parseColor("#508A4C");
+
+            return Color.parseColor(c.getString(c.getColumnIndex(KEY_STATE_COLOR)));
+        }
+    }
+
+    public int getStateCount(int id) {
+        if(id == ALL_VERSES) return getAllVerses().size();
+        else if(id == CURRENT) return getAllCurrentVerses().size();
+        else {
+            String selectQuery =
+                    "SELECT *" +
+                            " FROM " + TABLE_VERSES +
+                            " WHERE " + KEY_VERSES_STATE + " = " + id;
+
+
+            Cursor c = db.rawQuery(selectQuery, null);
+            if (c != null && c.getCount() > 0) return c.getCount();
+            else return 0;
+        }
+    }
+
+    public Verses<Passage> getAllVerses() {
         String selectQuery =
                 "SELECT *" +
-                " FROM " + TABLE_STATE +
-                " WHERE " + KEY_STATE_ID + " = " + id;
+                " FROM " + TABLE_VERSES;
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) c.moveToFirst();
-        else Color.parseColor("#508A4C");
+        else return new Verses<Passage>();
 
-        return Color.parseColor(c.getString(c.getColumnIndex(KEY_STATE_COLOR)));
+        Verses<Passage> verses = new Verses<Passage>();
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            verses.add(getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID))));
+        }
+
+        return verses;
     }
 
     public Verses<Passage> getAllCurrentVerses() {
@@ -596,111 +491,33 @@ public class VerseDB {
     }
 
     public Verses<Passage> getStateVerses(int id) {
-        String selectQuery =
-                "SELECT *" +
-                " FROM " + TABLE_VERSES +
-                " WHERE " + KEY_VERSES_STATE + " = " + id;
+        if(id == ALL_VERSES) return getAllVerses();
+        else if(id == CURRENT) return getAllCurrentVerses();
+        else {
+            String selectQuery =
+                    "SELECT *" +
+                    " FROM " + TABLE_VERSES +
+                    " WHERE " + KEY_VERSES_STATE + " = " + id;
 
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null && c.getCount() > 0) c.moveToFirst();
-        else return new Verses<Passage>();
+            Cursor c = db.rawQuery(selectQuery, null);
+            if (c != null && c.getCount() > 0) c.moveToFirst();
+            else return new Verses<Passage>();
 
-        Verses<Passage> verses = new Verses<Passage>();
-        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-            verses.add(getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID))));
+            Verses<Passage> verses = new Verses<Passage>();
+            for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                verses.add(getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID))));
+            }
+
+            return verses;
         }
-
-        return verses;
     }
-//
-//    private void addVerseToState(int state, long verseID) {
-//        String selectQuery =
-//                "SELECT *" +
-//                " FROM " + TABLE_STATE +
-//                " WHERE " + KEY_STATE_ID + " = " + state;
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//        if(c != null && c.getCount() > 0) {
-//            String state_verse_ids = c.getString(c.getColumnIndex(KEY_STATE_VERSEIDS));
-//
-//            if(state_verse_ids == null || state_verse_ids.length() == 0) {
-//                state_verse_ids = verseID + ",";
-//                ContentValues state_values = new ContentValues();
-//                state_values.put(KEY_STATE_VERSEIDS, state_verse_ids);
-//                db.update(
-//                        TABLE_STATE,
-//                        state_values,
-//                        KEY_STATE_ID + "=" + state,
-//                        null);
-//            }
-//            //state exists in table, but it does not contain this verse's id
-//            else {
-//                String[] ids = state_verse_ids.split(",");
-//
-//                boolean found = false;
-//                for(String id : ids) {
-//                    if(Long.parseLong(id) == verseID) {
-//                        found = true;
-//                        break;
-//                    }
-//                }
-//
-//                if(!found) {
-//                    //rebuild string for verses in state
-//                    state_verse_ids = "";
-//                    for(String id : ids) {
-//                        state_verse_ids += id + ",";
-//                    }
-//                    //add this verse to this state
-//                    state_verse_ids += verseID + ",";
-//
-//                    //update table
-//                    ContentValues state_values = new ContentValues();
-//                    state_values.put(KEY_STATE_VERSEIDS, state_verse_ids);
-//                    db.update(
-//                            TABLE_STATE,
-//                            state_values,
-//                            KEY_TAGS_ID + "=" + state,
-//                            null);
-//                }
-//            }
-//        }
-//    }
-//
-//    private void removeVerseFromState(long state, long verseID) {
-//        String selectQuery =
-//                "SELECT *" +
-//                " FROM " + TABLE_STATE +
-//                " WHERE " + KEY_STATE_ID + " = " + state;
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//        if(c != null && c.getCount() > 0) {
-//            String state_verse_ids = c.getString(c.getColumnIndex(KEY_STATE_VERSEIDS));
-//
-//            //state has no tags associated with it. How did we get here...?
-//            if(state_verse_ids == null || state_verse_ids.length() == 0) {
-//                Log.wtf("RemoveVerseFromState", "ID bookkeeping messed up...");
-//            }
-//            else {
-//                String[] ids = state_verse_ids.split(",");
-//                state_verse_ids = "";
-//
-//                for(String id : ids) {
-//                    //only add in the tags that are not this one
-//                    if(Long.parseLong(id) != verseID) {
-//                        state_verse_ids += id + ",";
-//                    }
-//                }
-//
-//                //update table
-//                ContentValues state_values = new ContentValues();
-//                state_values.put(KEY_STATE_VERSEIDS, state_verse_ids);
-//                db.update(
-//                        TABLE_STATE,
-//                        state_values,
-//                        KEY_TAGS_ID + "=" + state,
-//                        null);
-//            }
-//        }
-//    }
+
+    public void updateState(int id, String color) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_STATE_COLOR, color);
+
+        db.update(TABLE_STATE, values, KEY_STATE_ID + "=" + id, null);
+    }
+
+
 }

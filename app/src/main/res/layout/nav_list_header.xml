@@ -11,7 +11,7 @@
         android:id="@+id/navListHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
         android:paddingLeft="32dp"
         android:paddingStart="32dp"
         android:textSize="22sp" />

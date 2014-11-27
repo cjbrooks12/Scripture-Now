@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -32,7 +30,6 @@ import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,26 +39,9 @@ import java.util.List;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
-
-    /**
-     * Remember the position of the selected item.
-     */
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-
-    /**
-     * Per the design guidelines, you should show the drawer on launch until the user manually
-     * expands it. This shared preference tracks this.
-     */
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
-
-    /**
-     * A pointer to the current callbacks instance (the Activity).
-     */
     private NavigationDrawerCallbacks mCallbacks;
-
-    /**
-     * Helper component that ties the action bar to the navigation drawer.
-     */
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
@@ -92,7 +72,11 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         // Select either the default item (0, 0) or the last selected item.
-        selectItem(mCurrentSelectedGroup, mCurrentSelectedPosition);
+
+        NavListItem item = new NavListItem();
+        item.groupPosition = 0;
+        item.childPosition = 0;
+        selectItem(item);
     }
 
     @Override
@@ -102,17 +86,16 @@ public class NavigationDrawerFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+//create ExpandableListView and populate
+//------------------------------------------------------------------------------
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView = (ExpandableListView) view.findViewById(R.id.navListView);
 
         ExpandableListAdapter listAdapter;
-        List<String> listDataHeader;
-        HashMap<String, List<String>> listDataChild;
-
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        List<String> listDataHeader = new ArrayList<String>();
+        HashMap<String, List<Integer>> listDataChild = new HashMap<String, List<Integer>>();
 
         // Adding child data
         listDataHeader.add("Dashboard");
@@ -122,27 +105,35 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Adding child data
         VerseDB db = new VerseDB(parentActivity).open();
-        List<String> dashboard = new ArrayList<String>();
+        List<Integer> dashboard = new ArrayList<Integer>();
+        listDataChild.put(listDataHeader.get(0), dashboard);
 
-        List<String> states = new ArrayList<String>();
-        states.add("All Verses");
-        states.add("All Current Verses");
-        states.add("All Memorized");
-        states.add("Current - None");
-        states.add("Current - Some");
-        states.add("Current - Most");
-        states.add("Current - All");
+        List<Integer> states = new ArrayList<Integer>();
+        states.add(VerseDB.ALL_VERSES);
+        states.add(VerseDB.CURRENT);
+        states.add(VerseDB.MEMORIZED);
+        states.add(VerseDB.CURRENT_ALL);
+        states.add(VerseDB.CURRENT_MOST);
+        states.add(VerseDB.CURRENT_SOME);
+        states.add(VerseDB.CURRENT_NONE);
+        listDataChild.put(listDataHeader.get(1), states);
 
-        List<String> tags = Arrays.asList(db.getAllTagNames());
 
-        List<String> settings = new ArrayList<String>();
+        //TODO: sort tags alphabetically
+        int[] tagIds = db.getAllTagIds();
+        List<Integer> tags = new ArrayList<Integer>();
+        if(tagIds != null && tagIds.length > 0) {
+            for (int id : tagIds) {
+                tags.add(id);
+            }
+        }
+        listDataChild.put(listDataHeader.get(2), tags);
+
+
+        List<Integer> settings = new ArrayList<Integer>();
+        listDataChild.put(listDataHeader.get(3), settings);
 
         db.close();
-
-        listDataChild.put(listDataHeader.get(0), dashboard);
-        listDataChild.put(listDataHeader.get(1), states);
-        listDataChild.put(listDataHeader.get(2), tags);
-        listDataChild.put(listDataHeader.get(3), settings);
 
         listAdapter = new ExpandableListAdapter(parentActivity, listDataHeader, listDataChild);
 
@@ -156,7 +147,8 @@ public class NavigationDrawerFragment extends Fragment {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
 
-                selectItem(groupPosition, childPosition);
+
+                selectItem((NavListItem)parent.getExpandableListAdapter().getChild(groupPosition, childPosition));
 
                 return false;
             }
@@ -167,7 +159,11 @@ public class NavigationDrawerFragment extends Fragment {
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
                 if(groupPosition == 0 || groupPosition == 3) {
-                    selectItem(groupPosition, 0);
+                    NavListItem item = new NavListItem();
+                    item.name = (String)parent.getExpandableListAdapter().getGroup(groupPosition);
+                    item.groupPosition = groupPosition;
+                    selectItem(item);
+                    return true;
                 }
 
                 return false;
@@ -177,89 +173,106 @@ public class NavigationDrawerFragment extends Fragment {
         return view;
     }
 
-    //TODO: Setup NavItem objects to hold data such as color and database ID for each item
+    public static class NavListItem {
+        public int groupPosition;
+        public int childPosition;
+        public String name;
+        public int id;
+        public int count;
+        public int color;
+    }
+
     public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
-        private Context _context;
-        private List<String> _listDataHeader; // header titles
+        private Context context;
+        private List<String> headerItems; // header titles
         // child data in format of header title, child title
-        private HashMap<String, List<String>> _listDataChild;
+        private HashMap<String, List<Integer>> childItems;
 
-        public ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                     HashMap<String, List<String>> listChildData) {
-            this._context = context;
-            this._listDataHeader = listDataHeader;
-            this._listDataChild = listChildData;
+        public ExpandableListAdapter(
+                Context context,
+                List<String> headerItems,
+                HashMap<String, List<Integer>> childItems) {
+
+            this.context = context;
+            this.headerItems = headerItems;
+            this.childItems = childItems;
         }
 
         @Override
-        public Object getChild(int groupPosition, int childPosititon) {
-            return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                    .get(childPosititon);
+        public NavListItem getChild(int groupPosition, int childPosition) {
+            int id = childItems.get(headerItems.get(groupPosition))
+                    .get(childPosition);
+
+            NavListItem item = new NavListItem();
+            item.id = id;
+            item.groupPosition = groupPosition;
+            item.childPosition = childPosition;
+            VerseDB db = new VerseDB(parentActivity).open();
+            if(groupPosition == 0) {
+                item.name = headerItems.get(groupPosition);
+            }
+            else if(groupPosition == 1) {
+                item.name = db.getStateName(item.id);
+                item.color = db.getStateColor(item.id);
+                item.count = db.getStateCount(item.id);
+            }
+            else if(groupPosition == 2) {
+                item.name = db.getTagName(item.id);
+                item.color = db.getTagColor(db.getTagName(item.id));
+                item.count = db.getTagCount(item.id);
+            }
+            else if(groupPosition == 3) {
+                item.name = headerItems.get(groupPosition);
+            }
+
+            db.close();
+
+            return item;
         }
 
         @Override
         public long getChildId(int groupPosition, int childPosition) {
-            return childPosition;
+            NavListItem item = getChild(groupPosition, childPosition);
+            return item.id;
         }
 
         @Override
         public View getChildView(int groupPosition, final int childPosition,
                                  boolean isLastChild, View convertView, ViewGroup parent) {
-
-            final String childText = (String) getChild(groupPosition, childPosition);
-
             if (convertView == null) {
-                LayoutInflater infalInflater = (LayoutInflater) this._context
+                LayoutInflater infalInflater = (LayoutInflater) this.context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.nav_list_subitem, null);
             }
 
-            TextView txtListChild = (TextView) convertView
-                    .findViewById(R.id.navListSubitem);
+            NavListItem item = getChild(groupPosition, childPosition);
 
-            ImageView tagCircle = (ImageView) convertView.findViewById(R.id.chip_tag_circle);
-            int color = Color.parseColor("#000000");
+            TextView childText = (TextView) convertView.findViewById(R.id.subitemText);
+            childText.setText(item.name);
 
-            VerseDB db = new VerseDB(parentActivity).open();
-            String[] allTags = db.getAllTagNames();
-            if(groupPosition == 1) {
-                if(childPosition == 0) color = Color.parseColor("#555555");
-                if(childPosition == 1) color = Color.parseColor("#559955");
-                if(childPosition == 2) color = db.getStateColor(5);
-                if(childPosition == 3) color = db.getStateColor(1);
-                if(childPosition == 4) color = db.getStateColor(2);
-                if(childPosition == 5) color = db.getStateColor(3);
-                if(childPosition == 6) color = db.getStateColor(4);
-            }
-            else if(groupPosition == 2) {
-                int tagId = (int) db.getTagID(allTags[childPosition]);
-                color = db.getTagColor(db.getTagName(tagId));
-            }
+            ImageView tagCircle = (ImageView) convertView.findViewById(R.id.subitemCircle);
+            tagCircle.setBackgroundDrawable(Util.Drawables.circle(item.color));
 
+            TextView tagCircleCount = (TextView) convertView.findViewById(R.id.subitemCircleText);
+            tagCircleCount.setText(Integer.toString(item.count));
 
-
-            tagCircle.setBackgroundDrawable(Util.Drawables.circle(color));
-            db.close();
-
-            txtListChild.setText(childText);
             return convertView;
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                    .size();
+            return childItems.get(headerItems.get(groupPosition)).size();
         }
 
         @Override
-        public Object getGroup(int groupPosition) {
-            return this._listDataHeader.get(groupPosition);
+        public String getGroup(int groupPosition) {
+            return headerItems.get(groupPosition);
         }
 
         @Override
         public int getGroupCount() {
-            return this._listDataHeader.size();
+            return headerItems.size();
         }
 
         @Override
@@ -268,19 +281,19 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         @Override
-        public View getGroupView(int groupPosition, boolean isExpanded,
-                                 View convertView, ViewGroup parent) {
-            String headerTitle = (String) getGroup(groupPosition);
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                LayoutInflater infalInflater = (LayoutInflater) this._context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.nav_list_header, null);
+                convertView = LayoutInflater.from(context).inflate(R.layout.nav_list_header, null);
             }
 
-            TextView lblListHeader = (TextView) convertView
-                    .findViewById(R.id.navListHeader);
-            lblListHeader.setTypeface(null, Typeface.BOLD);
-            lblListHeader.setText(headerTitle);
+            String headerTitle = getGroup(groupPosition);
+            TextView header = (TextView) convertView.findViewById(R.id.navListHeader);
+            if(groupPosition == 2) {
+                header.setText(headerTitle + " (" + getChildrenCount(groupPosition) + ")");
+            }
+            else {
+                header.setText(headerTitle);
+            }
 
             return convertView;
         }
@@ -296,6 +309,9 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
+
+//Setup this fragment as a NavigationDrawer
+//------------------------------------------------------------------------------
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }
@@ -377,17 +393,17 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void selectItem(int group, int child) {
-        mCurrentSelectedGroup = group;
-        mCurrentSelectedPosition = child;
+    private void selectItem(NavListItem item) {
+        mCurrentSelectedGroup = item.groupPosition;
+        mCurrentSelectedPosition = item.childPosition;
         if (mDrawerListView != null) {
-            mDrawerListView.setItemChecked(child, true);
+            mDrawerListView.setItemChecked(item.childPosition, true);
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(group, child);
+            mCallbacks.onNavigationDrawerItemSelected(item);
         }
     }
 
@@ -467,6 +483,6 @@ public class NavigationDrawerFragment extends Fragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int group, int child);
+        void onNavigationDrawerItemSelected(NavListItem item);
     }
 }

@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.VerseDB;
-import com.caseybrooks.scripturememory.data.VersesDatabase;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment.onDashboardEditListener;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
@@ -71,13 +69,16 @@ public class MainActivity extends ActionBarActivity
         DashboardFragment.setOnDashboardEditListener(this);
 
 		getOverflowMenu();
-		setupActionBar();
 		showFirstTime();
 		showPrompt();
 
         int defaultScreen = MetaSettings.getDefaultScreen(context);
 
-        onNavigationDrawerItemSelected(defaultScreen, 0);
+        NavigationDrawerFragment.NavListItem item = new NavigationDrawerFragment.NavListItem();
+        item.groupPosition = defaultScreen;
+        item.childPosition = 0;
+
+        onNavigationDrawerItemSelected(item);
 		receiveImplicitIntent();
     }
 	
@@ -95,18 +96,6 @@ public class MainActivity extends ActionBarActivity
 		//If this is the first time opening the app, load a set of verses to memorize
 		if(firstTime) {
 			MetaSettings.putFirstTime(context, false);
-			MetaSettings.putVerseId(context, 1);
-
-            String[] refs = getResources().getStringArray(R.array.init_references);
-            String[] verses = getResources().getStringArray(R.array.init_verses);
-
-			VersesDatabase entry = new VersesDatabase(this);
-			entry.open();
-
-            for(int i = 0; i < refs.length; i++) {
-                //entry.createEntry(refs[i], verses[i], "current");
-            }
-			entry.close();
 		}
 	}
 
@@ -193,11 +182,6 @@ public class MainActivity extends ActionBarActivity
 	    }
 	}
 
-	private void setupActionBar() {
-
-	}
-
-
 	@Override
 	public void setTitle(CharSequence title) {
 	    this.title = title;
@@ -229,30 +213,24 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int group, int position) {
+    public void onNavigationDrawerItemSelected(NavigationDrawerFragment.NavListItem item) {
         Fragment fragment = new DashboardFragment();
 
-        switch(group) {
+        switch(item.groupPosition) {
             case 0:
                 fragment = new DashboardFragment();
                 break;
             case 1:
-                int stateId;
-                if(position == 0) stateId = 0;
-                else if(position == 1) stateId = 0;
-                else if(position == 2) stateId = 5;
-                else stateId = position;
-                fragment = VerseListFragment.newInstance(VerseListFragment.STATE, stateId);
+                fragment = VerseListFragment.newInstance(VerseListFragment.STATE, item.id);
+                setTitle(item.name);
                 break;
             case 2:
-                VerseDB db = new VerseDB(context).open();
-                String[] allTags = db.getAllTagNames();
-                int tagId = (int) db.getTagID(allTags[position]);
-                fragment = VerseListFragment.newInstance(VerseListFragment.TAGS, tagId);
-                db.close();
+                fragment = VerseListFragment.newInstance(VerseListFragment.TAGS, item.id);
+                setTitle(item.name);
                 break;
             case 3:
                 Intent settings = new Intent(MainActivity.this, Settings.class);
+                setTitle(item.name);
                 startActivity(settings);
                 finish();
                 break;

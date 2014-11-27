@@ -130,9 +130,8 @@ public class VersesDatabase {
                 }
             }
 
-            Log.i("RANDOM TAGS", passage.getTags().length + " tags");
-
             id = verseDB.insertVerse(passage);
+            Log.i("INSERT", id + "");
         }
 
         MetaSettings.putVerseId(context, (int)id);
