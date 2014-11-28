@@ -1,5 +1,7 @@
 package com.caseybrooks.androidbibletools.basic;
 
+import android.util.Log;
+
 import com.caseybrooks.androidbibletools.enumeration.Flags;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 
@@ -30,8 +32,9 @@ public class Passage extends AbstractVerse {
 	private static Pattern oneVerse = Pattern.compile("((\\d\\s*)?\\w+\\s*\\d+\\s*\\W\\s*\\d+)");
 	private static Pattern rangeInChapter = Pattern.compile("((\\d\\s*)?\\w+\\s*\\d+\\W+)(\\d+)\\W+(\\d+)");
 	private static Pattern rangeDifferentChapters = Pattern.compile("((\\d\\s*)?\\w+\\s*)(\\d+\\W+\\d+)\\W+(\\d+\\W+\\d+)");
+    private static Pattern hashtag = Pattern.compile("#((\\w+)|(\"[\\w ]+\"))");
 
-//Constructors
+    //Constructors
 //------------------------------------------------------------------------------
     public Passage(String reference) {
 		super();
@@ -136,21 +139,38 @@ public class Passage extends AbstractVerse {
 	}
 
 	public Passage setText(String text) {
-		if(text.matches(".+\\(\\n+\\).+")) {
-			String[] splitVerses = text.split(".+\\(\\n+\\).+");
-			if(splitVerses.length == verses.size()) {
-				for(int i = 0; i < verses.size(); i++) {
-					verses.get(i).setText(splitVerses[i]);
-				}
-				allText = null;
-			}
-			else {
-				this.allText = text;
-			}
-		}
-		else {
-			this.allText = text;
-		}
+//		if(text.matches(".+\\(\\n+\\).+")) {
+//			String[] splitVerses = text.split(".+\\(\\n+\\).+");
+//			if(splitVerses.length == verses.size()) {
+//				for(int i = 0; i < verses.size(); i++) {
+//					verses.get(i).setText(splitVerses[i]);
+//				}
+//				allText = null;
+//			}
+//			else {
+//				this.allText = text;
+//			}
+//		}
+//		else {
+            //parse input string and extract any tags, denoted as standard hastags
+        Matcher m = hashtag.matcher(text);
+
+        while (m.find()) {
+            String match = m.group(1);
+            if(match.charAt(0) == '\"') {
+                addTag(match.substring(1, match.length()-1));
+                Log.i("HASHTAG FOUND", match.substring(1, match.length()-1));
+
+            }
+            else {
+                addTag(match);
+                Log.i("HASHTAG FOUND", match);
+
+            }
+        }
+
+        this.allText =  m.replaceAll("");
+//		}
 
 		return this;
 	}

@@ -2,10 +2,8 @@ package com.caseybrooks.scripturememory.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
@@ -40,12 +39,12 @@ import java.util.List;
  */
 public class NavigationDrawerFragment extends Fragment {
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-    private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
     private NavigationDrawerCallbacks mCallbacks;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
     private ExpandableListView mDrawerListView;
+    private ExpandableListAdapter listAdapter;
     private View mFragmentContainerView;
 
     private int mCurrentSelectedGroup = 0;
@@ -63,8 +62,8 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(parentActivity);
-        mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
+
+        mUserLearnedDrawer = MetaSettings.getUserLearnedDrawer(getActivity());
 
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
@@ -93,20 +92,36 @@ public class NavigationDrawerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView = (ExpandableListView) view.findViewById(R.id.navListView);
 
-        ExpandableListAdapter listAdapter;
+        populateList();
+
+        return view;
+    }
+
+    public static class NavListItem {
+        public int groupPosition;
+        public int childPosition;
+        public String name;
+        public int id;
+        public int count;
+        public int color;
+    }
+
+    private void populateList() {
         List<String> listDataHeader = new ArrayList<String>();
         HashMap<String, List<Integer>> listDataChild = new HashMap<String, List<Integer>>();
 
         // Adding child data
         listDataHeader.add("Dashboard");
+        listDataHeader.add("Discover");
         listDataHeader.add("Memorization State");
         listDataHeader.add("Tags");
         listDataHeader.add("Settings");
 
         // Adding child data
         VerseDB db = new VerseDB(parentActivity).open();
-        List<Integer> dashboard = new ArrayList<Integer>();
-        listDataChild.put(listDataHeader.get(0), dashboard);
+        listDataChild.put(listDataHeader.get(0), new ArrayList<Integer>());
+        listDataChild.put(listDataHeader.get(1), new ArrayList<Integer>());
+
 
         List<Integer> states = new ArrayList<Integer>();
         states.add(VerseDB.ALL_VERSES);
@@ -116,8 +131,7 @@ public class NavigationDrawerFragment extends Fragment {
         states.add(VerseDB.CURRENT_MOST);
         states.add(VerseDB.CURRENT_SOME);
         states.add(VerseDB.CURRENT_NONE);
-        listDataChild.put(listDataHeader.get(1), states);
-
+        listDataChild.put(listDataHeader.get(2), states);
 
         //TODO: sort tags alphabetically
         int[] tagIds = db.getAllTagIds();
@@ -127,11 +141,11 @@ public class NavigationDrawerFragment extends Fragment {
                 tags.add(id);
             }
         }
-        listDataChild.put(listDataHeader.get(2), tags);
+        listDataChild.put(listDataHeader.get(3), tags);
 
 
         List<Integer> settings = new ArrayList<Integer>();
-        listDataChild.put(listDataHeader.get(3), settings);
+        listDataChild.put(listDataHeader.get(4), settings);
 
         db.close();
 
@@ -139,8 +153,6 @@ public class NavigationDrawerFragment extends Fragment {
 
         // setting list adapter
         mDrawerListView.setAdapter(listAdapter);
-
-
         mDrawerListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
@@ -158,7 +170,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
-                if(groupPosition == 0 || groupPosition == 3) {
+                if(groupPosition == 0 || groupPosition == 1 || groupPosition == 4) {
                     NavListItem item = new NavListItem();
                     item.name = (String)parent.getExpandableListAdapter().getGroup(groupPosition);
                     item.groupPosition = groupPosition;
@@ -169,17 +181,6 @@ public class NavigationDrawerFragment extends Fragment {
                 return false;
             }
         });
-
-        return view;
-    }
-
-    public static class NavListItem {
-        public int groupPosition;
-        public int childPosition;
-        public String name;
-        public int id;
-        public int count;
-        public int color;
     }
 
     public class ExpandableListAdapter extends BaseExpandableListAdapter {
@@ -213,16 +214,19 @@ public class NavigationDrawerFragment extends Fragment {
                 item.name = headerItems.get(groupPosition);
             }
             else if(groupPosition == 1) {
+                item.name = headerItems.get(groupPosition);
+            }
+            else if(groupPosition == 2) {
                 item.name = db.getStateName(item.id);
                 item.color = db.getStateColor(item.id);
                 item.count = db.getStateCount(item.id);
             }
-            else if(groupPosition == 2) {
+            else if(groupPosition == 3) {
                 item.name = db.getTagName(item.id);
                 item.color = db.getTagColor(db.getTagName(item.id));
                 item.count = db.getTagCount(item.id);
             }
-            else if(groupPosition == 3) {
+            else if(groupPosition == 4) {
                 item.name = headerItems.get(groupPosition);
             }
 
@@ -288,7 +292,7 @@ public class NavigationDrawerFragment extends Fragment {
 
             String headerTitle = getGroup(groupPosition);
             TextView header = (TextView) convertView.findViewById(R.id.navListHeader);
-            if(groupPosition == 2) {
+            if(groupPosition == 3) {
                 header.setText(headerTitle + " (" + getChildrenCount(groupPosition) + ")");
             }
             else {
@@ -315,6 +319,8 @@ public class NavigationDrawerFragment extends Fragment {
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }
+
+
 
     /**
      * Users of this fragment must call this method to set up the navigation drawer interactions.
@@ -367,11 +373,10 @@ public class NavigationDrawerFragment extends Fragment {
                     // The user manually opened the drawer; store this flag to prevent auto-showing
                     // the navigation drawer automatically in the future.
                     mUserLearnedDrawer = true;
-                    SharedPreferences sp = PreferenceManager
-                            .getDefaultSharedPreferences(parentActivity);
-                    sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).commit();
+                    MetaSettings.putUserLearnedDrawer(parentActivity, true);
                 }
 
+                populateList();
                 parentActivity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };

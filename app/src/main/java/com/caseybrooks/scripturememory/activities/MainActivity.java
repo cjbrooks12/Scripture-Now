@@ -19,6 +19,7 @@ import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment.onDashboardEditListener;
+import com.caseybrooks.scripturememory.fragments.DiscoverFragment;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment.onListEditListener;
@@ -221,14 +222,17 @@ public class MainActivity extends ActionBarActivity
                 fragment = new DashboardFragment();
                 break;
             case 1:
+                fragment = DiscoverFragment.newInstance();
+                break;
+            case 2:
                 fragment = VerseListFragment.newInstance(VerseListFragment.STATE, item.id);
                 setTitle(item.name);
                 break;
-            case 2:
+            case 3:
                 fragment = VerseListFragment.newInstance(VerseListFragment.TAGS, item.id);
                 setTitle(item.name);
                 break;
-            case 3:
+            case 4:
                 Intent settings = new Intent(MainActivity.this, Settings.class);
                 setTitle(item.name);
                 startActivity(settings);

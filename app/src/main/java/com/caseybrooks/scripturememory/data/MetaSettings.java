@@ -28,6 +28,7 @@ public class MetaSettings {
 //    public static final String RADIO_ID = "CHECKED_RADIO_ID";
     public static final String VERSE_DISPLAY_MODE = "VERSE_DISPLAY_MODE";
 	public static final String SORT_BY = "SORT_BY";
+    public static final String USER_LEARNED_DRAWER = "USER_LEARNED_DRAWER";
 //    public static final String CACHE_LAST_UPDATE = "CACHE_LAST_UPDATE";
 //    public static final String CACHE_VERSE = "CACHE_VERSE";
 
@@ -125,4 +126,12 @@ public class MetaSettings {
 	public static void putSortBy(Context context, int value) {
 		context.getSharedPreferences(settings_file, 0).edit().putInt(SORT_BY, value).commit();
 	}
+
+    public static boolean getUserLearnedDrawer(Context context) {
+        return context.getSharedPreferences(settings_file, 0).getBoolean(USER_LEARNED_DRAWER, false);
+    }
+
+    public static void putUserLearnedDrawer(Context context, boolean value) {
+        context.getSharedPreferences(settings_file, 0).edit().putBoolean(USER_LEARNED_DRAWER, value).commit();
+    }
 }

@@ -41,7 +41,8 @@ public class Verse extends AbstractVerse {
 
 	private static Pattern oneVerse = Pattern.compile("((\\d\\s*)?\\w+)\\s*(\\d+)\\W+(\\d+)");
 
-	//Constructors
+
+    //Constructors
 //------------------------------------------------------------------------------
     public Verse(Book book, int chapter, int verseNumber) {
         super();

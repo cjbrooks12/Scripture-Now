@@ -2,6 +2,12 @@
 <pre-dex-items>
 
     <item
+        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-d08c58db55d20385201eebd04529e9502aaea3f6.jar"
+        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3"/>
+    <item
         dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\jsoup-1.7.2-02eba155ee547721bc187da4cbecf1d649a264de.jar"
         jar="C:\Users\Casey\.gradle\caches\modules-2\files-2.1\org.jsoup\jsoup\1.7.2\d7e275ba05aa380ca254f72d0c0ffebaedc3adcf\jsoup-1.7.2.jar"
         jumboMode="false"
@@ -14,18 +20,6 @@
         revision="21.0.2"
         sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f"/>
     <item
-        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-e4adaa67e0970737fdca7d0349c3c7cd8c95d761.jar"
-        jar="C:\Program Files (x86)\Android\Studio\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.2\support-annotations-21.0.2.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6"/>
-    <item
-        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-d08c58db55d20385201eebd04529e9502aaea3f6.jar"
-        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\classes.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3"/>
-    <item
         dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-e212c20968558e1d171375239f9b8636c2088d1d.jar"
         jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.2\classes.jar"
         jumboMode="false"
@@ -37,6 +31,12 @@
         jumboMode="false"
         revision="21.0.2"
         sha1="44eafdf5e2d61a2e38a0e9dceaf2e901abc5f6b2"/>
+    <item
+        dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-e4adaa67e0970737fdca7d0349c3c7cd8c95d761.jar"
+        jar="C:\Program Files (x86)\Android\Studio\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.2\support-annotations-21.0.2.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6"/>
     <item
         dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-7d06631f0607ae988d3dcbb914353816e1a6b8f4.jar"
         jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.2\classes.jar"
@@ -54,6 +54,6 @@
         jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\scripturememory\AndroidBibleTools\unspecified\classes.jar"
         jumboMode="false"
         revision="21.0.2"
-        sha1="4502fa98cc94bcc910ef032dd06b17726c00e9d8"/>
+        sha1="68dc3d45d8703e113d79a092f10e8bd7ad0b6c91"/>
 
 </pre-dex-items>

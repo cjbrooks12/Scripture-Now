@@ -121,7 +121,6 @@ public class VOTDCard extends FrameLayout {
 
 			ref.setText("Problem Retrieving Verse");
 			ver.setText(e.getMessage());
-
 		}
 	}
 
@@ -141,6 +140,7 @@ public class VOTDCard extends FrameLayout {
                         newVerse.setVersion(MetaSettings.getBibleVersion(context));
                         newVerse.setState(1);
                         newVerse.setMillis(Calendar.getInstance().getTimeInMillis());
+                        newVerse.addTag("VOTD");
                         VerseDB db = new VerseDB(context);
                         db.open();
                         db.insertVerse(newVerse);
