@@ -19,7 +19,7 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
-import com.caseybrooks.scripturememory.data.BibleVerseAdapter;
+import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 

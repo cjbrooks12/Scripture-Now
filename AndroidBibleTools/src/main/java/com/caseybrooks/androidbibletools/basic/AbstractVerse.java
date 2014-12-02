@@ -78,6 +78,12 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 		return id;
 	}
 
+    public AbstractVerse removeAllTags() {
+        tags.clear();
+
+        return this;
+    }
+
 	public AbstractVerse setTags(String... tags) {
 		for (String item : tags) {
 			this.tags.add(item);

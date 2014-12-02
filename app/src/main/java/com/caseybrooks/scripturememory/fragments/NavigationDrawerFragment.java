@@ -133,7 +133,6 @@ public class NavigationDrawerFragment extends Fragment {
         states.add(VerseDB.CURRENT_NONE);
         listDataChild.put(listDataHeader.get(2), states);
 
-        //TODO: sort tags alphabetically
         int[] tagIds = db.getAllTagIds();
         List<Integer> tags = new ArrayList<Integer>();
         if(tagIds != null && tagIds.length > 0) {
@@ -142,7 +141,6 @@ public class NavigationDrawerFragment extends Fragment {
             }
         }
         listDataChild.put(listDataHeader.get(3), tags);
-
 
         List<Integer> settings = new ArrayList<Integer>();
         listDataChild.put(listDataHeader.get(4), settings);
@@ -198,6 +196,23 @@ public class NavigationDrawerFragment extends Fragment {
             this.context = context;
             this.headerItems = headerItems;
             this.childItems = childItems;
+        }
+
+        @Override
+        public void notifyDataSetChanged() {
+            VerseDB db = new VerseDB(context).open();
+            int[] tagIds = db.getAllTagIds();
+            List<Integer> tags = new ArrayList<Integer>();
+            if(tagIds != null && tagIds.length > 0) {
+                for (int id : tagIds) {
+                    tags.add(id);
+                }
+            }
+            childItems.remove(headerItems.get(3));
+            childItems.put(headerItems.get(3), tags);
+            db.close();
+
+            super.notifyDataSetChanged();
         }
 
         @Override
@@ -376,7 +391,7 @@ public class NavigationDrawerFragment extends Fragment {
                     MetaSettings.putUserLearnedDrawer(parentActivity, true);
                 }
 
-                populateList();
+                listAdapter.notifyDataSetChanged();
                 parentActivity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };

@@ -1599,12 +1599,12 @@ true
                     </item>
                 </style>
 
-                <color name="material_deep_teal_500" >#ff009688
-                </color>
-
                 <item
                     name="action_bar_activity_content"
                     type="id"/>
+
+                <color name="material_deep_teal_500" >#ff009688
+                </color>
 
                 <style name="Base.TextAppearance.AppCompat.Subhead" >
                     <item name="android:textSize">
@@ -1994,20 +1994,16 @@ false
                 </declare-styleable>
 
                 <style
+                    name="Base.Widget.AppCompat.Light.ActionBar.TabBar"
+                    parent="Base.Widget.AppCompat.ActionBar.TabBar" />
+
+                <style
                     name="Base.Widget.AppCompat.Light.ActionBar.TabView"
                     parent="Base.Widget.AppCompat.ActionBar.TabView" >
                     <item name="android:background">
 @drawable/abc_tab_indicator_material
                     </item>
                 </style>
-
-                <style
-                    name="Base.Widget.AppCompat.Light.ActionBar.TabBar"
-                    parent="Base.Widget.AppCompat.ActionBar.TabBar" />
-
-                <style
-                    name="TextAppearance.AppCompat.Inverse"
-                    parent="Base.TextAppearance.AppCompat.Inverse" />
 
                 <style name="Base.TextAppearance.AppCompat.Medium" >
                     <item name="android:textSize">
@@ -2019,8 +2015,8 @@ false
                 </style>
 
                 <style
-                    name="Widget.AppCompat.Light.ActionBar.Solid"
-                    parent="Base.Widget.AppCompat.Light.ActionBar.Solid" />
+                    name="TextAppearance.AppCompat.Inverse"
+                    parent="Base.TextAppearance.AppCompat.Inverse" />
 
                 <style
                     name="Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
@@ -2031,12 +2027,16 @@ false
                 </style>
 
                 <style
-                    name="Widget.AppCompat.Light.ActionBar.TabText"
-                    parent="Base.Widget.AppCompat.Light.ActionBar.TabText" />
+                    name="Widget.AppCompat.Light.ActionBar.Solid"
+                    parent="Base.Widget.AppCompat.Light.ActionBar.Solid" />
 
                 <style
                     name="Widget.AppCompat.ActionBar.TabBar"
                     parent="Base.Widget.AppCompat.ActionBar.TabBar" />
+
+                <style
+                    name="Widget.AppCompat.Light.ActionBar.TabText"
+                    parent="Base.Widget.AppCompat.Light.ActionBar.TabText" />
 
                 <dimen name="abc_text_size_display_2_material" >45sp
                 </dimen>
@@ -2516,11 +2516,12 @@ normal
 
                 <dimen name="abc_text_size_display_1_material" >34sp
                 </dimen>
-                <dimen name="abc_action_bar_default_height_material" >56dp
-                </dimen>
 
                 <string name="abc_action_mode_done" >Done
                 </string>
+
+                <dimen name="abc_action_bar_default_height_material" >56dp
+                </dimen>
 
                 <style
                     name="Widget.AppCompat.Light.ActionMode.Inverse"
@@ -2547,19 +2548,12 @@ normal
                     name="TextAppearance.AppCompat.Display3"
                     parent="Base.TextAppearance.AppCompat.Display3" />
 
-                <style
-                    name="TextAppearance.AppCompat.Display2"
-                    parent="Base.TextAppearance.AppCompat.Display2" />
-
                 <color name="hint_foreground_material_dark" >@color/bright_foreground_disabled_material_dark
                 </color>
 
                 <style
-                    name="TextAppearance.AppCompat.Display4"
-                    parent="Base.TextAppearance.AppCompat.Display4" />
-
-                <color name="abc_search_url_text_normal" >#7fa87f
-                </color>
+                    name="TextAppearance.AppCompat.Display2"
+                    parent="Base.TextAppearance.AppCompat.Display2" />
 
                 <item
                     name="dialog_fixed_width_minor"
@@ -2567,12 +2561,19 @@ normal
 320dp
                 </item>
 
+                <color name="abc_search_url_text_normal" >#7fa87f
+                </color>
+
                 <style
-                    name="Widget.AppCompat.ActionButton.CloseMode"
-                    parent="RtlOverlay.Widget.AppCompat.ActionButton.CloseMode" />
+                    name="TextAppearance.AppCompat.Display4"
+                    parent="Base.TextAppearance.AppCompat.Display4" />
 
                 <color name="primary_material_light" >#ffbdbdbd
                 </color>
+
+                <style
+                    name="Widget.AppCompat.ActionButton.CloseMode"
+                    parent="RtlOverlay.Widget.AppCompat.ActionButton.CloseMode" />
 
                 <style
                     name="Base.Widget.AppCompat.PopupMenu"
@@ -2644,6 +2645,9 @@ normal
                     </item>
                 </style>
 
+                <dimen name="abc_text_size_button_material" >14sp
+                </dimen>
+
                 <style
                     name="RtlOverlay.Widget.AppCompat.Search.DropDown.Query"
                     parent="android:Widget" >
@@ -2652,8 +2656,6 @@ true
                     </item>
                 </style>
 
-                <dimen name="abc_text_size_button_material" >14sp
-                </dimen>
                 <dimen name="abc_text_size_title_material_toolbar" >20dp
                 </dimen>
 
@@ -2677,12 +2679,12 @@ false
                     </item>
                 </style>
 
-                <dimen name="abc_action_button_min_height_material" >48dp
-                </dimen>
-
                 <style
                     name="Base.Theme.AppCompat"
                     parent="Base.V7.Theme.AppCompat" />
+
+                <dimen name="abc_action_button_min_height_material" >48dp
+                </dimen>
 
                 <style
                     name="RtlOverlay.Widget.AppCompat.Search.DropDown"
@@ -2741,12 +2743,12 @@ false
 false
                 </bool>
 
+                <dimen name="abc_action_button_min_width_material" >48dp
+                </dimen>
+
                 <style
                     name="Theme.AppCompat.Light.DarkActionBar"
                     parent="Base.Theme.AppCompat.Light.DarkActionBar" />
-
-                <dimen name="abc_action_button_min_width_material" >48dp
-                </dimen>
 
                 <style
                     name="Base.Widget.AppCompat.DrawerArrowToggle"
@@ -2914,23 +2916,19 @@ true
                     </item>
                 </style>
 
-                <style
-                    name="TextAppearance.AppCompat.Widget.DropDownItem"
-                    parent="Base.TextAppearance.AppCompat.Widget.DropDownItem" />
-
                 <dimen name="abc_action_bar_default_padding_material" >4dp
                 </dimen>
 
                 <style
-                    name="Widget.AppCompat.ActionButton"
-                    parent="Base.Widget.AppCompat.ActionButton" />
+                    name="TextAppearance.AppCompat.Widget.DropDownItem"
+                    parent="Base.TextAppearance.AppCompat.Widget.DropDownItem" />
 
                 <dimen name="abc_action_button_min_width_overflow_material" >36dp
                 </dimen>
 
                 <style
-                    name="Theme.AppCompat.CompactMenu"
-                    parent="Base.Theme.AppCompat.CompactMenu" />
+                    name="Widget.AppCompat.ActionButton"
+                    parent="Base.Widget.AppCompat.ActionButton" />
 
                 <style
                     name="Base.Widget.AppCompat.Toolbar"
@@ -2962,16 +2960,20 @@ true
                 </style>
 
                 <style
+                    name="Theme.AppCompat.CompactMenu"
+                    parent="Base.Theme.AppCompat.CompactMenu" />
+
+                <style
                     name="Theme.AppCompat.Light.DialogWhenLarge"
                     parent="Base.Theme.AppCompat.Light.DialogWhenLarge" />
 
                 <style
-                    name="Widget.AppCompat.ActionBar.TabText"
-                    parent="Base.Widget.AppCompat.ActionBar.TabText" />
-
-                <style
                     name="Base.TextAppearance.AppCompat.Widget.PopupMenu.Small"
                     parent="TextAppearance.AppCompat.Menu" />
+
+                <style
+                    name="Widget.AppCompat.ActionBar.TabText"
+                    parent="Base.Widget.AppCompat.ActionBar.TabText" />
 
                 <style name="Base.Widget.AppCompat.PopupMenu.Overflow" >
                     <item name="overlapAnchor">
@@ -2982,11 +2984,11 @@ true
                     </item>
                 </style>
 
-                <dimen name="abc_search_view_text_min_width" >160dip
-                </dimen>
-
                 <string name="abc_activity_chooser_view_see_all" >See all
                 </string>
+
+                <dimen name="abc_search_view_text_min_width" >160dip
+                </dimen>
 
                 <style
                     name="Base.V7.Theme.AppCompat"
@@ -4938,10 +4940,6 @@ true
                     </item>
                 </style>
 
-                <style
-                    name="TextAppearance.AppCompat.Widget.Switch"
-                    parent="Base.TextAppearance.AppCompat.Widget.Switch" />
-
                 <style name="Base.TextAppearance.AppCompat.Subhead.Inverse" >
                     <item name="android:textColor">
 ?android:attr/textColorSecondaryInverse
@@ -4952,21 +4950,25 @@ true
                 </style>
 
                 <style
+                    name="TextAppearance.AppCompat.Widget.Switch"
+                    parent="Base.TextAppearance.AppCompat.Widget.Switch" />
+
+                <style
                     name="Widget.AppCompat.ListView.Menu"
                     parent="Base.Widget.AppCompat.ListView.Menu" />
 
                 <color name="bright_foreground_inverse_material_dark" >@color/bright_foreground_material_light
                 </color>
 
-                <style
-                    name="Theme.AppCompat.Light.Dialog"
-                    parent="Base.Theme.AppCompat.Light.Dialog" />
+                <string name="abc_action_bar_home_description_format" >%1$s, %2$s
+                </string>
 
                 <color name="highlighted_text_material_light" >#66009688
                 </color>
 
-                <string name="abc_action_bar_home_description_format" >%1$s, %2$s
-                </string>
+                <style
+                    name="Theme.AppCompat.Light.Dialog"
+                    parent="Base.Theme.AppCompat.Light.Dialog" />
 
                 <color name="secondary_text_default_material_dark" >#b3ffffff
                 </color>
@@ -4987,9 +4989,6 @@ true
                     name="Base.Theme.AppCompat.DialogWhenLarge"
                     parent="Theme.AppCompat" />
 
-                <dimen name="abc_text_size_menu_material" >16sp
-                </dimen>
-
                 <style
                     name="Base.Theme.AppCompat.CompactMenu"
                     parent="" >
@@ -5000,6 +4999,9 @@ true
 @style/Widget.AppCompat.ListView.Menu
                     </item>
                 </style>
+
+                <dimen name="abc_text_size_menu_material" >16sp
+                </dimen>
 
                 <style name="Base.TextAppearance.AppCompat.Small" >
                     <item name="android:textSize">
@@ -5044,9 +5046,9 @@ true
                 <dimen name="abc_config_prefDialogWidth" >320dp
                 </dimen>
 
-                <color name="hint_foreground_material_light" >@color/bright_foreground_disabled_material_light
-                </color>
                 <color name="background_material_light" >#ffeeeeee
+                </color>
+                <color name="hint_foreground_material_light" >@color/bright_foreground_disabled_material_light
                 </color>
 
                 <style
@@ -5136,9 +5138,6 @@ true
                 <color name="bright_foreground_inverse_material_light" >@color/bright_foreground_material_dark
                 </color>
 
-                <dimen name="abc_text_size_subtitle_material_toolbar" >16dp
-                </dimen>
-
                 <style name="Base.ThemeOverlay.AppCompat.Light" >
                     <item name="android:windowBackground">
 @color/background_material_light
@@ -5223,6 +5222,9 @@ true
 true
                     </item>
                 </style>
+
+                <dimen name="abc_text_size_subtitle_material_toolbar" >16dp
+                </dimen>
 
                 <item
                     name="progress_horizontal"
@@ -5722,12 +5724,12 @@ true
                     name="TextAppearance.AppCompat.Headline"
                     parent="Base.TextAppearance.AppCompat.Headline" />
 
+                <color name="primary_text_disabled_material_light" >#39000000
+                </color>
+
                 <style
                     name="Widget.AppCompat.ProgressBar.Horizontal"
                     parent="Base.Widget.AppCompat.ProgressBar.Horizontal" />
-
-                <color name="primary_text_disabled_material_light" >#39000000
-                </color>
 
                 <style
                     name="RtlOverlay.Widget.AppCompat.PopupMenuItem.InternalGroup"
@@ -6298,12 +6300,12 @@ true
                     msgid="3691816814315814921" >"Smazat dotaz"
                 </string>
                 <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"Hotovo"
-                </string>
-                <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"Hledat"
+                </string>
+                <string
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"Hotovo"
                 </string>
                 <string
                     name="abc_searchview_description_voice"
@@ -6422,20 +6424,20 @@ true
                     msgid="2550479030709304392" >"Suchanfrage"
                 </string>
                 <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"Fertig"
-                </string>
-                <string
                     name="abc_searchview_description_clear"
                     msgid="3691816814315814921" >"Suchanfrage löschen"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Freigeben für"
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"Fertig"
                 </string>
                 <string
                     name="abc_searchview_description_submit"
                     msgid="8928215447528550784" >"Suchanfrage senden"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Freigeben für"
                 </string>
             </file>
             <file
@@ -6490,16 +6492,16 @@ true
                     msgid="2031811694353399454" >"Επιλέξτε κάποια εφαρμογή"
                 </string>
                 <string
-                    name="abc_searchview_description_voice"
-                    msgid="893419373245838918" >"Φωνητική αναζήτηση"
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"Διαγραφή ερωτήματος"
                 </string>
                 <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"Περισσότερες επιλογές"
                 </string>
                 <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"Διαγραφή ερωτήματος"
+                    name="abc_searchview_description_voice"
+                    msgid="893419373245838918" >"Φωνητική αναζήτηση"
                 </string>
             </file>
             <file
@@ -6614,20 +6616,20 @@ true
                     msgid="7165123711973476752" >"Share with %s"
                 </string>
                 <string
-                    name="abc_action_bar_home_subtitle_description_format"
-                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
-                </string>
-                <string
                     name="abc_action_mode_done"
                     msgid="4076576682505996667" >"Done"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Share with"
+                    name="abc_action_bar_home_subtitle_description_format"
+                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
                 </string>
                 <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"See all"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Share with"
                 </string>
             </file>
             <file
@@ -6686,12 +6688,12 @@ true
                     msgid="8928215447528550784" >"Enviar consulta"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"Compartir con %s"
-                </string>
-                <string
                     name="abc_action_bar_up_description"
                     msgid="1594238315039666878" >"Desplazarse hacia arriba"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"Compartir con %s"
                 </string>
             </file>
             <file
@@ -6810,12 +6812,12 @@ true
                     msgid="4600421777120114993" >"Navigeerimine avaekraanile"
                 </string>
                 <string
-                    name="abc_action_bar_home_description_format"
-                    msgid="1397052879051804371" >"%1$s, %2$s"
-                </string>
-                <string
                     name="abc_action_bar_up_description"
                     msgid="1594238315039666878" >"Navigeerimine üles"
+                </string>
+                <string
+                    name="abc_action_bar_home_description_format"
+                    msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
                     name="abc_activitychooserview_choose_application"
@@ -6942,60 +6944,60 @@ true
                     msgid="1594238315039666878" >"پیمایش به بالا"
                 </string>
                 <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"انجام شد"
-                </string>
-                <string
                     name="abc_searchview_description_submit"
                     msgid="8928215447528550784" >"ارسال عبارت جستجو"
+                </string>
+                <string
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"انجام شد"
                 </string>
             </file>
             <file
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-fi\values.xml"
                 qualifiers="fi" >
                 <string
-                    name="abc_action_bar_home_description_format"
-                    msgid="1397052879051804371" >"%1$s, %2$s"
-                </string>
-                <string
                     name="abc_action_bar_home_subtitle_description_format"
                     msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
                 </string>
                 <string
-                    name="abc_searchview_description_query"
-                    msgid="2550479030709304392" >"Hakulauseke"
+                    name="abc_action_bar_home_description_format"
+                    msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"Näytä kaikki"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"Jakaminen: %s"
+                    name="abc_searchview_description_query"
+                    msgid="2550479030709304392" >"Hakulauseke"
                 </string>
                 <string
                     name="abc_action_bar_up_description"
                     msgid="1594238315039666878" >"Siirry ylös"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Jakaminen:"
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"Jakaminen: %s"
                 </string>
                 <string
                     name="abc_searchview_description_voice"
                     msgid="893419373245838918" >"Puhehaku"
                 </string>
                 <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Jakaminen:"
+                </string>
+                <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"Haku"
                 </string>
                 <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"Siirry etusivulle"
-                </string>
-                <string
                     name="abc_action_mode_done"
                     msgid="4076576682505996667" >"Valmis"
+                </string>
+                <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"Siirry etusivulle"
                 </string>
                 <string
                     name="abc_action_menu_overflow_description"
@@ -7062,12 +7064,12 @@ true
                     msgid="3691816814315814921" >"Effacer la requête"
                 </string>
                 <string
-                    name="abc_searchview_description_voice"
-                    msgid="893419373245838918" >"Recherche vocale"
-                </string>
-                <string
                     name="abc_searchview_description_query"
                     msgid="2550479030709304392" >"Requête de recherche"
+                </string>
+                <string
+                    name="abc_searchview_description_voice"
+                    msgid="893419373245838918" >"Recherche vocale"
                 </string>
                 <string
                     name="abc_shareactionprovider_share_with_application"
@@ -7198,12 +7200,12 @@ true
                     msgid="1594238315039666878" >"Desprazarse cara arriba"
                 </string>
                 <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"Ir á páxina de inicio"
-                </string>
-                <string
                     name="abc_action_bar_home_subtitle_description_format"
                     msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
+                </string>
+                <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"Ir á páxina de inicio"
                 </string>
             </file>
             <file
@@ -7318,12 +7320,12 @@ true
                     msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
                 </string>
                 <string
-                    name="abc_searchview_description_voice"
-                    msgid="893419373245838918" >"Glasovno pretraživanje"
-                </string>
-                <string
                     name="abc_action_bar_home_description"
                     msgid="4600421777120114993" >"Idi na početnu"
+                </string>
+                <string
+                    name="abc_searchview_description_voice"
+                    msgid="893419373245838918" >"Glasovno pretraživanje"
                 </string>
                 <string
                     name="abc_searchview_description_submit"
@@ -7402,6 +7404,10 @@ true
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-hy-rAM\values.xml"
                 qualifiers="hy-rAM" >
                 <string
+                    name="abc_activitychooserview_choose_application"
+                    msgid="2031811694353399454" >"Ընտրել ծրագիր"
+                </string>
+                <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"Տեսնել բոլորը"
                 </string>
@@ -7410,16 +7416,24 @@ true
                     msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
                 </string>
                 <string
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"Կատարված է"
+                </string>
+                <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"Այլ ընտրանքներ"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Տարածել"
+                    name="abc_searchview_description_query"
+                    msgid="2550479030709304392" >"Որոնման հարցում"
                 </string>
                 <string
                     name="abc_action_bar_home_description_format"
                     msgid="1397052879051804371" >"%1$s, %2$s"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Տարածել"
                 </string>
                 <string
                     name="abc_searchview_description_clear"
@@ -7430,36 +7444,24 @@ true
                     msgid="8928215447528550784" >"Ուղարկել հարցումը"
                 </string>
                 <string
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"Տարածել ըստ %s"
+                </string>
+                <string
                     name="abc_action_bar_up_description"
                     msgid="1594238315039666878" >"Ուղղվել վերև"
                 </string>
                 <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"Ուղղվել տուն"
+                    name="abc_searchview_description_voice"
+                    msgid="893419373245838918" >"Ձայնային որոնում"
                 </string>
                 <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"Որոնել"
                 </string>
                 <string
-                    name="abc_activitychooserview_choose_application"
-                    msgid="2031811694353399454" >"Ընտրել ծրագիր"
-                </string>
-                <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"Կատարված է"
-                </string>
-                <string
-                    name="abc_searchview_description_query"
-                    msgid="2550479030709304392" >"Որոնման հարցում"
-                </string>
-                <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"Տարածել ըստ %s"
-                </string>
-                <string
-                    name="abc_searchview_description_voice"
-                    msgid="893419373245838918" >"Ձայնային որոնում"
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"Ուղղվել տուն"
                 </string>
             </file>
             <file
@@ -7514,16 +7516,16 @@ true
                     msgid="2550479030709304392" >"Kueri penelusuran"
                 </string>
                 <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"Selesai"
+                    name="abc_searchview_description_search"
+                    msgid="8264924765203268293" >"Telusuri"
                 </string>
                 <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"Lihat semua"
                 </string>
                 <string
-                    name="abc_searchview_description_search"
-                    msgid="8264924765203268293" >"Telusuri"
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"Selesai"
                 </string>
             </file>
             <file
@@ -7578,12 +7580,12 @@ true
                     msgid="2031811694353399454" >"Veldu forrit"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Deila með"
-                </string>
-                <string
                     name="abc_action_bar_up_description"
                     msgid="1594238315039666878" >"Fara upp"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Deila með"
                 </string>
                 <string
                     name="abc_action_menu_overflow_description"
@@ -7766,12 +7768,12 @@ true
                     msgid="3421042268587513524" >"共有"
                 </string>
                 <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"ホームへ移動"
-                </string>
-                <string
                     name="abc_action_bar_home_subtitle_description_format"
                     msgid="6623331958280229229" >"%1$s、%2$s、%3$s"
+                </string>
+                <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"ホームへ移動"
                 </string>
                 <string
                     name="abc_shareactionprovider_share_with_application"
@@ -7786,52 +7788,52 @@ true
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-ka-rGE\values.xml"
                 qualifiers="ka-rGE" >
                 <string
-                    name="abc_searchview_description_voice"
-                    msgid="893419373245838918" >"ხმოვანი ძიება"
-                </string>
-                <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"მეტი ვარიანტები"
+                </string>
+                <string
+                    name="abc_searchview_description_voice"
+                    msgid="893419373245838918" >"ხმოვანი ძიება"
                 </string>
                 <string
                     name="abc_action_mode_done"
                     msgid="4076576682505996667" >"დასრულდა"
                 </string>
                 <string
-                    name="abc_searchview_description_query"
-                    msgid="2550479030709304392" >"ძიების მოთხოვნა"
+                    name="abc_activitychooserview_choose_application"
+                    msgid="2031811694353399454" >"აპის არჩევა"
                 </string>
                 <string
                     name="abc_action_bar_up_description"
                     msgid="1594238315039666878" >"ზემოთ ნავიგაცია"
                 </string>
                 <string
-                    name="abc_activitychooserview_choose_application"
-                    msgid="2031811694353399454" >"აპის არჩევა"
+                    name="abc_searchview_description_query"
+                    msgid="2550479030709304392" >"ძიების მოთხოვნა"
                 </string>
                 <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"ყველას ნახვა"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"გაზიარება:"
-                </string>
-                <string
                     name="abc_action_bar_home_subtitle_description_format"
                     msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"%s-თან გაზიარება"
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"გაზიარება:"
+                </string>
+                <string
+                    name="abc_searchview_description_search"
+                    msgid="8264924765203268293" >"ძიება"
                 </string>
                 <string
                     name="abc_action_bar_home_description_format"
                     msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
-                    name="abc_searchview_description_search"
-                    msgid="8264924765203268293" >"ძიება"
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"%s-თან გაზიარება"
                 </string>
                 <string
                     name="abc_searchview_description_submit"
@@ -7902,12 +7904,12 @@ true
                     msgid="2550479030709304392" >"Сұрақты іздеу"
                 </string>
                 <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"Орындалды"
-                </string>
-                <string
                     name="abc_activitychooserview_choose_application"
                     msgid="2031811694353399454" >"Қолданбаны таңдау"
+                </string>
+                <string
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"Орындалды"
                 </string>
             </file>
             <file
@@ -7966,12 +7968,12 @@ true
                     msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
-                    name="abc_activitychooserview_choose_application"
-                    msgid="2031811694353399454" >"ជ្រើស​កម្មវិធី​​"
-                </string>
-                <string
                     name="abc_searchview_description_clear"
                     msgid="3691816814315814921" >"សម្អាត​សំណួរ"
+                </string>
+                <string
+                    name="abc_activitychooserview_choose_application"
+                    msgid="2031811694353399454" >"ជ្រើស​កម្មវិធី​​"
                 </string>
             </file>
             <file
@@ -8022,12 +8024,12 @@ true
                     msgid="3421042268587513524" >"ಇವರೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ"
                 </string>
                 <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"ಮುಗಿದಿದೆ"
-                </string>
-                <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"ಹುಡುಕು"
+                </string>
+                <string
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"ಮುಗಿದಿದೆ"
                 </string>
                 <string
                     name="abc_searchview_description_query"
@@ -8086,12 +8088,12 @@ true
                     msgid="4076576682505996667" >"완료"
                 </string>
                 <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"검색어 삭제"
-                </string>
-                <string
                     name="abc_searchview_description_submit"
                     msgid="8928215447528550784" >"검색어 보내기"
+                </string>
+                <string
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"검색어 삭제"
                 </string>
                 <string
                     name="abc_action_bar_home_subtitle_description_format"
@@ -8150,12 +8152,12 @@ true
                     msgid="4600421777120114993" >"Үйгө багыттоо"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Бөлүшүү"
-                </string>
-                <string
                     name="abc_action_mode_done"
                     msgid="4076576682505996667" >"Даяр"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Бөлүшүү"
                 </string>
                 <string
                     name="abc_activity_chooser_view_see_all"
@@ -8192,12 +8194,12 @@ true
             <file
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-large\values.xml"
                 qualifiers="large-v4" >
-                <dimen name="abc_search_view_text_min_width" >192dip
-                </dimen>
-
                 <bool name="abc_action_bar_embed_tabs_pre_jb" >
 true
                 </bool>
+
+                <dimen name="abc_search_view_text_min_width" >192dip
+                </dimen>
 
                 <item
                     name="dialog_fixed_height_major"
@@ -8244,28 +8246,28 @@ true
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-lo-rLA\values.xml"
                 qualifiers="lo-rLA" >
                 <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"ກັບໄປໜ້າຫຼັກ"
-                </string>
-                <string
                     name="abc_action_bar_home_subtitle_description_format"
                     msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
+                </string>
+                <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"ກັບໄປໜ້າຫຼັກ"
                 </string>
                 <string
                     name="abc_searchview_description_voice"
                     msgid="893419373245838918" >"ຊອກຫາດ້ວຍສຽງ"
                 </string>
                 <string
-                    name="abc_searchview_description_search"
-                    msgid="8264924765203268293" >"ຊອກຫາ"
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"ລຶບຂໍ້ຄວາມຊອກຫາ"
                 </string>
                 <string
                     name="abc_shareactionprovider_share_with"
                     msgid="3421042268587513524" >"ແບ່ງປັນກັບ"
                 </string>
                 <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"ລຶບຂໍ້ຄວາມຊອກຫາ"
+                    name="abc_searchview_description_search"
+                    msgid="8264924765203268293" >"ຊອກຫາ"
                 </string>
                 <string
                     name="abc_searchview_description_query"
@@ -8280,12 +8282,12 @@ true
                     msgid="4076576682505996667" >"ແລ້ວໆ"
                 </string>
                 <string
-                    name="abc_activity_chooser_view_see_all"
-                    msgid="7468859129482906941" >"ເບິ່ງທັງຫມົດ"
-                </string>
-                <string
                     name="abc_activitychooserview_choose_application"
                     msgid="2031811694353399454" >"ເລືອກແອັບຯ"
+                </string>
+                <string
+                    name="abc_activity_chooser_view_see_all"
+                    msgid="7468859129482906941" >"ເບິ່ງທັງຫມົດ"
                 </string>
                 <string
                     name="abc_searchview_description_submit"
@@ -8356,64 +8358,64 @@ true
                     msgid="4076576682505996667" >"Atlikta"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"Bendrinti naudojant „%s“"
+                    name="abc_searchview_description_search"
+                    msgid="8264924765203268293" >"Paieška"
                 </string>
                 <string
                     name="abc_action_bar_home_description"
                     msgid="4600421777120114993" >"Eiti į pagrindinį puslapį"
                 </string>
                 <string
-                    name="abc_searchview_description_search"
-                    msgid="8264924765203268293" >"Paieška"
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"Bendrinti naudojant „%s“"
                 </string>
             </file>
             <file
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-lv\values.xml"
                 qualifiers="lv" >
                 <string
-                    name="abc_action_menu_overflow_description"
-                    msgid="3588849162933574182" >"Vairāk opciju"
+                    name="abc_activitychooserview_choose_application"
+                    msgid="2031811694353399454" >"Izvēlieties lietotni"
                 </string>
                 <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"Skatīt visu"
                 </string>
                 <string
-                    name="abc_activitychooserview_choose_application"
-                    msgid="2031811694353399454" >"Izvēlieties lietotni"
-                </string>
-                <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"Kopīgot ar %s"
+                    name="abc_action_menu_overflow_description"
+                    msgid="3588849162933574182" >"Vairāk opciju"
                 </string>
                 <string
                     name="abc_searchview_description_voice"
                     msgid="893419373245838918" >"Meklēšana ar balsi"
                 </string>
                 <string
-                    name="abc_action_bar_home_subtitle_description_format"
-                    msgid="6623331958280229229" >"%1$s, %2$s: %3$s"
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"Kopīgot ar %s"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Kopīgot ar:"
+                    name="abc_action_bar_home_subtitle_description_format"
+                    msgid="6623331958280229229" >"%1$s, %2$s: %3$s"
                 </string>
                 <string
                     name="abc_searchview_description_submit"
                     msgid="8928215447528550784" >"Iesniegt vaicājumu"
                 </string>
                 <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Kopīgot ar:"
+                </string>
+                <string
                     name="abc_action_bar_home_description_format"
                     msgid="1397052879051804371" >"%1$s: %2$s"
                 </string>
                 <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"Gatavs"
-                </string>
-                <string
                     name="abc_action_bar_home_description"
                     msgid="4600421777120114993" >"Pārvietoties uz sākuma ekrānu"
+                </string>
+                <string
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"Gatavs"
                 </string>
                 <string
                     name="abc_searchview_description_clear"
@@ -8436,24 +8438,24 @@ true
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-mk-rMK\values.xml"
                 qualifiers="mk-rMK" >
                 <string
-                    name="abc_searchview_description_search"
-                    msgid="8264924765203268293" >"Пребарај"
-                </string>
-                <string
                     name="abc_action_bar_up_description"
                     msgid="1594238315039666878" >"Движи се нагоре"
                 </string>
                 <string
-                    name="abc_searchview_description_submit"
-                    msgid="8928215447528550784" >"Поднеси барање"
+                    name="abc_searchview_description_search"
+                    msgid="8264924765203268293" >"Пребарај"
+                </string>
+                <string
+                    name="abc_action_bar_home_subtitle_description_format"
+                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
                 </string>
                 <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"Види ги сите"
                 </string>
                 <string
-                    name="abc_action_bar_home_subtitle_description_format"
-                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
+                    name="abc_searchview_description_submit"
+                    msgid="8928215447528550784" >"Поднеси барање"
                 </string>
                 <string
                     name="abc_searchview_description_query"
@@ -8536,20 +8538,20 @@ true
                     msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"പൂർത്തിയാക്കി"
-                </string>
-                <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"തിരയൽ"
                 </string>
                 <string
-                    name="abc_action_bar_up_description"
-                    msgid="1594238315039666878" >"മുകളിലേക്ക് നാവിഗേറ്റുചെയ്യുക"
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"പൂർത്തിയാക്കി"
                 </string>
                 <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"കൂടുതല്‍ ഓപ്‌ഷനുകള്‍"
+                </string>
+                <string
+                    name="abc_action_bar_up_description"
+                    msgid="1594238315039666878" >"മുകളിലേക്ക് നാവിഗേറ്റുചെയ്യുക"
                 </string>
             </file>
             <file
@@ -8596,16 +8598,16 @@ true
                     msgid="7165123711973476752" >"%s-тай хуваалцах"
                 </string>
                 <string
+                    name="abc_activity_chooser_view_see_all"
+                    msgid="7468859129482906941" >"Бүгдийг харах"
+                </string>
+                <string
                     name="abc_action_bar_home_description"
                     msgid="4600421777120114993" >"Нүүр хуудас руу шилжих"
                 </string>
                 <string
                     name="abc_action_bar_home_description_format"
                     msgid="1397052879051804371" >"%1$s, %2$s"
-                </string>
-                <string
-                    name="abc_activity_chooser_view_see_all"
-                    msgid="7468859129482906941" >"Бүгдийг харах"
                 </string>
                 <string
                     name="abc_searchview_description_submit"
@@ -8664,12 +8666,12 @@ true
                     msgid="3588849162933574182" >"अधिक पर्याय"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"%s सह सामायिक करा"
-                </string>
-                <string
                     name="abc_searchview_description_voice"
                     msgid="893419373245838918" >"व्हॉइस शोध"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"%s सह सामायिक करा"
                 </string>
                 <string
                     name="abc_action_bar_home_description"
@@ -8728,12 +8730,12 @@ true
                     msgid="1594238315039666878" >"Navigasi ke atas"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"Kongsi dengan %s"
-                </string>
-                <string
                     name="abc_shareactionprovider_share_with"
                     msgid="3421042268587513524" >"Kongsi dengan"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"Kongsi dengan %s"
                 </string>
                 <string
                     name="abc_action_menu_overflow_description"
@@ -8792,12 +8794,12 @@ true
                     msgid="6623331958280229229" >"%1$s ၊ %2$s ၊ %3$s"
                 </string>
                 <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"ပြီးဆုံးပါပြီ"
-                </string>
-                <string
                     name="abc_activitychooserview_choose_application"
                     msgid="2031811694353399454" >"အပလီကေးရှင်း တစ်ခုခုကို ရွေးချယ်ပါ"
+                </string>
+                <string
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"ပြီးဆုံးပါပြီ"
                 </string>
                 <string
                     name="abc_action_bar_up_description"
@@ -8856,12 +8858,12 @@ true
                     msgid="8928215447528550784" >"Utfør søket"
                 </string>
                 <string
-                    name="abc_activitychooserview_choose_application"
-                    msgid="2031811694353399454" >"Velg en app"
-                </string>
-                <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"Søk"
+                </string>
+                <string
+                    name="abc_activitychooserview_choose_application"
+                    msgid="2031811694353399454" >"Velg en app"
                 </string>
                 <string
                     name="abc_action_bar_home_description"
@@ -8876,32 +8878,12 @@ true
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-ne-rNP\values.xml"
                 qualifiers="ne-rNP" >
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"साझेदारी गर्नुहोस्..."
-                </string>
-                <string
-                    name="abc_action_bar_up_description"
-                    msgid="1594238315039666878" >"माथि खोज्नुहोस्"
-                </string>
-                <string
-                    name="abc_searchview_description_voice"
-                    msgid="893419373245838918" >"भ्वाइस खोजी"
-                </string>
-                <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"प्रश्‍न हटाउनुहोस्"
-                </string>
-                <string
-                    name="abc_searchview_description_search"
-                    msgid="8264924765203268293" >"खोज्नुहोस्"
-                </string>
-                <string
-                    name="abc_searchview_description_submit"
-                    msgid="8928215447528550784" >"जिज्ञासा पेस गर्नुहोस्"
-                </string>
-                <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"थप विकल्पहरू"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"साझेदारी गर्नुहोस्..."
                 </string>
                 <string
                     name="abc_action_bar_home_description_format"
@@ -8912,16 +8894,28 @@ true
                     msgid="4076576682505996667" >"सम्पन्न भयो"
                 </string>
                 <string
+                    name="abc_action_bar_up_description"
+                    msgid="1594238315039666878" >"माथि खोज्नुहोस्"
+                </string>
+                <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"सबै हेर्नुहोस्"
+                </string>
+                <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"गृह खोज्नुहोस्"
                 </string>
                 <string
                     name="abc_shareactionprovider_share_with_application"
                     msgid="7165123711973476752" >"%s सँग साझेदारी गर्नुहोस्"
                 </string>
                 <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"गृह खोज्नुहोस्"
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"प्रश्‍न हटाउनुहोस्"
+                </string>
+                <string
+                    name="abc_searchview_description_voice"
+                    msgid="893419373245838918" >"भ्वाइस खोजी"
                 </string>
                 <string
                     name="abc_searchview_description_query"
@@ -8934,6 +8928,14 @@ true
                 <string
                     name="abc_action_bar_home_subtitle_description_format"
                     msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
+                </string>
+                <string
+                    name="abc_searchview_description_submit"
+                    msgid="8928215447528550784" >"जिज्ञासा पेस गर्नुहोस्"
+                </string>
+                <string
+                    name="abc_searchview_description_search"
+                    msgid="8264924765203268293" >"खोज्नुहोस्"
                 </string>
             </file>
             <file
@@ -8992,64 +8994,48 @@ true
                     msgid="1594238315039666878" >"Omhoog navigeren"
                 </string>
                 <string
-                    name="abc_activitychooserview_choose_application"
-                    msgid="2031811694353399454" >"Een app selecteren"
-                </string>
-                <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"Zoeken"
+                </string>
+                <string
+                    name="abc_activitychooserview_choose_application"
+                    msgid="2031811694353399454" >"Een app selecteren"
                 </string>
             </file>
             <file
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-pl\values.xml"
                 qualifiers="pl" >
                 <string
-                    name="abc_action_bar_home_description_format"
-                    msgid="1397052879051804371" >"%1$s, %2$s"
-                </string>
-                <string
-                    name="abc_activitychooserview_choose_application"
-                    msgid="2031811694353399454" >"Wybierz aplikację"
-                </string>
-                <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"Gotowe"
-                </string>
-                <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Udostępnij dla"
-                </string>
-                <string
-                    name="abc_action_bar_home_subtitle_description_format"
-                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
-                </string>
-                <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"Wyczyść zapytanie"
-                </string>
-                <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"Udostępnij dla %s"
+                    name="abc_activity_chooser_view_see_all"
+                    msgid="7468859129482906941" >"Zobacz wszystkie"
                 </string>
                 <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"Więcej opcji"
                 </string>
                 <string
-                    name="abc_activity_chooser_view_see_all"
-                    msgid="7468859129482906941" >"Zobacz wszystkie"
-                </string>
-                <string
-                    name="abc_action_bar_up_description"
-                    msgid="1594238315039666878" >"Przejdź wyżej"
+                    name="abc_action_bar_home_description_format"
+                    msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
                     name="abc_searchview_description_query"
                     msgid="2550479030709304392" >"Wyszukiwane hasło"
                 </string>
                 <string
+                    name="abc_action_bar_up_description"
+                    msgid="1594238315039666878" >"Przejdź wyżej"
+                </string>
+                <string
+                    name="abc_activitychooserview_choose_application"
+                    msgid="2031811694353399454" >"Wybierz aplikację"
+                </string>
+                <string
                     name="abc_action_bar_home_description"
                     msgid="4600421777120114993" >"Przejdź do strony głównej"
+                </string>
+                <string
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"Gotowe"
                 </string>
                 <string
                     name="abc_searchview_description_search"
@@ -9058,6 +9044,22 @@ true
                 <string
                     name="abc_searchview_description_submit"
                     msgid="8928215447528550784" >"Wyślij zapytanie"
+                </string>
+                <string
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"Wyczyść zapytanie"
+                </string>
+                <string
+                    name="abc_action_bar_home_subtitle_description_format"
+                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Udostępnij dla"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"Udostępnij dla %s"
                 </string>
                 <string
                     name="abc_searchview_description_voice"
@@ -9079,44 +9081,44 @@ false
                     msgid="7165123711973476752" >"Compartilhar com %s"
                 </string>
                 <string
-                    name="abc_action_bar_home_description_format"
-                    msgid="1397052879051804371" >"%1$s, %2$s"
+                    name="abc_searchview_description_voice"
+                    msgid="893419373245838918" >"Pesquisa por voz"
                 </string>
                 <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"Mais opções"
                 </string>
                 <string
-                    name="abc_searchview_description_voice"
-                    msgid="893419373245838918" >"Pesquisa por voz"
-                </string>
-                <string
-                    name="abc_activity_chooser_view_see_all"
-                    msgid="7468859129482906941" >"Ver tudo"
-                </string>
-                <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"Limpar consulta"
+                    name="abc_action_bar_home_description_format"
+                    msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
                     name="abc_searchview_description_submit"
                     msgid="8928215447528550784" >"Enviar consulta"
                 </string>
                 <string
-                    name="abc_action_bar_home_subtitle_description_format"
-                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"Limpar consulta"
+                </string>
+                <string
+                    name="abc_activity_chooser_view_see_all"
+                    msgid="7468859129482906941" >"Ver tudo"
                 </string>
                 <string
                     name="abc_searchview_description_query"
                     msgid="2550479030709304392" >"Consulta de pesquisa"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Compartilhar com"
+                    name="abc_action_bar_home_subtitle_description_format"
+                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
                 </string>
                 <string
                     name="abc_activitychooserview_choose_application"
                     msgid="2031811694353399454" >"Selecione um app"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Compartilhar com"
                 </string>
                 <string
                     name="abc_action_bar_home_description"
@@ -9191,12 +9193,12 @@ false
                     msgid="4076576682505996667" >"Concluído"
                 </string>
                 <string
-                    name="abc_action_bar_home_subtitle_description_format"
-                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
-                </string>
-                <string
                     name="abc_activitychooserview_choose_application"
                     msgid="2031811694353399454" >"Escolher uma aplicação"
+                </string>
+                <string
+                    name="abc_action_bar_home_subtitle_description_format"
+                    msgid="6623331958280229229" >"%1$s, %2$s, %3$s"
                 </string>
             </file>
             <file
@@ -9255,12 +9257,12 @@ false
                     msgid="8928215447528550784" >"Trimiteți interogarea"
                 </string>
                 <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"Navigați la ecranul de pornire"
-                </string>
-                <string
                     name="abc_action_bar_up_description"
                     msgid="1594238315039666878" >"Navigați în sus"
+                </string>
+                <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"Navigați la ecranul de pornire"
                 </string>
             </file>
             <file
@@ -9507,12 +9509,12 @@ false
                     msgid="8264924765203268293" >"Iskanje"
                 </string>
                 <string
-                    name="abc_searchview_description_query"
-                    msgid="2550479030709304392" >"Iskalna poizvedba"
-                </string>
-                <string
                     name="abc_searchview_description_submit"
                     msgid="8928215447528550784" >"Pošiljanje poizvedbe"
+                </string>
+                <string
+                    name="abc_searchview_description_query"
+                    msgid="2550479030709304392" >"Iskalna poizvedba"
                 </string>
                 <string
                     name="abc_searchview_description_voice"
@@ -9571,12 +9573,12 @@ false
                     msgid="3691816814315814921" >"Брисање упита"
                 </string>
                 <string
-                    name="abc_searchview_description_voice"
-                    msgid="893419373245838918" >"Гласовна претрага"
-                </string>
-                <string
                     name="abc_action_bar_home_description"
                     msgid="4600421777120114993" >"Одлазак на Почетну"
+                </string>
+                <string
+                    name="abc_searchview_description_voice"
+                    msgid="893419373245838918" >"Гласовна претрага"
                 </string>
                 <string
                     name="abc_action_bar_up_description"
@@ -9635,12 +9637,12 @@ false
                     msgid="7468859129482906941" >"Visa alla"
                 </string>
                 <string
-                    name="abc_action_bar_up_description"
-                    msgid="1594238315039666878" >"Navigera uppåt"
-                </string>
-                <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"Fler alternativ"
+                </string>
+                <string
+                    name="abc_action_bar_up_description"
+                    msgid="1594238315039666878" >"Navigera uppåt"
                 </string>
                 <string
                     name="abc_searchview_description_submit"
@@ -9699,12 +9701,12 @@ false
                     msgid="3588849162933574182" >"Chaguo zaidi"
                 </string>
                 <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"Nenda mwanzo"
-                </string>
-                <string
                     name="abc_action_bar_home_description_format"
                     msgid="1397052879051804371" >"%1$s, %2$s"
+                </string>
+                <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"Nenda mwanzo"
                 </string>
                 <string
                     name="abc_action_bar_home_subtitle_description_format"
@@ -9716,17 +9718,17 @@ false
                 qualifiers="sw600dp-v13" >
                 <dimen name="abc_action_bar_default_padding_material" >4dp
                 </dimen>
+                <dimen name="abc_action_bar_default_height_material" >64dp
+                </dimen>
                 <dimen name="abc_text_size_title_material_toolbar" >20dp
                 </dimen>
-                <dimen name="abc_action_bar_default_height_material" >64dp
+                <dimen name="abc_config_prefDialogWidth" >580dp
                 </dimen>
 
                 <integer name="abc_max_action_buttons" >
 5
                 </integer>
 
-                <dimen name="abc_config_prefDialogWidth" >580dp
-                </dimen>
                 <dimen name="abc_text_size_subtitle_material_toolbar" >16dp
                 </dimen>
             </file>
@@ -9842,12 +9844,12 @@ false
                     msgid="2031811694353399454" >"అనువర్తనాన్ని ఎంచుకోండి"
                 </string>
                 <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"ప్రశ్నను క్లియర్ చేయి"
-                </string>
-                <string
                     name="abc_searchview_description_query"
                     msgid="2550479030709304392" >"ప్రశ్న శోధించండి"
+                </string>
+                <string
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"ప్రశ్నను క్లియర్ చేయి"
                 </string>
                 <string
                     name="abc_searchview_description_submit"
@@ -9970,12 +9972,12 @@ false
                     msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Ibahagi sa/kay"
-                </string>
-                <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"Higit pang mga opsyon"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Ibahagi sa/kay"
                 </string>
                 <string
                     name="abc_activity_chooser_view_see_all"
@@ -10030,16 +10032,16 @@ false
                     msgid="4076576682505996667" >"Tamamlandı"
                 </string>
                 <string
+                    name="abc_searchview_description_search"
+                    msgid="8264924765203268293" >"Ara"
+                </string>
+                <string
                     name="abc_action_bar_up_description"
                     msgid="1594238315039666878" >"Yukarı git"
                 </string>
                 <string
                     name="abc_searchview_description_clear"
                     msgid="3691816814315814921" >"Sorguyu temizle"
-                </string>
-                <string
-                    name="abc_searchview_description_search"
-                    msgid="8264924765203268293" >"Ara"
                 </string>
                 <string
                     name="abc_searchview_description_voice"
@@ -10058,20 +10060,20 @@ false
                     msgid="4076576682505996667" >"Готово"
                 </string>
                 <string
-                    name="abc_activity_chooser_view_see_all"
-                    msgid="7468859129482906941" >"Переглянути всі"
-                </string>
-                <string
                     name="abc_action_bar_home_description_format"
                     msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
-                    name="abc_searchview_description_query"
-                    msgid="2550479030709304392" >"Пошуковий запит"
+                    name="abc_activity_chooser_view_see_all"
+                    msgid="7468859129482906941" >"Переглянути всі"
                 </string>
                 <string
                     name="abc_action_bar_up_description"
                     msgid="1594238315039666878" >"Перейти вгору"
+                </string>
+                <string
+                    name="abc_searchview_description_query"
+                    msgid="2550479030709304392" >"Пошуковий запит"
                 </string>
                 <string
                     name="abc_searchview_description_clear"
@@ -10082,12 +10084,12 @@ false
                     msgid="7165123711973476752" >"Надіслати через %s"
                 </string>
                 <string
-                    name="abc_action_menu_overflow_description"
-                    msgid="3588849162933574182" >"Інші опції"
-                </string>
-                <string
                     name="abc_action_bar_home_description"
                     msgid="4600421777120114993" >"Перейти на головний"
+                </string>
+                <string
+                    name="abc_action_menu_overflow_description"
+                    msgid="3588849162933574182" >"Інші опції"
                 </string>
                 <string
                     name="abc_searchview_description_voice"
@@ -11228,10 +11230,6 @@ false
                 </style>
 
                 <style
-                    name="Base.V14.Theme.AppCompat.Light.Dialog"
-                    parent="Base.V11.Theme.AppCompat.Light.Dialog" />
-
-                <style
                     name="Base.Theme.AppCompat"
                     parent="Base.V14.Theme.AppCompat" >
                     <item name="android:actionModeCutDrawable">
@@ -11252,16 +11250,16 @@ false
                 </style>
 
                 <style
+                    name="Base.V14.Theme.AppCompat.Light.Dialog"
+                    parent="Base.V11.Theme.AppCompat.Light.Dialog" />
+
+                <style
                     name="Base.V14.Theme.AppCompat.Light"
                     parent="Base.V11.Theme.AppCompat.Light" />
 
                 <style
                     name="Base.V14.Theme.AppCompat.Dialog"
                     parent="Base.V11.Theme.AppCompat.Dialog" />
-
-                <style
-                    name="Base.V14.Theme.AppCompat"
-                    parent="Base.V11.Theme.AppCompat" />
 
                 <style
                     name="Base.Theme.AppCompat.Light"
@@ -11282,6 +11280,10 @@ false
 ?actionModeShareDrawable
                     </item>
                 </style>
+
+                <style
+                    name="Base.V14.Theme.AppCompat"
+                    parent="Base.V11.Theme.AppCompat" />
             </file>
             <file
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-v17\values.xml"
@@ -11343,14 +11345,6 @@ viewStart
                 </style>
 
                 <style
-                    name="RtlOverlay.Widget.AppCompat.PopupMenuItem.InternalGroup"
-                    parent="android:Widget" >
-                    <item name="android:layout_marginStart">
-16dp
-                    </item>
-                </style>
-
-                <style
                     name="RtlOverlay.Widget.AppCompat.PopupMenuItem"
                     parent="android:Widget" >
                     <item name="android:paddingEnd">
@@ -11359,10 +11353,10 @@ viewStart
                 </style>
 
                 <style
-                    name="RtlOverlay.Widget.AppCompat.Search.DropDown.Query"
+                    name="RtlOverlay.Widget.AppCompat.PopupMenuItem.InternalGroup"
                     parent="android:Widget" >
-                    <item name="android:layout_alignParentEnd">
-true
+                    <item name="android:layout_marginStart">
+16dp
                     </item>
                 </style>
 
@@ -11370,6 +11364,14 @@ true
                     name="RtlOverlay.Widget.AppCompat.Search.DropDown.Icon1"
                     parent="android:Widget" >
                     <item name="android:layout_alignParentStart">
+true
+                    </item>
+                </style>
+
+                <style
+                    name="RtlOverlay.Widget.AppCompat.Search.DropDown.Query"
+                    parent="android:Widget" >
+                    <item name="android:layout_alignParentEnd">
 true
                     </item>
                 </style>
@@ -11383,14 +11385,6 @@ true
                 </style>
 
                 <style
-                    name="RtlOverlay.Widget.AppCompat.Search.DropDown.Icon2"
-                    parent="android:Widget" >
-                    <item name="android:layout_toStartOf">
-@id/edit_query
-                    </item>
-                </style>
-
-                <style
                     name="RtlOverlay.Widget.AppCompat.ActionButton.CloseMode"
                     parent="Base.Widget.AppCompat.ActionButton.CloseMode" >
                     <item name="android:paddingStart">
@@ -11398,6 +11392,14 @@ true
                     </item>
                     <item name="android:layout_marginEnd">
 16dp
+                    </item>
+                </style>
+
+                <style
+                    name="RtlOverlay.Widget.AppCompat.Search.DropDown.Icon2"
+                    parent="android:Widget" >
+                    <item name="android:layout_toStartOf">
+@id/edit_query
                     </item>
                 </style>
             </file>
@@ -11462,12 +11464,12 @@ true
                     parent="android:TextAppearance.Material.Display3" />
 
                 <style
-                    name="Base.Widget.AppCompat.Light.ActionBar.TabText"
-                    parent="android:Widget.Material.Light.ActionBar.TabText" />
-
-                <style
                     name="Base.TextAppearance.AppCompat.Display4"
                     parent="android:TextAppearance.Material.Display4" />
+
+                <style
+                    name="Base.Widget.AppCompat.Light.ActionBar.TabText"
+                    parent="android:Widget.Material.Light.ActionBar.TabText" />
 
                 <style
                     name="Base.Widget.AppCompat.AutoCompleteTextView"
@@ -11490,16 +11492,16 @@ false
                 </style>
 
                 <style
-                    name="Base.Widget.AppCompat.ActionBar.TabText"
-                    parent="android:Widget.Material.ActionBar.TabText" />
+                    name="Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
+                    parent="android:TextAppearance.Material.Widget.PopupMenu.Small" />
 
                 <style
                     name="Base.TextAppearance.AppCompat.Small"
                     parent="android:TextAppearance.Material.Small" />
 
                 <style
-                    name="Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
-                    parent="android:TextAppearance.Material.Widget.PopupMenu.Small" />
+                    name="Base.Widget.AppCompat.ActionBar.TabText"
+                    parent="android:Widget.Material.ActionBar.TabText" />
 
                 <style
                     name="Base.TextAppearance.AppCompat.SearchResult.Subtitle"
@@ -11846,10 +11848,6 @@ middle
                     parent="android:TextAppearance.Material.Button" />
 
                 <style
-                    name="Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                    parent="android:TextAppearance.Material.Widget.ActionBar.Subtitle" />
-
-                <style
                     name="Base.ThemeOverlay.AppCompat.Light"
                     parent="android:ThemeOverlay.Material.Light" >
                     <item name="colorControlHighlight">
@@ -11861,6 +11859,10 @@ middle
 true
                     </item>
                 </style>
+
+                <style
+                    name="Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                    parent="android:TextAppearance.Material.Widget.ActionBar.Subtitle" />
 
                 <style
                     name="Base.V21.Theme.AppCompat.Light.Dialog"
@@ -11957,12 +11959,12 @@ true
                 </style>
 
                 <style
-                    name="Base.TextAppearance.AppCompat.Widget.PopupMenu.Small"
-                    parent="android:TextAppearance.Material.Widget.PopupMenu.Small" />
-
-                <style
                     name="Base.Theme.AppCompat.Dialog"
                     parent="Base.V21.Theme.AppCompat.Dialog" />
+
+                <style
+                    name="Base.TextAppearance.AppCompat.Widget.PopupMenu.Small"
+                    parent="android:TextAppearance.Material.Widget.PopupMenu.Small" />
 
                 <style
                     name="Base.TextAppearance.AppCompat.Title"
@@ -11989,12 +11991,12 @@ true
                     parent="android:Widget.Material.Toolbar.Button.Navigation" />
 
                 <style
-                    name="Base.Widget.AppCompat.ActionButton"
-                    parent="android:Widget.Material.ActionButton" />
-
-                <style
                     name="Base.Theme.AppCompat.Light.Dialog"
                     parent="Base.V21.Theme.AppCompat.Light.Dialog" />
+
+                <style
+                    name="Base.Widget.AppCompat.ActionButton"
+                    parent="android:Widget.Material.ActionButton" />
 
                 <style
                     name="Base.TextAppearance.AppCompat.Inverse"
@@ -12102,6 +12104,10 @@ true
                     name="Base.Widget.AppCompat.DropDownItem.Spinner"
                     parent="android:Widget.Material.DropDownItem.Spinner" />
 
+                <style
+                    name="Base.Widget.AppCompat.Light.PopupMenu"
+                    parent="android:Widget.Material.Light.PopupMenu" />
+
                 <style name="Base.Widget.AppCompat.PopupMenu.Overflow" >
                     <item name="android:dropDownHorizontalOffset">
 -4dip
@@ -12112,12 +12118,16 @@ true
                 </style>
 
                 <style
-                    name="Base.Widget.AppCompat.Light.PopupMenu"
-                    parent="android:Widget.Material.Light.PopupMenu" />
-
-                <style
                     name="Base.Widget.AppCompat.Light.AutoCompleteTextView"
                     parent="android:Widget.Material.AutoCompleteTextView" />
+
+                <style
+                    name="Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"
+                    parent="android:TextAppearance.Material.Widget.ActionBar.Menu" />
+
+                <style
+                    name="Base.TextAppearance.AppCompat.Caption"
+                    parent="android:TextAppearance.Material.Caption" />
 
                 <style
                     name="Platform.AppCompat.Light.Dialog"
@@ -12129,14 +12139,6 @@ true
 false
                     </item>
                 </style>
-
-                <style
-                    name="Base.TextAppearance.AppCompat.Caption"
-                    parent="android:TextAppearance.Material.Caption" />
-
-                <style
-                    name="Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"
-                    parent="android:TextAppearance.Material.Widget.ActionBar.Menu" />
 
                 <style
                     name="Base.Widget.AppCompat.ListPopupWindow"
@@ -12151,10 +12153,6 @@ false
                     parent="android:TextAppearance.Material.Widget.ActionBar.Title.Inverse" />
 
                 <style
-                    name="Base.Widget.AppCompat.ActionBar.TabView"
-                    parent="android:Widget.Material.ActionBar.TabView" />
-
-                <style
                     name="Base.ThemeOverlay.AppCompat.Dark"
                     parent="android:ThemeOverlay.Material.Dark" >
                     <item name="colorControlHighlight">
@@ -12166,6 +12164,10 @@ false
 false
                     </item>
                 </style>
+
+                <style
+                    name="Base.Widget.AppCompat.ActionBar.TabView"
+                    parent="android:Widget.Material.ActionBar.TabView" />
 
                 <style
                     name="Base.TextAppearance.AppCompat.Subhead"
@@ -12302,15 +12304,15 @@ false
 false
                 </bool>
 
-                <integer name="abc_max_action_buttons" >
-5
-                </integer>
-
                 <item
                     name="dialog_fixed_height_major"
                     type="dimen">
 60%
                 </item>
+
+                <integer name="abc_max_action_buttons" >
+5
+                </integer>
             </file>
             <file
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\res\values-xlarge-land\values.xml"
@@ -12374,12 +12376,12 @@ false
                     msgid="1594238315039666878" >"转到上一层级"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with_application"
-                    msgid="7165123711973476752" >"通过%s分享"
-                </string>
-                <string
                     name="abc_action_bar_home_description"
                     msgid="4600421777120114993" >"转到主屏幕"
+                </string>
+                <string
+                    name="abc_shareactionprovider_share_with_application"
+                    msgid="7165123711973476752" >"通过%s分享"
                 </string>
             </file>
             <file
@@ -12566,12 +12568,12 @@ false
                     msgid="1397052879051804371" >"%1$s, %2$s"
                 </string>
                 <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"Sula inkinga"
-                </string>
-                <string
                     name="abc_searchview_description_submit"
                     msgid="8928215447528550784" >"Hambisa umbuzo"
+                </string>
+                <string
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"Sula inkinga"
                 </string>
             </file>
         </source>
@@ -13010,19 +13012,19 @@ false
                     name="theme_name"
                     format="string" />
                 <attr
-                    name="ic_mtrl_search"
-                    format="reference" />
-                <attr
                     name="color_card"
                     format="color" />
+                <attr
+                    name="ic_mtrl_search"
+                    format="reference" />
                 <attr
                     name="color_background"
                     format="color" />
                 <attr
-                    name="ic_mtrl_new"
+                    name="ic_mtrl_overflow"
                     format="reference" />
                 <attr
-                    name="ic_mtrl_overflow"
+                    name="ic_mtrl_new"
                     format="reference" />
             </file>
             <file
@@ -13128,21 +13130,21 @@ V2.5 - August 25, 2014
             <file
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\src\main\res\values\colors.xml"
                 qualifiers="" >
-                <color name="card_dark" >#505050
-                </color>
                 <color name="current_none" >#DF5A49
                 </color>
-                <color name="background_light" >#F0F0F0
-                </color>
-                <color name="background_dark" >#404040
+                <color name="card_dark" >#505050
                 </color>
                 <color name="forest_green" >#508a4c
                 </color>
-                <color name="card_light" >#FFFFFF
+                <color name="background_dark" >#404040
+                </color>
+                <color name="background_light" >#F0F0F0
+                </color>
+                <color name="current_most" >#EFC94C
                 </color>
                 <color name="memorized" >#45B29D
                 </color>
-                <color name="current_most" >#EFC94C
+                <color name="card_light" >#FFFFFF
                 </color>
                 <color name="primary" >#009688
                 </color>
@@ -13164,19 +13166,19 @@ V2.5 - August 25, 2014
             <file
                 path="C:\Users\Casey\Desktop\github\scripturememory\App\src\main\res\values\dimens.xml"
                 qualifiers="" >
-                <dimen name="navigation_drawer_width" >280dp
-                </dimen>
                 <dimen name="widget_margin" >8dp
+                </dimen>
+                <dimen name="navigation_drawer_width" >280dp
                 </dimen>
                 <dimen name="button_text_size" >16dp
                 </dimen>
-                <dimen name="tab_host_default_height" >48dp
-                </dimen>
                 <dimen name="activity_horizontal_margin" >16dp
                 </dimen>
-                <dimen name="title_text_size" >22dp
+                <dimen name="tab_host_default_height" >48dp
                 </dimen>
                 <dimen name="activity_vertical_margin" >16dp
+                </dimen>
+                <dimen name="title_text_size" >22dp
                 </dimen>
                 <dimen name="card_button_height" >70dp
                 </dimen>
@@ -13284,15 +13286,23 @@ Dark
                 </string>
                 <string name="add_verse" >Add Verse
                 </string>
-                <string name="action_settings" >Settings
-                </string>
                 <string name="enter_verse" >Enter Verse
+                </string>
+                <string name="action_settings" >Settings
                 </string>
                 <string name="hello_blank_fragment" >Hello blank fragment
                 </string>
                 <string name="navigation_drawer_close" >Close navigation drawer
                 </string>
 
+                <string-array name="pref_themes" >
+                    <item>
+Light
+                    </item>
+                    <item>
+Dark
+                    </item>
+                </string-array>
                 <string-array name="pref_default_screen" >
                     <item>
 Dashboard
@@ -13302,14 +13312,6 @@ Current Verses
                     </item>
                     <item>
 Memorized Verses
-                    </item>
-                </string-array>
-                <string-array name="pref_themes" >
-                    <item>
-Light
-                    </item>
-                    <item>
-Dark
                     </item>
                 </string-array>
 
@@ -13376,8 +13378,6 @@ Alphabetical
                 <string name="credits_votd" >Scriptures for the Verse of the Day card are 
         taken from VerseOfTheDay.com with permission.
                 </string>
-                <string name="reference" >Reference
-                </string>
 
                 <string-array name="pref_default_screen_values" >
                     <item>
@@ -13391,9 +13391,7 @@ Alphabetical
                     </item>
                 </string-array>
 
-                <string name="add_widget" >Add widget
-                </string>
-                <string name="app_name" >Scripture Memory
+                <string name="reference" >Reference
                 </string>
 
                 <string-array name="pref_themes_values" >
@@ -13405,12 +13403,16 @@ Alphabetical
                     </item>
                 </string-array>
 
-                <string name="share_message" >Are you looking for a new way to memorize Scripture? You should try this new app called Scripture Memory Notifications! You can add your favorite verses or try to memorize the Verse of the Day. You can even challenge yourself with just the first letter of each word, and much more, all from your phone\'s notification drawer!\n\nLearn more at https://play.google.com/store/apps/details?id=com.caseybrooks.scripturememory
+                <string name="app_name" >Scripture Memory
+                </string>
+                <string name="add_widget" >Add widget
                 </string>
                 <string name="credits_esv" >Initial Scripture quotations are from The Holy 
         Bible, English Standard Version® (ESV®), copyright © 2001 by Crossway, 
         a publishing ministry of Good News Publishers. Used by permission. All 
         rights reserved.
+                </string>
+                <string name="share_message" >Are you looking for a new way to memorize Scripture? You should try this new app called Scripture Memory Notifications! You can add your favorite verses or try to memorize the Verse of the Day. You can even challenge yourself with just the first letter of each word, and much more, all from your phone\'s notification drawer!\n\nLearn more at https://play.google.com/store/apps/details?id=com.caseybrooks.scripturememory
                 </string>
                 <string name="drawer_open" >Open
                 </string>

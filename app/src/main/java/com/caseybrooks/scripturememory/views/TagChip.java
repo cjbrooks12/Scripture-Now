@@ -77,6 +77,10 @@ public class TagChip extends RelativeLayout {
         }
     }
 
+    public int getMode() {
+        return mode;
+    }
+
     public void setTag(int tagId) {
         this.tagId = tagId;
 
@@ -91,6 +95,29 @@ public class TagChip extends RelativeLayout {
         tagCircle.setBackgroundDrawable(Util.Drawables.circle(color));
     }
 
+    public boolean changeName(String newName) {
+        VerseDB db = new VerseDB(context);
+        db.open();
+        db.updateTag(tagId, newName, null);
+        tagName.setText(db.getTagName(tagId));
+        db.close();
 
+        return true;
+    }
 
+    public boolean changeColor(String color) {
+        VerseDB db = new VerseDB(context);
+        db.open();
+        db.updateTag(tagId, null, color);
+        db.close();
+
+        return true;
+    }
+
+    public void deleteTag() {
+        VerseDB db = new VerseDB(context);
+        db.open();
+        db.deleteTag(tagId);
+        db.close();
+    }
 }

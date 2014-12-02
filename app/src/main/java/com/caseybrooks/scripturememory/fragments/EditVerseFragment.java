@@ -1,7 +1,12 @@
 package com.caseybrooks.scripturememory.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -13,28 +18,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.data.FlowLayout;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.misc.FlowLayout;
 import com.caseybrooks.scripturememory.notifications.MainNotification;
 import com.caseybrooks.scripturememory.views.TagChip;
+
+import java.util.Arrays;
 
 public class EditVerseFragment extends Fragment {
 //Data Members
 //------------------------------------------------------------------------------
 	Context context;
 	View view;
-	VerseDB db;
     Passage passage;
 	
 	ActionBar ab;
 	EditText editRef, editVer;
 
     FlowLayout tagChipsLayout;
+    SeekBar seekbar;
 
 //Lifecycle and Initialization
 //------------------------------------------------------------------------------
@@ -45,9 +53,8 @@ public class EditVerseFragment extends Fragment {
 //		if(theme == 0) new ContextThemeWrapper(getActivity(), R.style.Theme_ScriptureMemory_Light);
 //		else new ContextThemeWrapper(getActivity(), R.style.Theme_ScriptureMemory_Light);
 		
-		view = inflater.inflate(R.layout.fragment_edit_verse, container, false); 
-        context = getActivity();	
-        db = new VerseDB(context);
+		view = inflater.inflate(R.layout.fragment_edit_verse, container, false);
+        context = getActivity();
         initialize();
       
         return view;
@@ -56,7 +63,7 @@ public class EditVerseFragment extends Fragment {
 	private void initialize() {
 		long id = getActivity().getIntent().getIntExtra("KEY_ID", 1);
 
-		db.open();
+        VerseDB db = new VerseDB(context).open();
 		passage = db.getVerse(id);
 
         if(passage != null) {
@@ -65,21 +72,174 @@ public class EditVerseFragment extends Fragment {
             editVer = (EditText) view.findViewById(R.id.updateVerse);
             editVer.setText(passage.getText());
 
+            seekbar = (SeekBar) view.findViewById(R.id.stateSeekBar);
+            seekbar.setProgress(passage.getState() - 1);
+
+            int color = db.getStateColor(seekbar.getProgress() + 1);
+
+            Drawable line = seekbar.getProgressDrawable();
+            line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+            if(Build.VERSION.SDK_INT >= 16) {
+                Drawable thumb = seekbar.getThumb();
+                thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            }
+
+            seekbar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                    VerseDB db = new VerseDB(context).open();
+                    int color = db.getStateColor(progressValue + 1);
+                    passage.setState(progressValue + 1);
+                    db.updateVerse(passage);
+                    db.close();
+
+                    Drawable line = seekBar.getProgressDrawable();
+                    line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+//                    ShapeDrawable drawable = (ShapeDrawable) Util.Drawables.circle(color);
+//                    drawable.setIntrinsicHeight(32);
+//                    drawable.setIntrinsicWidth(32);
+//                    seekBar.setThumb(drawable);
+
+                    if(Build.VERSION.SDK_INT >= 16) {
+                        Drawable thumb = seekBar.getThumb();
+                        thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                    }
+
+//                    try {
+//                        Field field = seekBar.getClass().getDeclaredField("mThumb");
+////                        Drawable drawable = new LayerDrawable(null);
+////                        Method setFilter = drawable.getClass().getDeclaredMethod("setColorFilter");
+////                        setFilter.invoke(field.get(seekBar), color, PorterDuff.Mode.SRC_IN);
+//                    }
+//                    catch(Exception e) {
+//                        Log.e("ERROR", e.getMessage());
+//                    }
+
+
+
+                    //seekBar.setBackgroundColor(color);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
+            });
+
             tagChipsLayout = (FlowLayout) view.findViewById(R.id.tagChipLayout);
 
             String[] tags = passage.getTags();
 
             for(String tag : tags) {
-                TagChip tagChip = new TagChip(context);
+                final TagChip tagChip = new TagChip(context);
                 int tagId = (int)db.getTagID(tag);
                 tagChip.setMode(0);
                 tagChip.setTag(tagId);
+                tagChip.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        if(((TagChip)v).getMode() == 2) {
+                            Toast.makeText(context, "Add new tag", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            final EditText input = new EditText(context);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder
+                                    .setTitle("Change Tag Name")
+                                    .setMessage("Change the name of this tag")
+                                    .setView(input)
+                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            String value = input.getText().toString();
+                                            ((TagChip) v).changeName(value);
+                                        }
+                                    })
+
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            // Canceled.
+                                        }
+                                    });
+
+                            builder.show();
+                        }
+                    }
+                });
+
+                tagChip.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(final View v) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder
+                            .setTitle("Delete Tag")
+                            .setMessage("Remove this tag from all verses?")
+                            .setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    ((TagChip) v).deleteTag();
+                                    tagChipsLayout.removeView(v);
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+
+                                }
+                            });
+                        builder.show();
+
+                        return false;
+                    }
+                });
 
                 tagChipsLayout.addView(tagChip);
             }
 
             TagChip tagChip = new TagChip(context);
             tagChip.setMode(2);
+
+            tagChip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    final EditText input = new EditText(context);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder
+                            .setTitle("New Tag")
+                            .setMessage("Enter the name for this new tag")
+                            .setView(input)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    String value = input.getText().toString().trim();
+                                    VerseDB db = new VerseDB(context).open();
+                                    passage.addTag(value);
+                                    db.updateVerse(passage);
+
+                                    int[] tags = db.getAllTagIds();
+                                    Arrays.sort(tags);
+
+                                    TagChip newTagChip = new TagChip(context);
+                                    newTagChip.setMode(0);
+                                    newTagChip.setTag(tags[tags.length-1]);
+
+                                    tagChipsLayout.addView(newTagChip, tagChipsLayout.getChildCount() - 1);
+                                    db.close();
+                                }
+                            })
+
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    // Canceled.
+                                }
+                            });
+
+                    builder.show();
+                }
+
+            });
 
             tagChipsLayout.addView(tagChip);
         }
@@ -129,7 +289,9 @@ public class EditVerseFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
+        VerseDB db = new VerseDB(context).open();
+
+        switch (item.getItemId()) {
 	    case android.R.id.home:
 	    	returnToDashboard();
 	    	((ActionBarActivity) context).overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
@@ -144,7 +306,8 @@ public class EditVerseFragment extends Fragment {
 	    	return true;
 	    case R.id.menu_edit_save_changes:
             if(passage != null) {
-                db.open();
+                passage.setState(seekbar.getProgress() + 1);
+                passage.setText(editVer.getText().toString());
                 db.updateVerse(passage);
                 db.close();
                 Toast.makeText(context, "Verse Updated", Toast.LENGTH_SHORT).show();
@@ -153,27 +316,25 @@ public class EditVerseFragment extends Fragment {
 	    	return true;
 	    case R.id.menu_edit_delete:
             if(passage != null) {
-                db.open();
-                passage.setState(7);
+                passage.setState(6);
                 db.updateVerse(passage);
                 db.close();
             }
 			returnToDashboard();
 	    	return true;
 	    case R.id.menu_edit_change_list:
-            if(passage != null) {
-                db.open();
-                if (passage.getState() != 5) {
-                    passage.setState(5);
-                    db.updateVerse(passage);
-                }
-                else {
-                    passage.setState(1+(int)(Math.random()*4));
-                    db.updateVerse(passage);
-                }
-                db.close();
-                Toast.makeText(context, "Verse Updated", Toast.LENGTH_SHORT).show();
-            }
+//            if(passage != null) {
+//                if (passage.getState() != 5) {
+//                    passage.setState(5);
+//                    db.updateVerse(passage);
+//                }
+//                else {
+//                    passage.setState(1+(int)(Math.random()*4));
+//                    db.updateVerse(passage);
+//                }
+//                db.close();
+//                Toast.makeText(context, "Verse Updated", Toast.LENGTH_SHORT).show();
+//            }
 			returnToDashboard();
 	    	return true;
 	    case R.id.menu_edit_share:
@@ -189,6 +350,7 @@ public class EditVerseFragment extends Fragment {
 	    	returnToDashboard();
 	    	return true;
         default:
+            db.close();
             return super.onOptionsItemSelected(item);
 	    }
 	}

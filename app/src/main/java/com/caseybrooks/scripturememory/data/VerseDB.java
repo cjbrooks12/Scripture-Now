@@ -253,12 +253,12 @@ public class VerseDB {
         values.put(KEY_VERSES_REFERENCE, passage.getReference());
         values.put(KEY_VERSES_VERSE, passage.getText());
         values.put(KEY_VERSES_VERSION, passage.getVersion().getCode());
-        //values.put(KEY_VERSES_DATE_MODIFIED, passage.getMillis());
+        values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_STATE, passage.getState());
 
         //ensure tags on this verse are up-to-date
         String[] tags = passage.getTags();
-        String tag_string = "";
+        String tag_string = ",";
         for(String tag : tags) {
             long tagID = getTagID(tag);
 
@@ -272,6 +272,26 @@ public class VerseDB {
         values.put(KEY_VERSES_TAGS, tag_string);
 
         db.update(TABLE_VERSES, values, KEY_VERSES_ID + "=" + passage.getId(), null);
+
+        cleanupTags();
+    }
+
+    public void updateTag(int id, String name, String hexColor) {
+        //check to see if the name to change the tag to already exists
+        long existingTagId = getTagID(name);
+
+        if(existingTagId == -1) {
+            ContentValues values = new ContentValues();
+            if (name != null && name.length() > 0) {
+                values.put(KEY_TAGS_TAG, name);
+            }
+
+            if (hexColor != null && hexColor.length() > 0 && hexColor.matches("#\\d{6}")) {
+                values.put(KEY_TAGS_COLOR, hexColor);
+            }
+
+            db.update(TABLE_TAGS, values, KEY_TAGS_ID + "=" + id, null);
+        }
     }
 
     public int[] getAllTagIds() {
@@ -283,17 +303,19 @@ public class VerseDB {
         if (c != null && c.getCount() > 0) c.moveToFirst();
         else return null;
 
-        ArrayList<Integer> tagsList = new ArrayList<Integer>();
         ArrayList<String> tagNames = new ArrayList<String>();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-            tagsList.add(c.getInt(c.getColumnIndex(KEY_TAGS_ID)));
-            tagNames.add(c.getString(c.getColumnIndex(KEY_TAGS_TAG)));
+            int tagCount = c.getInt(c.getColumnIndex(KEY_TAGS_ID));
+
+            if(getTagCount(tagCount) > 0) {
+                tagNames.add(c.getString(c.getColumnIndex(KEY_TAGS_TAG)));
+            }
         }
 
         Collections.sort(tagNames);
 
         int[] tagIds = new int[tagNames.size()];
-        for(int i = 0; i < tagsList.size(); i++) {
+        for(int i = 0; i < tagNames.size(); i++) {
             tagIds[i] = (int)getTagID(tagNames.get(i));
         }
 
@@ -340,26 +362,12 @@ public class VerseDB {
         return Color.parseColor(c.getString(c.getColumnIndex(KEY_TAGS_COLOR)));
     }
 
-    public Verses<Passage> getTaggedVerses(String tag) {
-        String selectQuery =
-                "SELECT *" +
-                " FROM " + TABLE_TAGS +
-                " WHERE " + KEY_TAGS_TAG + " LIKE \"" + tag + "\"";
-
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null && c.getCount() > 0) c.moveToFirst();
-        else return new Verses<Passage>();
-
-        int tagId = c.getInt(c.getColumnIndex(KEY_TAGS_ID));
-
-        return getTaggedVerses(tagId);
-    }
-
     public Verses<Passage> getTaggedVerses(int tagId) {
         String selectQuery =
                 "SELECT *" +
                     " FROM " + TABLE_VERSES +
-                    " WHERE " + KEY_VERSES_TAGS + " LIKE '%," + tagId + ",%'";
+                    " WHERE " + KEY_VERSES_TAGS + " LIKE '%," + tagId + ",%'" +
+                    " AND " + KEY_VERSES_STATE + " < 6";
 
 
         Cursor c = db.rawQuery(selectQuery, null);
@@ -378,7 +386,8 @@ public class VerseDB {
         String selectQuery =
                 "SELECT *" +
                 " FROM " + TABLE_VERSES +
-                " WHERE " + KEY_VERSES_TAGS + " LIKE '%," + tagId + ",%'";
+                " WHERE " + KEY_VERSES_TAGS + " LIKE '%," + tagId + ",%'" +
+                " AND " + KEY_VERSES_STATE + " < 6";
 
 
         Cursor c = db.rawQuery(selectQuery, null);
@@ -402,6 +411,38 @@ public class VerseDB {
         }
 
         return db.insert(TABLE_TAGS, null, tag_values);
+    }
+
+    private void cleanupTags() {
+        String selectQuery =
+                "SELECT *" +
+                " FROM " + TABLE_TAGS;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null && c.getCount() > 0) c.moveToFirst();
+        else return;
+
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            int tagId = c.getInt(c.getColumnIndex(KEY_TAGS_ID));
+            if(getTagCount(tagId) == 0) {
+                deleteTag(tagId);
+            }
+        }
+    }
+
+    public void deleteTag(int id) {
+        //TODO: change to just iterate over a cursor and update the tag fields directly
+        Verses<Passage> verses = getTaggedVerses(id);
+        for(int i = 0; i < verses.size(); i++) {
+            String[] tags = verses.get(i).getTags();
+            ArrayList<String> tagsList = new ArrayList<String>();
+            Collections.addAll(tagsList, tags);
+            tagsList.remove(getTagName(id));
+            verses.get(i).removeAllTags();
+            verses.get(i).setTags(tagsList.toArray(new String[tagsList.size()]));
+            updateVerse(verses.get(i));
+        }
+        db.delete(TABLE_TAGS, KEY_TAGS_ID + "=" + id, null);
     }
 
     //get information about the state of a verses
@@ -458,7 +499,8 @@ public class VerseDB {
     public Verses<Passage> getAllVerses() {
         String selectQuery =
                 "SELECT *" +
-                " FROM " + TABLE_VERSES;
+                " FROM " + TABLE_VERSES +
+                " WHERE " + KEY_VERSES_STATE + " < 6";
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) c.moveToFirst();
