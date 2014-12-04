@@ -12,16 +12,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.OnTaskCompletedListener;
-import com.caseybrooks.scripturememory.data.VOTDGetTask;
+import com.caseybrooks.scripturememory.data.VOTDService;
 import com.caseybrooks.scripturememory.data.VerseDB;
-
-import java.util.Calendar;
 
 public class VOTDCard extends FrameLayout {
 //Data Members
@@ -32,6 +27,8 @@ public class VOTDCard extends FrameLayout {
     private ProgressBar progress;
     ImageButton removeView;
     LinearLayout layout;
+
+    Passage currentVerse;
 
     //status of Verse of the Day.
     //0: No attempt has been made to retrieve the Verse
@@ -72,6 +69,8 @@ public class VOTDCard extends FrameLayout {
         progress.setIndeterminate(true);
 
         this.setOnClickListener(votdAdd);
+
+        retrieve();
     }
 
     public void removeFromParent() {
@@ -81,47 +80,48 @@ public class VOTDCard extends FrameLayout {
 
     public void retrieve() {
         status = 1;
+        currentVerse = VOTDService.getCurrentVerse(context);
 
-        layout.addView(progress, 1);
-        ref.setVisibility(View.GONE);
-        ver.setVisibility(View.GONE);
-		try {
-			new VOTDGetTask(context, MetaSettings.getBibleVersion(context), new OnTaskCompletedListener() {
-				@Override
-				public void onTaskCompleted(Object param) {
-					if (param != null) {
-						status = 2;
+        if(currentVerse == null) {
+            new VOTDService.GetVOTD(context, new VOTDService.GetVerseListener() {
 
-						Passage passage = (Passage) param;
-						layout.removeView(progress);
-						ref.setVisibility(View.VISIBLE);
-						ver.setVisibility(View.VISIBLE);
+                @Override
+                public void onPreDownload() {
+                    layout.addView(progress, 1);
+                    ref.setVisibility(View.GONE);
+                    ver.setVisibility(View.GONE);
+                }
 
-						ref.setText(passage.getReference());
-						ver.setText(passage.getText());
-					} else {
-						status = 3;
+                @Override
+                public void onVerseDownloaded(Passage passage) {
+                    if(passage != null) {
+                        currentVerse = passage;
 
-						layout.removeView(progress);
-						ref.setVisibility(View.VISIBLE);
-						ver.setVisibility(View.VISIBLE);
+                        layout.removeView(progress);
+                        ref.setVisibility(View.VISIBLE);
+                        ver.setVisibility(View.VISIBLE);
 
-						ref.setText("Problem Retrieving Verse");
+                        ref.setText(currentVerse.getReference());
+                        ver.setText(currentVerse.getText());
+                        status = 2;
+                    }
+                    else {
+                        layout.removeView(progress);
+                        ref.setVisibility(View.VISIBLE);
+                        ver.setVisibility(View.VISIBLE);
+
+                        ref.setText("Problem Retrieving Verse");
 						ver.setText("Please check your internet connection and click to try again");
-					}
-				}
-			}).execute();
-		}
-		catch(Exception e) {
-			status = 3;
-
-			layout.removeView(progress);
-			ref.setVisibility(View.VISIBLE);
-			ver.setVisibility(View.VISIBLE);
-
-			ref.setText("Problem Retrieving Verse");
-			ver.setText(e.getMessage());
-		}
+                        status = 3;
+                    }
+                }
+            }).execute();
+        }
+        else {
+            ref.setText(currentVerse.getReference());
+            ver.setText(currentVerse.getText());
+            status = 2;
+        }
 	}
 
 //Helper Methods
@@ -133,30 +133,11 @@ public class VOTDCard extends FrameLayout {
 			builder.setMessage("Save " + ref.getText().toString() + " to verse list?");
 			builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					boolean success;
-					try {
-                        Passage newVerse = new Passage(ref.getText().toString());
-                        newVerse.setText(ver.getText().toString());
-                        newVerse.setVersion(MetaSettings.getBibleVersion(context));
-                        newVerse.setState(1);
-                        newVerse.setMillis(Calendar.getInstance().getTimeInMillis());
-                        newVerse.addTag("VOTD");
-                        VerseDB db = new VerseDB(context);
-                        db.open();
-                        db.insertVerse(newVerse);
-                        db.close();
-                        success = true;
-					}
-					catch(Exception ex) {
-						success = false;
-						Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
-					}
-					if(success) {
-						Toast.makeText(context, "Verse Saved", Toast.LENGTH_SHORT).show();
-					}
-				    else {
-					    Toast.makeText(context, "Something went wrong while saving verse", Toast.LENGTH_LONG).show();
-				    }
+                    VerseDB db = new VerseDB(context);
+                    db.open();
+                    currentVerse.setState(1);
+                    db.updateVerse(currentVerse);
+                    db.close();
 				}
 			});
 			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

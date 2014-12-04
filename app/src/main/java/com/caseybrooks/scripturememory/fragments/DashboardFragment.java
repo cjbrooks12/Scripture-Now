@@ -19,12 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
-import com.caseybrooks.scripturememory.data.VersesDatabase;
 import com.caseybrooks.scripturememory.notifications.MainNotification;
 import com.caseybrooks.scripturememory.views.NotificationVerseCard;
 import com.caseybrooks.scripturememory.views.VOTDCard;
@@ -111,14 +109,8 @@ public class DashboardFragment extends Fragment {
         input_card.editVerse.setOnFocusChangeListener(inputTextboxListener);
 
 		votd_card = new VOTDCard(context);
-        if(Util.isConnected(context)) {
-            votd_card.retrieve();
-            votd_card.setVisibility(View.VISIBLE);
-            dashboardLayout.addView(votd_card, 1);
-        }
-        else {
-            votd_card.setVisibility(View.GONE);
-        }
+        votd_card.setVisibility(View.VISIBLE);
+        dashboardLayout.addView(votd_card, 1);
 
         setHasOptionsMenu(true);
         setupActionBar();
@@ -184,13 +176,8 @@ public class DashboardFragment extends Fragment {
 	    	return true;
 	    case R.id.menu_dashboard_votd:
 	    	if(votd_card.getVisibility() == View.GONE) {
-				if(Util.isConnected(context)) {
-                    votd_card.setVisibility(View.VISIBLE);
-                    dashboardLayout.addView(votd_card, 1);
-	            }
-	            else {
-	            	Toast.makeText(context, "Cannot retrieve verse, no Internet Connection", Toast.LENGTH_LONG).show();
-	            }
+                votd_card.setVisibility(View.VISIBLE);
+                dashboardLayout.addView(votd_card, 1);
 			}
 			else {
 				votd_card.setVisibility(View.GONE);

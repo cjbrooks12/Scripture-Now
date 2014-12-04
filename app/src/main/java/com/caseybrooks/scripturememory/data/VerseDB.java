@@ -85,6 +85,9 @@ public class VerseDB {
     public static final int CURRENT_ALL = 4;
     public static final int MEMORIZED = 5;
     public static final int DELETED = 6;
+    public static final int ARCHIVED = 7;
+    public static final int CACHED = 8;
+    public static final int VOTD = 9;
     public static final int ALL_VERSES = -1;
     public static final int CURRENT = -2;
 
@@ -140,6 +143,21 @@ public class VerseDB {
             deleted.put(KEY_STATE_STATE, "Deleted");
             deleted.put(KEY_STATE_COLOR, "#666688");
             db.insert(TABLE_STATE, null, deleted);
+
+            ContentValues archived = new ContentValues();
+            archived.put(KEY_STATE_STATE, "Archived");
+            archived.put(KEY_STATE_COLOR, "#EDEDA0");
+            db.insert(TABLE_STATE, null, archived);
+
+            ContentValues cached = new ContentValues();
+            cached.put(KEY_STATE_STATE, "Cached");
+            cached.put(KEY_STATE_COLOR, "#666688");
+            db.insert(TABLE_STATE, null, cached);
+
+            ContentValues votd = new ContentValues();
+            votd.put(KEY_STATE_STATE, "VOTD");
+            votd.put(KEY_STATE_COLOR, "#8F0DED");
+            db.insert(TABLE_STATE, null, votd);
 
         }
 
@@ -274,6 +292,27 @@ public class VerseDB {
         db.update(TABLE_VERSES, values, KEY_VERSES_ID + "=" + passage.getId(), null);
 
         cleanupTags();
+    }
+
+//I may need to clean up below this line
+//------------------------------------------------------------------------------
+
+    public Passage getMostRecentVOTD() {
+        //SELECT 'all verses that are in VOTD state or have VOTD tag' ORDER BY 'date added in descending order'
+        String selectQuery =
+                "SELECT *" +
+                " FROM " + TABLE_VERSES +
+                " WHERE " + KEY_VERSES_STATE + " = " + VOTD +
+                " OR " + KEY_VERSES_TAGS + " LIKE '%," + getTagID("VOTD") + ",%'" +
+                " ORDER BY " + KEY_VERSES_DATE_ADDED + " DESC ";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null && c.getCount() > 0) {
+            //in descending order, the most recent verse is the first one
+            c.moveToFirst();
+            return getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
+        }
+        else return null;
     }
 
     public void updateTag(int id, String name, String hexColor) {
