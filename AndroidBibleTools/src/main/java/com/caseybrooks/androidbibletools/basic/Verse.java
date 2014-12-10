@@ -313,14 +313,19 @@ public class Verse extends AbstractVerse {
 
 //Retrieve verse from the internet
 //------------------------------------------------------------------------------
-	@Override
-	public Verse retrieve() throws IOException{
-		String query = "http://www.biblestudytools.com/" +
-							   version.getCode() + "/" +
-							   book.getName().toLowerCase().replaceAll(" ", "-") + "/" +
-							   chapter + "-" + verseNumber + ".html";
+    @Override
+    public String getURL() {
+        return "http://www.biblestudytools.com/" + version.getCode() + "/" +
+                book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
+                "/passage.aspx?q=" +
+                book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
+                "+" + chapter + ":" + verseNumber;
 
-		Document doc = Jsoup.connect(query).get();
+    }
+
+    @Override
+	public Verse retrieve() throws IOException{
+		Document doc = Jsoup.connect(getURL()).get();
 
 		Elements passage = doc.select(".versetext");
 		flags = EnumSet.of(Flags.TEXT_NORMAL, Flags.PRINT_VERSE_NUMBER, Flags.NUMBER_DOT);

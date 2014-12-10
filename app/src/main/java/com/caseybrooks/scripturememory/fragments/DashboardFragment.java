@@ -9,8 +9,6 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,7 +33,7 @@ public class DashboardFragment extends Fragment {
 	View view;
 
 	LinearLayout dashboardLayout;
-	ActionBar ab;
+//	ActionBar ab;
 	
 	NotificationVerseCard notify_card;
 	VerseInputCard input_card;
@@ -51,11 +49,6 @@ public class DashboardFragment extends Fragment {
         context = getActivity();
         initialize();
 
-//        VersesDatabase db = new VersesDatabase(context);
-//        db.open();
-//        db.migrate();
-//        db.close();
-
         return view;
     }
 	
@@ -65,7 +58,7 @@ public class DashboardFragment extends Fragment {
 	    receiver = new RefreshReceiver();
 		context.registerReceiver(receiver, new IntentFilter(REFRESH));
 
-		setupActionBar();
+//		setupActionBar();
 	    notify_card.refresh();
 		if(MetaSettings.getNotificationActive(context)) {
 		    MainNotification.notify(context).show();
@@ -113,7 +106,7 @@ public class DashboardFragment extends Fragment {
         dashboardLayout.addView(votd_card, 1);
 
         setHasOptionsMenu(true);
-        setupActionBar();
+//        setupActionBar();
         receiveImplicitIntent();
 	}
 
@@ -149,11 +142,11 @@ public class DashboardFragment extends Fragment {
 
 //ActionBar
 //------------------------------------------------------------------------------
-	private void setupActionBar() {
-		ab = ((ActionBarActivity) context).getSupportActionBar();
-        ab.setHomeButtonEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
-	}
+//	private void setupActionBar() {
+//		ab = ((ActionBarActivity) context).getSupportActionBar();
+//        ab.setHomeButtonEnabled(true);
+//        ab.setDisplayHomeAsUpEnabled(true);
+//	}
 
 	@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -188,21 +181,6 @@ public class DashboardFragment extends Fragment {
             return super.onOptionsItemSelected(item);
 	    }
 	}
-
-//Listeners
-//-----------------------------------------------------------------------------
-//	private OnClickListener editNotificationVerse = new OnClickListener() {
-// 		@Override
-//		public void onClick(View v) {
-////			switchToEditFragment(notify_card.getId());
-// 			if(notify_card.isExpanded()) {
-// 				notify_card.shrinkCard();
-// 			}
-// 			else {
-// 				notify_card.expandCard();
-// 			}
-//		}
-//	};
 
 //Broadcast Receiver to update NotificationVerseCard upon user hitting "next"
 //	in main notification

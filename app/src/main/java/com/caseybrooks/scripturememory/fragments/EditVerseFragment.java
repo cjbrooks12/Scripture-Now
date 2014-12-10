@@ -96,29 +96,11 @@ public class EditVerseFragment extends Fragment {
 
                     Drawable line = seekBar.getProgressDrawable();
                     line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-//                    ShapeDrawable drawable = (ShapeDrawable) Util.Drawables.circle(color);
-//                    drawable.setIntrinsicHeight(32);
-//                    drawable.setIntrinsicWidth(32);
-//                    seekBar.setThumb(drawable);
 
                     if(Build.VERSION.SDK_INT >= 16) {
                         Drawable thumb = seekBar.getThumb();
                         thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
                     }
-
-//                    try {
-//                        Field field = seekBar.getClass().getDeclaredField("mThumb");
-////                        Drawable drawable = new LayerDrawable(null);
-////                        Method setFilter = drawable.getClass().getDeclaredMethod("setColorFilter");
-////                        setFilter.invoke(field.get(seekBar), color, PorterDuff.Mode.SRC_IN);
-//                    }
-//                    catch(Exception e) {
-//                        Log.e("ERROR", e.getMessage());
-//                    }
-
-
-
-                    //seekBar.setBackgroundColor(color);
                 }
 
                 @Override

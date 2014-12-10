@@ -7,7 +7,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import android.util.Log;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
@@ -226,8 +225,6 @@ public class VerseDB {
             String[] tagNames = new String[tagNumbers.length - 1];
             for (int i = 1; i < tagNumbers.length; i++) {
                 if (tagNumbers[i].length() >= 1) {
-                    Log.i("Add tag to verse", tagNumbers[i]);
-
                     tagNames[i-1] = getTagName(Integer.parseInt(tagNumbers[i]));
                 }
             }
@@ -262,7 +259,7 @@ public class VerseDB {
         }
         values.put(KEY_VERSES_TAGS, tag_string);
 
-        return (int) db.insert(TABLE_VERSES, null, values);
+        return (int) db.insertWithOnConflict(TABLE_VERSES, null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 
     public void updateVerse(Passage passage) {

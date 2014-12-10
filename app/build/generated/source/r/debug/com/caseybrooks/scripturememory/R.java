@@ -1892,13 +1892,13 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f0b001f;
         public static final int action_bar_title=0x7f0b001e;
         public static final int action_context_bar=0x7f0b0032;
-        public static final int action_example=0x7f0b00b3;
+        public static final int action_example=0x7f0b00b8;
         public static final int action_menu_divider=0x7f0b0002;
         public static final int action_menu_presenter=0x7f0b0003;
         public static final int action_mode_bar=0x7f0b002e;
         public static final int action_mode_bar_stub=0x7f0b002d;
         public static final int action_mode_close_button=0x7f0b0020;
-        public static final int action_settings=0x7f0b00b4;
+        public static final int action_settings=0x7f0b00b9;
         public static final int activity_chooser_view_content=0x7f0b0021;
         public static final int activity_toolbar=0x7f0b0049;
         public static final int addVerse=0x7f0b0061;
@@ -1920,7 +1920,6 @@ containing a value of this type.
         public static final int chip_tag_name=0x7f0b0067;
         public static final int collapseActionView=0x7f0b0017;
         public static final int comparison_result=0x7f0b007e;
-        public static final int contextMenu=0x7f0b004f;
         public static final int context_input_card_lookup=0x7f0b00ac;
         public static final int context_input_card_method=0x7f0b00ab;
         public static final int context_list_card_delete=0x7f0b00b0;
@@ -1929,6 +1928,11 @@ containing a value of this type.
         public static final int context_list_card_post=0x7f0b00ad;
         public static final int context_notification_card_edit=0x7f0b00b1;
         public static final int context_notification_card_toggle=0x7f0b00b2;
+        public static final int context_votd_card_browser=0x7f0b00b7;
+        public static final int context_votd_card_post=0x7f0b00b6;
+        public static final int context_votd_card_redownload=0x7f0b00b4;
+        public static final int context_votd_card_remove=0x7f0b00b3;
+        public static final int context_votd_card_save=0x7f0b00b5;
         public static final int dashboardLayout=0x7f0b0068;
         public static final int decor_content_parent=0x7f0b002f;
         public static final int default_activity_button=0x7f0b0024;
@@ -1969,13 +1973,13 @@ containing a value of this type.
         public static final int mainIcon=0x7f0b0074;
         public static final int mainIconBackground=0x7f0b0073;
         public static final int matcher_result=0x7f0b008d;
-        public static final int menu_dashboard_add=0x7f0b00b5;
-        public static final int menu_dashboard_votd=0x7f0b00b6;
-        public static final int menu_edit_change_list=0x7f0b00ba;
-        public static final int menu_edit_delete=0x7f0b00b9;
-        public static final int menu_edit_save_changes=0x7f0b00b8;
-        public static final int menu_edit_set_notification=0x7f0b00b7;
-        public static final int menu_edit_share=0x7f0b00bb;
+        public static final int menu_dashboard_add=0x7f0b00ba;
+        public static final int menu_dashboard_votd=0x7f0b00bb;
+        public static final int menu_edit_change_list=0x7f0b00bf;
+        public static final int menu_edit_delete=0x7f0b00be;
+        public static final int menu_edit_save_changes=0x7f0b00bd;
+        public static final int menu_edit_set_notification=0x7f0b00bc;
+        public static final int menu_edit_share=0x7f0b00c0;
         public static final int metadata_layout=0x7f0b0092;
         public static final int middle=0x7f0b0015;
         public static final int navListHeader=0x7f0b0099;
@@ -1988,6 +1992,7 @@ containing a value of this type.
         public static final int notificationVerse=0x7f0b0053;
         public static final int notificationVerseLayout=0x7f0b0050;
         public static final int overflow=0x7f0b0096;
+        public static final int overflowButton=0x7f0b004f;
         public static final int p_add=0x7f0b0080;
         public static final int p_et=0x7f0b0081;
         public static final int p_layout=0x7f0b0083;
@@ -2117,11 +2122,12 @@ containing a value of this type.
         public static final int context_input_card=0x7f0f0000;
         public static final int context_list_card=0x7f0f0001;
         public static final int context_notification_card=0x7f0f0002;
-        public static final int dummy=0x7f0f0003;
-        public static final int global=0x7f0f0004;
-        public static final int menu_dashboard=0x7f0f0005;
-        public static final int menu_edit_verse=0x7f0f0006;
-        public static final int widget_configuration=0x7f0f0007;
+        public static final int context_votd_card=0x7f0f0003;
+        public static final int dummy=0x7f0f0004;
+        public static final int global=0x7f0f0005;
+        public static final int menu_dashboard=0x7f0f0006;
+        public static final int menu_edit_verse=0x7f0f0007;
+        public static final int widget_configuration=0x7f0f0008;
     }
     public static final class string {
         public static final int abc_action_bar_home_description=0x7f0d0000;

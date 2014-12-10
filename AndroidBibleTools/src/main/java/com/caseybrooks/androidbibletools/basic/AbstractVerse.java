@@ -181,6 +181,7 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 //------------------------------------------------------------------------------
 	public abstract String getReference();
 	public abstract String getText();
+    public abstract String getURL();
 	public abstract AbstractVerse retrieve() throws IOException;
 
 

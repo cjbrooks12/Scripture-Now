@@ -210,6 +210,7 @@ public class MainActivity extends ActionBarActivity
         fragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.push_up_in, 0)
                 .replace(R.id.mainFragmentContainer, fragment)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -242,22 +243,5 @@ public class MainActivity extends ActionBarActivity
         }
 
         setFragment(fragment);
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 0:
-                title = "Dashboard";
-                break;
-            case 1:
-                title = "State";
-                break;
-            case 2:
-                title = "Tags";
-                break;
-            case 3:
-                title = "Settings";
-                break;
-        }
     }
 }

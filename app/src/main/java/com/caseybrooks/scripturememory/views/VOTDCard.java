@@ -3,8 +3,12 @@ package com.caseybrooks.scripturememory.views;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.AttributeSet;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -15,8 +19,10 @@ import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VOTDService;
 import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.notifications.MainNotification;
 
 public class VOTDCard extends FrameLayout {
 //Data Members
@@ -25,10 +31,11 @@ public class VOTDCard extends FrameLayout {
 
 	private TextView ref, ver;
     private ProgressBar progress;
-    ImageButton removeView;
+    ImageButton overflowButton;
     LinearLayout layout;
 
     Passage currentVerse;
+    boolean redownload;
 
     //status of Verse of the Day.
     //0: No attempt has been made to retrieve the Verse
@@ -48,20 +55,12 @@ public class VOTDCard extends FrameLayout {
         initialize();
     }
     
-    public VOTDCard(Context context, AttributeSet attrs) {
-        super(context, attrs);
-		this.context = context;
-		
-		LayoutInflater.from(context).inflate(R.layout.card_votd, this);
-        
-        initialize();
-	}
-    
     void initialize() {
         status = 0;
+        redownload = false;
 
-        removeView = (ImageButton) findViewById(R.id.contextMenu);
-        removeView.setOnClickListener(votdRemove);
+        overflowButton = (ImageButton) findViewById(R.id.overflowButton);
+        overflowButton.setOnClickListener(votdRemove);
         ref = (TextView) findViewById(R.id.votdReference);
         ver = (TextView) findViewById(R.id.votdVerse);
         layout = (LinearLayout) findViewById(R.id.votdLayout);
@@ -82,7 +81,7 @@ public class VOTDCard extends FrameLayout {
         status = 1;
         currentVerse = VOTDService.getCurrentVerse(context);
 
-        if(currentVerse == null) {
+        if(currentVerse == null || redownload) {
             new VOTDService.GetVOTD(context, new VOTDService.GetVerseListener() {
 
                 @Override
@@ -155,9 +154,46 @@ public class VOTDCard extends FrameLayout {
     private OnClickListener votdRemove = new OnClickListener() {
  		@Override
  		public void onClick(final View v) {
- 			removeFromParent();
+            PopupMenu popup = new PopupMenu(context, v);
+            popup.setOnMenuItemClickListener(menuItemClick);
+            MenuInflater inflater = popup.getMenuInflater();
+            inflater.inflate(R.menu.context_votd_card, popup.getMenu());
+            popup.show();
         }
  	};
+
+    private PopupMenu.OnMenuItemClickListener menuItemClick = new PopupMenu.OnMenuItemClickListener() {
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.context_votd_card_remove:
+                    removeFromParent();
+                    return true;
+                case R.id.context_votd_card_redownload:
+                    redownload = true;
+                    retrieve();
+                    return true;
+                case R.id.context_votd_card_save:
+                    saveVerse();
+                    return true;
+                case R.id.context_votd_card_post:
+                    saveVerse();
+                    MetaSettings.putVerseId(context, (int)currentVerse.getId());
+                    MetaSettings.putNotificationActive(context, true);
+                    MainNotification.notify(context).show();
+                    return true;
+                case R.id.context_votd_card_browser:
+                    String url = currentVerse.getURL();
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    };
  	
  	private OnClickListener votdAdd = new OnClickListener() {
  		@Override

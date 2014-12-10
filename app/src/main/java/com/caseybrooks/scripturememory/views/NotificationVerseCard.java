@@ -62,7 +62,7 @@ public class NotificationVerseCard extends FrameLayout {
     void initialize() {
         ref = (TextView) findViewById(R.id.notificationReference);
         ver = (TextView) findViewById(R.id.notificationVerse);
-		contextMenu = (ImageView) findViewById(R.id.contextMenu);
+		contextMenu = (ImageView) findViewById(R.id.overflowButton);
 		contextMenu.setOnClickListener(contextMenuClick);
         this.setOnClickListener(expandCardClick);
 				

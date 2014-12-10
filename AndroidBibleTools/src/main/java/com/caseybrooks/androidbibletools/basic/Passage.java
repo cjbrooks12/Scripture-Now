@@ -5,8 +5,14 @@ import android.util.Log;
 import com.caseybrooks.androidbibletools.enumeration.Flags;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -238,52 +244,39 @@ public class Passage extends AbstractVerse {
 
 //Retrieve verse from the Internet
 //------------------------------------------------------------------------------
-	@Override
-	public Passage retrieve() throws IOException {
-//		//build URL
-//		String query = "http://www.biblestudytools.com/" +
-//							   version.getCode() + "/" +
-//							   start.getBook().getName().toLowerCase() + "/passage.aspx?q=" +
-//							   start.getBook().getName().toLowerCase() + "+" +
-//							   start.getChapter() + ":" + start.getVerseNumber();
-//
-//
-//
-//		if(start.compareTo(end) == 3) {
-//			query += "-" + end.getChapter() + ":" + end.getVerseNumber();
-//		}
-//        else if(start.compareTo(end) == 1) {
-//
-//        }
-//
-//        switch(start.compareTo(end)) {
-//            case 1:
-//            case 2:
-//                break;
-//            case 3:
-//                query += "-" + end.getChapter() + ":" + end.getVerseNumber();
-//
-//        }
-//
-//		//get webpage
-//		Document doc = Jsoup.connect(query).get();
-//		Elements passage = doc.select(".versetext");
-//		flags = EnumSet.of(Flags.TEXT_NORMAL, Flags.PRINT_VERSE_NUMBER, Flags.NUMBER_DOT);
-//
-//		String passageText = "";
-//
-//		//parse webpage
-//		for(Element element : passage) {
-//			int versenum = Integer.parseInt(element.select(".versenum").text());
-//			element.select(".versenum").remove();
-//			element.select("a").remove();
-//			passageText += /*" (" + versenum + ") " +*/ element.text() + " ";
-//		}
+    @Override
+    public String getURL() {
+        String query = "http://www.biblestudytools.com/" + version.getCode() + "/" +
+                start.getBook().getName().toLowerCase().trim().replaceAll(" ",  "-") +
+                "/passage.aspx?q=" + start.getBook().getName().toLowerCase().trim().replaceAll(" ",  "-") +
+                "+" + start.getChapter() + ":" + start.getVerseNumber();
 
-//		setText(passageText);
-        for(Verse item : verses) {
-            item.retrieve();
+        if(!start.equals(end)) {
+            query += "-" + end.getVerseNumber();
         }
+        return query;
+
+    }
+
+    @Override
+	public Passage retrieve() throws IOException {
+		//get webpage
+		Document doc = Jsoup.connect(getURL()).get();
+		Elements passage = doc.select(".versetext");
+		flags = EnumSet.of(Flags.TEXT_NORMAL, Flags.PRINT_VERSE_NUMBER, Flags.NUMBER_DOT);
+
+		String passageText = "";
+
+		//parse webpage
+		for(Element element : passage) {
+			int versenum = Integer.parseInt(element.select(".versenum").text());
+			element.select(".versenum").remove();
+			element.select("a").remove();
+			passageText += /*" (" + versenum + ") " +*/ element.text() + " ";
+		}
+
+		setText(passageText);
+
 		return this;
 	}
 }

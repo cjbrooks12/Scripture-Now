@@ -2,7 +2,6 @@ package com.caseybrooks.scripturememory.views;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -99,7 +98,7 @@ public class VerseInputCard extends FrameLayout {
 		});
 		addVerse = (TextView) findViewById(R.id.addVerse);
 		addVerse.setOnClickListener(addVerseClick);
-		contextMenu = (ImageButton) findViewById(R.id.contextMenu);
+		contextMenu = (ImageButton) findViewById(R.id.overflowButton);
     	contextMenu.setOnClickListener(contextMenuClick);
 	}
 
