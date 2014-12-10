@@ -11,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
@@ -44,6 +45,17 @@ public class Passage extends AbstractVerse {
 //------------------------------------------------------------------------------
     public Passage(String reference) {
 		super();
+
+        try {
+            Reference reference1 = new Reference(reference);
+            Log.e("PARSE CORRECTLY", "'" + reference + "' was parsed correctly");
+        }
+        catch(ParseException e1) {
+            Log.e("PARSE EXCEPTION", e1.getMessage() + " : " + e1.getErrorOffset());
+        }
+        catch(Exception e) {
+            Log.e("PARSE ERROR", "UNKNOWN");
+        }
 
 		reference = reference.trim().toLowerCase();
 		reference = reference.replaceAll(" and ", "-");

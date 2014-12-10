@@ -2,10 +2,9 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '21.0.2'
+    buildToolsVersion '21.1.1'
 
     defaultConfig {
-        applicationId "com.caseybrooks.androidbibletools"
         minSdkVersion 8
         targetSdkVersion 21
         versionCode 1
@@ -13,8 +12,6 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
