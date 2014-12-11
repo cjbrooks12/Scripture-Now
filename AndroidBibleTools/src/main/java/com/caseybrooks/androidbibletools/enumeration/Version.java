@@ -5,7 +5,7 @@ import java.util.EnumSet;
 
 /** Enumerates several English translations of the Bible according to their
  *   name and the number of chapters in that book. Using the static method
- *   fromString will attempt to find the appropriate enumeration given a
+ *   parseBook will attempt to find the appropriate enumeration given a
  *   string of the version's full name or its code.
  */
 public enum Version {
@@ -38,7 +38,7 @@ public enum Version {
      * @param name String to be parsed
      * @return Version the version enum if found
      */
-    public static Version fromString(String name) {
+    public static Version parseVersion(String name) {
         for (Version version : EnumSet.allOf(Version.class)) {
             if(version.getName().toLowerCase().contains(name.toLowerCase())) return version;
             else if(version.getCode().contains(name.toLowerCase())) return version;

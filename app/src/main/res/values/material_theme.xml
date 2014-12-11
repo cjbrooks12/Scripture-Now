@@ -6,6 +6,8 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/forest_green_light</item>
         <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@color/primary</item>
 
         <!-- ActionBar Icons -->
 

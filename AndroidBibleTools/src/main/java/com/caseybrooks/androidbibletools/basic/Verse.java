@@ -47,9 +47,9 @@ public class Verse extends AbstractVerse {
     public Verse(Book book, int chapter, int verseNumber) {
         super();
 
-        if(chapter > book.lastChapter() || chapter <= 0)
+        if(chapter > book.numChapters() || chapter <= 0)
 			throw new IllegalArgumentException("Verse does not exist: chapter out of range: " + book.getName() + " " + chapter + ":" + verseNumber);
-		if(verseNumber > book.verseInChapterCount(chapter) || verseNumber <= 0)
+		if(verseNumber > book.numVersesInChapter(chapter) || verseNumber <= 0)
 			throw new IllegalArgumentException("Verse does not exist: verse number out of range: " + book.getName() + " " + chapter + ":" + verseNumber);
 
 		this.book = book;
@@ -68,15 +68,15 @@ public class Verse extends AbstractVerse {
         Matcher m = oneVerse.matcher(reference);
 
         if(m.matches()) {
-            this.book = Book.fromString(m.group(1));
+            this.book = Book.parseBook(m.group(1));
             this.chapter = Integer.parseInt(m.group(3));
             this.verseNumber = Integer.parseInt(m.group(4));
 
             if(book == null)
                 throw new IllegalArgumentException("Verse does not exist: Book '" + m.group(1) + "' not found in " + reference);
-            if(chapter > book.lastChapter() || chapter <= 0)
+            if(chapter > book.numChapters() || chapter <= 0)
 				throw new IllegalArgumentException("Verse does not exist: chapter out of range: " + reference);
-			if(verseNumber > book.verseInChapterCount(chapter) || verseNumber <= 0)
+			if(verseNumber > book.numVersesInChapter(chapter) || verseNumber <= 0)
 				throw new IllegalArgumentException("Verse does not exist: verse number out of range: " + reference);
 
         }
@@ -150,11 +150,11 @@ public class Verse extends AbstractVerse {
     }
 
 	public Verse next() {
-		if(verseNumber != book.verseInChapterCount(chapter)) {
+		if(verseNumber != book.numVersesInChapter(chapter)) {
 			return new Verse(version, book, chapter, verseNumber + 1);
 		}
 		else {
-			if(chapter != book.chapterCount()) {
+			if(chapter != book.numChapters()) {
 				return new Verse(version, book, chapter + 1, 1);
 			}
 			else {
@@ -174,7 +174,7 @@ public class Verse extends AbstractVerse {
 		}
 		else {
 			if(chapter != 1) {
-				return new Verse(version, book, chapter - 1, book.verseInChapterCount(chapter - 1));
+				return new Verse(version, book, chapter - 1, book.numVersesInChapter(chapter - 1));
 			}
 			else {
 				Book newBook;
@@ -182,14 +182,14 @@ public class Verse extends AbstractVerse {
 					if((book == Book.values()[i]) && (i != 0)) {
 						newBook = Book.values()[i-1];
 						return new Verse(version, newBook,
-										newBook.lastChapter(),
-										newBook.lastVerse());
+										newBook.numChapters(),
+										newBook.lastVerseInBook());
 					}
 				}
 				newBook = Book.values()[Book.values().length - 1];
 				return new Verse(version, newBook,
-										newBook.lastChapter(),
-										newBook.lastVerse());
+										newBook.numChapters(),
+										newBook.lastVerseInBook());
 			}
 		}
 	}
@@ -264,14 +264,14 @@ public class Verse extends AbstractVerse {
 
         if(aBook - bBook == 1) {
             if((lhs.getChapter() == 1 && lhs.getVerseNumber() == 1) &&
-               (rhs.getChapter() == rhs.getBook().chapterCount() &&
-                 (rhs.getVerseNumber() == rhs.getBook().verseInChapterCount(rhs.getChapter())))) return 1;
+               (rhs.getChapter() == rhs.getBook().numChapters() &&
+                 (rhs.getVerseNumber() == rhs.getBook().numVersesInChapter(rhs.getChapter())))) return 1;
             else return 4;
         }
         else if(aBook - bBook == -1) {
             if((rhs.getChapter() == 1 && rhs.getVerseNumber() == 1) &&
-               (lhs.getChapter() == lhs.getBook().chapterCount() &&
-                 (lhs.getVerseNumber() == lhs.getBook().verseInChapterCount(lhs.getChapter())))) return -1;
+               (lhs.getChapter() == lhs.getBook().numChapters() &&
+                 (lhs.getVerseNumber() == lhs.getBook().numVersesInChapter(lhs.getChapter())))) return -1;
             else return -4;
         }
         else if(aBook > bBook) return 4;
@@ -280,12 +280,12 @@ public class Verse extends AbstractVerse {
             //same book
             if(lhs.getChapter() - rhs.getChapter() == 1) {
                 if((lhs.getVerseNumber() == 1) &&
-                   (rhs.getVerseNumber() == rhs.getBook().verseInChapterCount(rhs.getChapter()))) return 1;
+                   (rhs.getVerseNumber() == rhs.getBook().numVersesInChapter(rhs.getChapter()))) return 1;
                 else return 3;
             }
             if(lhs.getChapter() - rhs.getChapter() == -1) {
                 if((rhs.getVerseNumber() == 1) &&
-                   (lhs.getVerseNumber() == lhs.getBook().verseInChapterCount(lhs.getChapter()))) return -1;
+                   (lhs.getVerseNumber() == lhs.getBook().numVersesInChapter(lhs.getChapter()))) return -1;
                 else return -3;
             }
             else if(lhs.getChapter() > rhs.getChapter()) return 3;

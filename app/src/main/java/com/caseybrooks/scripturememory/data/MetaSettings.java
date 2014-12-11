@@ -44,7 +44,7 @@ public class MetaSettings {
 
     public static Version getBibleVersion(Context context) {
         String version = PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION, "King James Version");
-        return Version.fromString(version);
+        return Version.parseVersion(version);
     }
 
     public static int getDefaultScreen(Context context) {

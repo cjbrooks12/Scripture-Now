@@ -3,7 +3,7 @@ package com.caseybrooks.androidbibletools.enumeration;
 import java.util.EnumSet;
 
 /** Enumerates all books of Canonical Bible according to their name and the
- *   number of chapters in that book. Using the static method fromString
+ *   number of chapters in that book. Using the static method parseBook
  *   will attempt to find the appropriate enumeration given a string of the
  *   book name.
  */
@@ -80,7 +80,7 @@ public enum Book {
     Revelation(         "Revelation",       "Re",   20, 29, 22, 11, 14, 17, 17, 13, 21, 11, 19, 17, 18, 20, 8, 21, 18, 24, 21, 15, 27, 21);
 
     private final String name; //Name that is displayed
-    private final String code; //What is used for building a query URL
+    private final String code; //What is used for building a query URL and for abbreviation
     private final int[] verseCount;
 
     Book(String name, String code, int... verseCount) {
@@ -89,10 +89,36 @@ public enum Book {
         this.verseCount = verseCount;
     }
 
-    //Can definitely be improved...
-    public static Book fromString(String name) {
+    public static Book parseBook(String name) {
+        String input = name.toLowerCase().trim().replaceAll("\\s", "");
         for (Book book : EnumSet.allOf(Book.class)) {
-            if(book.getName().toLowerCase().contains(name.toLowerCase())) return book;
+            String bookName = book.getName().toLowerCase().trim().replaceAll("\\s", "");
+            String bookCode = book.getCode().toLowerCase().trim().replaceAll("\\s", "");
+
+            if(input.equals(bookName) || input.equals(bookCode)) {
+                return book;
+            }
+            else if(input.length() >= 3) {
+                if(input.substring(0, 3).equals(bookName.substring(0, 3))) {
+                    if(book == Judges || book == Jude) {
+                        if(bookName.length() >= 4 && input.length() >= 4) {
+                            if (input.substring(0, 4).equals(bookName.substring(0, 4))) {
+                                return book;
+                            }
+                        }
+                    }
+                    else if(book == Philippians || book == Philemon) {
+                        if(bookName.length() >= 5 && input.length() >= 5) {
+                            if (input.substring(0, 5).equals(bookName.substring(0, 5))) {
+                                return book;
+                            }
+                        }
+                    }
+                    else {
+                        return book;
+                    }
+                }
+            }
         }
 
         return null;
@@ -109,24 +135,22 @@ public enum Book {
     }
 
     public String getName() { return name; }
-    public String getCode() {return code; }
+    public String getCode() { return code; }
+
 	/** Returns the number of chapters in the book */
-    public int chapterCount() {
+    public int numChapters() {
         return verseCount.length;
     }
+
     /** Returns the number of verses in the specific chapter of the book */
-	public int verseInChapterCount(int chapter) {
+	public int numVersesInChapter(int chapter) {
         if(chapter <= verseCount.length && chapter != 0) {
             return verseCount[chapter - 1];
         }
         else return -1;
     }
 
-	public int lastChapter() {
-		return verseCount.length;
-	}
-
-	public int lastVerse() {
+	public int lastVerseInBook() {
 		return verseCount[verseCount.length - 1];
 	}
 }

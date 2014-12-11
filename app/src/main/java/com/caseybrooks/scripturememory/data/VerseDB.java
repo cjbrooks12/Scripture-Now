@@ -214,7 +214,7 @@ public class VerseDB {
         Passage passage = new Passage(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
         passage.setId(c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
         passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
-        passage.setVersion(Version.fromString(c.getString(c.getColumnIndex(KEY_VERSES_VERSION))));
+        passage.setVersion(Version.parseVersion(c.getString(c.getColumnIndex(KEY_VERSES_VERSION))));
         passage.setMillis(c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
         passage.setState(c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
 

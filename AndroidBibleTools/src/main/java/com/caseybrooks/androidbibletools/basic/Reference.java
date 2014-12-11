@@ -1,7 +1,5 @@
 package com.caseybrooks.androidbibletools.basic;
 
-import android.util.Log;
-
 import com.caseybrooks.androidbibletools.enumeration.Book;
 
 import java.text.ParseException;
@@ -10,9 +8,9 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 public class Reference {
-    public Book book;
-    public int chapter;
-    public ArrayList<Integer> verses;
+    public final Book book;
+    public final int chapter;
+    public final ArrayList<Integer> verses;
 
 //Parse the input string using recursive descent parsing
 //------------------------------------------------------------------------------
@@ -51,7 +49,7 @@ public class Reference {
         if(a != null && a.equals(Token.NUMBER) && a.getIntValue() <= 3) {
             Token b = ts.get();
             if(b != null && b.equals(Token.WORD)) {
-                return Book.fromString(a.getIntValue() + " " + b.getStringValue());
+                return Book.parseBook(a.getIntValue() + " " + b.getStringValue());
             }
             else {
                 ts.unget(b);
@@ -60,7 +58,7 @@ public class Reference {
             }
         }
         if(a != null && a.equals(Token.WORD)) {
-            return Book.fromString(a.getStringValue());
+            return Book.parseBook(a.getStringValue());
         }
         else {
             ts.unget(a);
@@ -92,9 +90,16 @@ public class Reference {
                 if(c != null && c.equals(Token.DASH)) {
                     Token d = ts.get();
                     if(d != null && d.equals(Token.NUMBER)) {
-                        for(int i = b.getIntValue(); i <= d.getIntValue(); i++) {
+                        for(int i = b.getIntValue() + 1; i <= d.getIntValue(); i++) {
                             verseList.add(i);
                         }
+                        return verseList;
+                    }
+                }
+                if(c != null && c.equals(Token.COMMA)) {
+                    Token d = ts.get();
+                    if(d != null && d.equals(Token.NUMBER)) {
+                        verseList.add(d.getIntValue());
                         return verseList;
                     }
                 }
@@ -209,7 +214,6 @@ public class Reference {
                         }
                     }
                 } else {
-                    Log.e("RETURN TOKEN", "none remaining: " + chars.size());
                     return null;
                 }
             }

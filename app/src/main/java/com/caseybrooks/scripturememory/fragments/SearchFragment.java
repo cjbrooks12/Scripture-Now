@@ -139,8 +139,8 @@ public class SearchFragment extends Fragment {
 				spinnerVerse = new Verse(Book.values()[position], spinnerVerse.getChapter(), spinnerVerse.getVerseNumber());
 				searchResultReference.setText(spinnerVerse.getReference());
 
-				chapterItems = new String[spinnerVerse.getBook().chapterCount()];
-				for(int i = 0; i < spinnerVerse.getBook().chapterCount(); i++) {
+				chapterItems = new String[spinnerVerse.getBook().numChapters()];
+				for(int i = 0; i < spinnerVerse.getBook().numChapters(); i++) {
 					chapterItems[i] = Integer.toString(i+1);
 				}
 
@@ -162,8 +162,8 @@ public class SearchFragment extends Fragment {
 				spinnerVerse = new Verse(spinnerVerse.getBook(), position+1, spinnerVerse.getVerseNumber());
 				searchResultReference.setText(spinnerVerse.getReference());
 
-				verseItems = new String[spinnerVerse.getBook().verseInChapterCount(position+1)];
-				for(int i = 0; i < spinnerVerse.getBook().verseInChapterCount(position+1); i++) {
+				verseItems = new String[spinnerVerse.getBook().numVersesInChapter(position + 1)];
+				for(int i = 0; i < spinnerVerse.getBook().numVersesInChapter(position + 1); i++) {
 					verseItems[i] = Integer.toString(i+1);
 				}
 
