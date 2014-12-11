@@ -13,6 +13,7 @@ import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -211,33 +212,39 @@ public class VerseDB {
         if (c != null && c.getCount() > 0) c.moveToFirst();
         else return null;
 
-        Passage passage = new Passage(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
-        passage.setId(c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
-        passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
-        passage.setVersion(Version.parseVersion(c.getString(c.getColumnIndex(KEY_VERSES_VERSION))));
-        passage.setMillis(c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
-        passage.setState(c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
+        try {
+            Passage passage = new Passage(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
+            passage.setId(c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
+            passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
+            passage.setVersion(Version.parseVersion(c.getString(c.getColumnIndex(KEY_VERSES_VERSION))));
+            passage.setMillis(c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
+            passage.setState(c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
 
-        String commaSeparatedTags = c.getString(c.getColumnIndex(KEY_VERSES_TAGS));
+            String commaSeparatedTags = c.getString(c.getColumnIndex(KEY_VERSES_TAGS));
 
-        if(commaSeparatedTags.length() > 1) {
-            String[] tagNumbers = commaSeparatedTags.split(",");
-            String[] tagNames = new String[tagNumbers.length - 1];
-            for (int i = 1; i < tagNumbers.length; i++) {
-                if (tagNumbers[i].length() >= 1) {
-                    tagNames[i-1] = getTagName(Integer.parseInt(tagNumbers[i]));
+            if (commaSeparatedTags.length() > 1) {
+                String[] tagNumbers = commaSeparatedTags.split(",");
+                String[] tagNames = new String[tagNumbers.length - 1];
+                for (int i = 1; i < tagNumbers.length; i++) {
+                    if (tagNumbers[i].length() >= 1) {
+                        tagNames[i - 1] = getTagName(Integer.parseInt(tagNumbers[i]));
+                    }
                 }
+                passage.setTags(tagNames);
             }
-            passage.setTags(tagNames);
-        }
 
-        return passage;
+            return passage;
+        }
+        catch(ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public int insertVerse(Passage passage) {
         //set values for each field in this verse to be either created or updated
         ContentValues values = new ContentValues();
-        values.put(KEY_VERSES_REFERENCE, passage.getReference());
+        values.put(KEY_VERSES_REFERENCE, passage.getReference().toString());
         values.put(KEY_VERSES_VERSE, passage.getText());
         values.put(KEY_VERSES_VERSION, passage.getVersion().getCode());
         values.put(KEY_VERSES_DATE_ADDED, Calendar.getInstance().getTimeInMillis());
@@ -265,7 +272,7 @@ public class VerseDB {
     public void updateVerse(Passage passage) {
         //set values for each field in this verse to be either created or updated
         ContentValues values = new ContentValues();
-        values.put(KEY_VERSES_REFERENCE, passage.getReference());
+        values.put(KEY_VERSES_REFERENCE, passage.getReference().toString());
         values.put(KEY_VERSES_VERSE, passage.getText());
         values.put(KEY_VERSES_VERSION, passage.getVersion().getCode());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());

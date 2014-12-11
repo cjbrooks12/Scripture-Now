@@ -12,19 +12,33 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 	//Data Members
 //------------------------------------------------------------------------------
 	protected Version version;
+    protected Reference reference;
+    protected Formatter formatter;
 	protected long id;
+
 	protected TreeSet<String> tags;
 	protected EnumSet<Flags> flags;
     protected long millis;
     protected int state;
     protected boolean checked;
 
-	public AbstractVerse() {
+	public AbstractVerse(Reference reference) {
 		version = Version.KJV;
+        this.reference = reference;
+
 		id = 0;
 		tags = new TreeSet<String>();
 		flags = EnumSet.of(Flags.TEXT_NORMAL);
 	}
+
+    public AbstractVerse(Version version, Reference reference) {
+        version = version;
+        this.reference = reference;
+
+        id = 0;
+        tags = new TreeSet<String>();
+        flags = EnumSet.of(Flags.TEXT_NORMAL);
+    }
 
 	//Defined methods
 //------------------------------------------------------------------------------
@@ -179,7 +193,7 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 
 //Abstract Methods
 //------------------------------------------------------------------------------
-	public abstract String getReference();
+	public Reference getReference() { return reference; };
 	public abstract String getText();
     public abstract String getURL();
 	public abstract AbstractVerse retrieve() throws IOException;
@@ -200,7 +214,7 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 	public static class AlphabeticalReferenceComparator implements Comparator<AbstractVerse> {
 		@Override
 		public int compare(AbstractVerse lhs, AbstractVerse rhs) {
-			return lhs.getReference().compareToIgnoreCase(rhs.getReference());
+			return lhs.getReference().toString().compareToIgnoreCase(rhs.getReference().toString());
 		}
 	}
 

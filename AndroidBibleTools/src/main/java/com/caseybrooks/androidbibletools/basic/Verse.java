@@ -2,7 +2,6 @@ package com.caseybrooks.androidbibletools.basic;
 
 import com.caseybrooks.androidbibletools.enumeration.Book;
 import com.caseybrooks.androidbibletools.enumeration.Flags;
-import com.caseybrooks.androidbibletools.enumeration.Version;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,9 +9,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.EnumSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /** The simplest unit of data in this data structure. Each verse contains one
  *  and only one Bible verse, its corresponding Book, Chapter, and Verse Number,
@@ -35,108 +33,21 @@ public class Verse extends AbstractVerse {
 //Data Members
 //------------------------------------------------------------------------------
     //Data members that make up the actual verse
-    private final Book book;
-    private final int chapter, verseNumber;
     private String verseText;
-
-	private static Pattern oneVerse = Pattern.compile("((\\d\\s*)?\\w+)\\s*(\\d+)\\W+(\\d+)");
 
 
     //Constructors
 //------------------------------------------------------------------------------
     public Verse(Book book, int chapter, int verseNumber) {
-        super();
-
-        if(chapter > book.numChapters() || chapter <= 0)
-			throw new IllegalArgumentException("Verse does not exist: chapter out of range: " + book.getName() + " " + chapter + ":" + verseNumber);
-		if(verseNumber > book.numVersesInChapter(chapter) || verseNumber <= 0)
-			throw new IllegalArgumentException("Verse does not exist: verse number out of range: " + book.getName() + " " + chapter + ":" + verseNumber);
-
-		this.book = book;
-		this.chapter = chapter;
-		this.verseNumber = verseNumber;
+        super(new Reference(book, chapter, verseNumber));
     }
 
-    public Verse(Version version, Book book, int chapter, int verseNumber) {
-        this(book, chapter, verseNumber);
-
-		this.version = version;
-    }
-
-    public Verse(String reference) {
-		super();
-        Matcher m = oneVerse.matcher(reference);
-
-        if(m.matches()) {
-            this.book = Book.parseBook(m.group(1));
-            this.chapter = Integer.parseInt(m.group(3));
-            this.verseNumber = Integer.parseInt(m.group(4));
-
-            if(book == null)
-                throw new IllegalArgumentException("Verse does not exist: Book '" + m.group(1) + "' not found in " + reference);
-            if(chapter > book.numChapters() || chapter <= 0)
-				throw new IllegalArgumentException("Verse does not exist: chapter out of range: " + reference);
-			if(verseNumber > book.numVersesInChapter(chapter) || verseNumber <= 0)
-				throw new IllegalArgumentException("Verse does not exist: verse number out of range: " + reference);
-
-        }
-        else throw new IllegalArgumentException("Verse does not exist: String not formatted properly, cannot parse '" + reference + "'");
-    }
-
-    public Verse(Version version, String reference) {
-        this(reference);
-		this.version = version;
+    public Verse(String reference) throws ParseException {
+		super(new Reference(reference));
     }
 
 //Getters and Setters
 //------------------------------------------------------------------------------
-    //Book is immutable
-    public Book getBook() {
-        return book;
-    }
-
-    public Verse setBook(Book book) {
-        Verse newVerse = new Verse(book, chapter, verseNumber);
-        newVerse.setVersion(version);
-                newVerse.setText(verseText)
-                .setFlags(flags)
-                .setId(id)
-                .setTags(getTags());
-
-        return newVerse;
-    }
-
-    //Chapter is immutable
-    public int getChapter() {
-        return chapter;
-    }
-
-    public Verse setChapter(int chapter) {
-        Verse newVerse = new Verse(book, chapter, verseNumber);
-        newVerse.setVersion(version);
-                newVerse.setText(verseText)
-                .setFlags(flags)
-                .setId(id)
-                .setTags(getTags());
-
-        return newVerse;
-    }
-
-    //Verse Number is immutable
-    public int getVerseNumber() {
-        return verseNumber;
-    }
-
-    public Verse setVerseNumber(int verseNumber) {
-        Verse newVerse = new Verse(book, chapter, verseNumber);
-        newVerse.setVersion(version);
-                newVerse.setText(verseText)
-                .setFlags(flags)
-                .setId(id)
-                .setTags(getTags());
-        return newVerse;
-    }
-
     //Verse Text is mutable, should be set when a user manually inputs a verse,
     //or when downloading the verse in a new Version.
     public Verse setText(String verseText) {
@@ -144,50 +55,45 @@ public class Verse extends AbstractVerse {
         return this;
     }
 
-//Auxiliary helper functions
-    public static Verse fromString(String reference) {
-        return new Verse(reference);
-    }
-
 	public Verse next() {
-		if(verseNumber != book.numVersesInChapter(chapter)) {
-			return new Verse(version, book, chapter, verseNumber + 1);
+		if(reference.verses.get(0) != reference.book.numVersesInChapter(reference.chapter)) {
+			return new Verse(reference.book, reference.chapter, reference.verses.get(0) + 1);
 		}
 		else {
-			if(chapter != book.numChapters()) {
-				return new Verse(version, book, chapter + 1, 1);
+			if(reference.chapter != reference.book.numChapters()) {
+                return new Verse(reference.book, reference.chapter + 1, reference.verses.get(0));
 			}
 			else {
 				for(int i = 0; i < Book.values().length; i++) {
-					if((book == Book.values()[i]) && (i != Book.values().length - 1)) {
-						return new Verse(version, Book.values()[i+1], 1, 1);
+					if((reference.book == Book.values()[i]) && (i != Book.values().length - 1)) {
+						return new Verse(Book.values()[i+1], 1, 1);
 					}
 				}
-				return new Verse(version, Book.values()[0], 1, 1);
+				return new Verse(Book.values()[0], 1, 1);
 			}
 		}
 	}
 
 	public Verse previous() {
-		if(verseNumber != 1) {
-			return new Verse(version, book, chapter, verseNumber - 1);
+		if(reference.verses.get(0) != 1) {
+			return new Verse(reference.book, reference.chapter, reference.verses.get(0) - 1);
 		}
 		else {
-			if(chapter != 1) {
-				return new Verse(version, book, chapter - 1, book.numVersesInChapter(chapter - 1));
+			if(reference.chapter != 1) {
+				return new Verse(reference.book, reference.chapter - 1, reference.book.numVersesInChapter(reference.chapter - 1));
 			}
 			else {
 				Book newBook;
 				for(int i = 0; i < Book.values().length; i++) {
-					if((book == Book.values()[i]) && (i != 0)) {
+					if((reference.book == Book.values()[i]) && (i != 0)) {
 						newBook = Book.values()[i-1];
-						return new Verse(version, newBook,
+						return new Verse(newBook,
 										newBook.numChapters(),
 										newBook.lastVerseInBook());
 					}
 				}
 				newBook = Book.values()[Book.values().length - 1];
-				return new Verse(version, newBook,
+				return new Verse(newBook,
 										newBook.numChapters(),
 										newBook.lastVerseInBook());
 			}
@@ -196,14 +102,10 @@ public class Verse extends AbstractVerse {
 
 //Print the formatted String
 //------------------------------------------------------------------------------
-	@Override
-	public String getReference() {
-        return book.getName() + " " + chapter + ":" + verseNumber;
-    }
-
-	@Override
+    @Override
     public String getText() {
         String text = "";
+        int verseNumber = reference.verses.get(0);
 
         if(flags.contains(Flags.PRINT_VERSE_NUMBER)) {
             if(flags.contains(Flags.NUMBER_PLAIN))
@@ -258,45 +160,45 @@ public class Verse extends AbstractVerse {
         //get the position of each book as an integer so we can work with it
         int aBook = -1, bBook = -1;
         for(int i = 0; i < Book.values().length; i++) {
-            if(Book.values()[i] == lhs.getBook()) aBook = i;
-            if(Book.values()[i] == rhs.getBook()) bBook = i;
+            if(Book.values()[i] == lhs.getReference().book) aBook = i;
+            if(Book.values()[i] == rhs.getReference().book) bBook = i;
         }
 
         if(aBook - bBook == 1) {
-            if((lhs.getChapter() == 1 && lhs.getVerseNumber() == 1) &&
-               (rhs.getChapter() == rhs.getBook().numChapters() &&
-                 (rhs.getVerseNumber() == rhs.getBook().numVersesInChapter(rhs.getChapter())))) return 1;
+            if((lhs.getReference().chapter == 1 && lhs.getReference().verses.get(0) == 1) &&
+               (rhs.getReference().chapter == rhs.getReference().book.numChapters() &&
+                 (rhs.getReference().verses.get(0) == rhs.getReference().book.numVersesInChapter(rhs.getReference().chapter)))) return 1;
             else return 4;
         }
         else if(aBook - bBook == -1) {
-            if((rhs.getChapter() == 1 && rhs.getVerseNumber() == 1) &&
-               (lhs.getChapter() == lhs.getBook().numChapters() &&
-                 (lhs.getVerseNumber() == lhs.getBook().numVersesInChapter(lhs.getChapter())))) return -1;
+            if((rhs.getReference().chapter == 1 && rhs.getReference().verses.get(0) == 1) &&
+               (lhs.getReference().chapter == lhs.getReference().book.numChapters() &&
+                 (lhs.getReference().verses.get(0) == lhs.getReference().book.numVersesInChapter(lhs.getReference().chapter)))) return -1;
             else return -4;
         }
         else if(aBook > bBook) return 4;
         else if(aBook < bBook) return -4;
         else {
             //same book
-            if(lhs.getChapter() - rhs.getChapter() == 1) {
-                if((lhs.getVerseNumber() == 1) &&
-                   (rhs.getVerseNumber() == rhs.getBook().numVersesInChapter(rhs.getChapter()))) return 1;
+            if(lhs.getReference().chapter - rhs.getReference().chapter == 1) {
+                if((lhs.getReference().verses.get(0) == 1) &&
+                   (rhs.getReference().verses.get(0) == rhs.getReference().book.numVersesInChapter(rhs.getReference().chapter))) return 1;
                 else return 3;
             }
-            if(lhs.getChapter() - rhs.getChapter() == -1) {
-                if((rhs.getVerseNumber() == 1) &&
-                   (lhs.getVerseNumber() == lhs.getBook().numVersesInChapter(lhs.getChapter()))) return -1;
+            if(lhs.getReference().chapter - rhs.getReference().chapter == -1) {
+                if((rhs.getReference().verses.get(0) == 1) &&
+                   (lhs.getReference().verses.get(0) == lhs.getReference().book.numVersesInChapter(lhs.getReference().chapter))) return -1;
                 else return -3;
             }
-            else if(lhs.getChapter() > rhs.getChapter()) return 3;
-            else if(lhs.getChapter() < rhs.getChapter()) return -3;
+            else if(lhs.getReference().chapter > rhs.getReference().chapter) return 3;
+            else if(lhs.getReference().chapter < rhs.getReference().chapter) return -3;
             else {
                 //same chapter
-                if(lhs.getVerseNumber() - rhs.getVerseNumber() == 1) return 1;
-                else if(lhs.getVerseNumber() - rhs.getVerseNumber() == -1) return -1;
-                else if(lhs.getVerseNumber() > rhs.getVerseNumber()) return 2;
-                else if(lhs.getVerseNumber() < rhs.getVerseNumber()) return -2;
-                else return 0; //lhs.getVerseNumber() == rhs.getVerseNumber()
+                if(lhs.getReference().verses.get(0) - rhs.getReference().verses.get(0) == 1) return 1;
+                else if(lhs.getReference().verses.get(0) - rhs.getReference().verses.get(0) == -1) return -1;
+                else if(lhs.getReference().verses.get(0) > rhs.getReference().verses.get(0)) return 2;
+                else if(lhs.getReference().verses.get(0) < rhs.getReference().verses.get(0)) return -2;
+                else return 0; //lhs.getReference().verses.get(0) == rhs.getReference().verses.get(0)
             }
         }
     }
@@ -306,9 +208,9 @@ public class Verse extends AbstractVerse {
         Verse lhs = this;
         Verse rhs = (Verse) verse;
 
-        return (lhs.getBook() == rhs.getBook()) &&
-               (lhs.getChapter() == rhs.getChapter()) &&
-               (lhs.getVerseNumber() == rhs.getVerseNumber());
+        return (lhs.getReference().book == rhs.getReference().book) &&
+               (lhs.getReference().chapter == rhs.getReference().chapter) &&
+               (lhs.getReference().verses.get(0) == rhs.getReference().verses.get(0));
     }
 
 //Retrieve verse from the internet
@@ -316,10 +218,10 @@ public class Verse extends AbstractVerse {
     @Override
     public String getURL() {
         return "http://www.biblestudytools.com/" + version.getCode() + "/" +
-                book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
+                reference.book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
                 "/passage.aspx?q=" +
-                book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
-                "+" + chapter + ":" + verseNumber;
+                reference.book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
+                "+" + reference.chapter + ":" + reference.verses.get(0);
 
     }
 

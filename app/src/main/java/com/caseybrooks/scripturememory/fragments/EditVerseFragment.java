@@ -68,7 +68,7 @@ public class EditVerseFragment extends Fragment {
 
         if(passage != null) {
             editRef = (EditText) view.findViewById(R.id.updateReference);
-            editRef.setText(passage.getReference());
+            editRef.setText(passage.getReference().toString());
             editVer = (EditText) view.findViewById(R.id.updateVerse);
             editVer.setText(passage.getText());
 
@@ -325,7 +325,7 @@ public class EditVerseFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("text/plain");
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_SUBJECT, passage.getReference());
+                intent.putExtra(Intent.EXTRA_SUBJECT, passage.getReference().toString());
                 intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                 startActivity(Intent.createChooser(intent, "Share To..."));
             }

@@ -100,7 +100,7 @@ public class VOTDCard extends FrameLayout {
                         ref.setVisibility(View.VISIBLE);
                         ver.setVisibility(View.VISIBLE);
 
-                        ref.setText(currentVerse.getReference());
+                        ref.setText(currentVerse.getReference().toString());
                         ver.setText(currentVerse.getText());
                         status = 2;
                     }
@@ -117,7 +117,7 @@ public class VOTDCard extends FrameLayout {
             }).execute();
         }
         else {
-            ref.setText(currentVerse.getReference());
+            ref.setText(currentVerse.getReference().toString());
             ver.setText(currentVerse.getText());
             status = 2;
         }

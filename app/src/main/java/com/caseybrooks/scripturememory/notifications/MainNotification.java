@@ -102,7 +102,7 @@ public class MainNotification {
                 mb.addAction(android.R.drawable.ic_menu_close_clear_cancel, "Dismiss", dismissPI);
             }
             mb.setSmallIcon(R.drawable.ic_cross);
-            mb.setContentTitle(verse.getReference());
+            mb.setContentTitle(verse.getReference().toString());
             mb.setContentText(verse.getText());
             mb.setPriority(NotificationCompat.PRIORITY_LOW);
             mb.setStyle(new NotificationCompat.BigTextStyle().bigText(verse.getText()));

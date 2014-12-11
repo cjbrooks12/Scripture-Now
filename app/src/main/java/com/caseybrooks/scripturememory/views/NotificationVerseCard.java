@@ -110,7 +110,7 @@ public class NotificationVerseCard extends FrameLayout {
         passage = db.getVerse(MetaSettings.getVerseId(context));
 
         if(passage != null) {
-            String s = passage.getReference();
+            String s = passage.getReference().toString();
             ref.setText(s);
             ver.setText(passage.getText());
         }
@@ -122,7 +122,7 @@ public class NotificationVerseCard extends FrameLayout {
                 if (allCurrent.size() > 0) {
                     passage = allCurrent.get(0);
                     MetaSettings.putVerseId(context, (int) passage.getId());
-                    ref.setText(passage.getReference());
+                    ref.setText(passage.getReference().toString());
                     ver.setText(passage.getText());
                     break;
                 }

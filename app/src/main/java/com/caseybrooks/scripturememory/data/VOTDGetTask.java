@@ -29,11 +29,7 @@ public class VOTDGetTask extends AsyncTask<Void, Void, Passage> {
         try {
             Passage passage = VerseOfTheDay.retrieve(version);
 
-            if (passage.getText().length() != 0 &&
-                    passage.getReference().length() != 0) {
-                return passage;
-            }
-            else return null;
+            return passage;
         } catch (IOException ioException) {
             Log.e("VOTDGetTask.doInBackground()", "Exception thrown while retrieving verse", ioException);
             return null;

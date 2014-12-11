@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -104,34 +105,56 @@ public class VersesDatabase {
         Cursor c = database.rawQuery("SELECT * FROM " + DATABASE_TABLE, null);
 
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-            Passage passage = new Passage(c.getString(c.getColumnIndex(KEY_REFERENCE)));
-            passage.setText(c.getString(c.getColumnIndex(KEY_VERSE)));
-            passage.setVersion(MetaSettings.getBibleVersion(context));
-            passage.setMillis(Calendar.getInstance().getTimeInMillis());
-            if(c.getString(c.getColumnIndex(KEY_LIST)).equals("memorized")) {
-                passage.setState(5);
-            }
-            else {
-                passage.setState(1+(int)(Math.random()*4));
-            }
-
-            while(passage.getTags().length < 1+(int)(Math.random()*6)) {
-                int rand = 1+(int)(Math.random()*8);
-                switch(rand) {
-                    case 1: passage.addTag("Tag A"); break;
-                    case 2: passage.addTag("Tag B"); break;
-                    case 3: passage.addTag("Tag C"); break;
-                    case 4: passage.addTag("Tag D"); break;
-                    case 5: passage.addTag("Tag E"); break;
-                    case 6: passage.addTag("Tag F"); break;
-                    case 7: passage.addTag("Tag G"); break;
-                    case 8: passage.addTag("Tag H"); break;
-                    default: passage.addTag("Tag Q"); break;
+            try {
+                Passage passage = new Passage(c.getString(c.getColumnIndex(KEY_REFERENCE)));
+                passage.setText(c.getString(c.getColumnIndex(KEY_VERSE)));
+                passage.setVersion(MetaSettings.getBibleVersion(context));
+                passage.setMillis(Calendar.getInstance().getTimeInMillis());
+                if (c.getString(c.getColumnIndex(KEY_LIST)).equals("memorized")) {
+                    passage.setState(5);
+                } else {
+                    passage.setState(1 + (int) (Math.random() * 4));
                 }
-            }
 
-            id = verseDB.insertVerse(passage);
-            Log.i("INSERT", id + "");
+                while (passage.getTags().length < 1 + (int) (Math.random() * 6)) {
+                    int rand = 1 + (int) (Math.random() * 8);
+                    switch (rand) {
+                        case 1:
+                            passage.addTag("Tag A");
+                            break;
+                        case 2:
+                            passage.addTag("Tag B");
+                            break;
+                        case 3:
+                            passage.addTag("Tag C");
+                            break;
+                        case 4:
+                            passage.addTag("Tag D");
+                            break;
+                        case 5:
+                            passage.addTag("Tag E");
+                            break;
+                        case 6:
+                            passage.addTag("Tag F");
+                            break;
+                        case 7:
+                            passage.addTag("Tag G");
+                            break;
+                        case 8:
+                            passage.addTag("Tag H");
+                            break;
+                        default:
+                            passage.addTag("Tag Q");
+                            break;
+                    }
+                }
+
+                id = verseDB.insertVerse(passage);
+                Log.i("INSERT", id + "");
+            }
+            catch(ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         MetaSettings.putVerseId(context, (int)id);
@@ -294,15 +317,20 @@ public class VersesDatabase {
 		while ((line = buffer.readLine()) != null) {
 		    String[] str = line.split("\t");
 
-            Passage passage = new Passage(str[1]);
-            passage.setText(str[2]);
-            if(str[3].equals("memorized"))
-                passage.setState(4);
-            else
-                passage.setState(1);
+            try {
+                Passage passage = new Passage(str[1]);
+                passage.setText(str[2]);
+                if (str[3].equals("memorized"))
+                    passage.setState(4);
+                else
+                    passage.setState(1);
 
 //            id = verseDB.insertVerse(passage);
-            id = (int) createEntry(str[1], str[2], str[3]);
+                id = (int) createEntry(str[1], str[2], str[3]);
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
 		}
 		buffer.close();
 //        MetaSettings.putVerseId(context, id);

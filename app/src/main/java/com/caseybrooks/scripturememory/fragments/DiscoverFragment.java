@@ -25,6 +25,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class DiscoverFragment extends Fragment {
     Context context;
@@ -62,7 +63,7 @@ public class DiscoverFragment extends Fragment {
             cardLayout.setOrientation(LinearLayout.VERTICAL);
             TextView title = new TextView(context);
             title.setTextSize(20);
-            title.setText(values[0].getReference());
+            title.setText(values[0].getReference().toString());
 
             TextView text = new TextView(context);
             text.setTextSize(15);
@@ -91,11 +92,16 @@ public class DiscoverFragment extends Fragment {
                     for(Element element : passages) {
                         if(count > 10) break; //only get the first 10 verses
 
-                        Passage passage = new Passage(element.select(".bibleref").first().ownText());
-                        passage.setVersion(MetaSettings.getBibleVersion(context));
-                        passage.retrieve();
-                        publishProgress(passage);
-                        count++;
+                        try {
+                            Passage passage = new Passage(element.select(".bibleref").first().ownText());
+                            passage.setVersion(MetaSettings.getBibleVersion(context));
+                            passage.retrieve();
+                            publishProgress(passage);
+                            count++;
+                        }
+                        catch(ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
                     message = "Finished";
                 }

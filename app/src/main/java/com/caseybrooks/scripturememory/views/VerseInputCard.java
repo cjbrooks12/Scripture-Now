@@ -23,6 +23,7 @@ import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Calendar;
 
 public class VerseInputCard extends FrameLayout {
@@ -126,8 +127,15 @@ public class VerseInputCard extends FrameLayout {
 		protected Passage doInBackground(Void... params) {
 			try {
 				if(Util.isConnected(context)) {
-					return new Passage(MetaSettings.getBibleVersion(context),
-											editReference.getText().toString()).retrieve();
+                    try {
+                        Passage passage = new Passage(editReference.getText().toString());
+                        passage.setVersion(MetaSettings.getBibleVersion(context));
+                        passage.retrieve();
+                        return passage;
+                    }
+                    catch (ParseException e) {
+                        return null;
+                    }
 				}
 				else {
 					message = "Cannot search verse, no internet connection";
@@ -148,10 +156,8 @@ public class VerseInputCard extends FrameLayout {
 		@Override
 		protected void onPostExecute(Passage params) {
 			super.onPostExecute(params);
-			if(params != null
-					   && params.getReference().length() > 0
-					   && params.getText().length() > 0) {
-				editReference.setText(params.getReference());
+			if(params != null) {
+				editReference.setText(params.getReference().toString());
 				editVerse.setText(params.getText());
 			}
 			else {

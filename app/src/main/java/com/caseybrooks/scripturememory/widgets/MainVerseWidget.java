@@ -135,7 +135,7 @@ public class MainVerseWidget extends AppWidgetProvider {
 			}
             // Construct the RemoteViews object
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
-            views.setTextViewText(R.id.widget_main_reference, verse.getReference());
+            views.setTextViewText(R.id.widget_main_reference, verse.getReference().toString());
             views.setTextViewText(R.id.widget_main_verse, verse.getText());
 
 

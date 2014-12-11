@@ -132,12 +132,12 @@ public class BibleVerseAdapter extends BaseAdapter {
         vh.overflow.setOnClickListener(overflowClick);
 
         //setup main content of ListItem
-        vh.reference.setText(passage.getReference());
+        vh.reference.setText(passage.getReference().toString());
         vh.verseText.setText(passage.getText());
         vh.version.setText(passage.getVersion().getCode().toUpperCase());
 
         //setup icon of ListItem
-        String passageBookCode = passage.getVerses()[0].getBook().getCode();
+        String passageBookCode = passage.getVerses()[0].getReference().book.getCode();
         vh.iconText.setText(passageBookCode.replaceFirst("(\\d)", "$1 "));
 
         if(vh.passage.isChecked()) {

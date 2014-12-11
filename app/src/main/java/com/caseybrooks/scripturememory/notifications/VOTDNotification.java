@@ -155,7 +155,7 @@ public class VOTDNotification {
                     if (currentAPIVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
                         //If device has Jelly Bean expanded notifications, set getText to
                         //	only show reference on small, and verse getText on big
-                        ref = passage.getReference();
+                        ref = passage.getReference().toString();
                         ver = " - " + passage.getText();
                     }
                     else {
@@ -164,7 +164,7 @@ public class VOTDNotification {
                         ref = passage.getReference() + " - " + passage.getText();
                         ver = "";
                     }
-                    ref_save = passage.getReference();
+                    ref_save = passage.getReference().toString();
                     ver_save = passage.getText();
                     create();
                     show();

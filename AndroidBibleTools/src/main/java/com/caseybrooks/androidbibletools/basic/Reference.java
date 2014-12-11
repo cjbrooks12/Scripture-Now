@@ -11,10 +11,19 @@ public class Reference {
     public final Book book;
     public final int chapter;
     public final ArrayList<Integer> verses;
-
-//Parse the input string using recursive descent parsing
-//------------------------------------------------------------------------------
     TokenStream ts;
+
+
+    //Parse the input string using recursive descent parsing
+//------------------------------------------------------------------------------
+    public Reference(Book book, int chapter, int... verses) {
+        this.book = book;
+        this.chapter = chapter;
+        this.verses = new ArrayList<Integer>();
+        for(int i = 0; i < verses.length; i++) {
+            this.verses.add(verses[i]);
+        }
+    }
 
     public Reference(String expression) throws ParseException {
         ts = new TokenStream(expression);
@@ -226,5 +235,21 @@ public class Reference {
         public void unget(Token token) {
             ungetTokens.push(token);
         }
+    }
+
+    @Override
+    public String toString() {
+        String refString = book.toString();
+        refString += " " + chapter;
+        refString += ":";
+
+        if(verses.size() > 0) {
+            refString += verses.get(0);
+            for(int i = 1; i < verses.size(); i++) {
+                refString += "," + verses.get(i);
+            }
+        }
+
+        return refString;
     }
 }

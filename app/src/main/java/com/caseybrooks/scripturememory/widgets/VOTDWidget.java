@@ -59,7 +59,7 @@ public class VOTDWidget extends AppWidgetProvider {
                     if (param != null) {
                         Passage passage = (Passage) param;
                         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_votd);
-                        views.setTextViewText(R.id.widget_votd_reference, passage.getReference());
+                        views.setTextViewText(R.id.widget_votd_reference, passage.getReference().toString());
                         views.setTextViewText(R.id.widget_votd_verse, passage.getText());
 
                         // Instruct the widget manager to update the widget

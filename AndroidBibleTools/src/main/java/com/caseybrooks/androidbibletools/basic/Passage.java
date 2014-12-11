@@ -1,19 +1,12 @@
 package com.caseybrooks.androidbibletools.basic;
 
-import android.util.Log;
-
 import com.caseybrooks.androidbibletools.enumeration.Flags;
 import com.caseybrooks.androidbibletools.enumeration.Version;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.EnumSet;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,104 +26,28 @@ public class Passage extends AbstractVerse {
 //------------------------------------------------------------------------------
 	//Data that makes up the Passage
 	private ArrayList<Verse> verses;
-    private final Verse start, end;
 	private String allText;
 
-	private static Pattern oneVerse = Pattern.compile("((\\d\\s*)?\\w+\\s*\\d+\\s*\\W\\s*\\d+)");
-	private static Pattern rangeInChapter = Pattern.compile("((\\d\\s*)?\\w+\\s*\\d+\\W+)(\\d+)\\W+(\\d+)");
-	private static Pattern rangeDifferentChapters = Pattern.compile("((\\d\\s*)?\\w+\\s*)(\\d+\\W+\\d+)\\W+(\\d+\\W+\\d+)");
     private static Pattern hashtag = Pattern.compile("#((\\w+)|(\"[\\w ]+\"))");
 
     //Constructors
 //------------------------------------------------------------------------------
-    public Passage(String reference) {
-		super();
+    public Passage(String reference) throws ParseException {
+		super(new Reference(reference));
 
-        try {
-            Reference reference1 = new Reference(reference);
-            Log.e("PARSE CORRECTLY", "'" + reference + "' was parsed correctly");
+        Collections.sort(this.reference.verses);
+        this.verses = new ArrayList<Verse>();
+
+        for(int i = 0; i < this.reference.verses.size(); i++) {
+            this.verses.add(
+                    new Verse(this.reference.book,
+                    this.reference.chapter,
+                    this.reference.verses.get(i)));
         }
-        catch(ParseException e1) {
-            Log.e("PARSE EXCEPTION", e1.getMessage() + " : " + e1.getErrorOffset());
-        }
-        catch(Exception e) {
-            Log.e("PARSE ERROR", "UNKNOWN");
-        }
-
-		reference = reference.trim().toLowerCase();
-		reference = reference.replaceAll(" and ", "-");
-
-		Matcher m1 = oneVerse.matcher(reference);
-        Matcher m2 = rangeInChapter.matcher(reference);
-        Matcher m3 = rangeDifferentChapters.matcher(reference);
-
-        try {
-            Verse a, b;
-            if (m1.matches()) {
-                a = new Verse(m1.group(1));
-                b = new Verse(m1.group(1));
-            } else if (m2.matches()) {
-                a = new Verse(m2.group(1) + m2.group(3));
-                b = new Verse(m2.group(1) + m2.group(4));
-            } else if (m3.matches()) {
-                a = new Verse(m3.group(1) + m3.group(3));
-                b = new Verse(m3.group(1) + m3.group(4));
-            } else {
-                throw new IllegalArgumentException("Passage does not exist: String not formatted properly, cannot parse '" + reference + "'");
-            }
-
-
-            if(a.compareTo(b) < 0) {
-                start = a;
-                end = b;
-            }
-            else if(a.compareTo(b) > 0) {
-                start = b;
-                end = a;
-            }
-            else {
-                start = a;
-                end = a;
-            }
-
-            verses = new ArrayList<Verse>();
-            verses.add(start);
-
-            //walk through bible verses, adding a verse to the container for each one between start and end
-            Verse nextVerse = start;
-            while(true) {
-                if(nextVerse.equals(end)) break;
-                else {
-                    nextVerse = nextVerse.next();
-                    verses.add(nextVerse);
-                }
-            }
-        }
-        catch (IllegalArgumentException e1) {
-            throw new IllegalArgumentException("Passage does not exist: One or more Verses in '" + reference + "' does not exist", e1);
-        }
-	}
-
-	public Passage(Version version, String reference) {
-		this(reference);
-		this.version = version;
-		for(Verse item : verses) item.setVersion(version);
-	}
-
-	public Passage(String reference, String text) {
-		this(reference);
-		setText(text);
-	}
-
-	public Passage(Version version, String reference, String text) {
-		this(version, reference);
-		setText(text);
 	}
 
 //Setters and Getters
 //------------------------------------------------------------------------------
-
-
     @Override
     public AbstractVerse setVersion(Version version) {
         super.setVersion(version);
@@ -139,56 +56,21 @@ public class Passage extends AbstractVerse {
         return this;
     }
 
-    @Override
-	public String getReference() {
-		switch(Math.abs(start.compareTo(end))) {
-			case 0: return start.getReference();
-			case 1:
-				if(start.getChapter() == end.getChapter()) {
-					return start.getReference() + "-" + end.getVerseNumber();
-				}
-				else {
-					return start.getReference() + " - " + end.getChapter() + ":" + end.getVerseNumber();
-				}
-			case 2: return start.getReference() + "-" + end.getVerseNumber();
-			case 3: return start.getReference() + " - " + end.getChapter() + ":" + end.getVerseNumber();
-			default: return start.getReference() + " - " + end.getReference();
-		}
-	}
-
 	public Passage setText(String text) {
-//		if(text.matches(".+\\(\\n+\\).+")) {
-//			String[] splitVerses = text.split(".+\\(\\n+\\).+");
-//			if(splitVerses.length == verses.size()) {
-//				for(int i = 0; i < verses.size(); i++) {
-//					verses.get(i).setText(splitVerses[i]);
-//				}
-//				allText = null;
-//			}
-//			else {
-//				this.allText = text;
-//			}
-//		}
-//		else {
-            //parse input string and extract any tags, denoted as standard hastags
+        //parse input string and extract any tags, denoted as standard hastags
         Matcher m = hashtag.matcher(text);
 
         while (m.find()) {
             String match = m.group(1);
             if(match.charAt(0) == '\"') {
-                addTag(match.substring(1, match.length()-1));
-                Log.i("HASHTAG FOUND", match.substring(1, match.length()-1));
-
+                addTag(match.substring(1, match.length() - 1));
             }
             else {
                 addTag(match);
-                Log.i("HASHTAG FOUND", match);
-
             }
         }
 
         this.allText =  m.replaceAll("");
-//		}
 
 		return this;
 	}
@@ -240,16 +122,16 @@ public class Passage extends AbstractVerse {
 
 	@Override
 	public int compareTo(AbstractVerse verse) {
-		Verse lhs = this.start;
-		Verse rhs = ((Passage) verse).start;
+		Verse lhs = this.verses.get(0);
+		Verse rhs = ((Passage) verse).verses.get(0);
 
 		return lhs.compareTo(rhs);
 	}
 
 	@Override
 	public boolean equals(AbstractVerse verse) {
-		Verse lhs = this.start;
-		Verse rhs = ((Passage) verse).start;
+        Verse lhs = this.verses.get(0);
+        Verse rhs = ((Passage) verse).verses.get(0);
 
 		return lhs.compareTo(rhs) == 0;
 	}
@@ -259,35 +141,39 @@ public class Passage extends AbstractVerse {
     @Override
     public String getURL() {
         String query = "http://www.biblestudytools.com/" + version.getCode() + "/" +
-                start.getBook().getName().toLowerCase().trim().replaceAll(" ",  "-") +
-                "/passage.aspx?q=" + start.getBook().getName().toLowerCase().trim().replaceAll(" ",  "-") +
-                "+" + start.getChapter() + ":" + start.getVerseNumber();
+                reference.book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
+                "/passage.aspx?q=" +
+                reference.book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
+                "+" +
+                reference.chapter + ":" + reference.verses.get(0);
 
-        if(!start.equals(end)) {
-            query += "-" + end.getVerseNumber();
+        if(reference.verses.size() > 1) {
+            query += "-" + reference.verses.get(reference.verses.size()-1);
         }
         return query;
-
     }
 
     @Override
 	public Passage retrieve() throws IOException {
 		//get webpage
-		Document doc = Jsoup.connect(getURL()).get();
-		Elements passage = doc.select(".versetext");
-		flags = EnumSet.of(Flags.TEXT_NORMAL, Flags.PRINT_VERSE_NUMBER, Flags.NUMBER_DOT);
+//		Document doc = Jsoup.connect(getURL()).get();
+//		Elements passage = doc.select(".versetext");
+//		flags = EnumSet.of(Flags.TEXT_NORMAL, Flags.PRINT_VERSE_NUMBER, Flags.NUMBER_DOT);
+//
+//		String passageText = "";
+//
+//		parse webpage
+//		for(Element element : passage) {
+//			int versenum = Integer.parseInt(element.select(".versenum").text());
+//			element.select(".versenum").remove();
+//			element.select("a").remove();
+//			passageText += /*" (" + versenum + ") " +*/ element.text() + " ";
+//		}
+//        setText(passageText);
 
-		String passageText = "";
-
-		//parse webpage
-		for(Element element : passage) {
-			int versenum = Integer.parseInt(element.select(".versenum").text());
-			element.select(".versenum").remove();
-			element.select("a").remove();
-			passageText += /*" (" + versenum + ") " +*/ element.text() + " ";
-		}
-
-		setText(passageText);
+        for(Verse verse : verses) {
+            verse.retrieve();
+        }
 
 		return this;
 	}

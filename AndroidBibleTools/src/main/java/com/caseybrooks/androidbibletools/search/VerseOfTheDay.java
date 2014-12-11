@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.EnumSet;
 
 public class VerseOfTheDay {
@@ -17,11 +18,17 @@ public class VerseOfTheDay {
 
 		Elements reference = doc.select("meta[property=og:title]");
 
-		Passage passage = new Passage(version, reference.attr("content").substring(18));
-		passage.retrieve();
-		passage.setFlags(EnumSet.of(Flags.TEXT_NORMAL));
-
-		return passage;
+        try {
+            Passage passage = new Passage(reference.attr("content").substring(18));
+            passage.setVersion(version);
+            passage.retrieve();
+            passage.setFlags(EnumSet.of(Flags.TEXT_NORMAL));
+            return passage;
+        }
+        catch(ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
 	}
 
 
