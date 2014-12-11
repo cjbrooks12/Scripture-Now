@@ -14,16 +14,9 @@ public class Reference {
     public int chapter;
     public ArrayList<Integer> verses;
 
-    public Reference(Book book, int chapter, int... verses) {
-        this.book = book;
-        this.chapter = chapter;
-        //this.verses = verses;
-    }
-
 //Parse the input string using recursive descent parsing
 //------------------------------------------------------------------------------
     TokenStream ts;
-    boolean matchAll;
 
     public Reference(String expression) throws ParseException {
         ts = new TokenStream(expression);
@@ -57,17 +50,8 @@ public class Reference {
         Token a = ts.get();
         if(a != null && a.equals(Token.NUMBER) && a.getIntValue() <= 3) {
             Token b = ts.get();
-            if(b != null && b.equals(Token.WHITESPACE)) {
-                Token c = ts.get();
-                if(c != null && c.equals(Token.WORD)) {
-                    return Book.fromString(a.getIntValue() + " " + c.getStringValue());
-                }
-                else {
-                    ts.unget(c);
-                    ts.unget(b);
-                    ts.unget(a);
-                    return null;
-                }
+            if(b != null && b.equals(Token.WORD)) {
+                return Book.fromString(a.getIntValue() + " " + b.getStringValue());
             }
             else {
                 ts.unget(b);
@@ -114,6 +98,10 @@ public class Reference {
                         return verseList;
                     }
                 }
+                else {
+                    ts.unget(c);
+                    return verseList;
+                }
             }
         }
         else {
@@ -130,7 +118,6 @@ public class Reference {
         public static final int COLON = 2;
         public static final int COMMA = 3;
         public static final int DASH = 4;
-        public static final int WHITESPACE = 5;
 
         private int tokenType;
         private String stringValue;
@@ -146,7 +133,6 @@ public class Reference {
             this.intValue = value;
         }
 
-        public int getType() { return tokenType; }
         public String getStringValue() { return stringValue; }
         public int getIntValue() { return intValue; }
 
@@ -160,9 +146,10 @@ public class Reference {
         Stack<Token> ungetTokens;
 
         public TokenStream(String expression) {
+            String toParse = expression.replaceAll("\\s", "");
             chars = new LinkedList<Character>();
-            for(int i = 0; i < expression.length(); i++) {
-                chars.add(expression.charAt(i));
+            for(int i = 0; i < toParse.length(); i++) {
+                chars.add(toParse.charAt(i));
             }
             ungetTokens = new Stack<Token>();
         }
@@ -177,64 +164,49 @@ public class Reference {
                     String s;
 
                     switch (ch) {
-                        case ':':
-                            Log.e("RETURN TOKEN", "_" + ch);
-                            return new Token(Token.COLON, ch);
-                        case ',':
-                            Log.e("RETURN TOKEN", "_" + ch);
-                            return new Token(Token.COMMA, ch);
-                        case '-':
-                            Log.e("RETURN TOKEN", "_" + ch);
-                            return new Token(Token.DASH, ch);
-                        case '0':
-                        case '1':
-                        case '2':
-                        case '3':
-                        case '4':
-                        case '5':
-                        case '6':
-                        case '7':
-                        case '8':
-                        case '9':
-                            s = "";
-                            s += ch;
-                            while (chars.getFirst() != null &&
-                                    Character.isDigit(chars.getFirst())) {
-                                s += chars.removeFirst();
-                            }
-                            Log.e("RETURN TOKEN", "_" + Integer.parseInt(s));
-                            return new Token(Token.NUMBER, Integer.parseInt(s));
-                        default:
-                            //ignore all whitespace at this point
-                            if (Character.isWhitespace(ch)) {
-                                s = "";
-                                s += ch;
-                                while (chars.getFirst() != null &&
-                                        Character.isWhitespace(chars.getFirst())) {
-                                    s += chars.removeFirst();
-                                }
-                            }
+                    case ':':
+                        return new Token(Token.COLON, ch);
+                    case ',':
+                        return new Token(Token.COMMA, ch);
+                    case '-':
+                        return new Token(Token.DASH, ch);
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9':
+                        s = "";
+                        s += ch;
+                        while (chars.size() > 0 && chars.getFirst() != null &&
+                                Character.isDigit(chars.getFirst())) {
+                            s += chars.removeFirst();
+                        }
+                        return new Token(Token.NUMBER, Integer.parseInt(s));
+                    default:
+                        s = "";
+                        s += ch;
+                        while (chars.size() > 0 && chars.getFirst() != null &&
+                                Character.isLetter(chars.getFirst())) {
+                            s += chars.removeFirst();
+                        }
 
-                            s = "";
-                            s += ch;
-                            while (chars.getFirst() != null &&
-                                    Character.isLetter(chars.getFirst())) {
-                                s += chars.removeFirst();
-                            }
-
-                            if (s.equalsIgnoreCase("through")) {
-                                Log.e("RETURN TOKEN", "_" + s);
-                                return new Token(Token.DASH, s);
-                            } else if (s.equalsIgnoreCase("to")) {
-                                Log.e("RETURN TOKEN", "_" + s);
-                                return new Token(Token.DASH, s);
-                            } else if (s.equalsIgnoreCase("and")) {
-                                Log.e("RETURN TOKEN", "_" + s);
-                                return new Token(Token.COMMA, s);
-                            } else {
-                                Log.e("RETURN TOKEN", "_" + s);
-                                return new Token(Token.WORD, s);
-                            }
+                        if (s.equalsIgnoreCase("through")) {
+                            return new Token(Token.DASH, s);
+                        }
+                        else if (s.equalsIgnoreCase("to")) {
+                            return new Token(Token.DASH, s);
+                        }
+                        else if (s.equalsIgnoreCase("and")) {
+                            return new Token(Token.COMMA, s);
+                        }
+                        else {
+                            return new Token(Token.WORD, s);
+                        }
                     }
                 } else {
                     Log.e("RETURN TOKEN", "none remaining: " + chars.size());
