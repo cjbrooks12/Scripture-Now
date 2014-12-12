@@ -25,12 +25,10 @@ public class MetaSettings {
     public static final String PROMPT_ON_START_INT = "PROMPT_ON_START_INT";
     public static final String MAIN_NOTIFICATION_ACTIVE = "ACTIVE";
     public static final String VERSE_ID = "SQL_ID";
-//    public static final String RADIO_ID = "CHECKED_RADIO_ID";
     public static final String VERSE_DISPLAY_MODE = "VERSE_DISPLAY_MODE";
+    public static final String RANDOMNESS_LEVEL = "RANDOMNESS_LEVEL";
 	public static final String SORT_BY = "SORT_BY";
     public static final String USER_LEARNED_DRAWER = "USER_LEARNED_DRAWER";
-//    public static final String CACHE_LAST_UPDATE = "CACHE_LAST_UPDATE";
-//    public static final String CACHE_VERSE = "CACHE_VERSE";
 
 //Display preferences
 //------------------------------------------------------------------------------
@@ -103,20 +101,20 @@ public class MetaSettings {
         context.getSharedPreferences(settings_file, 0).edit().putBoolean(MAIN_NOTIFICATION_ACTIVE, value).commit();
     }
 
-//    public static int getRadioId(Context context) {
-//        return context.getSharedPreferences(settings_file, 0).getInt(RADIO_ID, R.id.radioNormal);
-//    }
-//
-//    public static void putRadioId(Context context, int value) {
-//        context.getSharedPreferences(settings_file, 0).edit().putInt(RADIO_ID, value).commit();
-//    }
-
     public static int getVerseDisplayMode(Context context) {
         return context.getSharedPreferences(settings_file, 0).getInt(VERSE_DISPLAY_MODE, R.id.radioNormal);
     }
 
     public static void putVerseDisplayMode(Context context, int value) {
         context.getSharedPreferences(settings_file, 0).edit().putInt(VERSE_DISPLAY_MODE, value).commit();
+    }
+
+    public static float getRandomnessLevel(Context context) {
+        return context.getSharedPreferences(settings_file, 0).getFloat(RANDOMNESS_LEVEL, 0.5f);
+    }
+
+    public static void putRandomnessLevel(Context context, float value) {
+        context.getSharedPreferences(settings_file, 0).edit().putFloat(RANDOMNESS_LEVEL, value).commit();
     }
 
 	public static int getSortBy(Context context) {

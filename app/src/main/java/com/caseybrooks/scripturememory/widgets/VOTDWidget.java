@@ -9,13 +9,9 @@ import android.content.Intent;
 import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
-import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
-import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.OnTaskCompletedListener;
-import com.caseybrooks.scripturememory.data.VOTDGetTask;
+import com.caseybrooks.scripturememory.data.Util;
 
 public class VOTDWidget extends AppWidgetProvider {
     public static final String REFRESH_ALL = ".VOTDWidget.REFRESH_ALL";
@@ -53,26 +49,26 @@ public class VOTDWidget extends AppWidgetProvider {
 
         //get new verse if connected, else just don't update widgets
         if(Util.isConnected(context)) {
-            new VOTDGetTask(context, MetaSettings.getBibleVersion(context), new OnTaskCompletedListener() {
-                @Override
-                public void onTaskCompleted(Object param) {
-                    if (param != null) {
-                        Passage passage = (Passage) param;
-                        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_votd);
-                        views.setTextViewText(R.id.widget_votd_reference, passage.getReference().toString());
-                        views.setTextViewText(R.id.widget_votd_verse, passage.getText());
-
-                        // Instruct the widget manager to update the widget
-                        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-
-                        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, VOTDWidget.class));
-
-                        for (int i = 0; i < appWidgetIds.length; i++) {
-                            appWidgetManager.updateAppWidget(appWidgetIds[i], views);
-                        }
-                    }
-                }
-            }).execute();
+//            new VOTDGetTask(context, MetaSettings.getBibleVersion(context), new OnTaskCompletedListener() {
+//                @Override
+//                public void onTaskCompleted(Object param) {
+//                    if (param != null) {
+//                        Passage passage = (Passage) param;
+//                        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_votd);
+//                        views.setTextViewText(R.id.widget_votd_reference, passage.getReference().toString());
+//                        views.setTextViewText(R.id.widget_votd_verse, passage.getText());
+//
+//                        // Instruct the widget manager to update the widget
+//                        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+//
+//                        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, VOTDWidget.class));
+//
+//                        for (int i = 0; i < appWidgetIds.length; i++) {
+//                            appWidgetManager.updateAppWidget(appWidgetIds[i], views);
+//                        }
+//                    }
+//                }
+//            }).execute();
         }
     }
 

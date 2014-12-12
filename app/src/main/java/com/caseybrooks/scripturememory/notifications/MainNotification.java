@@ -12,8 +12,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import com.caseybrooks.androidbibletools.basic.DefaultFormatter;
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.enumeration.Flags;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaReceiver;
@@ -60,16 +60,20 @@ public class MainNotification {
 
             switch (MetaSettings.getVerseDisplayMode(context)) {
                 case 0:
-                    verse.setFlags(EnumSet.of(Flags.TEXT_NORMAL));
+                    verse.setFormatter(new DefaultFormatter.Normal());
                     break;
                 case 1:
-                    verse.setFlags(EnumSet.of(Flags.TEXT_DASHES));
+                    verse.setFormatter(new DefaultFormatter.Dashes());
                     break;
                 case 2:
-                    verse.setFlags(EnumSet.of(Flags.TEXT_LETTERS));
+                    verse.setFormatter(new DefaultFormatter.FirstLetters());
                     break;
                 case 3:
-                    verse.setFlags(EnumSet.of(Flags.TEXT_DASHED_LETTERS));
+                    verse.setFormatter(new DefaultFormatter.DashedLetter());
+                    break;
+                case 4:
+                    float randomness = MetaSettings.getRandomnessLevel(context);
+                    verse.setFormatter(new DefaultFormatter.RandomWords(randomness));
                     break;
                 default:
                     break;

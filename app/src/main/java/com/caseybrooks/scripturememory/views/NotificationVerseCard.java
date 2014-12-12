@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
@@ -33,10 +34,11 @@ public class NotificationVerseCard extends FrameLayout {
 	TextView ref, ver;
     ImageView contextMenu;
     RelativeLayout expandedSection;
-    RadioButton normal, dashes, letters, letteredDashes;
+    RadioButton normal, dashes, letters, letteredDashes, randomWords;
+    SeekBar randomnessLevelSlider;
     
     Passage passage;
-    boolean notificationActive, /*visible,*/ isExpanded;
+    boolean notificationActive, isExpanded;
     int verseDisplayMode;
 
 //Constructors and Initialization
@@ -74,6 +76,12 @@ public class NotificationVerseCard extends FrameLayout {
 		letters.setOnClickListener(radioButtonClick);
 		letteredDashes = (RadioButton) findViewById(R.id.radioLetteredDashes);
 		letteredDashes.setOnClickListener(radioButtonClick);
+        randomWords = (RadioButton) findViewById(R.id.radioRandomWords);
+        randomWords.setOnClickListener(radioButtonClick);
+
+        randomnessLevelSlider = (SeekBar) findViewById(R.id.randomnessLevelSlider);
+        randomnessLevelSlider.setOnSeekBarChangeListener(seekBarChangeListener);
+
 				
 		expandedSection = (RelativeLayout) findViewById(R.id.expandedLayout);
 		expandedSection.setVisibility(View.GONE);
@@ -225,15 +233,23 @@ public class NotificationVerseCard extends FrameLayout {
             switch(v.getId()) {
                 case R.id.radioNormal:
                     verseDisplayMode = 0;
+                    randomnessLevelSlider.setVisibility(View.GONE);
                     break;
                 case R.id.radioDashes:
                     verseDisplayMode = 1;
+                    randomnessLevelSlider.setVisibility(View.GONE);
                     break;
                 case R.id.radioLetters:
                     verseDisplayMode = 2;
+                    randomnessLevelSlider.setVisibility(View.GONE);
                     break;
                 case R.id.radioLetteredDashes:
                     verseDisplayMode = 3;
+                    randomnessLevelSlider.setVisibility(View.GONE);
+                    break;
+                case R.id.radioRandomWords:
+                    verseDisplayMode = 4;
+                    randomnessLevelSlider.setVisibility(View.VISIBLE);
                     break;
             }
             MetaSettings.putVerseDisplayMode(context, verseDisplayMode);
@@ -242,4 +258,24 @@ public class NotificationVerseCard extends FrameLayout {
 			MainNotification.notify(context).show();
 		}
 	};
+
+    SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            MetaSettings.putRandomnessLevel(context, seekBar.getProgress() / 1000f);
+
+            if(MetaSettings.getNotificationActive(context)) {
+                MainNotification.notify(context).show();
+            }
+        }
+    };
 }

@@ -116,7 +116,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Dashes with First Letters" />
+
+                <RadioButton
+                    android:id="@+id/radioRandomWords"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Random Words..." />
             </RadioGroup>
+            <SeekBar
+                android:id="@+id/randomnessLevelSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="1000"
+                android:progress="500"
+                android:visibility="gone"
+                android:layout_below="@+id/expandedDisplayOptionsGroup" />
         </RelativeLayout>
 
     </LinearLayout>

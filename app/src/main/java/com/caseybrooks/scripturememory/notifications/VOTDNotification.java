@@ -18,8 +18,6 @@ import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaReceiver;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.OnTaskCompletedListener;
-import com.caseybrooks.scripturememory.data.VOTDGetTask;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import java.util.Calendar;
@@ -146,31 +144,31 @@ public class VOTDNotification {
 //------------------------------------------------------------------------------
 	//Call to download and issue a notification for the VOTD
 	public VOTDNotification retrieveInternetVerse() {
-        new VOTDGetTask(context, MetaSettings.getBibleVersion(context), new OnTaskCompletedListener() {
-            @Override
-            public void onTaskCompleted(Object param) {
-                if(param != null) {
-					Passage passage = (Passage) param;
-                    int currentAPIVersion = android.os.Build.VERSION.SDK_INT;
-                    if (currentAPIVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        //If device has Jelly Bean expanded notifications, set getText to
-                        //	only show reference on small, and verse getText on big
-                        ref = passage.getReference().toString();
-                        ver = " - " + passage.getText();
-                    }
-                    else {
-                        //If device does not have expanded notifications, let notification
-                        //	always show reference and getText
-                        ref = passage.getReference() + " - " + passage.getText();
-                        ver = "";
-                    }
-                    ref_save = passage.getReference().toString();
-                    ver_save = passage.getText();
-                    create();
-                    show();
-                }
-            }
-        }).execute();
+//        new VOTDGetTask(context, MetaSettings.getBibleVersion(context), new OnTaskCompletedListener() {
+//            @Override
+//            public void onTaskCompleted(Object param) {
+//                if(param != null) {
+//					Passage passage = (Passage) param;
+//                    int currentAPIVersion = android.os.Build.VERSION.SDK_INT;
+//                    if (currentAPIVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//                        //If device has Jelly Bean expanded notifications, set getText to
+//                        //	only show reference on small, and verse getText on big
+//                        ref = passage.getReference().toString();
+//                        ver = " - " + passage.getText();
+//                    }
+//                    else {
+//                        //If device does not have expanded notifications, let notification
+//                        //	always show reference and getText
+//                        ref = passage.getReference() + " - " + passage.getText();
+//                        ver = "";
+//                    }
+//                    ref_save = passage.getReference().toString();
+//                    ver_save = passage.getText();
+//                    create();
+//                    show();
+//                }
+//            }
+//        }).execute();
         return this;
 	}
 	

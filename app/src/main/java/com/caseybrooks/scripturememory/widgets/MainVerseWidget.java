@@ -15,15 +15,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.caseybrooks.androidbibletools.basic.DefaultFormatter;
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.enumeration.Flags;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaReceiver;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
-
-import java.util.EnumSet;
 
 /**
  * Implementation of App Widget functionality.
@@ -119,17 +117,21 @@ public class MainVerseWidget extends AppWidgetProvider {
             verse = db.getVerse(id);
 			switch(MetaSettings.getVerseDisplayMode(context)) {
 				case 0:
-					verse.setFlags(EnumSet.of(Flags.TEXT_NORMAL));
+					verse.setFormatter(new DefaultFormatter.Normal());
 					break;
 				case 1:
-					verse.setFlags(EnumSet.of(Flags.TEXT_DASHES));
+                    verse.setFormatter(new DefaultFormatter.Dashes());
 					break;
 				case 2:
-					verse.setFlags(EnumSet.of(Flags.TEXT_LETTERS));
+                    verse.setFormatter(new DefaultFormatter.FirstLetters());
 					break;
 				case 3:
-					verse.setFlags(EnumSet.of(Flags.TEXT_DASHED_LETTERS));
+                    verse.setFormatter(new DefaultFormatter.DashedLetter());
 					break;
+                case 4:
+                    float randomness = MetaSettings.getRandomnessLevel(context);
+                    verse.setFormatter(new DefaultFormatter.RandomWords(randomness));
+                    break;
 				default:
 					break;
 			}

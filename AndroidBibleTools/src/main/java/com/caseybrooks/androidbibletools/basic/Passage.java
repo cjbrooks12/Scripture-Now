@@ -1,6 +1,5 @@
 package com.caseybrooks.androidbibletools.basic;
 
-import com.caseybrooks.androidbibletools.enumeration.Flags;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 
 import java.io.IOException;
@@ -77,41 +76,33 @@ public class Passage extends AbstractVerse {
 
 	@Override
 	public String getText() {
-		if(allText == null) {
-			String text = "";
+        if(allText == null) {
+            String text = "";
 
-			for (Verse verse : verses) {
-				verse.setFlags(flags);
-				text += verse.getText();
-			}
+            text += formatter.onPreFormat(reference);
 
-			return text;
-		}
-		else {
-			String text = "";
+            for (int i = 0; i < verses.size(); i++) {
+                Verse verse = verses.get(i);
 
-			//Will print only the first flag that is set, or normal if none are set
-			if(flags.contains(Flags.TEXT_NORMAL)) {
-				text += allText + " ";
-			}
-			else if(flags.contains(Flags.TEXT_DASHES)) {
-				text += allText.replaceAll("\\w", "_") + " ";
-			}
-			else if(flags.contains(Flags.TEXT_LETTERS)) {
-				text += allText.toUpperCase().replaceAll("(\\w)(\\w*)", "$1 ") + " ";
-			}
-			else if(flags.contains(Flags.TEXT_DASHED_LETTERS)) {
-				text += allText.toUpperCase().replaceAll("(\\B\\w)", "_") + " ";
-			}
-			else { //if no flags are given, print out normal
-				text += allText + " ";
-			}
+                text += formatter.onFormatNumber(verse.reference.verses.get(0));
+                text += formatter.onFormatText(verse.verseText);
 
-			if(flags.contains(Flags.PRINT_NEWLINE)) {
-				text += "\n";
-			}
-			return text;
-		}
+                if (i < verses.size() - 1) {
+                    text += formatter.onFormatNewVerse();
+                }
+            }
+
+            return text;
+        }
+        else {
+            String text = "";
+
+            text += formatter.onPreFormat(reference);
+            text += formatter.onFormatText(allText);
+            text += formatter.onPostFormat();
+
+            return text;
+        }
 	}
 
 	public Verse[] getVerses() {

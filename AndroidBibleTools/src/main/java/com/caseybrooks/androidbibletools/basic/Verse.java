@@ -1,7 +1,6 @@
 package com.caseybrooks.androidbibletools.basic;
 
 import com.caseybrooks.androidbibletools.enumeration.Book;
-import com.caseybrooks.androidbibletools.enumeration.Flags;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,7 +9,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.EnumSet;
 
 /** The simplest unit of data in this data structure. Each verse contains one
  *  and only one Bible verse, its corresponding Book, Chapter, and Verse Number,
@@ -33,8 +31,7 @@ public class Verse extends AbstractVerse {
 //Data Members
 //------------------------------------------------------------------------------
     //Data members that make up the actual verse
-    private String verseText;
-
+    protected String verseText;
 
     //Constructors
 //------------------------------------------------------------------------------
@@ -105,39 +102,12 @@ public class Verse extends AbstractVerse {
     @Override
     public String getText() {
         String text = "";
-        int verseNumber = reference.verses.get(0);
 
-        if(flags.contains(Flags.PRINT_VERSE_NUMBER)) {
-            if(flags.contains(Flags.NUMBER_PLAIN))
-                text += verseNumber + " ";
-            else if(flags.contains(Flags.NUMBER_DOT))
-                text += verseNumber + ". ";
-            else if(flags.contains(Flags.NUMBER_PARENTHESIS))
-                text += verseNumber + ") ";
-            else if(flags.contains(Flags.NUMBER_DOUBLE_PARENTHESIS))
-                text += "(" + verseNumber + ") ";
-        }
+        text += formatter.onPreFormat(reference);
+        text += formatter.onFormatNumber(reference.verses.get(0));
+        text += formatter.onFormatText(verseText);
+        text += formatter.onPostFormat();
 
-        //Will print only the first flag that is set, or normal if none are set
-        if(flags.contains(Flags.TEXT_NORMAL)) {
-            text += verseText + " ";
-        }
-        else if(flags.contains(Flags.TEXT_DASHES)) {
-            text += verseText.replaceAll("\\w", "_") + " ";
-        }
-        else if(flags.contains(Flags.TEXT_LETTERS)) {
-            text += verseText.toUpperCase().replaceAll("(\\w)(\\w*)", "$1 ") + " ";
-        }
-        else if(flags.contains(Flags.TEXT_DASHED_LETTERS)) {
-            text += verseText.toUpperCase().replaceAll("(\\B\\w)", "_") + " ";
-        }
-        else { //if no flags are given, print out normal
-            text += verseText + " ";
-        }
-
-        if(flags.contains(Flags.PRINT_NEWLINE)) {
-            text += "\n";
-        }
         return text;
     }
 
@@ -230,7 +200,6 @@ public class Verse extends AbstractVerse {
 		Document doc = Jsoup.connect(getURL()).get();
 
 		Elements passage = doc.select(".versetext");
-		flags = EnumSet.of(Flags.TEXT_NORMAL, Flags.PRINT_VERSE_NUMBER, Flags.NUMBER_DOT);
 
 		for(Element element : passage) {
 			element.select(".versenum").remove();

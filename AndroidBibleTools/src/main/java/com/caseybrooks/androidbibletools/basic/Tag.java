@@ -5,5 +5,4 @@ package com.caseybrooks.androidbibletools.basic;
  * Verses in a list structure
  */
 public class Tag {
-
 }

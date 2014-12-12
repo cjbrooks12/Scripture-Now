@@ -1,11 +1,9 @@
 package com.caseybrooks.androidbibletools.basic;
 
-import com.caseybrooks.androidbibletools.enumeration.Flags;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.EnumSet;
 import java.util.TreeSet;
 
 public abstract class AbstractVerse implements Comparable<AbstractVerse> {
@@ -17,7 +15,6 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 	protected long id;
 
 	protected TreeSet<String> tags;
-	protected EnumSet<Flags> flags;
     protected long millis;
     protected int state;
     protected boolean checked;
@@ -25,20 +22,11 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 	public AbstractVerse(Reference reference) {
 		version = Version.KJV;
         this.reference = reference;
+        formatter = new DefaultFormatter();
 
 		id = 0;
 		tags = new TreeSet<String>();
-		flags = EnumSet.of(Flags.TEXT_NORMAL);
 	}
-
-    public AbstractVerse(Version version, Reference reference) {
-        version = version;
-        this.reference = reference;
-
-        id = 0;
-        tags = new TreeSet<String>();
-        flags = EnumSet.of(Flags.TEXT_NORMAL);
-    }
 
 	//Defined methods
 //------------------------------------------------------------------------------
@@ -62,6 +50,11 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 
     public AbstractVerse setState(int state) {
         this.state = state;
+        return this;
+    }
+
+    public AbstractVerse setFormatter(Formatter formatter) {
+        this.formatter = formatter;
         return this;
     }
 
@@ -118,77 +111,6 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 		String[] tags = new String[this.tags.size()];
 		this.tags.toArray(tags);
 		return tags;
-	}
-
-	public AbstractVerse setFlags(EnumSet<Flags> flags) {
-		this.flags = flags;
-		return this;
-	}
-
-	public AbstractVerse setFlag(Flags flag, boolean status) {
-		//Whether to include the verse number
-		if (flag.equals(Flags.PRINT_VERSE_NUMBER)) {
-			if (status) {
-				flags.add(Flags.PRINT_VERSE_NUMBER);
-			}
-			else {
-				flags.remove(Flags.PRINT_VERSE_NUMBER);
-			}
-		}
-
-		//To format how the number is shown
-		if (flag.equals(Flags.NUMBER_PLAIN)
-					|| flag.equals(Flags.NUMBER_DOT)
-					|| flag.equals(Flags.NUMBER_PARENTHESIS)
-					|| flag.equals(Flags.NUMBER_DOUBLE_PARENTHESIS)) {
-
-			if(status) {
-				flags.remove(Flags.NUMBER_PLAIN);
-				flags.remove(Flags.NUMBER_DOT);
-				flags.remove(Flags.NUMBER_PARENTHESIS);
-				flags.remove(Flags.NUMBER_DOUBLE_PARENTHESIS);
-
-				flags.add(flag);
-			}
-			else {
-				flags.remove(flag);
-			}
-		}
-
-		//To format how the getText is shown
-		if (flag.equals(Flags.TEXT_NORMAL)
-					|| flag.equals(Flags.TEXT_DASHES)
-					|| flag.equals(Flags.TEXT_LETTERS)
-					|| flag.equals(Flags.TEXT_DASHED_LETTERS)) {
-
-			if(status) {
-				flags.remove(Flags.TEXT_NORMAL);
-				flags.remove(Flags.TEXT_DASHES);
-				flags.remove(Flags.TEXT_LETTERS);
-				flags.remove(Flags.TEXT_DASHED_LETTERS);
-
-				flags.add(flag);
-			}
-			else {
-				flags.remove(flag);
-			}
-		}
-
-		//Whether to include a newline character after the verse getText
-		if (flag.equals(Flags.PRINT_NEWLINE)) {
-			if (status) {
-				flags.add(Flags.PRINT_NEWLINE);
-			}
-			else {
-				flags.remove(Flags.PRINT_NEWLINE);
-			}
-		}
-
-		return this;
-	}
-
-	public EnumSet<Flags> getFlags() {
-		return flags;
 	}
 
 //Abstract Methods

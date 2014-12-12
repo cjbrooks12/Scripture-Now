@@ -1,7 +1,6 @@
 package com.caseybrooks.androidbibletools.search;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.enumeration.Flags;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 
 import org.jsoup.Jsoup;
@@ -10,7 +9,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.EnumSet;
 
 public class VerseOfTheDay {
 	public static Passage retrieve(Version version) throws IOException {
@@ -22,7 +20,6 @@ public class VerseOfTheDay {
             Passage passage = new Passage(reference.attr("content").substring(18));
             passage.setVersion(version);
             passage.retrieve();
-            passage.setFlags(EnumSet.of(Flags.TEXT_NORMAL));
             return passage;
         }
         catch(ParseException e) {
