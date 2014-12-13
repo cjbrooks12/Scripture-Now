@@ -233,9 +233,11 @@ public class VerseDB {
                 passage.setTags(tagNames);
             }
 
+            c.close();
             return passage;
         }
         catch(ParseException e) {
+            c.close();
             e.printStackTrace();
             return null;
         }
@@ -314,9 +316,14 @@ public class VerseDB {
         if (c != null && c.getCount() > 0) {
             //in descending order, the most recent verse is the first one
             c.moveToFirst();
-            return getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
+            Passage passage = getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
+            c.close();
+            return passage;
         }
-        else return null;
+        else {
+            c.close();
+            return null;
+        }
     }
 
     public void updateTag(int id, String name, String hexColor) {
@@ -362,6 +369,7 @@ public class VerseDB {
             tagIds[i] = (int)getTagID(tagNames.get(i));
         }
 
+        c.close();
         return tagIds;
     }
 
@@ -376,7 +384,9 @@ public class VerseDB {
         if (c != null && c.getCount() > 0) c.moveToFirst();
         else return "";
 
-        return c.getString(c.getColumnIndex(KEY_TAGS_TAG));
+        String name = c.getString(c.getColumnIndex(KEY_TAGS_TAG));
+        c.close();
+        return name;
     }
 
     public long getTagID(String tag) {
@@ -389,7 +399,10 @@ public class VerseDB {
         if (c != null && c.getCount() > 0) c.moveToFirst();
         else return -1;
 
-        return c.getInt(c.getColumnIndex(KEY_TAGS_ID));
+
+        int color = c.getInt(c.getColumnIndex(KEY_TAGS_ID));
+        c.close();
+        return color;
     }
 
     public int getTagColor(String tag) {
@@ -402,7 +415,9 @@ public class VerseDB {
         if (c != null && c.getCount() > 0) c.moveToFirst();
         else return Color.parseColor("#508A4C");
 
-        return Color.parseColor(c.getString(c.getColumnIndex(KEY_TAGS_COLOR)));
+        int color = Color.parseColor(c.getString(c.getColumnIndex(KEY_TAGS_COLOR)));
+        c.close();
+        return color;
     }
 
     public Verses<Passage> getTaggedVerses(int tagId) {
@@ -422,6 +437,7 @@ public class VerseDB {
             verses.add(getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID))));
         }
 
+        c.close();
         return verses;
     }
 
@@ -432,9 +448,12 @@ public class VerseDB {
                 " WHERE " + KEY_VERSES_TAGS + " LIKE '%," + tagId + ",%'" +
                 " AND " + KEY_VERSES_STATE + " < 6";
 
-
         Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null && c.getCount() > 0) return c.getCount();
+        if (c != null && c.getCount() > 0) {
+            int count = c.getCount();
+            c.close();
+            return count;
+        }
         else return 0;
     }
 
@@ -471,6 +490,7 @@ public class VerseDB {
                 deleteTag(tagId);
             }
         }
+        c.close();
     }
 
     public void deleteTag(int id) {

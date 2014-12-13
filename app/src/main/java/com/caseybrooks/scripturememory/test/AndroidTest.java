@@ -106,4 +106,18 @@ public class AndroidTest extends InstrumentationTestCase {
             assertEquals(pre, post);
         }
     }
+
+    public void testHashCodes() throws Throwable {
+        Reference ref1 = new Reference(Book.John, 3, 16, 17);
+        Reference ref2 = new Reference("John 3:16-17");
+        Reference ref3 = new Reference("John 3:16, 17");
+
+        assertEquals(true, ref1.equals(ref2));
+        assertEquals(true, ref2.equals(ref3));
+        assertEquals(true, ref1.equals(ref3));
+
+        assertEquals(ref1.hashCode(), ref2.hashCode());
+        assertEquals(ref2.hashCode(), ref3.hashCode());
+        assertEquals(ref1.hashCode(), ref3.hashCode());
+    }
 }

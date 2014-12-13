@@ -77,10 +77,9 @@ public class DefaultFormatter implements Formatter {
         }
     }
 
-    /** Randomly replaces words with dashes. Randomizer is seeded based on the
-     * reference of the verse being formatted to ensure the same verse will
-     * always be displayed the same, but that another verse will not have
-     * the same pattern of words missing.
+    /** Randomly replaces words with dashes. Randomizer is seeded with the
+     * hashcode of the reference to ensure consistent randomization for equivalent
+     * verses, but also unique reference patterns for each verse.
      */
     public static class RandomWords extends DefaultFormatter {
         //the percent of words to randomly be removed
@@ -93,10 +92,7 @@ public class DefaultFormatter implements Formatter {
 
         @Override
         public String onFormatText(String verseText) {
-            randomizer = new Random(
-                    reference.book.ordinal()*10000 +
-                            reference.chapter*100 +
-                            reference.verses.get(0)*1);
+            randomizer = new Random(reference.hashCode());
 
             String text = "";
             String[] words = verseText.split("\\s");

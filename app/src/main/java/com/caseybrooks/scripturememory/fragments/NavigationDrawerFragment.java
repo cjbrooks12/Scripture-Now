@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -46,6 +47,9 @@ public class NavigationDrawerFragment extends Fragment {
     private ExpandableListView mDrawerListView;
     private ExpandableListAdapter listAdapter;
     private View mFragmentContainerView;
+
+    private TextView mainRef;
+    private TextView mainVer;
 
     private int mCurrentSelectedGroup = 0;
     private int mCurrentSelectedPosition = 0;
@@ -91,6 +95,9 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView = (ExpandableListView) view.findViewById(R.id.navListView);
+
+        mainRef = (TextView) view.findViewById(R.id.navMainVerseRef);
+        mainVer = (TextView) view.findViewById(R.id.navMainVerseText);
 
         populateList();
 
@@ -390,6 +397,13 @@ public class NavigationDrawerFragment extends Fragment {
                     mUserLearnedDrawer = true;
                     MetaSettings.putUserLearnedDrawer(parentActivity, true);
                 }
+
+                VerseDB db = new VerseDB(parentActivity).open();
+                Passage passage = db.getVerse(MetaSettings.getVerseId(parentActivity));
+                db.close();
+
+                mainRef.setText(passage.getReference().toString());
+                mainVer.setText(passage.getText());
 
                 listAdapter.notifyDataSetChanged();
                 parentActivity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()

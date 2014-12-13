@@ -92,122 +92,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="card_notification_verse.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/src/main/res/layout/card_notification_verse.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="VerseDB.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/data/VerseDB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.928572" vertical-offset="2210" max-vertical-offset="2840">
-              <caret line="130" column="37" selection-start-line="130" selection-start-column="37" selection-end-line="130" selection-end-column="37" />
-              <folding>
-                <element signature="e#1082#1117#0" expanded="true" />
-                <element signature="e#1155#1190#0" expanded="true" />
-                <element signature="e#1220#1248#0" expanded="true" />
-                <element signature="e#1282#1306#0" expanded="true" />
-                <element signature="e#2507#2536#0" expanded="true" />
-                <element signature="e#2573#2608#0" expanded="true" />
-                <element signature="e#2646#2681#0" expanded="true" />
-                <element signature="e#2717#2746#0" expanded="true" />
-                <element signature="e#2776#2795#0" expanded="true" />
-                <element signature="e#2829#2853#0" expanded="true" />
-                <element signature="e#3246#3281#0" expanded="true" />
-                <element signature="e#3319#3354#0" expanded="true" />
-                <element signature="e#3384#3399#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Passage.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Passage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1333" max-vertical-offset="3400">
-              <caret line="83" column="53" selection-start-line="83" selection-start-column="53" selection-end-line="83" selection-end-column="53" />
+            <state vertical-scroll-proportion="-2.6733944" vertical-offset="8857" max-vertical-offset="12320">
+              <caret line="388" column="20" selection-start-line="388" selection-start-column="20" selection-end-line="388" selection-end-column="20" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_edit_verse.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/src/main/res/layout/fragment_edit_verse.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.642858" vertical-offset="1010" max-vertical-offset="1540">
-              <caret line="64" column="28" selection-start-line="63" selection-start-column="8" selection-end-line="64" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DefaultFormatter.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/DefaultFormatter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4265233" vertical-offset="1402" max-vertical-offset="2480">
-              <caret line="82" column="42" selection-start-line="82" selection-start-column="42" selection-end-line="82" selection-end-column="42" />
-              <folding>
-                <element signature="e#1626#1627#0" expanded="true" />
-                <element signature="e#1666#1667#0" expanded="true" />
-                <element signature="e#3323#3324#0" expanded="true" />
-                <element signature="e#3365#3366#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NotificationVerseCard.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/views/NotificationVerseCard.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4595" max-vertical-offset="5260">
-              <caret line="273" column="82" selection-start-line="273" selection-start-column="82" selection-end-line="273" selection-end-column="82" />
-              <folding>
-                <element signature="e#5646#5647#0" expanded="true" />
-                <element signature="e#5670#5671#0" expanded="true" />
-                <element signature="e#6160#6497#0" expanded="true" />
-                <element signature="e#6492#6493#0" expanded="true" />
-                <element signature="e#6546#6779#0" expanded="true" />
-                <element signature="e#6772#6773#0" expanded="true" />
-                <element signature="e#6834#7917#0" expanded="true" />
-                <element signature="e#7913#7914#0" expanded="true" />
-                <element signature="e#7967#9165#0" expanded="true" />
-                <element signature="e#9161#9162#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VOTDService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/data/VOTDService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1162" max-vertical-offset="2080">
-              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VOTDNotification.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/notifications/VOTDNotification.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3055" max-vertical-offset="4120">
-              <caret line="167" column="29" selection-start-line="167" selection-start-column="29" selection-end-line="167" selection-end-column="29" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VOTDWidget.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/widgets/VOTDWidget.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1335" max-vertical-offset="1880">
-              <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -1582,7 +1472,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/App/src/main/res/layout/fragment_navigation_drawer.xml" />
         <option value="$PROJECT_DIR$/App/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/App/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/App/src/main/res/layout/nav_list_header.xml" />
@@ -1590,7 +1479,6 @@
         <option value="$PROJECT_DIR$/App/src/main/res/layout/nav_list_subitem.xml" />
         <option value="$PROJECT_DIR$/App/src/main/res/layout/fragment_discover.xml" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/misc/StateSeekBar.java" />
-        <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/NavigationDrawerFragment.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/views/TagChip.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/DashboardFragment.java" />
         <option value="$PROJECT_DIR$/App/src/main/res/layout/card_votd.xml" />
@@ -1604,12 +1492,10 @@
         <option value="$PROJECT_DIR$/App/src/main/res/values/material_theme.xml" />
         <option value="$PROJECT_DIR$/App/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/test/ABTTest.java" />
-        <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/test/AndroidTest.java" />
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/enumeration/Version.java" />
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/enumeration/Book.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/EditVerseFragment.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/views/VerseInputCard.java" />
-        <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/data/VerseDB.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/data/VersesDatabase.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/views/VOTDCard.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/misc/BibleVerseAdapter.java" />
@@ -1619,7 +1505,6 @@
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Formatter.java" />
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Pen.java" />
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Tag.java" />
-        <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Reference.java" />
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Verse.java" />
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/AbstractVerse.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/widgets/MainVerseWidget.java" />
@@ -1628,11 +1513,16 @@
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/container/Verses.java" />
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/search/VerseOfTheDay.java" />
         <option value="$PROJECT_DIR$/App/src/main/res/layout/card_notification_verse.xml" />
-        <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/views/NotificationVerseCard.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/notifications/VOTDNotification.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/widgets/VOTDWidget.java" />
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Passage.java" />
+        <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/test/AndroidTest.java" />
+        <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Reference.java" />
         <option value="$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/DefaultFormatter.java" />
+        <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/views/NotificationVerseCard.java" />
+        <option value="$PROJECT_DIR$/App/src/main/res/layout/fragment_navigation_drawer.xml" />
+        <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/NavigationDrawerFragment.java" />
+        <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/data/VerseDB.java" />
       </list>
     </option>
   </component>
@@ -1687,29 +1577,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Problems" />
-        <subPane subId="Tests" />
         <subPane subId="Production">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1806,6 +1675,7 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+        <subPane subId="Tests" />
         <subPane subId="Project Files">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1917,109 +1787,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fragments" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2149,38 +1921,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidBibleTools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="androidbibletools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="basic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2540,20 +2298,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/NavigationDrawerFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3000" max-vertical-offset="9320">
-          <caret line="212" column="23" selection-start-line="212" selection-start-column="23" selection-end-line="212" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/src/main/res/menu/context_input_card.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28673837" vertical-offset="0" max-vertical-offset="558">
-          <caret line="8" column="32" selection-start-line="3" selection-start-column="4" selection-end-line="8" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App/src/main/res/layout/card_votd.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -2651,13 +2395,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/test/AndroidTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6451613" vertical-offset="0" max-vertical-offset="2300">
-          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-21/java/lang/Object.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33211008" vertical-offset="6179" max-vertical-offset="8700">
@@ -2715,14 +2452,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/data/VerseDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.81284404" vertical-offset="3977" max-vertical-offset="11920">
-          <caret line="239" column="24" selection-start-line="239" selection-start-column="24" selection-end-line="239" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/data/VersesDatabase.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="12.146789" vertical-offset="0" max-vertical-offset="7060">
@@ -2773,15 +2502,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1440" max-vertical-offset="3160">
           <caret line="83" column="28" selection-start-line="83" selection-start-column="28" selection-end-line="83" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/DashboardFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.8256881" vertical-offset="0" max-vertical-offset="3860">
-          <caret line="104" column="46" selection-start-line="104" selection-start-column="46" selection-end-line="104" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2789,23 +2509,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.70642203" vertical-offset="2795" max-vertical-offset="4160">
           <caret line="169" column="47" selection-start-line="169" selection-start-column="47" selection-end-line="169" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/AbstractVerse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51376146" vertical-offset="1660" max-vertical-offset="2980">
-          <caret line="113" column="5" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Reference.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7798165" vertical-offset="4495" max-vertical-offset="5080">
-          <caret line="253" column="5" selection-start-line="253" selection-start-column="5" selection-end-line="253" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2813,7 +2516,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0035842294" vertical-offset="222" max-vertical-offset="780">
           <caret line="11" column="49" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2821,7 +2523,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.58715594" vertical-offset="0" max-vertical-offset="2980">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2829,7 +2530,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.559633" vertical-offset="1875" max-vertical-offset="2740">
           <caret line="113" column="5" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2837,7 +2537,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="3.6697247" vertical-offset="0" max-vertical-offset="2980">
           <caret line="121" column="23" selection-start-line="121" selection-start-column="23" selection-end-line="121" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2845,7 +2544,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6280">
           <caret line="327" column="87" selection-start-line="327" selection-start-column="87" selection-end-line="327" selection-end-column="87" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2853,9 +2551,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4265233" vertical-offset="202" max-vertical-offset="760">
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2873,64 +2568,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/src/main/res/layout/card_notification_verse.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.928572" vertical-offset="2210" max-vertical-offset="2840">
-          <caret line="130" column="37" selection-start-line="130" selection-start-column="37" selection-end-line="130" selection-end-column="37" />
-          <folding>
-            <element signature="e#1082#1117#0" expanded="true" />
-            <element signature="e#1155#1190#0" expanded="true" />
-            <element signature="e#1220#1248#0" expanded="true" />
-            <element signature="e#1282#1306#0" expanded="true" />
-            <element signature="e#2507#2536#0" expanded="true" />
-            <element signature="e#2573#2608#0" expanded="true" />
-            <element signature="e#2646#2681#0" expanded="true" />
-            <element signature="e#2717#2746#0" expanded="true" />
-            <element signature="e#2776#2795#0" expanded="true" />
-            <element signature="e#2829#2853#0" expanded="true" />
-            <element signature="e#3246#3281#0" expanded="true" />
-            <element signature="e#3319#3354#0" expanded="true" />
-            <element signature="e#3384#3399#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App/src/main/res/layout/fragment_edit_verse.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.642858" vertical-offset="1010" max-vertical-offset="1540">
+        <state vertical-scroll-proportion="0.509434" vertical-offset="1010" max-vertical-offset="1540">
           <caret line="64" column="28" selection-start-line="63" selection-start-column="8" selection-end-line="64" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/views/NotificationVerseCard.java">
+    <entry file="file://$PROJECT_DIR$/App/src/main/res/layout/card_notification_verse.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4595" max-vertical-offset="5260">
-          <caret line="273" column="82" selection-start-line="273" selection-start-column="82" selection-end-line="273" selection-end-column="82" />
+        <state vertical-scroll-proportion="0.7358491" vertical-offset="2210" max-vertical-offset="2840">
+          <caret line="130" column="37" selection-start-line="130" selection-start-column="37" selection-end-line="130" selection-end-column="37" />
           <folding>
-            <element signature="e#5646#5647#0" expanded="true" />
-            <element signature="e#5670#5671#0" expanded="true" />
-            <element signature="e#6160#6497#0" expanded="true" />
-            <element signature="e#6492#6493#0" expanded="true" />
-            <element signature="e#6546#6779#0" expanded="true" />
-            <element signature="e#6772#6773#0" expanded="true" />
-            <element signature="e#6834#7917#0" expanded="true" />
-            <element signature="e#7913#7914#0" expanded="true" />
-            <element signature="e#7967#9165#0" expanded="true" />
-            <element signature="e#9161#9162#0" expanded="true" />
+            <element signature="e#1082#1117#0" expanded="false" />
+            <element signature="e#1155#1190#0" expanded="false" />
+            <element signature="e#1220#1248#0" expanded="false" />
+            <element signature="e#1282#1306#0" expanded="false" />
+            <element signature="e#2507#2536#0" expanded="false" />
+            <element signature="e#2573#2608#0" expanded="false" />
+            <element signature="e#2646#2681#0" expanded="false" />
+            <element signature="e#2717#2746#0" expanded="false" />
+            <element signature="e#2776#2795#0" expanded="false" />
+            <element signature="e#2829#2853#0" expanded="false" />
+            <element signature="e#3246#3281#0" expanded="false" />
+            <element signature="e#3319#3354#0" expanded="false" />
+            <element signature="e#3384#3399#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/data/VOTDService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1162" max-vertical-offset="2080">
+        <state vertical-scroll-proportion="0.103942655" vertical-offset="1162" max-vertical-offset="2080">
           <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
           <folding />
         </state>
@@ -2938,42 +2614,121 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/notifications/VOTDNotification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3055" max-vertical-offset="4120">
+        <state vertical-scroll-proportion="0.5229358" vertical-offset="3055" max-vertical-offset="4120">
           <caret line="167" column="29" selection-start-line="167" selection-start-column="29" selection-end-line="167" selection-end-column="29" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/widgets/VOTDWidget.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1335" max-vertical-offset="1880">
+        <state vertical-scroll-proportion="-0.13761468" vertical-offset="1335" max-vertical-offset="1880">
           <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/AbstractVerse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14678898" vertical-offset="1840" max-vertical-offset="2980">
+          <caret line="112" column="20" selection-start-line="112" selection-start-column="20" selection-end-line="112" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Passage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1333" max-vertical-offset="3400">
+        <state vertical-scroll-proportion="-0.74014336" vertical-offset="1933" max-vertical-offset="3400">
           <caret line="83" column="53" selection-start-line="83" selection-start-column="53" selection-end-line="83" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/test/AndroidTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2060" max-vertical-offset="2460">
+          <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/Reference.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4955" max-vertical-offset="5760">
+          <caret line="276" column="37" selection-start-line="276" selection-start-column="37" selection-end-line="276" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AndroidBibleTools/src/main/java/com/caseybrooks/androidbibletools/basic/DefaultFormatter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4265233" vertical-offset="1402" max-vertical-offset="2480">
-          <caret line="82" column="42" selection-start-line="82" selection-start-column="42" selection-end-line="82" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1662" max-vertical-offset="2320">
+          <caret line="81" column="65" selection-start-line="81" selection-start-column="65" selection-end-line="81" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/src/main/res/layout/widget_votd.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.857143" vertical-offset="360" max-vertical-offset="1380">
+          <caret line="22" column="49" selection-start-line="20" selection-start-column="8" selection-end-line="22" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/src/main/res/layout/fragment_navigation_drawer.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1480">
+          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
           <folding>
-            <element signature="e#1626#1627#0" expanded="true" />
-            <element signature="e#1666#1667#0" expanded="true" />
-            <element signature="e#3323#3324#0" expanded="true" />
-            <element signature="e#3365#3366#0" expanded="true" />
+            <element signature="e#2150#2174#0" expanded="true" />
+            <element signature="e#2204#2233#0" expanded="true" />
+            <element signature="e#2667#2696#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/DashboardFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.706422" vertical-offset="3015" max-vertical-offset="3860">
+          <caret line="104" column="46" selection-start-line="104" selection-start-column="46" selection-end-line="104" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/views/NotificationVerseCard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2117" max-vertical-offset="5680">
+          <caret line="241" column="47" selection-start-line="241" selection-start-column="47" selection-end-line="241" selection-end-column="47" />
+          <folding>
+            <element signature="e#7710#8793#0" expanded="true" />
+            <element signature="e#8789#8790#0" expanded="true" />
+            <element signature="e#8843#10723#0" expanded="true" />
+            <element signature="e#10719#10720#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/NavigationDrawerFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="25.103449" vertical-offset="2648" max-vertical-offset="9580">
+          <caret line="127" column="55" selection-start-line="127" selection-start-column="48" selection-end-line="127" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/data/VerseDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6733944" vertical-offset="8857" max-vertical-offset="12320">
+          <caret line="388" column="20" selection-start-line="388" selection-start-column="20" selection-end-line="388" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -4,12 +4,14 @@ import com.caseybrooks.androidbibletools.enumeration.Book;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Stack;
 
 public class Reference {
     public final Book book;
     public final int chapter;
+    public final int verse;
     public final ArrayList<Integer> verses;
     TokenStream ts;
 
@@ -19,9 +21,18 @@ public class Reference {
     public Reference(Book book, int chapter, int... verses) {
         this.book = book;
         this.chapter = chapter;
-        this.verses = new ArrayList<Integer>();
-        for(int i = 0; i < verses.length; i++) {
-            this.verses.add(verses[i]);
+        if(verses.length == 1) {
+            this.verses = null;
+            verse = verses[0];
+        }
+        else {
+            verse = 0;
+            this.verses = new ArrayList<Integer>();
+
+            for (int i = 0; i < verses.length; i++) {
+                this.verses.add(verses[i]);
+            }
+            Collections.sort(this.verses);
         }
     }
 
@@ -34,10 +45,11 @@ public class Reference {
                 ArrayList<Integer> verseList = verseList();
 
                 if(verseList != null) {
-
                     this.book = book;
                     this.chapter = chapter;
+                    Collections.sort(verseList);
                     this.verses = verseList;
+                    this.verse = verseList.get(0);
                 }
                 else {
                     throw new ParseException("'" + expression + "' is not formatted correctly(verseList)", 3);
@@ -251,5 +263,28 @@ public class Reference {
         }
 
         return refString;
+    }
+
+    public boolean equals(Reference ref) {
+        if(ref == null) return false;
+        if(this.book != ref.book) return false;
+        if(this.chapter != ref.chapter) return false;
+        if(this.verses.size() != ref.verses.size()) return false;
+
+        for(Integer i : this.verses) {
+            if(!ref.verses.contains(i)) return false;
+        }
+        for(Integer i : ref.verses) {
+            if(!this.verses.contains(i)) return false;
+        }
+
+        return true;
+    }
+
+    public int hashCode() {
+        int result = book.hashCode();
+        result = 31 * result + chapter;
+        result = 31 * result + (verses != null ? verses.hashCode() : 0);
+        return result;
     }
 }

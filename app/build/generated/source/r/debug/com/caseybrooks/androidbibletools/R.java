@@ -370,8 +370,8 @@ public final class R {
 		public static final int activity_chooser_view_content = 0x7f0b0021;
 		public static final int always = 0x7f0b0016;
 		public static final int beginning = 0x7f0b0013;
-		public static final int bookSpinner = 0x7f0b00a0;
-		public static final int chapterSpinner = 0x7f0b00a1;
+		public static final int bookSpinner = 0x7f0b00a2;
+		public static final int chapterSpinner = 0x7f0b00a3;
 		public static final int checkbox = 0x7f0b0029;
 		public static final int collapseActionView = 0x7f0b0017;
 		public static final int decor_content_parent = 0x7f0b002f;
@@ -417,8 +417,8 @@ public final class R {
 		public static final int title = 0x7f0b0027;
 		public static final int up = 0x7f0b0008;
 		public static final int useLogo = 0x7f0b0012;
-		public static final int verseSpinner = 0x7f0b00a2;
-		public static final int versionSpinner = 0x7f0b009f;
+		public static final int verseSpinner = 0x7f0b00a4;
+		public static final int versionSpinner = 0x7f0b00a1;
 		public static final int withText = 0x7f0b001a;
 		public static final int wrap_content = 0x7f0b001d;
 	}
