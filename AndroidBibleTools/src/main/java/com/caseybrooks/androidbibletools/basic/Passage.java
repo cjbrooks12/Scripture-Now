@@ -84,7 +84,7 @@ public class Passage extends AbstractVerse {
             for (int i = 0; i < verses.size(); i++) {
                 Verse verse = verses.get(i);
 
-                text += formatter.onFormatNumber(verse.reference.verses.get(0));
+                text += formatter.onFormatNumber(verse.reference.verse);
                 text += formatter.onFormatText(verse.verseText);
 
                 if (i < verses.size() - 1) {

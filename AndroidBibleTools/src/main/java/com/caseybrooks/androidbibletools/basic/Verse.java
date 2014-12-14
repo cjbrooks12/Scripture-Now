@@ -188,16 +188,15 @@ public class Verse extends AbstractVerse {
     @Override
     public String getURL() {
         return "http://www.biblestudytools.com/" + version.getCode() + "/" +
-                reference.book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
-                "/passage.aspx?q=" +
-                reference.book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
-                "+" + reference.chapter + ":" + reference.verses.get(0);
-
+            reference.book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
+            "/passage.aspx?q=" +
+            reference.book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
+            "+" + reference.chapter + ":" + reference.verse;
     }
 
     @Override
 	public Verse retrieve() throws IOException{
-		Document doc = Jsoup.connect(getURL()).get();
+        Document doc = Jsoup.connect(getURL()).get();
 
 		Elements passage = doc.select(".versetext");
 

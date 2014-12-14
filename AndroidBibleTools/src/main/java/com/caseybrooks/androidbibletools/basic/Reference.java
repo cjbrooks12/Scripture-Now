@@ -44,7 +44,7 @@ public class Reference {
             if(chapter != 0) {
                 ArrayList<Integer> verseList = verseList();
 
-                if(verseList != null) {
+                if(verseList != null && verseList.size() > 0) {
                     this.book = book;
                     this.chapter = chapter;
                     Collections.sort(verseList);
@@ -62,6 +62,54 @@ public class Reference {
         else {
             throw new ParseException("'" + expression + "' is not formatted correctly(book)", 1);
         }
+    }
+
+    private Reference(TokenStream ts) throws ParseException {
+        String expression = ts.toString();
+        this.ts = ts;
+        Book book = book();
+        if(book != null) {
+            int chapter = chapter();
+            if(chapter != 0) {
+                ArrayList<Integer> verseList = verseList();
+
+                if(verseList != null && verseList.size() > 0) {
+                    this.book = book;
+                    this.chapter = chapter;
+                    Collections.sort(verseList);
+                    this.verses = verseList;
+                    this.verse = verseList.get(0);
+                }
+                else {
+                    throw new ParseException("'" + expression + "' is not formatted correctly(verseList)", 3);
+                }
+            }
+            else {
+                throw new ParseException("'" + expression + "' is not formatted correctly(chapter)", 2);
+            }
+        }
+        else {
+            throw new ParseException("'" + expression + "' is not formatted correctly(book)", 1);
+        }
+    }
+
+    public static Reference extractReference(String reference) {
+        TokenStream streamBase = new TokenStream(reference);
+        TokenStream stream = new TokenStream(reference);
+
+        while(stream.toString().length() > 0) {
+            try {
+                Reference ref = new Reference(stream);
+                return ref;
+            }
+            catch(ParseException e) {
+                streamBase.get();
+                stream = new TokenStream(streamBase.toString());
+                continue;
+            }
+        }
+
+        return null;
     }
 
     //book ::= [123] WORD | WORD
@@ -87,10 +135,10 @@ public class Reference {
         }
     }
 
-    //chapter ::= [1...150]
+    //chapter ::= number
     private int chapter() {
         Token a = ts.get();
-        if(a != null && a.equals(Token.NUMBER) && a.getIntValue() >= 1 && a.getIntValue() <= 150) {
+        if(a != null && a.equals(Token.NUMBER)) {
             return a.getIntValue();
         }
         else {
@@ -99,51 +147,87 @@ public class Reference {
         }
     }
 
-    //verseList ::= (nothing) | : number {, number} | : number - number
+    //verse ::= number
+    private int verse() {
+        Token a = ts.get();
+        if(a != null && a.equals(Token.NUMBER)) {
+            return a.getIntValue();
+        }
+        else {
+            ts.unget(a);
+            return 0;
+        }
+    }
+
+    //verseSequence ::= verse - verse
+    private ArrayList<Integer> verseSequence() {
+        int a = verse();
+        if(a > 0) {
+            Token b = ts.get();
+            if(b != null && b.equals(Token.DASH)) {
+                int c = verse();
+                if(c > 0) {
+                    ArrayList<Integer> verses = new ArrayList<Integer>();
+                    for(int i = a; i <= c; i++) {
+                        verses.add(i);
+                    }
+                    return verses;
+                }
+                else {
+                    ts.unget(b);
+                    ts.unget(new Token(Token.NUMBER, a));
+                }
+            }
+            else {
+                ts.unget(b);
+                ts.unget(new Token(Token.NUMBER, a));
+            }
+        }
+
+
+        return null;
+    }
+
+    //verseList ::= : { verse | verseSequence {,} }
     private ArrayList<Integer> verseList() {
         ArrayList<Integer> verseList = new ArrayList<Integer>();
         Token a = ts.get();
         if(a != null && a.equals(Token.COLON)) {
-            Token b = ts.get();
-            if(b != null && b.equals(Token.NUMBER)) {
-                verseList.add(b.getIntValue());
-                Token c = ts.get();
-                if(c != null && c.equals(Token.DASH)) {
-                    Token d = ts.get();
-                    if(d != null && d.equals(Token.NUMBER)) {
-                        for(int i = b.getIntValue() + 1; i <= d.getIntValue(); i++) {
-                            verseList.add(i);
-                        }
-                        return verseList;
-                    }
-                }
-                if(c != null && c.equals(Token.COMMA)) {
-                    Token d = ts.get();
-                    if(d != null && d.equals(Token.NUMBER)) {
-                        verseList.add(d.getIntValue());
-                        return verseList;
-                    }
+            while (true) {
+                ArrayList<Integer> b = verseSequence();
+                if (b != null && b.size() > 0) {
+                    verseList.addAll(b);
                 }
                 else {
-                    ts.unget(c);
+                    int c = verse();
+                    if (c > 0) {
+                        verseList.add(c);
+                    }
+                }
+
+                Token comma = ts.get();
+                if (comma != null && comma.equals(Token.COMMA)) {
+                    continue;
+                }
+                else {
+                    ts.unget(comma);
                     return verseList;
                 }
             }
         }
         else {
             ts.unget(a);
-            return verseList;
+            return null;
         }
-
-        return null;
     }
 
-    private class Token {
+    private static class Token {
         public static final int WORD = 0;
         public static final int NUMBER = 1;
         public static final int COLON = 2;
         public static final int COMMA = 3;
         public static final int DASH = 4;
+        public static final int WHITESPACE = 5;
 
         private int tokenType;
         private String stringValue;
@@ -167,17 +251,26 @@ public class Reference {
         }
     }
 
-    private class TokenStream {
+    private static class TokenStream {
         LinkedList<Character> chars;
         Stack<Token> ungetTokens;
 
         public TokenStream(String expression) {
-            String toParse = expression.replaceAll("\\s", "");
+            String toParse = expression.replaceAll("\\s+", "~");
             chars = new LinkedList<Character>();
             for(int i = 0; i < toParse.length(); i++) {
                 chars.add(toParse.charAt(i));
             }
             ungetTokens = new Stack<Token>();
+        }
+
+        public TokenStream(TokenStream ts) {
+            chars = ts.chars;
+            ungetTokens = ts.ungetTokens;
+        }
+
+        public void removeChar() {
+            chars.removeFirst();
         }
 
         public Token get() {
@@ -190,6 +283,8 @@ public class Reference {
                     String s;
 
                     switch (ch) {
+                    case '~':
+                        return get();
                     case ':':
                         return new Token(Token.COLON, ch);
                     case ',':
@@ -247,6 +342,15 @@ public class Reference {
         public void unget(Token token) {
             ungetTokens.push(token);
         }
+
+        @Override
+        public String toString() {
+            String s = "";
+            for(int i = 0; i < chars.size(); i++) {
+                s += chars.get(i);
+            }
+            return s;
+        }
     }
 
     @Override
@@ -255,10 +359,33 @@ public class Reference {
         refString += " " + chapter;
         refString += ":";
 
-        if(verses.size() > 0) {
+        if(verses.size() == 1) {
+            refString += verse;
+        }
+        else {
             refString += verses.get(0);
-            for(int i = 1; i < verses.size(); i++) {
-                refString += "," + verses.get(i);
+            int lastVerse = verses.get(0);
+
+            int i = 1;
+            while(i < verses.size()) {
+                if(verses.get(i) == lastVerse + 1) {
+                    refString += "-";
+                    while(true) {
+                        if (i < verses.size() && verses.get(i) == lastVerse + 1) {
+                            lastVerse++;
+                            i++;
+                        }
+                        else {
+                            refString += Integer.toString(lastVerse);
+                            break;
+                        }
+                    }
+                }
+                else {
+                    refString += ", " + verses.get(i);
+                    lastVerse = verses.get(i);
+                    i++;
+                }
             }
         }
 

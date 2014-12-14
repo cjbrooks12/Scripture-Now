@@ -8,7 +8,7 @@ import com.caseybrooks.androidbibletools.enumeration.Book;
 
 import java.text.ParseException;
 
-public class AndroidTest extends InstrumentationTestCase {
+public class ReferenceClassTest extends InstrumentationTestCase {
 
     public void testReferenceParser() throws Throwable {
         String[] references = new String[] {
@@ -119,5 +119,52 @@ public class AndroidTest extends InstrumentationTestCase {
         assertEquals(ref1.hashCode(), ref2.hashCode());
         assertEquals(ref2.hashCode(), ref3.hashCode());
         assertEquals(ref1.hashCode(), ref3.hashCode());
+    }
+
+    public void testPrintingReferences() throws Throwable {
+        String refStringManual1 = "John 3:16-19,     24, 27-29, 31, 33";
+        Reference ref1 = new Reference(Book.John, 3,
+                16, 17, 18, 19, 24, 27, 28, 29, 31, 33);
+
+        String refStringManual2 = "Mark 1:1-7,      14, 19, 22,     29-32, 34-35";
+        Reference ref2 = new Reference(Book.Mark, 1,
+                1, 2, 3, 4, 5, 6, 7, 14, 19, 22, 29, 30, 31, 32, 34, 35);
+
+
+        assertEquals(refStringManual1.replaceAll("\\s+", " "), ref1.toString());
+        assertEquals(refStringManual2.replaceAll("\\s+", " "), ref2.toString());
+
+        Reference ref3 = new Reference(ref1.toString());
+        Reference ref4 = new Reference(ref2.toString());
+
+        assertEquals(ref1.toString(), ref3.toString());
+        assertEquals(ref2.toString(), ref4.toString());
+    }
+
+    public void testExtractVerse() throws Throwable {
+        Reference ref = Reference.extractReference("Lets see if I can find John 3:16-18");
+
+        assertNotNull(ref);
+        assertEquals(Book.John, ref.book);
+        assertEquals(3, ref.chapter);
+        assertEquals(16, (int)ref.verses.get(0));
+        assertEquals(17, (int)ref.verses.get(1));
+        assertEquals(18, (int)ref.verses.get(2));
+    }
+
+    public void testExtractSharedVerse() {
+        String youVersion = "http://bible.com/111/gen.3.1.niv Now the serpent was more crafty";
+        Reference youVersionRef = Reference.extractReference(youVersion);
+        assertNotNull(youVersionRef);
+        assertEquals(Book.Genesis, youVersionRef.book);
+        assertEquals(3, youVersionRef.chapter);
+        assertEquals(1, (int)youVersionRef.verse);
+
+        String faithlife = "\"Now the serpent was more crafty\"\n\n http://ref.ly/r/niv2011/Ge3.1 via the FaithLife";
+        Reference faithlifeRef = Reference.extractReference(faithlife);
+        assertNotNull(faithlifeRef);
+        assertEquals(Book.Genesis, faithlifeRef.book);
+        assertEquals(3, faithlifeRef.chapter);
+        assertEquals(1, (int)faithlifeRef.verse);
     }
 }
