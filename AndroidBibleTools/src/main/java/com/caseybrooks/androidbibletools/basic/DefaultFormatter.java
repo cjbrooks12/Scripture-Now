@@ -84,15 +84,22 @@ public class DefaultFormatter implements Formatter {
     public static class RandomWords extends DefaultFormatter {
         //the percent of words to randomly be removed
         float level;
+        int seedOffset;
         Random randomizer;
 
         public RandomWords(float level) {
             this.level = level;
+            this.seedOffset = 0;
+        }
+
+        public RandomWords(float level, int seedOffset) {
+            this.level = level;
+            this.seedOffset = seedOffset;
         }
 
         @Override
         public String onFormatText(String verseText) {
-            randomizer = new Random(reference.hashCode());
+            randomizer = new Random(reference.hashCode() + seedOffset);
 
             String text = "";
             String[] words = verseText.split("\\s");

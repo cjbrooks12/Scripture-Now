@@ -20,8 +20,6 @@ import com.caseybrooks.scripturememory.data.MetaReceiver;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
-import java.util.EnumSet;
-
 public class MainNotification {
 //Data Members
 //------------------------------------------------------------------------------
@@ -73,7 +71,8 @@ public class MainNotification {
                     break;
                 case 4:
                     float randomness = MetaSettings.getRandomnessLevel(context);
-                    verse.setFormatter(new DefaultFormatter.RandomWords(randomness));
+                    int offset = MetaSettings.getRandomSeedOffset(context);
+                    verse.setFormatter(new DefaultFormatter.RandomWords(randomness, offset));
                     break;
                 default:
                     break;

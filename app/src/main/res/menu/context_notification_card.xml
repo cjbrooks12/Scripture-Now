@@ -6,4 +6,10 @@
     <item
         android:id="@+id/context_notification_card_toggle"
         android:title="Toggle"/>
+    <item
+        android:id="@+id/context_notification_card_scramble_random"
+        android:title="Scramble Random Words"/>
+    <item
+        android:id="@+id/context_notification_card_reset_random"
+        android:title="Reset Random Words"/>
 </menu>

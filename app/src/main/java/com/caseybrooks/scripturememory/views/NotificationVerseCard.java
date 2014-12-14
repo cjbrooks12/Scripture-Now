@@ -233,6 +233,23 @@ public class NotificationVerseCard extends FrameLayout {
                     MetaSettings.putNotificationActive(context, true);
 				}
 	        	return true;
+            case R.id.context_notification_card_scramble_random:
+                float level = MetaSettings.getRandomnessLevel(context);
+                int seedOffset = (int)System.currentTimeMillis();
+                MetaSettings.putRandomSeedOffset(context, seedOffset);
+                passage.setFormatter(new DefaultFormatter.RandomWords(level, seedOffset));
+                ver.setText(passage.getText());
+                MainNotification.notify(context).show();
+                MetaSettings.putNotificationActive(context, true);
+                return true;
+            case R.id.context_notification_card_reset_random:
+                level = MetaSettings.getRandomnessLevel(context);
+                MetaSettings.putRandomSeedOffset(context, 0);
+                passage.setFormatter(new DefaultFormatter.RandomWords(level, 0));
+                ver.setText(passage.getText());
+                MainNotification.notify(context).show();
+                MetaSettings.putNotificationActive(context, true);
+                return true;
 	        default:
 	            return false;
 			}

@@ -27,6 +27,7 @@ public class MetaSettings {
     public static final String VERSE_ID = "SQL_ID";
     public static final String VERSE_DISPLAY_MODE = "VERSE_DISPLAY_MODE";
     public static final String RANDOMNESS_LEVEL = "RANDOMNESS_LEVEL";
+    public static final String RANDOM_OFFSET = "RANDOM_OFFSET";
 	public static final String SORT_BY = "SORT_BY";
     public static final String USER_LEARNED_DRAWER = "USER_LEARNED_DRAWER";
 
@@ -115,6 +116,14 @@ public class MetaSettings {
 
     public static void putRandomnessLevel(Context context, float value) {
         context.getSharedPreferences(settings_file, 0).edit().putFloat(RANDOMNESS_LEVEL, value).commit();
+    }
+
+    public static int getRandomSeedOffset(Context context) {
+        return context.getSharedPreferences(settings_file, 0).getInt(RANDOM_OFFSET, 0);
+    }
+
+    public static void putRandomSeedOffset(Context context, int value) {
+        context.getSharedPreferences(settings_file, 0).edit().putInt(RANDOM_OFFSET, value).commit();
     }
 
 	public static int getSortBy(Context context) {

@@ -544,19 +544,23 @@ public class VerseDB {
     }
 
     public int getStateCount(int id) {
-        if(id == ALL_VERSES) return getAllVerses().size();
-        else if(id == CURRENT) return getAllCurrentVerses().size();
-        else {
-            String selectQuery =
-                    "SELECT *" +
-                            " FROM " + TABLE_VERSES +
-                            " WHERE " + KEY_VERSES_STATE + " = " + id;
-
-
-            Cursor c = db.rawQuery(selectQuery, null);
-            if (c != null && c.getCount() > 0) return c.getCount();
-            else return 0;
+        String selectQuery =
+                "SELECT *" +
+                        " FROM " + TABLE_VERSES +
+                        " WHERE " + KEY_VERSES_STATE;
+        if(id == ALL_VERSES) {
+            selectQuery += " <= 5";
         }
+        else if(id == CURRENT) {
+            selectQuery += " <= 4";
+        }
+        else {
+            selectQuery += " = " + id;
+        }
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null && c.getCount() > 0) return c.getCount();
+        else return 0;
     }
 
     public Verses<Passage> getAllVerses() {
