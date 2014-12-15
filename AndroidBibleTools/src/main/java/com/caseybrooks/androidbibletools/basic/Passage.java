@@ -146,22 +146,6 @@ public class Passage extends AbstractVerse {
 
     @Override
 	public Passage retrieve() throws IOException {
-		//get webpage
-//		Document doc = Jsoup.connect(getURL()).get();
-//		Elements passage = doc.select(".versetext");
-//		flags = EnumSet.of(Flags.TEXT_NORMAL, Flags.PRINT_VERSE_NUMBER, Flags.NUMBER_DOT);
-//
-//		String passageText = "";
-//
-//		parse webpage
-//		for(Element element : passage) {
-//			int versenum = Integer.parseInt(element.select(".versenum").text());
-//			element.select(".versenum").remove();
-//			element.select("a").remove();
-//			passageText += /*" (" + versenum + ") " +*/ element.text() + " ";
-//		}
-//        setText(passageText);
-
         for(Verse verse : verses) {
             verse.retrieve();
         }

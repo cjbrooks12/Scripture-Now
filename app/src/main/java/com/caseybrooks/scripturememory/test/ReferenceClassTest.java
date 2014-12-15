@@ -126,7 +126,7 @@ public class ReferenceClassTest extends InstrumentationTestCase {
         Reference ref1 = new Reference(Book.John, 3,
                 16, 17, 18, 19, 24, 27, 28, 29, 31, 33);
 
-        String refStringManual2 = "Mark 1:1-7,      14, 19, 22,     29-32, 34-35";
+        String refStringManual2 = "Mark 1:1-7, 14, 19, 22, 29-32, 34-35";
         Reference ref2 = new Reference(Book.Mark, 1,
                 1, 2, 3, 4, 5, 6, 7, 14, 19, 22, 29, 30, 31, 32, 34, 35);
 

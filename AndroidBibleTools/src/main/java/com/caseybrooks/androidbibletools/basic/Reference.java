@@ -12,6 +12,7 @@ public class Reference {
     public final Book book;
     public final int chapter;
     public final int verse;
+    public final boolean isValid;
     public final ArrayList<Integer> verses;
     TokenStream ts;
 
@@ -34,34 +35,12 @@ public class Reference {
             }
             Collections.sort(this.verses);
         }
+
+        isValid = validate();
     }
 
     public Reference(String expression) throws ParseException {
-        ts = new TokenStream(expression);
-        Book book = book();
-        if(book != null) {
-            int chapter = chapter();
-            if(chapter != 0) {
-                ArrayList<Integer> verseList = verseList();
-
-                if(verseList != null && verseList.size() > 0) {
-                    this.book = book;
-                    this.chapter = chapter;
-                    Collections.sort(verseList);
-                    this.verses = verseList;
-                    this.verse = verseList.get(0);
-                }
-                else {
-                    throw new ParseException("'" + expression + "' is not formatted correctly(verseList)", 3);
-                }
-            }
-            else {
-                throw new ParseException("'" + expression + "' is not formatted correctly(chapter)", 2);
-            }
-        }
-        else {
-            throw new ParseException("'" + expression + "' is not formatted correctly(book)", 1);
-        }
+        this(new TokenStream(expression));
     }
 
     private Reference(TokenStream ts) throws ParseException {
@@ -79,6 +58,8 @@ public class Reference {
                     Collections.sort(verseList);
                     this.verses = verseList;
                     this.verse = verseList.get(0);
+
+                    isValid = validate();
                 }
                 else {
                     throw new ParseException("'" + expression + "' is not formatted correctly(verseList)", 3);
@@ -91,6 +72,20 @@ public class Reference {
         else {
             throw new ParseException("'" + expression + "' is not formatted correctly(book)", 1);
         }
+    }
+
+    public boolean validate() {
+        if(chapter > book.numChapters() || chapter < 1) return false;
+        if(verses != null && verses.size() > 0) {
+            for (Integer i : verses) {
+                if (i > book.numVersesInChapter(chapter) || i < 1) return false;
+            }
+        }
+        else {
+            if (verse > book.numVersesInChapter(chapter) || verse < 1) return false;
+        }
+
+        return true;
     }
 
     public static Reference extractReference(String reference) {
@@ -196,11 +191,15 @@ public class Reference {
             while (true) {
                 ArrayList<Integer> b = verseSequence();
                 if (b != null && b.size() > 0) {
-                    verseList.addAll(b);
+                    for(Integer i : b) {
+                        if(!verseList.contains(i)) {
+                            verseList.add(i);
+                        }
+                    }
                 }
                 else {
                     int c = verse();
-                    if (c > 0) {
+                    if (c > 0 &&  !verseList.contains(c)) {
                         verseList.add(c);
                     }
                 }
@@ -262,15 +261,6 @@ public class Reference {
                 chars.add(toParse.charAt(i));
             }
             ungetTokens = new Stack<Token>();
-        }
-
-        public TokenStream(TokenStream ts) {
-            chars = ts.chars;
-            ungetTokens = ts.ungetTokens;
-        }
-
-        public void removeChar() {
-            chars.removeFirst();
         }
 
         public Token get() {

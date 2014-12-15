@@ -20,13 +20,13 @@ public class DefaultFormatter implements Formatter {
     public String onPreFormat(Reference reference) { this.reference = reference; return ""; }
 
     @Override
-    public String onFormatNumber(int verseNumber) { return ""; }
+    public String onFormatNumber(int verseNumber) { return " "; }
 
     @Override
     public String onFormatText(String verseText) { return verseText; }
 
     @Override
-    public String onFormatSpecial(String special) { return null; }
+    public String onFormatSpecial(String special) { return ""; }
 
     @Override
     public String onFormatNewVerse() { return ""; }
