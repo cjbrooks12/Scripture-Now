@@ -19,9 +19,9 @@ import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.DiscoverFragment;
 import com.caseybrooks.scripturememory.fragments.EditVerseFragment;
-import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.fragments.SettingsFragment;
+import com.caseybrooks.scripturememory.fragments.SpotifyTestFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
@@ -247,7 +247,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 
     @Override
     public void toHelp() {
-        Fragment fragment = new HelpFragment();
+        Fragment fragment = SpotifyTestFragment.newInstance();
         setFragment(fragment);
     }
 }

@@ -1,5 +1,6 @@
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\classes\debug
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-f269277964e1bd745490fcabf8cffbde400529e5.jar
+C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-11e40da25c1766f25d3cdc8629d6aad452bddda9.jar
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-e212c20968558e1d171375239f9b8636c2088d1d.jar
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-deb28ef767408d48fa3a2aac4c477de62e9b3615.jar
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-3d1ab864938a204ef1f04468badf825ca950bde5.jar
