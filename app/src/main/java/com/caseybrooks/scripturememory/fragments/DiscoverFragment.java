@@ -1,5 +1,6 @@
 package com.caseybrooks.scripturememory.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,6 +34,7 @@ public class DiscoverFragment extends Fragment {
 
     EditText searchEditText;
     LinearLayout verseLayout;
+    NavigationCallbacks mCallbacks;
 
     public static DiscoverFragment newInstance() {
         DiscoverFragment fragment = new DiscoverFragment();
@@ -143,5 +146,23 @@ public class DiscoverFragment extends Fragment {
         });
 
         return view;
+    }
+
+//Host Activity Interface
+//------------------------------------------------------------------------------
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mCallbacks = (NavigationCallbacks) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Activity must implement NavigationCallbacks.");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
 }

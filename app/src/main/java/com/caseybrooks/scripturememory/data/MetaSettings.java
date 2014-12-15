@@ -9,7 +9,7 @@ import com.caseybrooks.scripturememory.R;
 public class MetaSettings {
     public static final String settings_file = "my_settings";
 
-    //settings saved through app preferences
+    //settings saved through app settings
     public static final String PERSIST_MAIN_NOTIFICATION = "PREF_PERSIST_NOTIFICATION";
     public static final String VOTD_SHOW_NOTIFICATION = "PREF_VOTD_NOTIFICATION";
     public static final String VOTD_NOTIFY_TIME = "PREF_VOTD_TIME";
@@ -31,7 +31,7 @@ public class MetaSettings {
 	public static final String SORT_BY = "SORT_BY";
     public static final String USER_LEARNED_DRAWER = "USER_LEARNED_DRAWER";
 
-//Display preferences
+//Display settings
 //------------------------------------------------------------------------------
     public static int getAppTheme(Context context) {
         return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(APP_THEME, "0"));

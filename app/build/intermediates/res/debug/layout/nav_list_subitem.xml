@@ -33,7 +33,6 @@
         android:layout_gravity="center"
         android:fontFamily="sans-serif-light"
         android:paddingLeft="8dp"
-        android:paddingStart="8dp"
         android:textSize="18sp" />
 
 </LinearLayout><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/nav_list_subitem.xml -->

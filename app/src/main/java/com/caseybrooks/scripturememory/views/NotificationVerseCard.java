@@ -1,8 +1,6 @@
 package com.caseybrooks.scripturememory.views;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.util.AttributeSet;
@@ -23,9 +21,9 @@ import com.caseybrooks.androidbibletools.basic.Formatter;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.activities.EditVerse;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.notifications.MainNotification;
 
 public class NotificationVerseCard extends FrameLayout {
@@ -38,6 +36,7 @@ public class NotificationVerseCard extends FrameLayout {
     RelativeLayout expandedSection;
     RadioButton normal, dashes, letters, letteredDashes, randomWords;
     SeekBar randomnessLevelSlider;
+    NavigationCallbacks mCallbacks;
     
     Passage passage;
     boolean notificationActive, isExpanded;
@@ -209,14 +208,12 @@ public class NotificationVerseCard extends FrameLayout {
 		public boolean onMenuItemClick(MenuItem item) {
 			switch (item.getItemId()) {
 	        case R.id.context_notification_card_edit:
-	        	Intent intent = new Intent(context, EditVerse.class);
-	 	    	intent.putExtra("KEY_ID", passage.getId());
-	 	    	
-	 	    	context.startActivity(intent);
-	 	    	
-	 	    	if(context instanceof ActionBarActivity) {
-	 	 	    	((ActionBarActivity) context).overridePendingTransition(R.anim.slide_in_right, 0);
-	 	    	}
+                try {
+                    mCallbacks = (NavigationCallbacks) context;
+                    mCallbacks.toVerseEdit((int)passage.getId());
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
+                }
 	        	return true;
 	        case R.id.context_notification_card_toggle:
 	        	notificationActive = MetaSettings.getNotificationActive(context);

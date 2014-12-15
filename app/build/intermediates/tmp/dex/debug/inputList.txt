@@ -1,10 +1,10 @@
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\classes\debug
-C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-88011bbb54891590d7e087087abc90289c7406b2.jar
+C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-f269277964e1bd745490fcabf8cffbde400529e5.jar
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-e212c20968558e1d171375239f9b8636c2088d1d.jar
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-deb28ef767408d48fa3a2aac4c477de62e9b3615.jar
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-3d1ab864938a204ef1f04468badf825ca950bde5.jar
-C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-5a47421e6a0bfe5a864945bfe29640d4ebb74119.jar
+C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-412a5df3b01c1714be79f9a7a1ae5da2760c0c7d.jar
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-7d06631f0607ae988d3dcbb914353816e1a6b8f4.jar
 C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\jsoup-1.7.2-02eba155ee547721bc187da4cbecf1d649a264de.jar
-C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-63f735c8f5dde0eec50e18e9d514eb374eef0c72.jar
-C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-d08c58db55d20385201eebd04529e9502aaea3f6.jar
+C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-50e2fb1198a0d2e4dacede024237181a60eba310.jar
+C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-17dc3a65ead040942d0b50c81d7dd20a6990419e.jar

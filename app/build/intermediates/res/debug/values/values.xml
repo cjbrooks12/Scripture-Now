@@ -110,7 +110,7 @@
     <eat-comment/>
     <attr format="color" name="color_background"/>
     <attr format="color" name="color_card"/>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -119,13 +119,13 @@
     <attr format="reference" name="ic_mtrl_new"/>
     <attr format="reference" name="ic_mtrl_overflow"/>
     <attr format="reference" name="ic_mtrl_search"/>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="boolean" name="isLightTheme"/>
     <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/values/attrs.xml -->
     <eat-comment/>
     <attr format="string" name="theme_name"/>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="string" name="title"/>
     <bool name="abc_action_bar_embed_tabs">true</bool>
@@ -145,14 +145,14 @@
     <color name="all_current_verses">#559955</color>
     <color name="all_verses">#555555</color>
     <color name="background_dark">#404040</color>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="background_floating_material_dark">#ff424242</color>
     <color name="background_floating_material_light">#ffeeeeee</color>
     <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="background_light">#F0F0F0</color>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="background_material_dark">#ff303030</color>
     <color name="background_material_light">#ffeeeeee</color>
@@ -180,7 +180,7 @@
     <color name="current_most">#EFC94C</color>
     <color name="current_none">#DF5A49</color>
     <color name="current_some">#E27A3F</color>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
@@ -190,7 +190,7 @@
     <eat-comment/>
     <color name="forest_green">#508a4c</color>
     <color name="forest_green_light">#B9D6B6</color>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
@@ -209,7 +209,7 @@
     <color name="primary">#009688</color>
     <color name="primary_accent">#D32F2F</color>
     <color name="primary_dark">#00796B</color>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
@@ -301,7 +301,7 @@
     <dimen name="cardview_compat_inset_shadow">1dp</dimen>
     <dimen name="cardview_default_elevation">2dp</dimen>
     <dimen name="cardview_default_radius">2dp</dimen>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -315,7 +315,7 @@
     <dimen name="tab_host_default_height">48dp</dimen>
     <dimen name="title_text_size">22dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
@@ -400,7 +400,7 @@
     <string name="toggle_notification">Toggle Notification</string>
     <string name="verse">Verse</string>
     <string name="verse_of_the_day">Verse Of The Day</string>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance">
         <item name="android:textColor">?android:textColorPrimary</item>
@@ -1170,7 +1170,7 @@
     <style name="CardView.Light">
         <item name="cardBackgroundColor">@color/cardview_light_background</item>
     </style>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
         <item name="android:windowNoTitle">true</item>
@@ -1405,7 +1405,6 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/forest_green_light</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
 
         <!-- ActionBar Icons -->
 
@@ -1427,8 +1426,6 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/forest_green_light</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:statusBarColor">@color/primary</item>
 
         <!-- ActionBar Icons -->
 
@@ -1443,7 +1440,7 @@
         <item name="ic_mtrl_search">@drawable/abc_ic_search_api_mtrl_alpha</item>
         <item name="ic_mtrl_new">@drawable/abc_ic_search_api_mtrl_alpha</item>
     </style>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="ThemeOverlay.AppCompat" parent="Base.ThemeOverlay.AppCompat"/>
     <style name="ThemeOverlay.AppCompat.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar"/>

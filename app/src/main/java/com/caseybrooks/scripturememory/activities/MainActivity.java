@@ -11,31 +11,29 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
-import com.caseybrooks.scripturememory.fragments.DashboardFragment.onDashboardEditListener;
 import com.caseybrooks.scripturememory.fragments.DiscoverFragment;
+import com.caseybrooks.scripturememory.fragments.EditVerseFragment;
+import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
+import com.caseybrooks.scripturememory.fragments.SettingsFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
-import com.caseybrooks.scripturememory.fragments.VerseListFragment.onListEditListener;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 import java.lang.reflect.Field;
 
-public class MainActivity extends ActionBarActivity
-		implements onListEditListener, onDashboardEditListener,
-        NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends ActionBarActivity implements NavigationCallbacks {
 //Data members
 //------------------------------------------------------------------------------		
     Toolbar tb;
     Context context;
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private CharSequence title;
 
 //Lifecycle and Initialization
 //------------------------------------------------------------------------------
@@ -50,14 +48,11 @@ public class MainActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-        title = getTitle();
-
         // Set up the drawer.
         tb = (Toolbar) findViewById(R.id.activity_toolbar);
         setSupportActionBar(tb);
 
         mNavigationDrawerFragment = new NavigationDrawerFragment();
-
         mNavigationDrawerFragment.setUp(this, tb,  findViewById(R.id.navigation_drawer_container),
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
@@ -65,9 +60,6 @@ public class MainActivity extends ActionBarActivity
         fragmentManager.beginTransaction()
                 .add(R.id.navigation_drawer_container, mNavigationDrawerFragment)
                 .commit();
-
-        VerseListFragment.setOnListEditListener(this);
-        DashboardFragment.setOnDashboardEditListener(this);
 
 		getOverflowMenu();
 		showFirstTime();
@@ -82,14 +74,6 @@ public class MainActivity extends ActionBarActivity
         onNavigationDrawerItemSelected(item);
 		receiveImplicitIntent();
     }
-	
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-	    	startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME));
-	    }
-	    return super.onKeyDown(keyCode, event);
-	}
 
     //TODO: Setup app for first time opened. Will need to remove all current "first" time methods and make brand new one
 	private void showFirstTime() {
@@ -171,36 +155,23 @@ public class MainActivity extends ActionBarActivity
 	//Forces three dot overflow on devices with hardware menu button.
 	//Some might consider this a hack...
 	private void getOverflowMenu() {
-	     try {
-	        ViewConfiguration config = ViewConfiguration.get(this);
-	        Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
-	        if(menuKeyField != null) {
-	            menuKeyField.setAccessible(true);
-	            menuKeyField.setBoolean(config, false);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+        try {
+            ViewConfiguration config = ViewConfiguration.get(this);
+            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            if(menuKeyField != null) {
+                menuKeyField.setAccessible(true);
+                menuKeyField.setBoolean(config, false);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 
 	@Override
 	public void setTitle(CharSequence title) {
-	    this.title = title;
 		tb.setTitle(title);
 	}
-
-//Fragment Communication Interface
-//------------------------------------------------------------------------------
-    @Override
-    public void toEdit(int id) {
-        Intent intent = new Intent(getBaseContext(), EditVerse.class);
-        intent.putExtra("KEY_ID", id);
-
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.none);
-    }
-
-
 
 //Everything to do with new NavDrawerFragment
 //------------------------------------------------------------------------------
@@ -216,32 +187,67 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(NavigationDrawerFragment.NavListItem item) {
-        Fragment fragment = new DashboardFragment();
-
         switch(item.groupPosition) {
             case 0:
-                fragment = new DashboardFragment();
+                toDashboard();
                 break;
             case 1:
-                fragment = DiscoverFragment.newInstance();
+                toDiscover();
                 break;
             case 2:
-                fragment = VerseListFragment.newInstance(VerseListFragment.STATE, item.id);
-                setTitle(item.name);
+                toVerseList(VerseListFragment.STATE, item.id);
                 break;
             case 3:
-                fragment = VerseListFragment.newInstance(VerseListFragment.TAGS, item.id);
-                setTitle(item.name);
+                toVerseList(VerseListFragment.TAGS, item.id);
                 break;
             case 4:
-                Intent settings = new Intent(MainActivity.this, Settings.class);
-                setTitle(item.name);
-                startActivity(settings);
-                finish();
+                toSettings();
+                break;
+            case 5:
+                toHelp();
                 break;
             default:
         }
+    }
 
+    @Override
+    public void toVerseDetail(int id) {
+
+    }
+
+    @Override
+    public void toVerseEdit(int id) {
+        Fragment fragment = EditVerseFragment.newInstance(id);
+        setFragment(fragment);
+    }
+
+    @Override
+    public void toVerseList(int listType, int id) {
+        Fragment fragment = VerseListFragment.newInstance(listType, id);
+        setFragment(fragment);
+    }
+
+    @Override
+    public void toDashboard() {
+        Fragment fragment = new DashboardFragment();
+        setFragment(fragment);
+    }
+
+    @Override
+    public void toDiscover() {
+        Fragment fragment = DiscoverFragment.newInstance();
+        setFragment(fragment);
+    }
+
+    @Override
+    public void toSettings() {
+        Fragment fragment = new SettingsFragment();
+        setFragment(fragment);
+    }
+
+    @Override
+    public void toHelp() {
+        Fragment fragment = new HelpFragment();
         setFragment(fragment);
     }
 }

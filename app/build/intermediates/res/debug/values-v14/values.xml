@@ -3,7 +3,7 @@
     <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/values-v14/dimens.xml -->
     <eat-comment/>
     <dimen name="widget_margin">0dp</dimen>
-    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values-v14/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values-v14/values.xml -->
     <eat-comment/>
     <style name="Base.Theme.AppCompat" parent="Base.V14.Theme.AppCompat">
         <item name="android:actionModeCutDrawable">?actionModeCutDrawable</item>

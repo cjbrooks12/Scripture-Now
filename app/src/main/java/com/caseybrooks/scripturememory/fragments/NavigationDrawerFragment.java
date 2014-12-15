@@ -21,13 +21,13 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class NavigationDrawerFragment extends Fragment {
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-    private NavigationDrawerCallbacks mCallbacks;
+    private NavigationCallbacks mCallbacks;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
@@ -123,6 +123,7 @@ public class NavigationDrawerFragment extends Fragment {
         listDataHeader.add("Memorization State");
         listDataHeader.add("Tags");
         listDataHeader.add("Settings");
+        listDataHeader.add("Help & Feedback");
 
         // Adding child data
         VerseDB db = new VerseDB(parentActivity).open();
@@ -175,7 +176,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
-                if(groupPosition == 0 || groupPosition == 1 || groupPosition == 4) {
+                if(groupPosition == 0 || groupPosition == 1 || groupPosition == 4 || groupPosition == 5) {
                     NavListItem item = new NavListItem();
                     item.name = (String)parent.getExpandableListAdapter().getGroup(groupPosition);
                     item.groupPosition = groupPosition;
@@ -445,9 +446,9 @@ public class NavigationDrawerFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mCallbacks = (NavigationDrawerCallbacks) activity;
+            mCallbacks = (NavigationCallbacks) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
+            throw new ClassCastException("Activity must implement NavigationCallbacks.");
         }
     }
 
@@ -487,11 +488,6 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(parentActivity, "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -508,15 +504,5 @@ public class NavigationDrawerFragment extends Fragment {
 
     private ActionBar getActionBar() {
         return parentActivity.getSupportActionBar();
-    }
-
-    /**
-     * Callbacks interface that all activities using this fragment must implement.
-     */
-    public static interface NavigationDrawerCallbacks {
-        /**
-         * Called when an item in the navigation drawer is selected.
-         */
-        void onNavigationDrawerItemSelected(NavListItem item);
     }
 }

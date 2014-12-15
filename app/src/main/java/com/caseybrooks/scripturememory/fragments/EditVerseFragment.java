@@ -1,5 +1,6 @@
 package com.caseybrooks.scripturememory.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,6 +27,7 @@ import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.FlowLayout;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.notifications.MainNotification;
 import com.caseybrooks.scripturememory.views.TagChip;
 
@@ -37,6 +39,7 @@ public class EditVerseFragment extends Fragment {
 	Context context;
 	View view;
     Passage passage;
+    NavigationCallbacks mCallbacks;
 	
 	ActionBar ab;
 	EditText editRef, editVer;
@@ -44,12 +47,21 @@ public class EditVerseFragment extends Fragment {
     FlowLayout tagChipsLayout;
     SeekBar seekbar;
 
+    public static Fragment newInstance(int id) {
+        Fragment edit = new EditVerseFragment();
+        Bundle extras = new Bundle();
+        extras.putInt("KEY_ID", id);
+        edit.setArguments(extras);
+        return edit;
+    }
+
+
 //Lifecycle and Initialization
 //------------------------------------------------------------------------------
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-//		int theme = Integer.parseInt(preferences.getString("PREF_SELECTED_THEME", "0"));
+//		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+//		int theme = Integer.parseInt(settings.getString("PREF_SELECTED_THEME", "0"));
 //		if(theme == 0) new ContextThemeWrapper(getActivity(), R.style.Theme_ScriptureMemory_Light);
 //		else new ContextThemeWrapper(getActivity(), R.style.Theme_ScriptureMemory_Light);
 		
@@ -275,7 +287,6 @@ public class EditVerseFragment extends Fragment {
 
         switch (item.getItemId()) {
 	    case android.R.id.home:
-	    	returnToDashboard();
 	    	((ActionBarActivity) context).overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 	    	return true;
 	    case R.id.menu_edit_set_notification:
@@ -284,7 +295,6 @@ public class EditVerseFragment extends Fragment {
                 MainNotification.notify(context).show();
                 Toast.makeText(context, "Notification Set", Toast.LENGTH_SHORT).show();
             }
-	    	returnToDashboard();
 	    	return true;
 	    case R.id.menu_edit_save_changes:
             if(passage != null) {
@@ -294,7 +304,6 @@ public class EditVerseFragment extends Fragment {
                 db.close();
                 Toast.makeText(context, "Verse Updated", Toast.LENGTH_SHORT).show();
             }
-			returnToDashboard();
 	    	return true;
 	    case R.id.menu_edit_delete:
             if(passage != null) {
@@ -302,7 +311,6 @@ public class EditVerseFragment extends Fragment {
                 db.updateVerse(passage);
                 db.close();
             }
-			returnToDashboard();
 	    	return true;
 	    case R.id.menu_edit_change_list:
 //            if(passage != null) {
@@ -317,7 +325,6 @@ public class EditVerseFragment extends Fragment {
 //                db.close();
 //                Toast.makeText(context, "Verse Updated", Toast.LENGTH_SHORT).show();
 //            }
-			returnToDashboard();
 	    	return true;
 	    case R.id.menu_edit_share:
             if(passage != null) {
@@ -329,7 +336,6 @@ public class EditVerseFragment extends Fragment {
                 intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                 startActivity(Intent.createChooser(intent, "Share To..."));
             }
-	    	returnToDashboard();
 	    	return true;
         default:
             db.close();
@@ -339,19 +345,19 @@ public class EditVerseFragment extends Fragment {
 	
 //Host Activity Interface
 //------------------------------------------------------------------------------
-	private static onReturnHomeListener listener;
-	
-	public void returnToDashboard() {
-	    if(listener != null){
-	        listener.toParent();
-	    }
-	}
-
-	public interface onReturnHomeListener {
-	    void toParent();
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mCallbacks = (NavigationCallbacks) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Activity must implement NavigationCallbacks.");
+        }
     }
 
-	public static void setOnReturnHomeListener(onReturnHomeListener listener) {
-	    EditVerseFragment.listener = listener;
-	}
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 }

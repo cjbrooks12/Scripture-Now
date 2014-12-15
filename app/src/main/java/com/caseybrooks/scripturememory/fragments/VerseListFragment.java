@@ -1,5 +1,6 @@
 package com.caseybrooks.scripturememory.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 public class VerseListFragment extends ListFragment {
 //enums for creating new fragment
@@ -43,6 +45,7 @@ public class VerseListFragment extends ListFragment {
 	Context context;
     ActionBar ab;
     ActionMode mActionMode;
+    NavigationCallbacks mCallbacks;
 
 	BibleVerseAdapter bibleVerseAdapter;
 	int listType;
@@ -107,7 +110,7 @@ public class VerseListFragment extends ListFragment {
     BibleVerseAdapter.OnItemClickListener itemClick = new BibleVerseAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-            switchToEditFragment((int)bibleVerseAdapter.getItemId(position));
+            mCallbacks.toVerseEdit((int)bibleVerseAdapter.getItemId(position));
         }
     };
 
@@ -171,21 +174,21 @@ public class VerseListFragment extends ListFragment {
 	
 //Host Activity Interface
 //------------------------------------------------------------------------------
-	private static onListEditListener listener;
-	
-	public void switchToEditFragment(int id) {
-	    if(listener != null) {
-	        listener.toEdit(id);
-	    }
-	}
-
-    public interface onListEditListener {
-	    void toEdit(int id);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mCallbacks = (NavigationCallbacks) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Activity must implement NavigationCallbacks.");
+        }
     }
 
-	public static void setOnListEditListener(onListEditListener listener) {
-	    VerseListFragment.listener = listener;
-	}
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
 //Contextual ActionMode for multi-selection
 //------------------------------------------------------------------------------

@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:paddingLeft="32dp"
-        android:paddingStart="32dp"
         android:textSize="22sp" />
 
 </LinearLayout>

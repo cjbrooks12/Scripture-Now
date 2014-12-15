@@ -2,6 +2,7 @@ package com.caseybrooks.scripturememory.fragments;
 
 import android.animation.LayoutTransition;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.widget.ScrollView;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.notifications.MainNotification;
 import com.caseybrooks.scripturememory.views.NotificationVerseCard;
 import com.caseybrooks.scripturememory.views.VOTDCard;
@@ -33,7 +35,7 @@ public class DashboardFragment extends Fragment {
 	View view;
 
 	LinearLayout dashboardLayout;
-//	ActionBar ab;
+    NavigationCallbacks mCallbacks;
 	
 	NotificationVerseCard notify_card;
 	VerseInputCard input_card;
@@ -196,19 +198,19 @@ public class DashboardFragment extends Fragment {
 	
 //Host Activity Interface
 //------------------------------------------------------------------------------
-	private static onDashboardEditListener listener;
-	
-	public void switchToEditFragment(int id) {
-	    if(listener != null){
-	        listener.toEdit(id);
-	    }
-	}
-
-	public interface onDashboardEditListener {
-	    void toEdit(int id);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mCallbacks = (NavigationCallbacks) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Activity must implement NavigationCallbacks.");
+        }
     }
 
-	public static void setOnDashboardEditListener(onDashboardEditListener listener) {
-	    DashboardFragment.listener = listener;
-	}
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 }
