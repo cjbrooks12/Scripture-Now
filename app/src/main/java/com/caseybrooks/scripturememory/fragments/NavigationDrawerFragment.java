@@ -22,12 +22,13 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
+import com.caseybrooks.scripturememory.views.NavDrawerHeader;
+import com.nirhart.parallaxscroll.views.ParallaxExpandableListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,20 +40,16 @@ import java.util.List;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
-    private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     private NavigationCallbacks mCallbacks;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ExpandableListView mDrawerListView;
+    private ParallaxExpandableListView mDrawerListView;
     private ExpandableListAdapter listAdapter;
     private View mFragmentContainerView;
 
-    private TextView mainRef;
-    private TextView mainVer;
+    NavDrawerHeader header;
 
-    private int mCurrentSelectedGroup = 0;
-    private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
     private ActionBarActivity parentActivity;
@@ -70,7 +67,6 @@ public class NavigationDrawerFragment extends Fragment {
         mUserLearnedDrawer = MetaSettings.getUserLearnedDrawer(getActivity());
 
         if (savedInstanceState != null) {
-            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
 
@@ -94,10 +90,7 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        mDrawerListView = (ExpandableListView) view.findViewById(R.id.navListView);
-
-        mainRef = (TextView) view.findViewById(R.id.navMainVerseRef);
-        mainVer = (TextView) view.findViewById(R.id.navMainVerseText);
+        mDrawerListView = (ParallaxExpandableListView) view.findViewById(R.id.navListView);
 
         populateList();
 
@@ -114,6 +107,10 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void populateList() {
+        header = new NavDrawerHeader(parentActivity);
+
+        mDrawerListView.addParallaxedHeaderView(header);
+
         List<String> listDataHeader = new ArrayList<String>();
         HashMap<String, List<Integer>> listDataChild = new HashMap<String, List<Integer>>();
 
@@ -399,13 +396,7 @@ public class NavigationDrawerFragment extends Fragment {
                     MetaSettings.putUserLearnedDrawer(parentActivity, true);
                 }
 
-                VerseDB db = new VerseDB(parentActivity).open();
-                Passage passage = db.getVerse(MetaSettings.getVerseId(parentActivity));
-                db.close();
-
-                mainRef.setText(passage.getReference().toString());
-                mainVer.setText(passage.getText());
-
+                header.refresh();
                 listAdapter.notifyDataSetChanged();
                 parentActivity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
@@ -429,10 +420,8 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void selectItem(NavListItem item) {
-        mCurrentSelectedGroup = item.groupPosition;
-        mCurrentSelectedPosition = item.childPosition;
         if (mDrawerListView != null) {
-            mDrawerListView.setItemChecked(item.childPosition, true);
+//            mDrawerListView.setItemChecked(item.childPosition, true);
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
@@ -461,7 +450,6 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
     }
 
     @Override

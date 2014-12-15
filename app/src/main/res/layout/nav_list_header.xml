@@ -5,7 +5,8 @@
     android:layout_height="48dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/color_background" >
 
     <TextView
         android:id="@+id/navListHeader"
