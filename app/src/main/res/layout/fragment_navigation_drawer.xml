@@ -6,10 +6,12 @@
     android:background="?attr/color_background"
     android:orientation="vertical">
     <com.nirhart.parallaxscroll.views.ParallaxExpandableListView
+        android:background="?attr/color_background"
         android:id="@+id/navListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        app:parallax_factor="1.0" />
+        android:groupIndicator="@null"
+        app:parallax_factor="1.5" />
 </LinearLayout>

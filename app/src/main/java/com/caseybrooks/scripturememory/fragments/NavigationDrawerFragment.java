@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.caseybrooks.scripturememory.R;
@@ -27,7 +28,6 @@ import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
-import com.caseybrooks.scripturememory.views.NavDrawerHeader;
 import com.nirhart.parallaxscroll.views.ParallaxExpandableListView;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class NavigationDrawerFragment extends Fragment {
     private ExpandableListAdapter listAdapter;
     private View mFragmentContainerView;
 
-    NavDrawerHeader header;
+    RelativeLayout header;
 
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
@@ -107,7 +107,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void populateList() {
-        header = new NavDrawerHeader(parentActivity);
+        header = (RelativeLayout) LayoutInflater.from(parentActivity).inflate(R.layout.nav_drawer_header, null);
 
         mDrawerListView.addParallaxedHeaderView(header);
 
@@ -126,7 +126,6 @@ public class NavigationDrawerFragment extends Fragment {
         VerseDB db = new VerseDB(parentActivity).open();
         listDataChild.put(listDataHeader.get(0), new ArrayList<Integer>());
         listDataChild.put(listDataHeader.get(1), new ArrayList<Integer>());
-
 
         List<Integer> states = new ArrayList<Integer>();
         states.add(VerseDB.ALL_VERSES);
@@ -396,7 +395,6 @@ public class NavigationDrawerFragment extends Fragment {
                     MetaSettings.putUserLearnedDrawer(parentActivity, true);
                 }
 
-                header.refresh();
                 listAdapter.notifyDataSetChanged();
                 parentActivity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }

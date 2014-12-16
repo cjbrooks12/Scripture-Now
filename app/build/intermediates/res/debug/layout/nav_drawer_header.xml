@@ -30,30 +30,12 @@
         android:id="@+id/navHeaderRef"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ref_icon_layout"
-        android:layout_alignBottom="@+id/ref_icon_layout"
-        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/ref_icon_layout"
         android:layout_toEndOf="@+id/ref_icon_layout"
+        android:textColor="#CC000000"
         android:fontFamily="sans-serif-light"
         android:textSize="@dimen/title_text_size"
-        android:text="@string/first_john_ref_test"/>
-
-    <View
-        android:id="@+id/anchor"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/ref_icon_layout"
-        android:background="#45000000"/>
-
-    <TextView
-        android:id="@+id/navHeaderText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/anchor"
-        android:fontFamily="sans-serif-light"
-        android:text="@string/first_john_ver_test"/>
+        android:text="Scripture Now!"/>
 </RelativeLayout>
 <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/nav_drawer_header.xml -->

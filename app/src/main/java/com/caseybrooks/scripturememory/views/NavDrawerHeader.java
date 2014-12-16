@@ -8,14 +8,10 @@ import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.VerseDB;
 
 public class NavDrawerHeader extends RelativeLayout {
     Context context;
     TextView reference;
-    TextView verseText;
-
     Passage passage;
 
     public NavDrawerHeader(Context context) {
@@ -38,26 +34,5 @@ public class NavDrawerHeader extends RelativeLayout {
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         LayoutInflater.from(context).inflate(R.layout.nav_drawer_header, this);
-
-        reference = (TextView) findViewById(R.id.navHeaderRef);
-        verseText = (TextView) findViewById(R.id.navHeaderText);
-
-        VerseDB db = new VerseDB(context).open();
-        int id = MetaSettings.getVerseId(context);
-        passage = db.getVerse(id);
-        db.close();
-
-        reference.setText(passage.getReference().toString());
-        verseText.setText(passage.getText());
-    }
-
-    public void refresh() {
-        VerseDB db = new VerseDB(context).open();
-        int id = MetaSettings.getVerseId(context);
-        passage = db.getVerse(id);
-        db.close();
-
-        reference.setText(passage.getReference().toString());
-        verseText.setText(passage.getText());
     }
 }
