@@ -12,6 +12,7 @@
         <!-- Colors -->
         <item name="color_background">@color/background_dark</item>
         <item name="color_card">@color/card_dark</item>
+        <item name="color_toolbar">@color/primary</item>
         <item name="android:windowBackground">@color/background_dark</item>
 
         <item name="theme_name">Dark</item>

@@ -2,14 +2,19 @@ package com.caseybrooks.scripturememory.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.support.v7.app.ActionBar;
+import android.util.TypedValue;
 import android.widget.Toast;
 
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
 
@@ -31,7 +36,21 @@ public class HelpFragment extends PreferenceFragment {
         findPreference("ShareApp").setOnPreferenceClickListener(shareAppClick);
     }
 
-//Rate App (go to Play Store) listener
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ActionBar ab = ((MainActivity) context).getSupportActionBar();
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
+        int color = typedValue.data;
+        ColorDrawable colorDrawable = new ColorDrawable(color);
+        ab.setBackgroundDrawable(colorDrawable);
+        ab.setTitle("Help");
+    }
+
+    //Rate App (go to Play Store) listener
 //------------------------------------------------------------------------------	
     OnPreferenceClickListener rateAppClick = new OnPreferenceClickListener() {
         @Override

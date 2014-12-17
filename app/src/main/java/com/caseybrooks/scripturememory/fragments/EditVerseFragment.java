@@ -5,13 +5,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.FlowLayout;
@@ -48,11 +52,11 @@ public class EditVerseFragment extends Fragment {
     SeekBar seekbar;
 
     public static Fragment newInstance(int id) {
-        Fragment edit = new EditVerseFragment();
+        Fragment fragment = new EditVerseFragment();
         Bundle extras = new Bundle();
         extras.putInt("KEY_ID", id);
-        edit.setArguments(extras);
-        return edit;
+        fragment.setArguments(extras);
+        return fragment;
     }
 
 
@@ -60,11 +64,6 @@ public class EditVerseFragment extends Fragment {
 //------------------------------------------------------------------------------
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-//		int theme = Integer.parseInt(settings.getString("PREF_SELECTED_THEME", "0"));
-//		if(theme == 0) new ContextThemeWrapper(getActivity(), R.style.Theme_ScriptureMemory_Light);
-//		else new ContextThemeWrapper(getActivity(), R.style.Theme_ScriptureMemory_Light);
-		
 		view = inflater.inflate(R.layout.fragment_edit_verse, container, false);
         context = getActivity();
         initialize();
@@ -72,8 +71,22 @@ public class EditVerseFragment extends Fragment {
         return view;
 	}
 
-	private void initialize() {
-		long id = getActivity().getIntent().getIntExtra("KEY_ID", 1);
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ActionBar ab = ((MainActivity) context).getSupportActionBar();
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
+        int color = typedValue.data;
+        ColorDrawable colorDrawable = new ColorDrawable(color);
+        ab.setBackgroundDrawable(colorDrawable);
+        ab.setTitle("Edit");
+    }
+
+    private void initialize() {
+		long id = getArguments().getInt("KEY_ID", 1);
 
         VerseDB db = new VerseDB(context).open();
 		passage = db.getVerse(id);
@@ -175,7 +188,9 @@ public class EditVerseFragment extends Fragment {
                             .setMessage("Remove this tag from all verses?")
                             .setPositiveButton("Remove", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    ((TagChip) v).deleteTag();
+                                    TagChip chip = (TagChip) v;
+                                    passage.removeTag(chip.getTagName());
+                                    chip.deleteTag();
                                     tagChipsLayout.removeView(v);
                                 }
                             })

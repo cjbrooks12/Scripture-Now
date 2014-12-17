@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\se.emilsjolander\stickylistheaders\2.5.2\classes.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="9f0808c3f609d8fe93018a8108d5a3d7c9cb5458">
-        <dex dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-17beb911a296dd6c6253205f78fc185ae8299081.jar" />
-    </item>
-    <item
         jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\com.github.nirhart\parallaxscroll\1.0\classes.jar"
         jumboMode="false"
         revision="21.1.1"
@@ -26,7 +19,7 @@
         jar="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\exploded-aar\scripturememory\AndroidBibleTools\unspecified\classes.jar"
         jumboMode="false"
         revision="21.1.1"
-        sha1="f14db47147f4d1705c553aa9f32f59a877423695">
+        sha1="d5a3390dcf7a581f64c378ac3e02354cccf86a44">
         <dex dex="C:\Users\Casey\Desktop\github\scripturememory\App\build\intermediates\pre-dexed\debug\classes-3d1ab864938a204ef1f04468badf825ca950bde5.jar" />
     </item>
     <item

@@ -345,7 +345,7 @@ public class Reference {
 
     @Override
     public String toString() {
-        String refString = book.toString();
+        String refString = book.getName();
         refString += " " + chapter;
         refString += ":";
 

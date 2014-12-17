@@ -11,6 +11,7 @@
 
         <!-- Colors -->
         <item name="color_background">@color/background_light</item>
+        <item name="color_toolbar">@color/primary</item>
         <item name="color_card">@color/card_light</item>
         <item name="android:windowBackground">@color/background_light</item>
 

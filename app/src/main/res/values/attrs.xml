@@ -5,6 +5,7 @@
     <!-- Colors -->
     <attr name="color_background" format="color"/>
     <attr name="color_card" format="color"/>
+    <attr name="color_toolbar" format="color"/>
 
     <!-- ActionBar Icons -->
     <attr name="ic_mtrl_overflow" format="reference" />

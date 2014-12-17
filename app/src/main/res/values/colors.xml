@@ -4,6 +4,9 @@
 	<color name="forest_green">#508a4c</color>
     <color name="forest_green_light">#B9D6B6</color>
 
+    <color name="open_bible_brown">#7E7156</color>
+    <color name="open_bible_green">#C1E68D</color>
+
     <!-- Colors for the memorization state -->
     <color name="all_verses">#555555</color>
     <color name="all_current_verses">#559955</color>
@@ -20,7 +23,7 @@
     <color name="card_dark">#505050</color>
 
     <!-- Toolbar Colors (Current main colors) -->
-    <color name="primary">#009688</color>
+    <color name="primary">#45B29D</color>
     <color name="primary_dark">#00796B</color>
     <color name="primary_accent">#D32F2F</color>
 

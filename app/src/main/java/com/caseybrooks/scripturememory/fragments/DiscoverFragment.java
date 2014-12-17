@@ -2,10 +2,15 @@ package com.caseybrooks.scripturememory.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
+import android.support.v7.app.ActionBar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +18,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
@@ -35,6 +42,7 @@ public class DiscoverFragment extends Fragment {
     EditText searchEditText;
     LinearLayout verseLayout;
     NavigationCallbacks mCallbacks;
+    ProgressBar progress;
 
     public static DiscoverFragment newInstance() {
         DiscoverFragment fragment = new DiscoverFragment();
@@ -54,29 +62,86 @@ public class DiscoverFragment extends Fragment {
         }
     }
 
-    private class SearchVerseAsync extends AsyncTask<String, Passage, Void> {
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ActionBar ab = ((MainActivity) context).getSupportActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(context.getResources().getColor(R.color.open_bible_brown));
+        ab.setBackgroundDrawable(colorDrawable);
+        ab.setTitle("Topical Bible");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_discover, container, false);
+
+        this.context = getActivity();
+
+        verseLayout = (LinearLayout) view.findViewById(R.id.discoverVerseLayout);
+        progress = (ProgressBar) view.findViewById(R.id.progress);
+
+        ColorFilter filter = new PorterDuffColorFilter(Color.parseColor("#508a4c"), PorterDuff.Mode.SRC_IN);
+
+        progress.getProgressDrawable().setColorFilter(filter);
+        progress.getIndeterminateDrawable().setColorFilter(filter);
+
+        searchEditText = (EditText) view.findViewById(R.id.discoverEditText);
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String text = searchEditText.getText().toString();
+                    if(text.length() > 1) {
+                        new SearchVerseAsync().execute(text);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+        return view;
+    }
+
+    private class Data {
+        Passage passage;
+        int upVotes;
+    }
+
+    private class SearchVerseAsync extends AsyncTask<String, Data, Void> {
         String message;
+        int count;
 
         @Override
-        protected void onProgressUpdate(Passage... values) {
-            super.onProgressUpdate(values);
+        protected void onPreExecute() {
+            super.onPreExecute();
+            count = 0;
 
-            CardView cv = new CardView(context);
-            LinearLayout cardLayout = new LinearLayout(context);
-            cardLayout.setOrientation(LinearLayout.VERTICAL);
-            TextView title = new TextView(context);
-            title.setTextSize(20);
-            title.setText(values[0].getReference().toString());
+            progress.setVisibility(View.VISIBLE);
+            progress.setIndeterminate(true);
+            progress.setProgress(0);
+        }
 
-            TextView text = new TextView(context);
-            text.setTextSize(15);
-            text.setText(values[0].getText());
+        @Override
+        protected void onProgressUpdate(Data... data) {
+            super.onProgressUpdate(data);
 
-            cardLayout.addView(title);
-            cardLayout.addView(text);
-            cv.addView(cardLayout);
+            progress.setProgress(count);
 
-            verseLayout.addView(cv);
+            View view = LayoutInflater.from(context).inflate(R.layout.open_bible_verse_card, null);
+
+            TextView reference = (TextView) view.findViewById(R.id.reference);
+            TextView verse = (TextView) view.findViewById(R.id.verse);
+            TextView helpful = (TextView) view.findViewById(R.id.upVotes);
+
+            reference.setText(data[0].passage.getReference().toString());
+            verse.setText(data[0].passage.getText());
+            helpful.setText(data[0].upVotes + " helpful votes");
+
+            verseLayout.addView(view);
         }
 
         @Override
@@ -87,20 +152,24 @@ public class DiscoverFragment extends Fragment {
                             params[0].trim().replaceAll(" ", "_");
 
                     Document doc = Jsoup.connect(query).get();
-
                     Elements passages = doc.select(".verse");
-
-                    int count = 0;
+                    progress.setIndeterminate(false);
 
                     for(Element element : passages) {
-                        if(count > 10) break; //only get the first 10 verses
+                        if(count > 9) break; //only get the first 10 verses
+                        count++;
 
                         try {
                             Passage passage = new Passage(element.select(".bibleref").first().ownText());
                             passage.setVersion(MetaSettings.getBibleVersion(context));
-                            passage.retrieve();
-                            publishProgress(passage);
-                            count++;
+                            passage.setText(element.select("p").get(1).text());
+
+                            Data data = new Data();
+                            data.passage = passage;
+                            String notesString = element.select(".note").get(0).ownText();
+                            data.upVotes = Integer.parseInt(notesString.replaceAll("\\D", ""));
+
+                            publishProgress(data);
                         }
                         catch(ParseException e) {
                             e.printStackTrace();
@@ -121,31 +190,13 @@ public class DiscoverFragment extends Fragment {
 
             return null;
         }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_discover, container, false);
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
 
-        this.context = getActivity();
-
-        verseLayout = (LinearLayout) view.findViewById(R.id.discoverVerseLayout);
-
-        searchEditText = (EditText) view.findViewById(R.id.discoverEditText);
-        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    new SearchVerseAsync().execute(searchEditText.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        return view;
+            progress.setVisibility(View.GONE);
+        }
     }
 
 //Host Activity Interface

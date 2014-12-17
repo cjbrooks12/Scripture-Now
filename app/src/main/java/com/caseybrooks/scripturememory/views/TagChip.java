@@ -81,6 +81,10 @@ public class TagChip extends RelativeLayout {
         return mode;
     }
 
+    public String getTagName() {
+        return tagName.getText().toString();
+    }
+
     public void setTag(int tagId) {
         this.tagId = tagId;
 

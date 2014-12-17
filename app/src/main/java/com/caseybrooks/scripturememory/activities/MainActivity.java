@@ -33,8 +33,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
     Toolbar tb;
     Context context;
 
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-
 //Lifecycle and Initialization
 //------------------------------------------------------------------------------
 	@Override
@@ -52,26 +50,23 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
         tb = (Toolbar) findViewById(R.id.activity_toolbar);
         setSupportActionBar(tb);
 
-        mNavigationDrawerFragment = new NavigationDrawerFragment();
+        NavigationDrawerFragment mNavigationDrawerFragment = new NavigationDrawerFragment();
         mNavigationDrawerFragment.setUp(this, tb,  findViewById(R.id.navigation_drawer_container),
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
+                //put fragment in navigation drawer
                 .add(R.id.navigation_drawer_container, mNavigationDrawerFragment)
+
+                //put DashboardFragment in main content
+                .add(R.id.mainFragmentContainer, new DashboardFragment())
                 .commit();
 
 		getOverflowMenu();
 		showFirstTime();
 		showPrompt();
 
-        int defaultScreen = MetaSettings.getDefaultScreen(context);
-
-        NavigationDrawerFragment.NavListItem item = new NavigationDrawerFragment.NavListItem();
-        item.groupPosition = defaultScreen;
-        item.childPosition = 0;
-
-        onNavigationDrawerItemSelected(item);
 		receiveImplicitIntent();
     }
 
@@ -138,19 +133,19 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		Bundle extras = getIntent().getExtras();
 		if(extras != null && extras.containsKey(Intent.EXTRA_TEXT)) {
             DashboardFragment dashboard = new DashboardFragment();
-            setFragment(dashboard);
             dashboard.setArguments(extras);
+            setFragment(dashboard);
         }
 	}
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-        receiveImplicitIntent();
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        setIntent(intent);
+//        receiveImplicitIntent();
+//    }
 
-    //ActionBar
+//ActionBar
 //------------------------------------------------------------------------------
 	//Forces three dot overflow on devices with hardware menu button.
 	//Some might consider this a hack...
@@ -166,11 +161,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
         catch (Exception e) {
             e.printStackTrace();
         }
-	}
-
-	@Override
-	public void setTitle(CharSequence title) {
-		tb.setTitle(title);
 	}
 
 //Everything to do with new NavDrawerFragment
@@ -249,5 +239,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
     public void toHelp() {
         Fragment fragment = new HelpFragment();
         setFragment(fragment);
+
     }
 }

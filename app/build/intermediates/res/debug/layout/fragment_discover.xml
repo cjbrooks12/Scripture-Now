@@ -1,38 +1,55 @@
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin" >
-
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/discoverEditText"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:hint="Search OpenBible.info"
-        android:inputType="text"
-        android:imeOptions="actionSearch"
-        />
-
-    <ScrollView
+    android:layout_height="wrap_content">
+    <com.nirhart.parallaxscroll.views.ParallaxScrollView
+        android:id="@+id/parallax_scrollview"
+        app:parallax_factor="1.9"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/discoverEditText">
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/discoverVerseLayout"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
-</RelativeLayout>
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/open_bible_green">
+                <TextView
+                    android:id="@+id/a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:textSize="24sp"
+                    android:text="What does the Bible say about..."/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/discoverEditText"
+                    android:layout_below="@+id/a"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="Search OpenBible.info"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch" />
+            </RelativeLayout>
+        </LinearLayout>
+    </com.nirhart.parallaxscroll.views.ParallaxScrollView>
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginTop="-8dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="false"
+        android:max="10"/>
+</FrameLayout>
 <!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/fragment_discover.xml -->

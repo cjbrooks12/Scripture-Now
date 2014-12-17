@@ -7,9 +7,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
@@ -60,12 +65,20 @@ public class DashboardFragment extends Fragment {
 	    receiver = new RefreshReceiver();
 		context.registerReceiver(receiver, new IntentFilter(REFRESH));
 
-//		setupActionBar();
 	    notify_card.refresh();
 		if(MetaSettings.getNotificationActive(context)) {
 		    MainNotification.notify(context).show();
 		}
-	}
+
+        ActionBar ab = ((MainActivity) context).getSupportActionBar();
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
+        int color = typedValue.data;
+        ColorDrawable colorDrawable = new ColorDrawable(color);
+        ab.setBackgroundDrawable(colorDrawable);
+        ab.setTitle("Dashboard");
+    }
 
 	@Override
 	public void onPause() {
@@ -108,7 +121,6 @@ public class DashboardFragment extends Fragment {
         dashboardLayout.addView(votd_card, 1);
 
         setHasOptionsMenu(true);
-//        setupActionBar();
         receiveImplicitIntent();
 	}
 
@@ -144,12 +156,6 @@ public class DashboardFragment extends Fragment {
 
 //ActionBar
 //------------------------------------------------------------------------------
-//	private void setupActionBar() {
-//		ab = ((ActionBarActivity) context).getSupportActionBar();
-//        ab.setHomeButtonEnabled(true);
-//        ab.setDisplayHomeAsUpEnabled(true);
-//	}
-
 	@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater = getActivity().getMenuInflater();

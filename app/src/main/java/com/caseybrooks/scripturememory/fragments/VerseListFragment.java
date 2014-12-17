@@ -2,6 +2,7 @@ package com.caseybrooks.scripturememory.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,9 +21,9 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
-import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 public class VerseListFragment extends ListFragment {
@@ -74,8 +75,6 @@ public class VerseListFragment extends ListFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-        db = new VerseDB(context);
-
 		SpinnerAdapter spinnerAdapter = ArrayAdapter.createFromResource(context,
 							   R.array.sort_methods, android.R.layout.simple_spinner_dropdown_item);
 
@@ -85,6 +84,26 @@ public class VerseListFragment extends ListFragment {
 		ab.setListNavigationCallbacks(spinnerAdapter, navigationListener);
 		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		ab.setSelectedNavigationItem(MetaSettings.getSortBy(context));
+
+        String title;
+        int color;
+
+        db = new VerseDB(context).open();
+        if(listType == TAGS) {
+            title = db.getTagName(listId);
+            color = db.getTagColor(db.getTagName(listId));
+        }
+        else {
+            title = db.getStateName(listId);
+            color = db.getStateColor(listId);
+        }
+
+        ((MainActivity)context).getSupportActionBar().setTitle(title);
+
+        db.close();
+
+        ColorDrawable colorDrawable = new ColorDrawable(color);
+        ab.setBackgroundDrawable(colorDrawable);
 
 		populateBibleVerses();
 	}
