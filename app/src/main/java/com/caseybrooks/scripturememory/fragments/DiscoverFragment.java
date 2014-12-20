@@ -1,6 +1,7 @@
 package com.caseybrooks.scripturememory.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -26,6 +27,7 @@ import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
+import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 import org.jsoup.Jsoup;
@@ -108,6 +110,7 @@ public class DiscoverFragment extends Fragment {
 
     private class Data {
         Passage passage;
+        String searchTerm;
         int upVotes;
     }
 
@@ -130,16 +133,52 @@ public class DiscoverFragment extends Fragment {
             super.onProgressUpdate(data);
 
             progress.setProgress(count);
-
             View view = LayoutInflater.from(context).inflate(R.layout.open_bible_verse_card, null);
 
             TextView reference = (TextView) view.findViewById(R.id.reference);
+            TextView version = (TextView) view.findViewById(R.id.version);
             TextView verse = (TextView) view.findViewById(R.id.verse);
             TextView helpful = (TextView) view.findViewById(R.id.upVotes);
 
-            reference.setText(data[0].passage.getReference().toString());
-            verse.setText(data[0].passage.getText());
-            helpful.setText(data[0].upVotes + " helpful votes");
+            final Data currentItem = data[0];
+
+            reference.setText(currentItem.passage.getReference().toString());
+            version.setText(currentItem.passage.getVersion().getCode());
+            verse.setText(currentItem.passage.getText());
+            helpful.setText(currentItem.upVotes + " helpful votes");
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final View view = LayoutInflater.from(context).inflate(R.layout.popup_add_verse, null);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setView(view);
+
+                    final AlertDialog dialog = builder.create();
+
+                    TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
+                    cancelButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+                    TextView addVerseButton = (TextView) view.findViewById(R.id.add_verse_button);
+                    addVerseButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            VerseDB db = new VerseDB(context).open();
+                            Passage passage = currentItem.passage;
+                            passage.setState(VerseDB.CURRENT_NONE);
+                            passage.addTag(currentItem.searchTerm);
+                            db.insertVerse(passage);
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.show();
+                }
+            });
 
             verseLayout.addView(view);
         }
@@ -163,11 +202,14 @@ public class DiscoverFragment extends Fragment {
                             Passage passage = new Passage(element.select(".bibleref").first().ownText());
                             passage.setVersion(MetaSettings.getBibleVersion(context));
                             passage.setText(element.select("p").get(1).text());
+                            passage.setVersion(MetaSettings.getBibleVersion(context));
+                            passage.retrieve();
 
                             Data data = new Data();
                             data.passage = passage;
                             String notesString = element.select(".note").get(0).ownText();
                             data.upVotes = Integer.parseInt(notesString.replaceAll("\\D", ""));
+                            data.searchTerm = params[0].trim();
 
                             publishProgress(data);
                         }

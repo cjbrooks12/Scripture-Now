@@ -55,6 +55,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:textColor="@color/primary_dark"
+            android:background="@drawable/bg_transparent"
             android:textSize="18sp"
             android:text="THIS VERSE"/>
 
@@ -70,6 +71,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:textColor="@color/primary_dark"
+            android:background="@drawable/bg_transparent"
             android:textSize="18sp"
             android:text="ALL VERSES"/>
 
@@ -85,6 +87,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:textColor="@color/primary_dark"
+            android:background="@drawable/bg_transparent"
             android:textSize="18sp"
             android:text="CANCEL"/>
     </RelativeLayout>

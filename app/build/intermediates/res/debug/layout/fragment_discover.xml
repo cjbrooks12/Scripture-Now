@@ -37,7 +37,7 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="4dp"
                     android:hint="Search OpenBible.info"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:imeOptions="actionSearch" />
             </RelativeLayout>
         </LinearLayout>

@@ -29,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:src="@drawable/circle"/>
+                android:background="@drawable/circle"
+                android:src="@drawable/ic_launcher"/>
 
             <TextView
                 android:id="@+id/ref_icon_text"
@@ -114,7 +115,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:fontFamily="sans-serif-light"
-            android:layout_below="@+id/ref_icon_layout"
-            android:text="@string/first_john_ver_test" />
+            android:layout_below="@+id/ref_icon_layout"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/open_bible_verse_card.xml -->
