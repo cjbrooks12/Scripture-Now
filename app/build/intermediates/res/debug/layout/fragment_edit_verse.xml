@@ -53,7 +53,7 @@
         android:id="@+id/tagChipLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/stateSeekBar" />
+        android:layout_above="@+id/stateSeekBar"/>
 
     <SeekBar
         android:layout_width="wrap_content"

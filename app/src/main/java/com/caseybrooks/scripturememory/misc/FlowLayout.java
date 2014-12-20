@@ -1,144 +1,237 @@
 package com.caseybrooks.scripturememory.misc;
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Taken from Patrick Boos at https://gist.github.com/pboos/3057258 who modified
- * the original code by to Nishant Nair at
- * http://nishantvnair.wordpress.com/2010/09/28/flowlayout-in-android/
- */
+//https://gist.github.com/hzqtc/7940858
+
 public class FlowLayout extends ViewGroup {
+    public static final int DEFAULT_HORIZONTAL_SPACING = 5;
+    public static final int DEFAULT_VERTICAL_SPACING = 5;
+    private final int horizontalSpacing;
+    private final int verticalSpacing;
 
-    private final List<Integer> mLineHeights = new ArrayList<Integer>();
+    private final AdapterObserver observer = new AdapterObserver();
+    private List<RowMeasurement> currentRows = Collections.emptyList();
+    private ListAdapter adapter;
 
-    public static class LayoutParams extends ViewGroup.MarginLayoutParams {
+    private final List<OnClickListener> clickListeners = new LinkedList<OnClickListener>();
+    private final List<OnLongClickListener> longClickListeners = new LinkedList<OnLongClickListener>();
 
-        public final int horizontalSpacing;
-        public final int verticalSpacing;
-
-        /**
-         * @param horizontalSpacing Pixels between items, horizontally
-         * @param verticalSpacing Pixels between items, vertically
-         */
-        public LayoutParams(final int horizontalSpacing, final int verticalSpacing) {
-            super(0, 0);
-            this.horizontalSpacing = horizontalSpacing;
-            this.verticalSpacing = verticalSpacing;
+    private final OnClickListener clickListener = new OnClickListener() {
+        public void onClick(final View view) {
+            synchronized (clickListeners) {
+                for (final OnClickListener listener : clickListeners) {
+                    listener.onClick(view);
+                }
+            }
         }
-    }
+    };
 
-    public FlowLayout(final Context context) {
-        super(context);
-    }
+    private final OnLongClickListener longClickListener = new OnLongClickListener() {
+        public boolean onLongClick(final View view) {
+            synchronized (longClickListeners) {
+                for (final OnLongClickListener listener : longClickListeners) {
+                    listener.onLongClick(view);
+                }
+            }
+            return true;
+        }
+    };
 
     public FlowLayout(final Context context, final AttributeSet attrs) {
         super(context, attrs);
+        float density = getResources().getDisplayMetrics().density;
+        horizontalSpacing = (int) (4 * density);
+        verticalSpacing = (int) (4 * density);
+    }
+
+    public void setOnItemClickListener(final OnClickListener listener) {
+        synchronized (clickListeners) {
+            clickListeners.add(listener);
+        }
+    }
+
+    public void setOnItemLongClickListener(final OnLongClickListener listener) {
+        synchronized (longClickListeners) {
+            longClickListeners.add(listener);
+        }
     }
 
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
-        assert (MeasureSpec.getMode(widthMeasureSpec) != MeasureSpec.UNSPECIFIED);
+        final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        final int maxInternalWidth = MeasureSpec.getSize(widthMeasureSpec) - getHorizontalPadding();
+        final int maxInternalHeight = MeasureSpec.getSize(heightMeasureSpec) - getVerticalPadding();
+        final List<RowMeasurement> rows = new ArrayList<RowMeasurement>();
+        RowMeasurement currentRow = new RowMeasurement(maxInternalWidth, widthMode);
+        rows.add(currentRow);
+        for (final View child : getLayoutChildren()) {
+            final android.view.ViewGroup.LayoutParams childLayoutParams = child.getLayoutParams();
+            final int childWidthSpec = createChildMeasureSpec(childLayoutParams.width, maxInternalWidth, widthMode);
+            final int childHeightSpec = createChildMeasureSpec(childLayoutParams.height, maxInternalHeight, heightMode);
+            child.measure(childWidthSpec, childHeightSpec);
+            final int childWidth = child.getMeasuredWidth();
+            final int childHeight = child.getMeasuredHeight();
+            if (currentRow.wouldExceedMax(childWidth)) {
+                currentRow = new RowMeasurement(maxInternalWidth, widthMode);
+                rows.add(currentRow);
+            }
+            currentRow.addChildDimensions(childWidth, childHeight);
+        }
 
-        final int maxWidth = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft()
-                - getPaddingRight();
-        int width = 0;
-        int height = MeasureSpec.getSize(heightMeasureSpec) - getPaddingTop() - getPaddingBottom();
-        final int count = getChildCount();
-        int currentLineHeight = 0;
-        int currentHeight = 0;
-        mLineHeights.clear();
+        int longestRowWidth = 0;
+        int totalRowHeight = 0;
+        for (int index = 0; index < rows.size(); index++) {
+            final RowMeasurement row = rows.get(index);
+            totalRowHeight += row.getHeight();
+            if (index < rows.size() - 1) {
+                totalRowHeight += verticalSpacing;
+            }
+            longestRowWidth = Math.max(longestRowWidth, row.getWidth());
+        }
+        setMeasuredDimension(widthMode == MeasureSpec.EXACTLY ? MeasureSpec.getSize(widthMeasureSpec) : longestRowWidth
+                        + getHorizontalPadding(), heightMode == MeasureSpec.EXACTLY ? MeasureSpec.getSize(heightMeasureSpec)
+                        : totalRowHeight + getVerticalPadding());
+        currentRows = Collections.unmodifiableList(rows);
+    }
 
-        int xpos = getPaddingLeft();
-        int ypos = getPaddingTop();
-
-        int childHeightMeasureSpec;
-        if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST) {
-            childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST);
+    private int createChildMeasureSpec(final int childLayoutParam, final int max, final int parentMode) {
+        int spec;
+        if (childLayoutParam == LayoutParams.FILL_PARENT) {
+            spec = MeasureSpec.makeMeasureSpec(max, MeasureSpec.EXACTLY);
+        } else if (childLayoutParam == LayoutParams.WRAP_CONTENT) {
+            spec = MeasureSpec.makeMeasureSpec(max, parentMode == MeasureSpec.UNSPECIFIED ? MeasureSpec.UNSPECIFIED: MeasureSpec.AT_MOST);
         } else {
-            childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+            spec = MeasureSpec.makeMeasureSpec(childLayoutParam, MeasureSpec.EXACTLY);
         }
+        return spec;
+    }
 
-        for (int i = 0; i < count; i++) {
-            final View child = getChildAt(i);
-            if (child.getVisibility() != GONE) {
-                final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-                child.measure(MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.AT_MOST),
-                        childHeightMeasureSpec);
-                final int childw = child.getMeasuredWidth();
-                currentHeight = Math
-                        .max(currentLineHeight, child.getMeasuredHeight() + lp.verticalSpacing);
+    @Override
+    protected void onLayout(final boolean changed, final int leftPosition, final int topPosition,
+                    final int rightPosition, final int bottomPosition) {
+        final int widthOffset = getMeasuredWidth() - getPaddingRight();
+        int x = getPaddingLeft();
+        int y = getPaddingTop();
 
-                if (xpos + childw > maxWidth) {
-                    xpos = getPaddingLeft();
-                    ypos += currentLineHeight;
-                    mLineHeights.add(currentLineHeight);
-                    currentLineHeight = currentHeight;
-                } else {
-                    width = Math.max(xpos + childw, width);
-                    currentLineHeight = currentHeight;
+        final Iterator<RowMeasurement> rowIterator = currentRows.iterator();
+        RowMeasurement currentRow = rowIterator.next();
+        for (final View child : getLayoutChildren()) {
+            final int childWidth = child.getMeasuredWidth();
+            final int childHeight = child.getMeasuredHeight();
+            if (x + childWidth > widthOffset) {
+                x = getPaddingLeft();
+                y += currentRow.height + verticalSpacing;
+                if (rowIterator.hasNext()) {
+                    currentRow = rowIterator.next();
                 }
-
-                xpos += childw + lp.horizontalSpacing;
             }
+            child.layout(x, y, x + childWidth, y + childHeight);
+            x += childWidth + horizontalSpacing;
         }
-        mLineHeights.add(currentHeight);
-
-        if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.UNSPECIFIED) {
-            height = ypos + currentLineHeight;
-        } else if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST) {
-            if (ypos + currentLineHeight < height) {
-                height = ypos + currentLineHeight;
-            }
-        }
-
-        if (MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.EXACTLY) {
-            width = maxWidth;
-        }
-
-        setMeasuredDimension(width, height);
     }
 
-    @Override
-    protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
-        return new LayoutParams(1, 1); // default of 1px spacing
-    }
-
-    @Override
-    protected boolean checkLayoutParams(final ViewGroup.LayoutParams p) {
-        if (p instanceof LayoutParams) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    protected void onLayout(final boolean changed, final int l, final int t, final int r,
-                            final int b) {
-        final int count = getChildCount();
-        final int width = r - l;
-        int xpos = getPaddingLeft();
-        int ypos = getPaddingTop();
-        int currentLine = 0;
-
-        for (int i = 0; i < count; i++) {
-            final View child = getChildAt(i);
-            if (child.getVisibility() != GONE) {
-                final int childw = child.getMeasuredWidth();
-                final int childh = child.getMeasuredHeight();
-                final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-                if (xpos + childw > width) {
-                    xpos = getPaddingLeft();
-                    ypos += mLineHeights.get(currentLine++);
-                }
-                child.layout(xpos, ypos, xpos + childw, ypos + childh);
-                xpos += childw + lp.horizontalSpacing;
+    private List<View> getLayoutChildren() {
+        final List<View> children = new ArrayList<View>();
+        for (int index = 0; index < getChildCount(); index++) {
+            final View child = getChildAt(index);
+            if (child.getVisibility() != View.GONE) {
+                    children.add(child);
             }
+        }
+        return children;
+    }
+
+    protected int getVerticalPadding() {
+        return getPaddingTop() + getPaddingBottom();
+    }
+
+    protected int getHorizontalPadding() {
+        return getPaddingLeft() + getPaddingRight();
+    }
+
+    private final class RowMeasurement {
+        private final int maxWidth;
+        private final int widthMode;
+        private int width;
+        private int height;
+
+        public RowMeasurement(final int maxWidth, final int widthMode) {
+            this.maxWidth = maxWidth;
+            this.widthMode = widthMode;
+        }
+
+        public int getHeight() {
+            return height;
+        }
+
+        public int getWidth() {
+            return width;
+        }
+
+        public boolean wouldExceedMax(final int childWidth) {
+            return widthMode == MeasureSpec.UNSPECIFIED ? false : getNewWidth(childWidth) > maxWidth;
+        }
+
+        public void addChildDimensions(final int childWidth, final int childHeight) {
+            width = getNewWidth(childWidth);
+            height = Math.max(height, childHeight);
+        }
+
+        private int getNewWidth(final int childWidth) {
+            return width == 0 ? childWidth : width + horizontalSpacing + childWidth;
+        }
+    }
+
+    public ListAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void setAdapter(final ListAdapter adapter) {
+        if (this.adapter != null) {
+            this.adapter.unregisterDataSetObserver(observer);
+        }
+        this.adapter = adapter;
+        this.adapter.registerDataSetObserver(observer);
+
+        refresh();
+    }
+
+    public void refresh() {
+        removeAllViews();
+
+        for (int i = 0; i < adapter.getCount(); i++) {
+            final View view = adapter.getView(i, null, this);
+            view.setOnClickListener(clickListener);
+            view.setOnLongClickListener(longClickListener);
+            addView(view);
+        }
+
+        this.postInvalidate();
+        this.requestLayout();
+    }
+
+    public class AdapterObserver extends DataSetObserver {
+        @Override
+        public void onChanged() {
+            refresh();
+        }
+
+        @Override
+        public void onInvalidated() {
+
         }
     }
 }

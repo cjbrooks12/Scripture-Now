@@ -89,7 +89,6 @@ public class BibleVerseAdapter extends BaseAdapter {
         this.overflowClickListener = listener;
     }
 
-
     @Override
     public int getCount() {
         return items.size();

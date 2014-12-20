@@ -18,7 +18,6 @@ import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.DiscoverFragment;
-import com.caseybrooks.scripturememory.fragments.EditVerseFragment;
 import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.fragments.SettingsFragment;
@@ -207,8 +206,12 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 
     @Override
     public void toVerseEdit(int id) {
-        Fragment fragment = EditVerseFragment.newInstance(id);
-        setFragment(fragment);
+        Intent intent = new Intent(this, DetailActivity.class);
+        Bundle extras = new Bundle();
+        extras.putInt("KEY_ID", id);
+        intent.putExtras(extras);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, 0);
     }
 
     @Override
@@ -239,6 +242,5 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
     public void toHelp() {
         Fragment fragment = new HelpFragment();
         setFragment(fragment);
-
     }
 }

@@ -58,13 +58,10 @@ public class Util {
 
     public static class Drawables {
         public static Drawable circle(int color) {
-
-
-
             GradientDrawable circle = new GradientDrawable();
             circle.setColor(Color.WHITE);
             circle.setShape(GradientDrawable.OVAL);
-            circle.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+            circle.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN));
             circle.setSize(16, 16);
 
             return circle;
