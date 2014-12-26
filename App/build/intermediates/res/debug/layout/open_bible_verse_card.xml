@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/verse_list_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="@drawable/bg_transparent"
+    cardView:cardBackgroundColor="?attr/color_card"
+    cardView:cardCornerRadius="4dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="4dp" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:descendantFocusability="blocksDescendants">
+
+        <RelativeLayout
+            android:id="@+id/ref_icon_layout"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="4dp" >
+
+            <ImageView
+                android:id="@+id/ref_icon_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@drawable/circle"
+                android:src="@drawable/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/ref_icon_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="1Jn"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-light"
+                android:textSize="28sp"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/metadata_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_toRightOf="@+id/ref_icon_layout"
+            android:layout_toEndOf="@+id/ref_icon_layout"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="4dp" >
+
+            <TextView
+                android:id="@+id/reference"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/overflow"
+                android:layout_toStartOf="@+id/overflow"
+                android:fontFamily="sans-serif-light"
+                android:singleLine="true"
+                android:text="@string/first_john_ref_test"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/overflow"
+                android:layout_toStartOf="@+id/overflow"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="italic"
+                android:text="ESV"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/overflow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/bg_transparent"
+                android:src="?attr/ic_mtrl_overflow" />
+
+            <TextView
+                android:id="@+id/upVotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/version"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/overflow"
+                android:layout_toStartOf="@+id/overflow"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="italic"
+                android:text="ESV"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/verse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:fontFamily="sans-serif-light"
+            android:layout_below="@+id/ref_icon_layout"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/open_bible_verse_card.xml -->

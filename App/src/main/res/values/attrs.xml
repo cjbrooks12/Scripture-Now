@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="theme_name" format="string"/>
+
+    <!-- Colors -->
+    <attr name="color_background" format="color"/>
+    <attr name="color_card" format="color"/>
+    <attr name="color_toolbar" format="color"/>
+
+    <!-- ActionBar Icons -->
+    <attr name="ic_mtrl_overflow" format="reference" />
+    <attr name="ic_mtrl_search" format="reference" />
+    <attr name="ic_mtrl_new" format="reference" />
+
+</resources>

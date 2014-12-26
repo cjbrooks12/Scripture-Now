@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/context_input_card_method"
+        android:title="Input Method"/>
+    <item
+        android:id="@+id/context_input_card_lookup"
+        android:title="Lookup"/>
+</menu><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/menu/context_input_card.xml -->

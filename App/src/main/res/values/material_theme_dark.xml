@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- - - - - - - - - Theme Header Section - - - - - - - - -->
+    <style name="Theme.BaseDark" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary_accent</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+
+        <!-- ActionBar Icons -->
+
+        <!-- Colors -->
+        <item name="color_background">@color/background_dark</item>
+        <item name="color_card">@color/card_dark</item>
+        <item name="color_toolbar">@color/primary</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+
+        <item name="theme_name">Dark</item>
+
+        <item name="ic_mtrl_overflow">@drawable/abc_ic_menu_moreoverflow_mtrl_alpha</item>
+        <item name="ic_mtrl_search">@drawable/abc_ic_search_api_mtrl_alpha</item>
+        <item name="ic_mtrl_new">@drawable/abc_ic_search_api_mtrl_alpha</item>
+    </style>
+</resources>

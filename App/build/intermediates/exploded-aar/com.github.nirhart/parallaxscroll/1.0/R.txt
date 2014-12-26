@@ -1,0 +1,11 @@
+int attr alpha_factor 0x7f010001
+int attr circular_parallax 0x7f010004
+int attr inner_parallax_factor 0x7f010002
+int attr parallax_factor 0x7f010000
+int attr parallax_views_num 0x7f010003
+int[] styleable ParallaxScroll { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004 }
+int styleable ParallaxScroll_alpha_factor 1
+int styleable ParallaxScroll_circular_parallax 4
+int styleable ParallaxScroll_inner_parallax_factor 2
+int styleable ParallaxScroll_parallax_factor 0
+int styleable ParallaxScroll_parallax_views_num 3

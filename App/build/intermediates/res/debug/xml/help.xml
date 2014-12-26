@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:title="How To Use" >
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="About" >
+        <PreferenceScreen
+            android:title="About" >
+            <Preference
+                android:title="Changelog" >
+                <intent android:action="android.intent.action.VIEW"
+                        android:targetPackage="com.caseybrooks.scripturememory"
+                        android:targetClass="com.caseybrooks.scripturememory.activities.Changelog" />
+            </Preference>
+            <Preference
+                android:title="Licences" >
+                <intent android:action="android.intent.action.VIEW"
+                        android:targetPackage="com.caseybrooks.scripturememory"
+                        android:targetClass="com.caseybrooks.scripturememory.activities.About" />
+            </Preference>
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceScreen
+        android:title="Contact Developer">
+        <Preference
+            android:title="Report a Bug"
+            android:key="CONTACT_BUG" >
+        </Preference>
+        <Preference
+            android:title="Suggest a Feature"
+            android:key="CONTACT_FEATURE" >
+        </Preference>
+        <Preference
+            android:title="Leave a Comment"
+            android:key="CONTACT_COMMENT" >
+        </Preference>
+    </PreferenceScreen>
+
+    <Preference
+        android:title="Rate App"
+        android:key="RateThisApp" >
+    </Preference>
+
+    <Preference
+        android:title="Share"
+        android:key="ShareApp" >
+    </Preference>
+
+</PreferenceScreen><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/xml/help.xml -->
