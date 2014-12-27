@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
+import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
 import com.caseybrooks.scripturememory.fragments.TopicalBibleFragment;
 import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
@@ -24,7 +26,16 @@ import com.caseybrooks.scripturememory.fragments.SettingsFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 public class MainActivity extends ActionBarActivity implements NavigationCallbacks {
 //Data members
@@ -76,7 +87,52 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		boolean firstTime = MetaSettings.getFirstTime(context);
 		//If this is the first time opening the app, load a set of verses to memorize
 		if(firstTime) {
-			MetaSettings.putFirstTime(context, false);
+            try {
+                // initial verse packs are in /res/raw/, but we need them on the sdcard. We must copy
+                // all files from raw to the sdcard the first time we open the app
+                String state = Environment.getExternalStorageState();
+                if (Environment.MEDIA_MOUNTED.equals(state)) {
+                    String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
+                    File folder = new File(path);
+
+                    if(!folder.exists()) {
+                        folder.mkdirs();
+                    }
+                    if(folder.exists()) {
+                        Source[] domSource = new StreamSource[] {
+                                new StreamSource(getResources().openRawResource(R.raw.gods_holiness)),
+                                new StreamSource(getResources().openRawResource(R.raw.mans_depravity)),
+                                new StreamSource(getResources().openRawResource(R.raw.share_the_gospel)),
+                                new StreamSource(getResources().openRawResource(R.raw.the_command_of_christ)),
+                                new StreamSource(getResources().openRawResource(R.raw.the_person_of_christ)),
+                                new StreamSource(getResources().openRawResource(R.raw.the_work_of_christ))
+                        };
+
+                        File[] outputStream = new File[]{
+                                new File(path, "gods_holiness.xml"),
+                                new File(path, "mans_depravity.xml"),
+                                new File(path, "share_the_gospel.xml"),
+                                new File(path, "the_command_of_christ.xml"),
+                                new File(path, "the_person_of_christ.xml"),
+                                new File(path, "the_work_of_christ.xml")
+                        };
+
+                        TransformerFactory factory = TransformerFactory.newInstance();
+                        Transformer transformer = factory.newTransformer();
+
+                        for(int i = 0; i < outputStream.length; i++) {
+                            transformer.transform(domSource[i], new StreamResult(outputStream[i]));
+                        }
+                    }
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                //we have finished our first time setup, do not run this code again
+                MetaSettings.putFirstTime(context, false);
+            }
 		}
 	}
 
@@ -183,7 +239,8 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                 toDashboard();
                 break;
             case 1:
-                toDiscover();
+                if(item.childPosition == 0) toTopicalBible();
+                else toImportVerses();
                 break;
             case 2:
                 toVerseList(VerseListFragment.STATE, item.id);
@@ -229,8 +286,14 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
     }
 
     @Override
-    public void toDiscover() {
+    public void toTopicalBible() {
         Fragment fragment = TopicalBibleFragment.newInstance();
+        setFragment(fragment);
+    }
+
+    @Override
+    public void toImportVerses() {
+        Fragment fragment = ImportVersesFragment.newInstance();
         setFragment(fragment);
     }
 

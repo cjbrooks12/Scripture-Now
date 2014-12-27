@@ -106,7 +106,7 @@ public class NavigationDrawerFragment extends Fragment {
         List<String> listDataHeader = new ArrayList<String>();
         HashMap<String, List<Integer>> listDataChild = new HashMap<String, List<Integer>>();
 
-        // Adding child data
+        //set the headers for top-level navigation
         listDataHeader.add("Dashboard");
         listDataHeader.add("Discover");
         listDataHeader.add("Memorization State");
@@ -114,11 +114,17 @@ public class NavigationDrawerFragment extends Fragment {
         listDataHeader.add("Settings");
         listDataHeader.add("Help & Feedback");
 
-        // Adding child data
+        // set dashboard subitems (none)
         VerseDB db = new VerseDB(parentActivity).open();
         listDataChild.put(listDataHeader.get(0), new ArrayList<Integer>());
-        listDataChild.put(listDataHeader.get(1), new ArrayList<Integer>());
 
+        // set Discover subitems (Topical Bible and Import Verses)
+        List<Integer> discoverItems = new ArrayList<Integer>();
+        discoverItems.add(0);
+        discoverItems.add(1);
+        listDataChild.put(listDataHeader.get(1), discoverItems);
+
+        // set Memorization State subitems (each state, plus all current and all verses
         List<Integer> states = new ArrayList<Integer>();
         states.add(VerseDB.ALL_VERSES);
         states.add(VerseDB.CURRENT);
@@ -129,6 +135,8 @@ public class NavigationDrawerFragment extends Fragment {
         states.add(VerseDB.CURRENT_NONE);
         listDataChild.put(listDataHeader.get(2), states);
 
+        // set Tags subitems (each tag, plus untagged)
+        //TODO: set way to get all untagged verses as a list
         int[] tagIds = db.getAllTagIds();
         List<Integer> tags = new ArrayList<Integer>();
         if(tagIds != null && tagIds.length > 0) {
@@ -138,8 +146,11 @@ public class NavigationDrawerFragment extends Fragment {
         }
         listDataChild.put(listDataHeader.get(3), tags);
 
-        List<Integer> settings = new ArrayList<Integer>();
-        listDataChild.put(listDataHeader.get(4), settings);
+        // set Settings subitems (none)
+        listDataChild.put(listDataHeader.get(4), new ArrayList<Integer>());
+
+        //set Help subitems (none)
+        listDataChild.put(listDataHeader.get(5), new ArrayList<Integer>());
 
         db.close();
 
@@ -152,8 +163,6 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-
-
                 selectItem((NavListItem)parent.getExpandableListAdapter().getChild(groupPosition, childPosition));
 
                 return false;
@@ -164,7 +173,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
-                if(groupPosition == 0 || groupPosition == 1 || groupPosition == 4 || groupPosition == 5) {
+                if(groupPosition == 0 || groupPosition == 4 || groupPosition == 5) {
                     NavListItem item = new NavListItem();
                     item.name = (String)parent.getExpandableListAdapter().getGroup(groupPosition);
                     item.groupPosition = groupPosition;
@@ -225,7 +234,14 @@ public class NavigationDrawerFragment extends Fragment {
                 item.name = headerItems.get(groupPosition);
             }
             else if(groupPosition == 1) {
-                item.name = headerItems.get(groupPosition);
+                if(childPosition == 0) {
+                    item.name = "Topical Bible";
+                    item.color = getResources().getColor(R.color.open_bible_brown);
+                }
+                else {
+                    item.name = "Import Verses";
+                    item.color = getResources().getColor(R.color.all_verses);
+                }
             }
             else if(groupPosition == 2) {
                 item.name = db.getStateName(item.id);
@@ -270,7 +286,12 @@ public class NavigationDrawerFragment extends Fragment {
             tagCircle.setBackgroundDrawable(Util.Drawables.circle(item.color));
 
             TextView tagCircleCount = (TextView) convertView.findViewById(R.id.subitemCircleText);
-            tagCircleCount.setText(Integer.toString(item.count));
+            if(groupPosition == 1) {
+                tagCircleCount.setText("");
+            }
+            else {
+                tagCircleCount.setText(Integer.toString(item.count));
+            }
 
             return convertView;
         }

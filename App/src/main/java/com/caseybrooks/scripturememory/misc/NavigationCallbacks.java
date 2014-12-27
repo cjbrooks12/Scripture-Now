@@ -8,7 +8,8 @@ public interface NavigationCallbacks {
     void toVerseDetail(int id);
     void toVerseEdit(int id);
     void toDashboard();
-    void toDiscover();
+    void toTopicalBible();
+    void toImportVerses();
     void toSettings();
     void toHelp();
 }

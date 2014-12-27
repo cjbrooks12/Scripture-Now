@@ -54,8 +54,8 @@ public class TopicalBibleFragment extends Fragment {
     NavigationCallbacks mCallbacks;
     ProgressBar progress;
 
-    public static TopicalBibleFragment newInstance() {
-        TopicalBibleFragment fragment = new TopicalBibleFragment();
+    public static Fragment newInstance() {
+        Fragment fragment = new TopicalBibleFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -142,7 +142,6 @@ public class TopicalBibleFragment extends Fragment {
                 new SearchVerseAsync().execute(s);
             }
         });
-
 
         return view;
     }

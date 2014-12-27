@@ -86,7 +86,12 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
     }
 
     @Override
-    public void toDiscover() {
+    public void toTopicalBible() {
+
+    }
+
+    @Override
+    public void toImportVerses() {
 
     }
 
