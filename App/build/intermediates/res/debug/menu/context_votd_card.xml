@@ -16,4 +16,4 @@
     <item
         android:id="@+id/context_votd_card_browser"
         android:title="Open In Browser"/>
-</menu><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/menu/context_votd_card.xml -->
+</menu><!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/menu/context_votd_card.xml -->

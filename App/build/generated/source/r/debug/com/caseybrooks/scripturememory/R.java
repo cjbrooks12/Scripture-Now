@@ -1618,7 +1618,7 @@ containing a value of this type.
     }
     public static final class id {
         public static final int MainLayout=0x7f0b0041;
-        public static final int a=0x7f0b006f;
+        public static final int a=0x7f0b0077;
         public static final int about_app_icon=0x7f0b0043;
         public static final int about_app_title=0x7f0b0042;
         public static final int about_developer=0x7f0b0044;
@@ -1679,8 +1679,8 @@ containing a value of this type.
         public static final int description=0x7f0b008f;
         public static final int dialog=0x7f0b001d;
         public static final int disableHome=0x7f0b000c;
-        public static final int discoverEditText=0x7f0b0070;
-        public static final int discoverVerseLayout=0x7f0b006e;
+        public static final int discoverEditText=0x7f0b0078;
+        public static final int discoverVerseLayout=0x7f0b0076;
         public static final int drawer_layout=0x7f0b004c;
         public static final int dropdown=0x7f0b001e;
         public static final int editFragmentContainer=0x7f0b004b;
@@ -1688,7 +1688,7 @@ containing a value of this type.
         public static final int editVerse=0x7f0b0062;
         public static final int edit_query=0x7f0b0035;
         public static final int edit_text=0x7f0b0093;
-        public static final int editableFieldsLayout=0x7f0b0072;
+        public static final int editableFieldsLayout=0x7f0b006d;
         public static final int end=0x7f0b0016;
         public static final int expand_activities_button=0x7f0b0024;
         public static final int expandedDisplayOptionsGroup=0x7f0b0056;
@@ -1724,7 +1724,7 @@ containing a value of this type.
         public static final int middle=0x7f0b0017;
         public static final int navHeaderRef=0x7f0b0087;
         public static final int navListHeader=0x7f0b0089;
-        public static final int navListView=0x7f0b0079;
+        public static final int navListView=0x7f0b0074;
         public static final int navigation_drawer_container=0x7f0b004d;
         public static final int never=0x7f0b001b;
         public static final int none=0x7f0b000e;
@@ -1734,8 +1734,8 @@ containing a value of this type.
         public static final int notificationVerseLayout=0x7f0b0050;
         public static final int overflow=0x7f0b007f;
         public static final int overflowButton=0x7f0b004f;
-        public static final int parallax_scrollview=0x7f0b006d;
-        public static final int progress=0x7f0b0071;
+        public static final int parallax_scrollview=0x7f0b0075;
+        public static final int progress=0x7f0b0079;
         public static final int progress_circular=0x7f0b0005;
         public static final int progress_horizontal=0x7f0b0006;
         public static final int radio=0x7f0b002d;
@@ -1748,7 +1748,7 @@ containing a value of this type.
         public static final int ref_icon_background=0x7f0b007b;
         public static final int ref_icon_layout=0x7f0b007a;
         public static final int ref_icon_text=0x7f0b007c;
-        public static final int reference=0x7f0b0074;
+        public static final int reference=0x7f0b006f;
         public static final int rtl=0x7f0b0014;
         public static final int save_edit_button=0x7f0b0094;
         public static final int searchButton=0x7f0b0060;
@@ -1767,13 +1767,13 @@ containing a value of this type.
         public static final int showHome=0x7f0b0010;
         public static final int showTitle=0x7f0b0011;
         public static final int split_action_bar=0x7f0b0007;
-        public static final int stateSeekBar=0x7f0b0078;
+        public static final int stateSeekBar=0x7f0b0073;
         public static final int subitemCircle=0x7f0b008a;
         public static final int subitemCircleText=0x7f0b008b;
         public static final int subitemText=0x7f0b008c;
         public static final int submit_area=0x7f0b003e;
         public static final int tabMode=0x7f0b000b;
-        public static final int tagChipLayout=0x7f0b0073;
+        public static final int tagChipLayout=0x7f0b006e;
         public static final int tags_layout=0x7f0b0081;
         public static final int textReference=0x7f0b005e;
         public static final int textVerse=0x7f0b0061;
@@ -1781,10 +1781,10 @@ containing a value of this type.
         public static final int title=0x7f0b0029;
         public static final int up=0x7f0b0008;
         public static final int upVotes=0x7f0b008d;
-        public static final int updateReference=0x7f0b0075;
-        public static final int updateVerse=0x7f0b0077;
+        public static final int updateReference=0x7f0b0070;
+        public static final int updateVerse=0x7f0b0072;
         public static final int useLogo=0x7f0b0012;
-        public static final int verse=0x7f0b0076;
+        public static final int verse=0x7f0b0071;
         public static final int verseSpinner=0x7f0b009b;
         public static final int verse_list_card_view=0x7f0b004e;
         public static final int version=0x7f0b0080;
@@ -1843,9 +1843,9 @@ containing a value of this type.
         public static final int card_votd=0x7f03001e;
         public static final int chip_tag_full=0x7f03001f;
         public static final int fragment_dashboard=0x7f030020;
-        public static final int fragment_discover=0x7f030021;
-        public static final int fragment_edit_verse=0x7f030022;
-        public static final int fragment_navigation_drawer=0x7f030023;
+        public static final int fragment_edit_verse=0x7f030021;
+        public static final int fragment_navigation_drawer=0x7f030022;
+        public static final int fragment_topical_bible=0x7f030023;
         public static final int list_card_new=0x7f030024;
         public static final int list_changelog=0x7f030025;
         public static final int nav_drawer_header=0x7f030026;

@@ -21,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -376,7 +378,16 @@ public class EditVerseFragment extends Fragment {
 
         final AlertDialog dialog = builder.create();
 
-        final EditText edit = (EditText) view.findViewById(R.id.edit_text);
+        final AutoCompleteTextView edit = (AutoCompleteTextView) view.findViewById(R.id.edit_text);
+        VerseDB db = new VerseDB(context).open();
+
+        String[] tagSuggestions = db.getAllTagNames();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                context,
+                android.R.layout.simple_list_item_1,
+                tagSuggestions
+        );
+        edit.setAdapter(adapter);
 
         TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {

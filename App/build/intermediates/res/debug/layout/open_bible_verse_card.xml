@@ -117,4 +117,4 @@
             android:fontFamily="sans-serif-light"
             android:layout_below="@+id/ref_icon_layout"/>
     </RelativeLayout>
-</android.support.v7.widget.CardView><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/open_bible_verse_card.xml -->
+</android.support.v7.widget.CardView><!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/layout/open_bible_verse_card.xml -->

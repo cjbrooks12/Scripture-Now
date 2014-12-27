@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
-import com.caseybrooks.scripturememory.fragments.DiscoverFragment;
+import com.caseybrooks.scripturememory.fragments.TopicalBibleFragment;
 import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.fragments.SettingsFragment;
@@ -50,15 +50,14 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
         setSupportActionBar(tb);
 
         NavigationDrawerFragment mNavigationDrawerFragment = new NavigationDrawerFragment();
+        mNavigationDrawerFragment.setUp(this, tb,  findViewById(R.id.navigation_drawer_container),
+                (DrawerLayout) findViewById(R.id.drawer_layout));
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 //put fragment in navigation drawer
                 .add(R.id.navigation_drawer_container, mNavigationDrawerFragment)
                 .commit();
-
-        mNavigationDrawerFragment.setUp(tb,  findViewById(R.id.navigation_drawer_container),
-                (DrawerLayout) findViewById(R.id.drawer_layout));
 
                 //put DashboardFragment in main content
         fragmentManager.beginTransaction()
@@ -231,7 +230,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 
     @Override
     public void toDiscover() {
-        Fragment fragment = DiscoverFragment.newInstance();
+        Fragment fragment = TopicalBibleFragment.newInstance();
         setFragment(fragment);
     }
 

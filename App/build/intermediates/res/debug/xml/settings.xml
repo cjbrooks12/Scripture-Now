@@ -58,4 +58,4 @@
             android:title="Import"
             android:key="Import" />
     </PreferenceCategory>
-</PreferenceScreen><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/xml/settings.xml -->
+</PreferenceScreen><!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/xml/settings.xml -->

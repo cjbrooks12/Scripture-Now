@@ -29,7 +29,7 @@
                     android:textSize="24sp"
                     android:textColor="@color/text_dark"
                     android:text="What does the Bible say about..."/>
-                <EditText
+                <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/discoverEditText"
@@ -38,8 +38,10 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/text_dark"
+                    style="@style/Base.Widget.AppCompat.EditText"
                     android:hint="Search OpenBible.info"
                     android:textColorHint="@color/text_dark"
+                    android:completionThreshold="3"
                     android:inputType="textCapWords"
                     android:imeOptions="actionSearch" />
             </RelativeLayout>
@@ -55,4 +57,4 @@
         android:indeterminate="false"
         android:max="10"/>
 </FrameLayout>
-<!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/fragment_discover.xml -->
+<!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/layout/fragment_topical_bible.xml -->

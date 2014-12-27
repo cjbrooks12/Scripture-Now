@@ -338,11 +338,12 @@ public class NavigationDrawerFragment extends Fragment {
      *
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    public void setUp(
+    public void setUp(ActionBarActivity activity,
                     Toolbar tb,
                     View parentContainer,
                     DrawerLayout drawerLayout) {
         mFragmentContainerView = parentContainer;
+        this.parentActivity = activity;
         mDrawerLayout = drawerLayout;
 
         // set a custom shadow that overlays the main content when the drawer opens
@@ -357,7 +358,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerToggle = new ActionBarDrawerToggle(
                 parentActivity,                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
-                tb,             /* nav drawer image to replace 'Up' caret */
+                tb,             /* Toolbar to host navigation in */
                 R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
                 R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
         ) {

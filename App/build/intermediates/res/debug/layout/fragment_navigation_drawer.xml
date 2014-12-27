@@ -14,4 +14,4 @@
         android:dividerHeight="0dp"
         android:groupIndicator="@null"
         app:parallax_factor="1.5" />
-</LinearLayout><!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/fragment_navigation_drawer.xml -->
+</LinearLayout><!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/layout/fragment_navigation_drawer.xml -->

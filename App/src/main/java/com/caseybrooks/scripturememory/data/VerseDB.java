@@ -373,6 +373,35 @@ public class VerseDB {
         return tagIds;
     }
 
+    public String[] getAllTagNames() {
+        String selectQuery =
+                "SELECT *" +
+                        " FROM " + TABLE_TAGS;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null && c.getCount() > 0) c.moveToFirst();
+        else return null;
+
+        ArrayList<String> tagNames = new ArrayList<String>();
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            int tagCount = c.getInt(c.getColumnIndex(KEY_TAGS_ID));
+
+            if(getTagCount(tagCount) > 0) {
+                tagNames.add(c.getString(c.getColumnIndex(KEY_TAGS_TAG)));
+            }
+        }
+
+        Collections.sort(tagNames);
+
+        String[] tagNamesArray = new String[tagNames.size()];
+        for(int i = 0; i < tagNames.size(); i++) {
+            tagNamesArray[i] = tagNames.get(i);
+        }
+
+        c.close();
+        return tagNamesArray;
+    }
+
     //Get information about tags
     public String getTagName(long tag_id) {
         String selectQuery =

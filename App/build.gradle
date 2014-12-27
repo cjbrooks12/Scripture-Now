@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '21.1.1'
+    buildToolsVersion '21.1.2'
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 21
     }
     signingConfigs {
         release {
-            storeFile file('C:/Users/Casey/Documents/android/scripturememory/scripturememory_keystore')
+            storeFile file('/home/casey/Desktop/scripturememory/App')
             keyAlias 'scripturememory_keystore'
             storePassword 'TwXlvX08'
             keyPassword 'TwXlvX08'
@@ -22,8 +22,7 @@ android {
     }
     productFlavors {
     }
-    sourceSets {
-        main {
+    sourceSets {       main {
             java.srcDirs = ['src/main/java']
         }
     }

@@ -61,4 +61,4 @@
         android:layout_below="@+id/widget_votd_reference"
         android:text="@string/verse" />
 </RelativeLayout>
-<!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/widget_votd.xml -->
+<!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/layout/widget_votd.xml -->

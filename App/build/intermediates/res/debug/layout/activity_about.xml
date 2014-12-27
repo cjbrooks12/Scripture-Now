@@ -71,4 +71,4 @@ android:orientation="vertical" >
         android:text="@string/credits_esv" />
 </RelativeLayout>
 </ScrollView>
-<!-- From: file:/C:/Users/Casey/Desktop/github/scripturememory/App/src/main/res/layout/activity_about.xml -->
+<!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/layout/activity_about.xml -->

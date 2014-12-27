@@ -12,11 +12,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -37,23 +42,26 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
-public class DiscoverFragment extends Fragment {
+public class TopicalBibleFragment extends Fragment {
     Context context;
 
-    EditText searchEditText;
+    AutoCompleteTextView searchEditText;
+    ArrayAdapter<String> suggestionsAdapter;
+
     LinearLayout verseLayout;
     NavigationCallbacks mCallbacks;
     ProgressBar progress;
 
-    public static DiscoverFragment newInstance() {
-        DiscoverFragment fragment = new DiscoverFragment();
+    public static TopicalBibleFragment newInstance() {
+        TopicalBibleFragment fragment = new TopicalBibleFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public DiscoverFragment() {
+    public TopicalBibleFragment() {
         // Required empty public constructor
     }
 
@@ -78,7 +86,7 @@ public class DiscoverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_discover, container, false);
+        View view = inflater.inflate(R.layout.fragment_topical_bible, container, false);
 
         this.context = getActivity();
 
@@ -90,13 +98,13 @@ public class DiscoverFragment extends Fragment {
         progress.getProgressDrawable().setColorFilter(filter);
         progress.getIndeterminateDrawable().setColorFilter(filter);
 
-        searchEditText = (EditText) view.findViewById(R.id.discoverEditText);
+        searchEditText = (AutoCompleteTextView) view.findViewById(R.id.discoverEditText);
         searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String text = searchEditText.getText().toString();
-                    if(text.length() > 1) {
+                    if (text.length() > 1) {
                         new SearchVerseAsync().execute(text);
                         return true;
                     }
@@ -104,6 +112,37 @@ public class DiscoverFragment extends Fragment {
                 return false;
             }
         });
+        suggestionsAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1);
+        searchEditText.setAdapter(suggestionsAdapter);
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            Character searchedChar;
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i2, int i3) {
+                if(searchedChar == null || (s.length() > 0 && s.charAt(0) != searchedChar)) {
+                    new GetSuggestionsAsync().execute(s.charAt(0));
+                    searchedChar = s.charAt(0);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        searchEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String s = suggestionsAdapter.getItem(position);
+                new SearchVerseAsync().execute(s);
+            }
+        });
+
 
         return view;
     }
@@ -112,6 +151,62 @@ public class DiscoverFragment extends Fragment {
         Passage passage;
         String searchTerm;
         int upVotes;
+    }
+
+    private class GetSuggestionsAsync extends AsyncTask<Character, Void, Void> {
+        String message;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.setVisibility(View.VISIBLE);
+            progress.setIndeterminate(true);
+            progress.setProgress(0);
+            suggestionsAdapter.clear();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progress.setVisibility(View.GONE);
+            int threshold = searchEditText.getThreshold();
+            searchEditText.setThreshold(1);
+            searchEditText.showDropDown();
+            searchEditText.setThreshold(threshold);
+        }
+
+        @Override
+        protected Void doInBackground(Character... params) {
+            try {
+                if(Util.isConnected(context)) {
+                    for(Character character : params) {
+                        String query = "http://www.openbible.info/topics/" + character;
+
+                        Document doc = Jsoup.connect(query).get();
+                        Elements passages = doc.select("li");
+
+                        for (Element element : passages) {
+
+                            suggestionsAdapter.add(element.text());
+                            suggestionsAdapter.notifyDataSetChanged();
+                        }
+                    }
+                    message = "Finished";
+                }
+                else {
+                    message = "Cannot search, no internet connection";
+                }
+            }
+            catch(IOException e2) {
+                message = "Error while retrieving verse";
+            }
+
+
+
+
+
+            return null;
+        }
     }
 
     private class SearchVerseAsync extends AsyncTask<String, Data, Void> {
