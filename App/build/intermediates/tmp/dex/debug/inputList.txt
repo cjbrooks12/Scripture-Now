@@ -1,11 +1,11 @@
 /home/casey/Desktop/scripturememory/App/build/intermediates/classes/debug
-/home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-2cb1c5652fa3c1e06d546317be380caccd054d52.jar
+/home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-77286b450018c765668e673a0baa91c48ed88e84.jar
 /home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/classes-5f208e7808b66902554d0c70f4893096585d6d59.jar
 /home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/classes-929e9f45d82474ff9a586581547308ec08ddffa9.jar
 /home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/classes-1d9b85245dcc67490f69f58830901a6cad5684fe.jar
 /home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/classes-29698b0370f34596acf8b63cfc35381d021e49a1.jar
 /home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-1abda17340f95c23eca63cbc25f0c657c9c750d5.jar
 /home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/classes-53002114a132ab6f05476145e29e8566ae0f1dd9.jar
-/home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/jsoup-1.7.2-e9028a76d8f1aa798fe18b4583763377b473f00c.jar
+/home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/jsoup-1.7.2-08fa3b4e8be819ec147261388c0bc61d55ad235b.jar
 /home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/classes-bb8a4f13bdb7024936ecfe6ca4ce281bc2e1ae9e.jar
 /home/casey/Desktop/scripturememory/App/build/intermediates/pre-dexed/debug/classes-1e8502ee020a4977a194511e73827675260ab3b3.jar

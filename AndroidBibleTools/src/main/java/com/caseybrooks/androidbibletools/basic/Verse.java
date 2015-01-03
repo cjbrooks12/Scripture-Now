@@ -1,5 +1,6 @@
 package com.caseybrooks.androidbibletools.basic;
 
+import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.enumeration.Book;
 
 import org.jsoup.Jsoup;
@@ -108,7 +109,7 @@ public class Verse extends AbstractVerse {
         text += formatter.onFormatText(verseText);
         text += formatter.onPostFormat();
 
-        return text;
+        return text.trim();
     }
 
 //Comparison methods for sorting
@@ -130,45 +131,45 @@ public class Verse extends AbstractVerse {
         //get the position of each book as an integer so we can work with it
         int aBook = -1, bBook = -1;
         for(int i = 0; i < Book.values().length; i++) {
-            if(Book.values()[i] == lhs.getReference().book) aBook = i;
-            if(Book.values()[i] == rhs.getReference().book) bBook = i;
+            if(Book.values()[i] == lhs.reference.book) aBook = i;
+            if(Book.values()[i] == rhs.reference.book) bBook = i;
         }
 
         if(aBook - bBook == 1) {
-            if((lhs.getReference().chapter == 1 && lhs.getReference().verses.get(0) == 1) &&
-               (rhs.getReference().chapter == rhs.getReference().book.numChapters() &&
-                 (rhs.getReference().verses.get(0) == rhs.getReference().book.numVersesInChapter(rhs.getReference().chapter)))) return 1;
+            if((lhs.reference.chapter == 1 && lhs.reference.verses.get(0) == 1) &&
+               (rhs.reference.chapter == rhs.reference.book.numChapters() &&
+                 (rhs.reference.verses.get(0) == rhs.reference.book.numVersesInChapter(rhs.reference.chapter)))) return 1;
             else return 4;
         }
         else if(aBook - bBook == -1) {
-            if((rhs.getReference().chapter == 1 && rhs.getReference().verses.get(0) == 1) &&
-               (lhs.getReference().chapter == lhs.getReference().book.numChapters() &&
-                 (lhs.getReference().verses.get(0) == lhs.getReference().book.numVersesInChapter(lhs.getReference().chapter)))) return -1;
+            if((rhs.reference.chapter == 1 && rhs.reference.verses.get(0) == 1) &&
+               (lhs.reference.chapter == lhs.reference.book.numChapters() &&
+                 (lhs.reference.verses.get(0) == lhs.reference.book.numVersesInChapter(lhs.reference.chapter)))) return -1;
             else return -4;
         }
         else if(aBook > bBook) return 4;
         else if(aBook < bBook) return -4;
         else {
             //same book
-            if(lhs.getReference().chapter - rhs.getReference().chapter == 1) {
-                if((lhs.getReference().verses.get(0) == 1) &&
-                   (rhs.getReference().verses.get(0) == rhs.getReference().book.numVersesInChapter(rhs.getReference().chapter))) return 1;
+            if(lhs.reference.chapter - rhs.reference.chapter == 1) {
+                if((lhs.reference.verses.get(0) == 1) &&
+                   (rhs.reference.verses.get(0) == rhs.reference.book.numVersesInChapter(rhs.reference.chapter))) return 1;
                 else return 3;
             }
-            if(lhs.getReference().chapter - rhs.getReference().chapter == -1) {
-                if((rhs.getReference().verses.get(0) == 1) &&
-                   (lhs.getReference().verses.get(0) == lhs.getReference().book.numVersesInChapter(lhs.getReference().chapter))) return -1;
+            if(lhs.reference.chapter - rhs.reference.chapter == -1) {
+                if((rhs.reference.verses.get(0) == 1) &&
+                   (lhs.reference.verses.get(0) == lhs.reference.book.numVersesInChapter(lhs.reference.chapter))) return -1;
                 else return -3;
             }
-            else if(lhs.getReference().chapter > rhs.getReference().chapter) return 3;
-            else if(lhs.getReference().chapter < rhs.getReference().chapter) return -3;
+            else if(lhs.reference.chapter > rhs.reference.chapter) return 3;
+            else if(lhs.reference.chapter < rhs.reference.chapter) return -3;
             else {
                 //same chapter
-                if(lhs.getReference().verses.get(0) - rhs.getReference().verses.get(0) == 1) return 1;
-                else if(lhs.getReference().verses.get(0) - rhs.getReference().verses.get(0) == -1) return -1;
-                else if(lhs.getReference().verses.get(0) > rhs.getReference().verses.get(0)) return 2;
-                else if(lhs.getReference().verses.get(0) < rhs.getReference().verses.get(0)) return -2;
-                else return 0; //lhs.getReference().verses.get(0) == rhs.getReference().verses.get(0)
+                if(lhs.reference.verses.get(0) - rhs.reference.verses.get(0) == 1) return 1;
+                else if(lhs.reference.verses.get(0) - rhs.reference.verses.get(0) == -1) return -1;
+                else if(lhs.reference.verses.get(0) > rhs.reference.verses.get(0)) return 2;
+                else if(lhs.reference.verses.get(0) < rhs.reference.verses.get(0)) return -2;
+                else return 0; //lhs.reference.verses.get(0) == rhs.reference.verses.get(0)
             }
         }
     }
@@ -178,9 +179,9 @@ public class Verse extends AbstractVerse {
         Verse lhs = this;
         Verse rhs = (Verse) verse;
 
-        return (lhs.getReference().book == rhs.getReference().book) &&
-               (lhs.getReference().chapter == rhs.getReference().chapter) &&
-               (lhs.getReference().verses.get(0) == rhs.getReference().verses.get(0));
+        return (lhs.reference.book == rhs.reference.book) &&
+               (lhs.reference.chapter == rhs.reference.chapter) &&
+               (lhs.reference.verses.get(0) == rhs.reference.verses.get(0));
     }
 
 //Retrieve verse from the internet

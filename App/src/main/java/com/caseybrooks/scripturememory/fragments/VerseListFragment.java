@@ -19,12 +19,16 @@ import android.widget.SpinnerAdapter;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
+import com.caseybrooks.androidbibletools.data.MetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
+
+import java.util.Collections;
+import java.util.Comparator;
 
 public class VerseListFragment extends ListFragment {
 //enums for creating new fragment
@@ -158,17 +162,25 @@ public class VerseListFragment extends ListFragment {
         }
 		db.close();
 
+        Comparator comparator;
+
         switch(MetaSettings.getSortBy(context)) {
             case 0:
-                verses.sortByID();
+                comparator = new MetaData.Comparator("TIME_CREATED");
                 break;
             case 1:
-                verses.sort();
+                comparator = new MetaData.Comparator(MetaData.Comparator.KEY_REFERENCE);
                 break;
             case 2:
-                verses.sortAlphabetical();
+                comparator = new MetaData.Comparator(MetaData.Comparator.KEY_REFERENCE_ALPHABETICAL);
+                break;
+            case 3:
+            default:
+                comparator = new MetaData.Comparator("ID");
                 break;
         }
+
+        Collections.sort(verses.verses, comparator);
 
 		bibleVerseAdapter = new BibleVerseAdapter(context, verses);
         bibleVerseAdapter.setOnMultiSelectListener(iconClick);

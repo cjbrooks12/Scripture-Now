@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.search.VerseOfTheDay;
 
 import java.util.Calendar;
@@ -30,7 +31,7 @@ public class VOTDService {
             //if the current verse is not today, it needs to get updated
             Calendar today = Calendar.getInstance();
             Calendar current = Calendar.getInstance();
-            current.setTimeInMillis(mostRecent.getMillis());
+            current.setTimeInMillis(mostRecent.getMetaData().getLong(DefaultMetaData.TIME_CREATED));
 
             boolean isCurrent =
                 (today.get(Calendar.ERA) == current.get(Calendar.ERA)
@@ -69,7 +70,7 @@ public class VOTDService {
 
                 if(passage != null) {
                     passage.addTag("VOTD");
-                    passage.setState(VerseDB.VOTD);
+                    passage.getMetaData().putInt(DefaultMetaData.STATE, VerseDB.VOTD);
 
                     VerseDB db = new VerseDB(context).open();
                     db.insertVerse(passage);

@@ -1,5 +1,6 @@
 package com.caseybrooks.androidbibletools.basic;
 
+import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 
 import java.io.IOException;
@@ -47,14 +48,6 @@ public class Passage extends AbstractVerse {
 
 //Setters and Getters
 //------------------------------------------------------------------------------
-    @Override
-    public AbstractVerse setVersion(Version version) {
-        super.setVersion(version);
-
-        for(Verse item : verses) item.setVersion(version);
-        return this;
-    }
-
 	public Passage setText(String text) {
         //parse input string and extract any tags, denoted as standard hastags
         Matcher m = hashtag.matcher(text);
@@ -92,7 +85,7 @@ public class Passage extends AbstractVerse {
                 }
             }
 
-            return text;
+            return text.trim();
         }
         else {
             String text = "";

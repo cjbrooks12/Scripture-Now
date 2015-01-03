@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -175,8 +176,8 @@ public class VerseInputCard extends FrameLayout {
                     Passage newVerse = new Passage(editReference.getText().toString());
                     newVerse.setText(editVerse.getText().toString());
                     newVerse.setVersion(MetaSettings.getBibleVersion(context));
-                    newVerse.setState(1);
-                    newVerse.setMillis(Calendar.getInstance().getTimeInMillis());
+                    newVerse.getMetaData().putInt(DefaultMetaData.STATE, 1);
+                    newVerse.getMetaData().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
                     VerseDB db = new VerseDB(context);
                     db.open();
                     db.insertVerse(newVerse);

@@ -28,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
@@ -263,7 +264,7 @@ public class TopicalBibleFragment extends Fragment {
                         public void onClick(View v) {
                             VerseDB db = new VerseDB(context).open();
                             Passage passage = currentItem.passage;
-                            passage.setState(VerseDB.CURRENT_NONE);
+                            passage.getMetaData().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
                             passage.addTag(currentItem.searchTerm);
                             db.insertVerse(passage);
                             dialog.cancel();

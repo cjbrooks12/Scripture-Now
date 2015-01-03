@@ -16,10 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.caseybrooks.androidbibletools.basic.DefaultFormatter;
-import com.caseybrooks.androidbibletools.basic.Formatter;
+import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
+import com.caseybrooks.androidbibletools.data.Formatter;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -129,8 +130,7 @@ public class NotificationVerseCard extends FrameLayout {
 
         if(passage != null) {
             passage.setFormatter(formatter);
-            String s = passage.getReference().toString();
-            ref.setText(s);
+            ref.setText(passage.getReference().toString());
             ver.setText(passage.getText());
         }
         else {
@@ -140,7 +140,7 @@ public class NotificationVerseCard extends FrameLayout {
                 Verses<Passage> allCurrent = db.getStateVerses(i);
                 if (allCurrent.size() > 0) {
                     passage = allCurrent.get(0);
-                    MetaSettings.putVerseId(context, (int) passage.getId());
+                    MetaSettings.putVerseId(context, (int) passage.getMetaData().getInt(DefaultMetaData.ID));
                     ref.setText(passage.getReference().toString());
                     ver.setText(passage.getText());
                     break;
@@ -210,7 +210,7 @@ public class NotificationVerseCard extends FrameLayout {
 	        case R.id.context_notification_card_edit:
                 try {
                     mCallbacks = (NavigationCallbacks) context;
-                    mCallbacks.toVerseEdit((int)passage.getId());
+                    mCallbacks.toVerseEdit(passage.getMetaData().getInt(DefaultMetaData.ID));
                 } catch (ClassCastException e) {
                     e.printStackTrace();
                 }

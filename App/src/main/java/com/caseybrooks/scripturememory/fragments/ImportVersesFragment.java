@@ -104,17 +104,25 @@ public class ImportVersesFragment extends Fragment {
         File f = new File(path);
         File file[] = f.listFiles();
         for (int i=0; i < file.length; i++) {
-            View itemView = LayoutInflater.from(context).inflate(R.layout.open_bible_verse_card, null);
+            try {
+                Document doc = Jsoup.parse(file[i], null);
 
-            TextView reference = (TextView) itemView.findViewById(R.id.reference);
-            TextView version = (TextView) itemView.findViewById(R.id.version);
-            TextView verse = (TextView) itemView.findViewById(R.id.verse);
+                if(doc.select("verses").size() > 0) {
+                    View itemView = LayoutInflater.from(context).inflate(R.layout.open_bible_verse_card, null);
+                    TextView reference = (TextView) itemView.findViewById(R.id.reference);
+                    TextView version = (TextView) itemView.findViewById(R.id.version);
+                    TextView verse = (TextView) itemView.findViewById(R.id.verse);
 
-            reference.setText(file[i].getName());
-            version.setText("");
-            verse.setText(file[i].getPath());
+                    reference.setText(doc.select("verses").attr("name"));
+                    version.setText(doc.select("passage").size() + " Verses");
+                    verse.setText(file[i].getPath());
 
-            verseLayout.addView(itemView);
+                    verseLayout.addView(itemView);
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return view;

@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -107,7 +108,7 @@ public class EditVerseFragment extends Fragment {
             editVer.setText(passage.getText());
 
             seekbar = (SeekBar) view.findViewById(R.id.stateSeekBar);
-            seekbar.setProgress(passage.getState() - 1);
+            seekbar.setProgress((int) passage.getMetaData().getInt(DefaultMetaData.STATE) - 1);
 
             int color = db.getStateColor(seekbar.getProgress() + 1);
 
@@ -124,7 +125,7 @@ public class EditVerseFragment extends Fragment {
                 public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                     VerseDB db = new VerseDB(context).open();
                     int color = db.getStateColor(progressValue + 1);
-                    passage.setState(progressValue + 1);
+                    passage.getMetaData().putInt(DefaultMetaData.STATE, progressValue + 1);
                     db.updateVerse(passage);
                     db.close();
 
@@ -422,10 +423,10 @@ public class EditVerseFragment extends Fragment {
         super.onPrepareOptionsMenu(menu);
 
         if(passage != null) {
-            if (MetaSettings.getVerseId(context) == passage.getId()) {
+            if (MetaSettings.getVerseId(context) == (int) passage.getMetaData().getInt(DefaultMetaData.ID)) {
                 menu.removeItem(R.id.menu_edit_delete);
             }
-            if (passage.getState() == 4) {
+            if ((int) passage.getMetaData().getInt(DefaultMetaData.STATE) == 4) {
                 menu.removeItem(R.id.menu_edit_set_notification);
             }
         }
@@ -444,14 +445,14 @@ public class EditVerseFragment extends Fragment {
         switch (item.getItemId()) {
 	    case R.id.menu_edit_set_notification:
             if(passage != null) {
-                MetaSettings.putVerseId(context, (int)passage.getId());
+                MetaSettings.putVerseId(context, (int) passage.getMetaData().getInt(DefaultMetaData.ID));
                 MainNotification.notify(context).show();
                 Toast.makeText(context, "Notification Set", Toast.LENGTH_SHORT).show();
             }
 	    	return true;
 	    case R.id.menu_edit_save_changes:
             if(passage != null) {
-                passage.setState(seekbar.getProgress() + 1);
+                passage.getMetaData().putInt(DefaultMetaData.STATE, seekbar.getProgress() + 1);
                 passage.setText(editVer.getText().toString());
                 db.updateVerse(passage);
                 db.close();
@@ -460,7 +461,7 @@ public class EditVerseFragment extends Fragment {
 	    	return true;
 	    case R.id.menu_edit_delete:
             if(passage != null) {
-                passage.setState(6);
+                passage.getMetaData().putInt(DefaultMetaData.STATE, Integer.valueOf(6));
                 db.updateVerse(passage);
                 db.close();
             }

@@ -1,5 +1,12 @@
 package com.caseybrooks.androidbibletools.basic;
 
+import android.util.Log;
+
+import com.caseybrooks.androidbibletools.data.Formatter;
+import com.caseybrooks.androidbibletools.data.MetaData;
+import com.caseybrooks.androidbibletools.data.Reference;
+import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 
 import java.io.IOException;
@@ -12,78 +19,63 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 	protected Version version;
     protected Reference reference;
     protected Formatter formatter;
-	protected long id;
-
+    protected MetaData metaData;
 	protected TreeSet<String> tags;
-    protected long millis;
-    protected int state;
-    protected boolean checked;
 
 	public AbstractVerse(Reference reference) {
-		version = Version.KJV;
+		this.version = Version.KJV;
         this.reference = reference;
-        formatter = new DefaultFormatter();
-
-		id = 0;
-		tags = new TreeSet<String>();
+        this.formatter = new DefaultFormatter();
+        this.metaData = new MetaData();
+		this.tags = new TreeSet<String>();
 	}
 
-	//Defined methods
+//Defined methods
 //------------------------------------------------------------------------------
-	public AbstractVerse setVersion(Version version) {
-		this.version = version;
-		return this;
-	}
-
-	public long getMillis() {
-		return millis;
-	}
-
-    public AbstractVerse setMillis(long millis) {
-        this.millis = millis;
-        return this;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public AbstractVerse setState(int state) {
-        this.state = state;
-        return this;
-    }
-
-    public AbstractVerse setFormatter(Formatter formatter) {
-        this.formatter = formatter;
-        return this;
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public AbstractVerse setChecked(boolean checked) {
-        this.checked = checked;
-        return this;
-    }
-
-    public AbstractVerse toggle() {
-        setChecked(!checked);
-        return this;
-    }
-
     public Version getVersion() {
         return version;
     }
 
-	public AbstractVerse setId(long id) {
-		this.id = id;
-		return this;
-	}
+    public void setVersion(Version version) {
+        this.version = version;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public Reference getReference() {
+        return reference;
+    }
+
+    public void setReference(Reference reference) {
+        this.reference = reference;
+    }
+
+    public Formatter getFormatter() {
+        return formatter;
+    }
+
+    public void setFormatter(Formatter formatter) {
+        this.formatter = formatter;
+    }
+
+    public MetaData getMetaData() {
+        return metaData;
+    }
+
+    public void setMetaData(MetaData metaData) {
+        this.metaData = metaData;
+    }
+
+    public boolean isChecked() {
+        return metaData.getBoolean(DefaultMetaData.IS_CHECKED);
+    }
+
+    public void setChecked(boolean checked) {
+        metaData.putBoolean(DefaultMetaData.IS_CHECKED, checked);
+    }
+
+    public AbstractVerse toggle() {
+        setChecked(!isChecked());
+        return this;
+    }
 
     public AbstractVerse removeAllTags() {
         tags.clear();
@@ -121,46 +113,13 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 
 //Abstract Methods
 //------------------------------------------------------------------------------
-	public Reference getReference() { return reference; };
+//	public Reference getReference() { return reference; };
 	public abstract String getText();
     public abstract String getURL();
 	public abstract AbstractVerse retrieve() throws IOException;
-
 
 //Comparison methods
 //------------------------------------------------------------------------------
 	public abstract int compareTo(AbstractVerse verse);
 	public abstract boolean equals(AbstractVerse verse);
-
-	public static class IDComparator implements Comparator<AbstractVerse> {
-		@Override
-		public int compare(AbstractVerse lhs, AbstractVerse rhs) {
-			return (int)(lhs.getId() - rhs.getId());
-		}
-	}
-
-	public static class AlphabeticalReferenceComparator implements Comparator<AbstractVerse> {
-		@Override
-		public int compare(AbstractVerse lhs, AbstractVerse rhs) {
-			return lhs.getReference().toString().compareToIgnoreCase(rhs.getReference().toString());
-		}
-	}
-
-	//Sorts Verses by their tags. Verses without tags will always be first,
-	//  Verses with tags will be sorted by their first tag, which is already
-	//  sorted to be the least tag.
-	public static class TagComparator implements Comparator<AbstractVerse> {
-		@Override
-		public int compare(AbstractVerse lhs, AbstractVerse rhs) {
-			if(lhs.getTags().length == 0) {
-				return -2147483647;
-			}
-			else if(rhs.getTags().length == 0) {
-				return -2147483647;
-			}
-			else {
-				return lhs.getTags()[0].compareTo(rhs.getTags()[0]);
-			}
-		}
-	}
 }

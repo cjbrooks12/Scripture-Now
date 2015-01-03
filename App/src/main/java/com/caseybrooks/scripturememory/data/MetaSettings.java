@@ -2,6 +2,7 @@ package com.caseybrooks.scripturememory.data;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.util.Pair;
 
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
@@ -21,7 +22,6 @@ public class MetaSettings {
 
     //settings set throughout app
     public static final String FIRST_TIME = "FIRST_TIME";
-	public static final String PROMPT_ON_START = "PROMPT_ON_START";
     public static final String PROMPT_ON_START_INT = "PROMPT_ON_START_INT";
     public static final String MAIN_NOTIFICATION_ACTIVE = "ACTIVE";
     public static final String VERSE_ID = "SQL_ID";
@@ -30,6 +30,8 @@ public class MetaSettings {
     public static final String RANDOM_OFFSET = "RANDOM_OFFSET";
 	public static final String SORT_BY = "SORT_BY";
     public static final String USER_LEARNED_DRAWER = "USER_LEARNED_DRAWER";
+    public static final String DRAWER_SELECTED_GROUP = "DRAWER_SELECTED_GROUP";
+    public static final String DRAWER_SELECTED_CHILD = "DRAWER_SELECTED_CHILD";
 
 //Display settings
 //------------------------------------------------------------------------------
@@ -48,6 +50,17 @@ public class MetaSettings {
 
     public static int getDefaultScreen(Context context) {
         return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(DEFAULT_SCREEN, "0"));
+    }
+
+    public static void putDrawerSelection(Context context, int group, int child) {
+        context.getSharedPreferences(settings_file, 0).edit().putInt(DRAWER_SELECTED_GROUP, group).commit();
+        context.getSharedPreferences(settings_file, 0).edit().putInt(DRAWER_SELECTED_CHILD, child).commit();
+    }
+
+    public static Pair<Integer, Integer> getDrawerSelection(Context context) {
+        int group = context.getSharedPreferences(settings_file, 0).getInt(DRAWER_SELECTED_GROUP, -1);
+        int child = context.getSharedPreferences(settings_file, 0).getInt(DRAWER_SELECTED_CHILD, -1);
+        return new Pair<Integer, Integer>(group, child);
     }
 
 //Notification Preferences

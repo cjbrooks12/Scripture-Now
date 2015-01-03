@@ -3,7 +3,7 @@ package com.caseybrooks.scripturememory.test;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 
-import com.caseybrooks.androidbibletools.basic.Reference;
+import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.enumeration.Book;
 
 import java.text.ParseException;

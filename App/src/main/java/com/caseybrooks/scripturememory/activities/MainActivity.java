@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
@@ -26,12 +28,25 @@ import com.caseybrooks.scripturememory.fragments.SettingsFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -75,6 +90,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                 .add(R.id.mainFragmentContainer, new DashboardFragment())
                 .commit();
 
+        new TranslateRememberMeFiles().execute();
 		getOverflowMenu();
 		showFirstTime();
 		showPrompt();
@@ -136,6 +152,135 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		}
 	}
 
+    private class VerseStrings {
+        String ref;
+        String version;
+        String tags;
+        String text;
+    }
+
+    private class TranslateRememberMeFiles extends AsyncTask<Void, Void, Void> {
+        ArrayList<VerseStrings> verses = new ArrayList<VerseStrings>();
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //pathA = Scripture Now's external directory
+            //pathB = RememberMe's external directory
+
+            String pathA = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
+            String pathB = Environment.getExternalStorageDirectory().getPath() + "/RememberMe";
+
+            File folderA = new File(pathA);
+            File folderB = new File(pathB);
+
+            if(folderB.exists() && folderB.isDirectory() && folderB.listFiles().length > 0) {
+                //the RememberMe folder exists and has files in it, which must be to imported
+
+                for(File file : folderB.listFiles()) {
+                    if(file.getName().equals("books_of_bible.txt")) continue;
+                    if(!file.getName().contains(".txt")) continue;
+
+                    Log.e("PARSING FILE:", file.getName());
+                    try {
+                        BufferedReader in = new BufferedReader(new FileReader(file));
+
+                        String line;
+                        VerseStrings passage = null;
+
+                        while (true) {
+                            line = in.readLine();
+                            if (line == null) break;
+                            if (line.length() == 0) continue;
+
+                            String lineType = line.substring(0, 2).toLowerCase().trim();
+
+                            if (lineType.equals("r:")) {
+                                if (passage == null) {
+                                    passage = new VerseStrings();
+                                } else {
+                                    if(passage.ref == null || passage.version == null || passage.tags == null || passage.text == null){
+
+                                    }
+                                    else {
+                                        verses.add(passage);
+                                    }
+
+                                    passage = new VerseStrings();
+                                }
+                                passage.ref = line.substring(2).trim();
+                            } else if (lineType.equals("q:")) {
+                                passage.version = line.substring(2).trim();
+                            } else if (lineType.equals("t:")) {
+                                passage.tags = line.substring(2).trim();
+                            } else if (lineType.equals("p:")) {
+                                passage.text = line.substring(2).trim();
+                            } else {
+                                passage.text += " " + line.substring(2).trim();
+                            }
+                        }
+
+                        //print verses to an XML file
+                        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                        DocumentBuilder builder = factory.newDocumentBuilder();
+
+                        Document doc = builder.newDocument();
+                        Element root = doc.createElement("verses");
+                        root.setAttribute("name", file.getName().replaceAll("_", " ").replaceAll(".txt", ""));
+                        doc.appendChild(root);
+
+                        for(int i = 0; i < verses.size(); i++) {
+                            Element passageElement = doc.createElement("passage");
+                            root.appendChild(passageElement);
+
+                            Element r = doc.createElement("R");
+                            r.appendChild(doc.createTextNode(verses.get(i).ref));
+                            passageElement.appendChild(r);
+
+                            Element q = doc.createElement("Q");
+                            q.appendChild(doc.createTextNode(verses.get(i).version));
+                            passageElement.appendChild(q);
+
+                            //TODO: write all tags to file
+                            Element t = doc.createElement("T");
+                            t.appendChild(doc.createTextNode(verses.get(i).tags));
+                            passageElement.appendChild(t);
+
+                            Element p = doc.createElement("P");
+                            p.appendChild(doc.createTextNode(verses.get(i).text));
+                            passageElement.appendChild(p);
+                        }
+
+                        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                        Transformer transformer = transformerFactory.newTransformer();
+                        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                        DOMSource source = new DOMSource(doc);
+                        StreamResult result = new StreamResult(new File(folderA, file.getName().replaceAll(".txt", ".xml")));
+                        transformer.transform(source, result);
+                    }
+                    catch(FileNotFoundException fnfe) {
+                        fnfe.printStackTrace();
+                    }
+                    catch(IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+                    catch (ParserConfigurationException pce) {
+                        pce.printStackTrace();
+                    }
+                    catch (TransformerConfigurationException tce) {
+                        tce.printStackTrace();
+                    }
+                    catch (TransformerException te) {
+                        te.printStackTrace();
+                    }
+                }
+            }
+
+
+
+            return null;
+        }
+    }
+
 	private void showPrompt() {
 		if(MetaSettings.getPromptOnStart(context) == 3) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -194,13 +339,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
             setFragment(dashboard);
         }
 	}
-
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        setIntent(intent);
-//        receiveImplicitIntent();
-//    }
 
 //ActionBar
 //------------------------------------------------------------------------------

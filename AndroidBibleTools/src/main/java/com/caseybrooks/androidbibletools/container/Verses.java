@@ -14,15 +14,13 @@ import java.util.Iterator;
 public class Verses<T extends AbstractVerse> {
 //Data Members
 //------------------------------------------------------------------------------
-    protected ArrayList<T> verses;
+    public ArrayList<T> verses;
 
 //Constructors
 //------------------------------------------------------------------------------
     public Verses() {
         this.verses = new ArrayList<T>();
     }
-
-
 
 //Getters and Setters
 //------------------------------------------------------------------------------
@@ -72,26 +70,5 @@ public class Verses<T extends AbstractVerse> {
 
     public int size() {
         return verses.size();
-    }
-
-    public T[] toArray(T[] array) {
-		return verses.toArray(array);
-    }
-
-//Sorting methods
-    public void sort() {
-        Collections.sort(verses);
-    }
-
-    public void sortByTag() {
-        Collections.sort(verses, new T.TagComparator());
-    }
-
-    public void sortAlphabetical() {
-        Collections.sort(verses, new T.AlphabeticalReferenceComparator());
-    }
-
-    public void sortByID() {
-        Collections.sort(verses, new T.IDComparator());
     }
 }

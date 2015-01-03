@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VOTDService;
@@ -134,7 +135,7 @@ public class VOTDCard extends FrameLayout {
 				public void onClick(DialogInterface dialog, int id) {
                     VerseDB db = new VerseDB(context);
                     db.open();
-                    currentVerse.setState(1);
+                    currentVerse.getMetaData().putInt(DefaultMetaData.STATE, 1);
                     db.updateVerse(currentVerse);
                     db.close();
 				}
@@ -179,7 +180,7 @@ public class VOTDCard extends FrameLayout {
                     return true;
                 case R.id.context_votd_card_post:
                     saveVerse();
-                    MetaSettings.putVerseId(context, (int)currentVerse.getId());
+                    MetaSettings.putVerseId(context, currentVerse.getMetaData().getInt(DefaultMetaData.ID));
                     MetaSettings.putNotificationActive(context, true);
                     MainNotification.notify(context).show();
                     return true;

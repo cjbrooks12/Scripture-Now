@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +41,6 @@ public class NavigationDrawerFragment extends Fragment {
     private ExpandableListAdapter listAdapter;
     private View mFragmentContainerView;
 
-    RelativeLayout header;
-
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
     private ActionBarActivity parentActivity;
@@ -64,9 +63,16 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Select either the default item (0, 0) or the last selected item.
 
+        Pair<Integer, Integer> lastSelected = MetaSettings.getDrawerSelection(parentActivity);
         NavListItem item = new NavListItem();
-        item.groupPosition = 0;
-        item.childPosition = 0;
+        if(lastSelected.first != -1) {
+            item.groupPosition = lastSelected.first;
+            item.childPosition = lastSelected.second;
+        }
+        else {
+            item.groupPosition = 0;
+            item.childPosition = 0;
+        }
         selectItem(item);
     }
 
@@ -99,8 +105,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void populateList() {
-        header = (RelativeLayout) LayoutInflater.from(parentActivity).inflate(R.layout.nav_drawer_header, null);
-
+        RelativeLayout header = (RelativeLayout) LayoutInflater.from(parentActivity).inflate(R.layout.nav_drawer_header, null);
         mDrawerListView.addParallaxedHeaderView(header);
 
         List<String> listDataHeader = new ArrayList<String>();
@@ -177,6 +182,7 @@ public class NavigationDrawerFragment extends Fragment {
                     NavListItem item = new NavListItem();
                     item.name = (String)parent.getExpandableListAdapter().getGroup(groupPosition);
                     item.groupPosition = groupPosition;
+                    item.childPosition = 0;
                     selectItem(item);
                     return true;
                 }
@@ -434,7 +440,29 @@ public class NavigationDrawerFragment extends Fragment {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(item);
+            MetaSettings.putDrawerSelection(parentActivity, item.groupPosition, item.childPosition);
+            switch(item.groupPosition) {
+                case 0:
+                    mCallbacks.toDashboard();
+                    break;
+                case 1:
+                    if (item.childPosition == 0) mCallbacks.toTopicalBible();
+                    else mCallbacks.toImportVerses();
+                    break;
+                case 2:
+                    mCallbacks.toVerseList(VerseListFragment.STATE, item.id);
+                    break;
+                case 3:
+                    mCallbacks.toVerseList(VerseListFragment.TAGS, item.id);
+                    break;
+                case 4:
+                    mCallbacks.toSettings();
+                    break;
+                case 5:
+                    mCallbacks.toHelp();
+                    break;
+                default:
+            }
         }
     }
 

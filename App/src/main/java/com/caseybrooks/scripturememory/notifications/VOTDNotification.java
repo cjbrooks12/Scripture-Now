@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaReceiver;
@@ -181,12 +182,12 @@ public class VOTDNotification {
                 Passage newVerse = new Passage(intent.getStringExtra("REF_SAVE"));
                 newVerse.setText(intent.getStringExtra("VER_SAVE"));
                 newVerse.setVersion(MetaSettings.getBibleVersion(context));
-                newVerse.setState(1);
-                newVerse.setMillis(Calendar.getInstance().getTimeInMillis());
+                newVerse.getMetaData().putInt(DefaultMetaData.STATE, 1);
+                newVerse.getMetaData().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
 				VerseDB db = new VerseDB(context);
 				db.open();
 				db.insertVerse(newVerse);
-				db.close();	
+				db.close();
 			}
 			catch(Exception e) {
 				new QuickNotification(context, "Verse of the Day", "There was an error saving the verse");

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
@@ -101,7 +102,7 @@ public class BibleVerseAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return items.get(position).getId();
+        return items.get(position).getMetaData().getInt(DefaultMetaData.ID);
     }
 
     @Override
@@ -147,10 +148,9 @@ public class BibleVerseAdapter extends BaseAdapter {
             vh.iconBackground.setImageDrawable(vh.circle);
         }
         else {
-            int selectedColor = db.getStateColor(passage.getState());
+            int selectedColor = db.getStateColor(passage.getMetaData().getInt(DefaultMetaData.ID));
             vh.circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
             vh.iconBackground.setImageDrawable(vh.circle);
-
         }
         vh.iconBackground.setTag(R.id.ref_icon_background, vh);
         vh.iconBackground.setOnClickListener(iconClick);
@@ -259,7 +259,7 @@ public class BibleVerseAdapter extends BaseAdapter {
                     @Override
                     public void onAnimationEnd(Animation arg0) {
                         VerseDB db = new VerseDB(context).open();
-                        int selectedColor = db.getStateColor(vh.passage.getState());
+                        int selectedColor = db.getStateColor(vh.passage.getMetaData().getInt(DefaultMetaData.STATE));
                         db.close();
 
                         vh.circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));

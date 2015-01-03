@@ -9,7 +9,6 @@ import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 
 public class About extends ActionBarActivity {
-    LinearLayout mainLayout;
     Context context;
 	
 	@Override

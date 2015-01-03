@@ -10,6 +10,7 @@ import android.graphics.Color;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
 
@@ -214,11 +215,11 @@ public class VerseDB {
 
         try {
             Passage passage = new Passage(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
-            passage.setId(c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
+            passage.getMetaData().putInt(DefaultMetaData.ID, c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
             passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
             passage.setVersion(Version.parseVersion(c.getString(c.getColumnIndex(KEY_VERSES_VERSION))));
-            passage.setMillis(c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
-            passage.setState(c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
+            passage.getMetaData().putLong(DefaultMetaData.TIME_CREATED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
+            passage.getMetaData().putInt(DefaultMetaData.STATE, c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
 
             String commaSeparatedTags = c.getString(c.getColumnIndex(KEY_VERSES_TAGS));
 
@@ -251,7 +252,7 @@ public class VerseDB {
         values.put(KEY_VERSES_VERSION, passage.getVersion().getCode());
         values.put(KEY_VERSES_DATE_ADDED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
-        values.put(KEY_VERSES_STATE, passage.getState());
+        values.put(KEY_VERSES_STATE, passage.getMetaData().getInt(DefaultMetaData.STATE));
 
         //ensure tags on this verse are up-to-date
         String[] tags = passage.getTags();
@@ -278,7 +279,7 @@ public class VerseDB {
         values.put(KEY_VERSES_VERSE, passage.getText());
         values.put(KEY_VERSES_VERSION, passage.getVersion().getCode());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
-        values.put(KEY_VERSES_STATE, passage.getState());
+        values.put(KEY_VERSES_STATE, passage.getMetaData().getInt(DefaultMetaData.STATE));
 
         //ensure tags on this verse are up-to-date
         String[] tags = passage.getTags();
@@ -295,7 +296,7 @@ public class VerseDB {
         }
         values.put(KEY_VERSES_TAGS, tag_string);
 
-        db.update(TABLE_VERSES, values, KEY_VERSES_ID + "=" + passage.getId(), null);
+        db.update(TABLE_VERSES, values, KEY_VERSES_ID + "=" + passage.getMetaData().getInt(DefaultMetaData.ID), null);
 
         cleanupTags();
     }

@@ -41,25 +41,6 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
                 .commit();
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        if(id == android.R.id.home) {
-//            finish();
-//        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void onNavigationDrawerItemSelected(NavigationDrawerFragment.NavListItem item) {
 

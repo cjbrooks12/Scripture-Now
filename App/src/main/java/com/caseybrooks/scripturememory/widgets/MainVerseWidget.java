@@ -15,7 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.caseybrooks.androidbibletools.basic.DefaultFormatter;
+import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
