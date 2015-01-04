@@ -102,7 +102,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/bg_transparent"
-                android:src="?attr/ic_mtrl_overflow" />
+                android:src="?attr/ic_action_overflow" />
 
         </RelativeLayout>
 

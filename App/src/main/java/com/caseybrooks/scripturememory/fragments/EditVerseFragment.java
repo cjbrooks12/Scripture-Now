@@ -260,7 +260,7 @@ public class EditVerseFragment extends Fragment {
                 color = Color.BLACK;
                 Drawable circle = Util.Drawables.circle(color);
                 vh.tagCircle.setBackgroundDrawable(circle);
-                vh.tagIcon.setImageResource(R.drawable.abc_ic_search_api_mtrl_alpha);
+                vh.tagIcon.setImageResource(R.drawable.ic_action_add_dark);
             }
             else {
                 VerseDB db = new VerseDB(context).open();

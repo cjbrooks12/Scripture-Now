@@ -3,6 +3,8 @@ package com.caseybrooks.scripturememory.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -329,13 +332,28 @@ public class NavigationDrawerFragment extends Fragment {
             }
 
             String headerTitle = getGroup(groupPosition);
-            TextView header = (TextView) convertView.findViewById(R.id.navListHeader);
+            TextView headerText = (TextView) convertView.findViewById(R.id.navListHeader);
+            ImageView headerImage = (ImageView) convertView.findViewById(R.id.header_image);
+
+            TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {
+                    R.attr.ic_action_home,
+                    R.attr.ic_action_find_in_page,
+                    R.attr.ic_action_group_work,
+                    R.attr.ic_action_tag,
+                    R.attr.ic_action_settings,
+                    R.attr.ic_action_help
+            });
+
             if(groupPosition == 3) {
-                header.setText(headerTitle + " (" + getChildrenCount(groupPosition) + ")");
+                headerText.setText(headerTitle + " (" + getChildrenCount(groupPosition) + ")");
             }
             else {
-                header.setText(headerTitle);
+                headerText.setText(headerTitle);
             }
+            Drawable headerDrawable = getResources().getDrawable(a.getResourceId(groupPosition, 0));
+            headerDrawable.setAlpha(140);
+            headerImage.setImageDrawable(headerDrawable);
+            a.recycle();
 
             return convertView;
         }

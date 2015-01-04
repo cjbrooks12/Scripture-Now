@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -121,12 +122,16 @@ public class VerseListFragment extends ListFragment {
     BibleVerseAdapter.OnMultiSelectListener iconClick = new BibleVerseAdapter.OnMultiSelectListener() {
         @Override
         public void onMultiSelect(View view, int position) {
-            if (mActionMode != null) {
-
+            if(mActionMode == null) {
+                mActionMode = ((ActionBarActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+                mActionMode.setTitle("1 Selected");
             }
-
-            // Start the CAB using the ActionMode.Callback defined above
-            mActionMode = ((ActionBarActivity)getActivity()).startSupportActionMode(mActionModeCallback);
+            else if(bibleVerseAdapter.getSelectedCount() == 0) {
+                mActionMode.finish();
+            }
+            else {
+                mActionMode.setTitle(bibleVerseAdapter.getSelectedCount() + " Selected");
+            }
         }
     };
 
@@ -229,8 +234,8 @@ public class VerseListFragment extends ListFragment {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             // Inflate a menu resource providing context menu items
-//            MenuInflater inflater = mode.getMenuInflater();
-//            inflater.inflate(R.menu.context_menu, menu);
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.contextual_list, menu);
             return true;
         }
 
@@ -244,22 +249,20 @@ public class VerseListFragment extends ListFragment {
         // Called when the user selects a contextual menu item
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.menu_share:
-//                    shareCurrentItem();
-//                    mode.finish(); // Action picked, so close the CAB
-//                    return true;
-//                default:
-//                    return false;
-//            }
-
-            return false;
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         // Called when the user exits the action mode
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
+            bibleVerseAdapter.deselectAll();
         }
     };
 }

@@ -15,8 +15,7 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:src="?attr/ic_mtrl_search"/>
+        android:paddingRight="16dp"/>
 
     <TextView
         android:id="@+id/navListHeader"

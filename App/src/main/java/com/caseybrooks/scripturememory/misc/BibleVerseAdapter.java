@@ -95,6 +95,27 @@ public class BibleVerseAdapter extends BaseAdapter {
         return items.size();
     }
 
+    public int getSelectedCount() {
+        int count = 0;
+
+        for(Passage passage : items.verses) {
+            if(passage.getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) count++;
+        }
+
+        return count;
+    }
+
+    public void deselectAll() {
+        for(int i = 0; i < items.size(); i++) {
+            if(items.get(i).getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) {
+                View v = getView(i, null, null);
+                ViewHolder vh = (ViewHolder) v.getTag();
+                iconClick.onClick(vh.iconBackground);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public Passage getItem(int position) {
         return items.get(position);
@@ -140,7 +161,7 @@ public class BibleVerseAdapter extends BaseAdapter {
         String passageBookCode = passage.getVerses()[0].getReference().book.getCode();
         vh.iconText.setText(passageBookCode.replaceFirst("(\\d)", "$1 "));
 
-        if(vh.passage.isChecked()) {
+        if(vh.passage.getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) {
             TypedArray a = context.getTheme().obtainStyledAttributes(R.style.Theme_BaseLight, new int[]{R.attr.colorAccent});
             int selectedColor = a.getColor(0, 0);
             a.recycle();
@@ -148,11 +169,11 @@ public class BibleVerseAdapter extends BaseAdapter {
             vh.iconBackground.setImageDrawable(vh.circle);
         }
         else {
-            int selectedColor = db.getStateColor(passage.getMetaData().getInt(DefaultMetaData.ID));
+            int selectedColor = db.getStateColor(passage.getMetaData().getInt(DefaultMetaData.STATE));
             vh.circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
             vh.iconBackground.setImageDrawable(vh.circle);
         }
-        vh.iconBackground.setTag(R.id.ref_icon_background, vh);
+        vh.iconBackground.setTag(vh);
         vh.iconBackground.setOnClickListener(iconClick);
 
         //setup tags of each ListItem
@@ -213,15 +234,16 @@ public class BibleVerseAdapter extends BaseAdapter {
     View.OnClickListener iconClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            final ViewHolder vh = (ViewHolder)v.getTag(R.id.ref_icon_background);
-
-            //notify that this item has been put into multi-select mode by clicking the icon
-            if(multiSelectListener != null) multiSelectListener.onMultiSelect(v, vh.position);
+            final ViewHolder vh = (ViewHolder)v.getTag();
 
             final Animation a = AnimationUtils.loadAnimation(context, R.anim.flip_to_middle);
             final Animation b = AnimationUtils.loadAnimation(context, R.anim.flip_from_middle);
 
-            if(!vh.passage.isChecked()) {
+            if(!vh.passage.getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) {
+
+                vh.passage.getMetaData().putBoolean(DefaultMetaData.IS_CHECKED, true);
+                if(multiSelectListener != null) multiSelectListener.onMultiSelect(v, vh.position);
+
                 a.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation arg0) {
@@ -246,6 +268,10 @@ public class BibleVerseAdapter extends BaseAdapter {
                 });
             }
             else {
+
+                vh.passage.getMetaData().putBoolean(DefaultMetaData.IS_CHECKED, false);
+                if(multiSelectListener != null) multiSelectListener.onMultiSelect(v, vh.position);
+
                 a.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation arg0) {
@@ -273,9 +299,6 @@ public class BibleVerseAdapter extends BaseAdapter {
 
             vh.iconBackground.startAnimation(a);
             vh.iconText.startAnimation(a);
-
-            //toggle checked state of this view
-            vh.passage.toggle();
         }
     };
 }

@@ -3,12 +3,12 @@
 	<item
         android:id="@+id/menu_dashboard_add"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/abc_ic_clear_mtrl_alpha"
+        android:icon="?attr/ic_action_add"
         android:title="Add Verse"/>
 	<item
         android:id="@+id/menu_dashboard_votd"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        android:icon="?attr/ic_action_today"
         android:title="Show Verse of the Day"/>
 </menu>
 <!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/menu/menu_dashboard.xml -->

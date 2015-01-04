@@ -34,14 +34,14 @@ public class Verse extends AbstractVerse {
     //Data members that make up the actual verse
     protected String verseText;
 
-    //Constructors
+//Constructors
 //------------------------------------------------------------------------------
-    public Verse(Book book, int chapter, int verseNumber) {
-        super(new Reference(book, chapter, verseNumber));
+    public Verse(Reference reference) {
+        super(reference);
     }
 
     public Verse(String reference) throws ParseException {
-		super(new Reference(reference));
+        super(reference);
     }
 
 //Getters and Setters
@@ -55,45 +55,49 @@ public class Verse extends AbstractVerse {
 
 	public Verse next() {
 		if(reference.verses.get(0) != reference.book.numVersesInChapter(reference.chapter)) {
-			return new Verse(reference.book, reference.chapter, reference.verses.get(0) + 1);
+            Reference nextRef = new Reference(reference.book, reference.chapter, reference.verses.get(0) + 1);
+			return new Verse(nextRef);
 		}
 		else {
 			if(reference.chapter != reference.book.numChapters()) {
-                return new Verse(reference.book, reference.chapter + 1, reference.verses.get(0));
+                Reference nextRef = new Reference(reference.book, reference.chapter + 1, reference.verses.get(0));
+                return new Verse(nextRef);
 			}
 			else {
 				for(int i = 0; i < Book.values().length; i++) {
 					if((reference.book == Book.values()[i]) && (i != Book.values().length - 1)) {
-						return new Verse(Book.values()[i+1], 1, 1);
+                        Reference nextRef = new Reference(Book.values()[i+1], 1, 1);
+						return new Verse(nextRef);
 					}
 				}
-				return new Verse(Book.values()[0], 1, 1);
+                Reference nextRef = new Reference(Book.values()[0], 1, 1);
+				return new Verse(nextRef);
 			}
 		}
 	}
 
 	public Verse previous() {
 		if(reference.verses.get(0) != 1) {
-			return new Verse(reference.book, reference.chapter, reference.verses.get(0) - 1);
+            Reference previousRef = new Reference(reference.book, reference.chapter, reference.verses.get(0) - 1);
+            return new Verse(previousRef);
 		}
 		else {
 			if(reference.chapter != 1) {
-				return new Verse(reference.book, reference.chapter - 1, reference.book.numVersesInChapter(reference.chapter - 1));
+                Reference previousRef = new Reference(reference.book, reference.chapter - 1, reference.book.numVersesInChapter(reference.chapter - 1));
+                return new Verse(previousRef);
 			}
 			else {
 				Book newBook;
 				for(int i = 0; i < Book.values().length; i++) {
 					if((reference.book == Book.values()[i]) && (i != 0)) {
 						newBook = Book.values()[i-1];
-						return new Verse(newBook,
-										newBook.numChapters(),
-										newBook.lastVerseInBook());
+                        Reference previousRef = new Reference(newBook, newBook.numChapters(), newBook.lastVerseInBook());
+                        return new Verse(previousRef);
 					}
 				}
 				newBook = Book.values()[Book.values().length - 1];
-				return new Verse(newBook,
-										newBook.numChapters(),
-										newBook.lastVerseInBook());
+                Reference previousRef = new Reference(newBook, newBook.numChapters(), newBook.lastVerseInBook());
+                return new Verse(previousRef);
 			}
 		}
 	}

@@ -32,17 +32,31 @@ public class Passage extends AbstractVerse {
 
     //Constructors
 //------------------------------------------------------------------------------
-    public Passage(String reference) throws ParseException {
-		super(new Reference(reference));
+    public Passage(Reference reference) {
+        super(reference);
 
         Collections.sort(this.reference.verses);
         this.verses = new ArrayList<Verse>();
 
         for(int i = 0; i < this.reference.verses.size(); i++) {
             this.verses.add(
-                    new Verse(this.reference.book,
+                    new Verse(new Reference(this.reference.book,
+                            this.reference.chapter,
+                            this.reference.verses.get(i))));
+        }
+    }
+
+    public Passage(String reference) throws ParseException {
+		super(reference);
+
+        Collections.sort(this.reference.verses);
+        this.verses = new ArrayList<Verse>();
+
+        for(int i = 0; i < this.reference.verses.size(); i++) {
+            this.verses.add(
+                    new Verse(new Reference(this.reference.book,
                     this.reference.chapter,
-                    this.reference.verses.get(i)));
+                    this.reference.verses.get(i))));
         }
 	}
 

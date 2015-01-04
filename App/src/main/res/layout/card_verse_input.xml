@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/bg_transparent"
-                android:src="?attr/ic_mtrl_overflow"
+                android:src="?attr/ic_action_overflow"
                 android:contentDescription="@string/remove" />
         </RelativeLayout>
 
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_transparent"
-                android:src="?attr/ic_mtrl_search"
+                android:src="?attr/ic_action_search"
                 android:layout_alignParentRight="true"
                 android:layout_alignBottom="@id/editReference"/>
 

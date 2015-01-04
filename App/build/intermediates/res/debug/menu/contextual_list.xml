@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/contextual_list_change_state"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Change State" />
+    <item
+        android:id="@+id/contextual_list_add_tag"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Add Tag" />
+    <item
+        android:id="@+id/contextual_list_delete"
+        app:showAsAction="ifRoom"
+        android:icon="?attr/ic_action_delete"
+        android:title="Delete" />
+    <item
+        android:id="@+id/contextual_list_export"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Export" />
+</menu>
+<!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/menu/contextual_list.xml -->

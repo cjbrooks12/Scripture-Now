@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_transparent"
                 android:layout_alignParentRight="true"
-                android:src="?attr/ic_mtrl_overflow" />
+                android:src="?attr/ic_action_overflow" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/notificationVerseLayout"
