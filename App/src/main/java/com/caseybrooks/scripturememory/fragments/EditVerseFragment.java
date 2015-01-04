@@ -51,7 +51,6 @@ public class EditVerseFragment extends Fragment {
     Passage passage;
     NavigationCallbacks mCallbacks;
 	
-	ActionBar ab;
 	EditText editRef, editVer;
 
     TagAdapter tagAdapter;
@@ -426,7 +425,7 @@ public class EditVerseFragment extends Fragment {
             if (MetaSettings.getVerseId(context) == (int) passage.getMetaData().getInt(DefaultMetaData.ID)) {
                 menu.removeItem(R.id.menu_edit_delete);
             }
-            if ((int) passage.getMetaData().getInt(DefaultMetaData.STATE) == 4) {
+            if (passage.getMetaData().getInt(DefaultMetaData.STATE) == 4) {
                 menu.removeItem(R.id.menu_edit_set_notification);
             }
         }

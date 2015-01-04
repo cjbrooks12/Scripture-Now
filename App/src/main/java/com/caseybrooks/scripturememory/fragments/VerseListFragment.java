@@ -2,6 +2,7 @@ package com.caseybrooks.scripturememory.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,16 +19,19 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.androidbibletools.data.MetaData;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
+import com.caseybrooks.scripturememory.notifications.MainNotification;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -80,15 +85,10 @@ public class VerseListFragment extends ListFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		SpinnerAdapter spinnerAdapter = ArrayAdapter.createFromResource(context,
-							   R.array.sort_methods, android.R.layout.simple_spinner_dropdown_item);
 
 		ab = ((MainActivity) context).getSupportActionBar();
 		ab.setHomeButtonEnabled(true);
 		ab.setDisplayHomeAsUpEnabled(true);
-		ab.setListNavigationCallbacks(spinnerAdapter, navigationListener);
-		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		ab.setSelectedNavigationItem(MetaSettings.getSortBy(context));
 
         String title;
         int color;
@@ -116,7 +116,6 @@ public class VerseListFragment extends ListFragment {
 	@Override
 	public void onPause() {
 		super.onPause();
-		((ActionBarActivity) context).getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
     }
 
     BibleVerseAdapter.OnMultiSelectListener iconClick = new BibleVerseAdapter.OnMultiSelectListener() {
@@ -187,27 +186,27 @@ public class VerseListFragment extends ListFragment {
 
         Collections.sort(verses.verses, comparator);
 
-		bibleVerseAdapter = new BibleVerseAdapter(context, verses);
+		bibleVerseAdapter = new BibleVerseAdapter(context, verses, getListView());
         bibleVerseAdapter.setOnMultiSelectListener(iconClick);
         bibleVerseAdapter.setOnItemClickListener(itemClick);
 		setListAdapter(bibleVerseAdapter);
 	}
 
-//ActionBar Spinner
-//------------------------------------------------------------------------------
-    ActionBar.OnNavigationListener navigationListener = new ActionBar.OnNavigationListener() {
-        @Override
-        public boolean onNavigationItemSelected(int position, long itemId) {
-
-            String[] strings = getActivity().getResources().getStringArray(R.array.sort_methods);
-
-			MetaSettings.putSortBy(context, position);
-            populateBibleVerses();
-
-            return true;
-        }
-    };
-	
+////ActionBar Spinner
+////------------------------------------------------------------------------------
+//    ActionBar.OnNavigationListener navigationListener = new ActionBar.OnNavigationListener() {
+//        @Override
+//        public boolean onNavigationItemSelected(int position, long itemId) {
+//
+//            String[] strings = getActivity().getResources().getStringArray(R.array.sort_methods);
+//
+//			MetaSettings.putSortBy(context, position);
+//            populateBibleVerses();
+//
+//            return true;
+//        }
+//    };
+//
 //Host Activity Interface
 //------------------------------------------------------------------------------
     @Override
@@ -224,6 +223,29 @@ public class VerseListFragment extends ListFragment {
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
+    }
+
+//ActionBar items
+//------------------------------------------------------------------------------
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater = ((ActionBarActivity) context).getMenuInflater();
+        inflater.inflate(R.menu.menu_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_list_sort:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 //Contextual ActionMode for multi-selection
@@ -265,4 +287,6 @@ public class VerseListFragment extends ListFragment {
             bibleVerseAdapter.deselectAll();
         }
     };
+
+
 }

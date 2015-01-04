@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -70,7 +71,7 @@ public class NavigationDrawerFragment extends Fragment {
         NavListItem item = new NavListItem();
         if(lastSelected.first != -1) {
             item.groupPosition = lastSelected.first;
-            item.childPosition = lastSelected.second;
+            item.id = lastSelected.second;
         }
         else {
             item.groupPosition = 0;
@@ -127,10 +128,7 @@ public class NavigationDrawerFragment extends Fragment {
         listDataChild.put(listDataHeader.get(0), new ArrayList<Integer>());
 
         // set Discover subitems (Topical Bible and Import Verses)
-        List<Integer> discoverItems = new ArrayList<Integer>();
-        discoverItems.add(0);
-        discoverItems.add(1);
-        listDataChild.put(listDataHeader.get(1), discoverItems);
+        listDataChild.put(listDataHeader.get(1), new ArrayList<Integer>());
 
         // set Memorization State subitems (each state, plus all current and all verses
         List<Integer> states = new ArrayList<Integer>();
@@ -167,7 +165,6 @@ public class NavigationDrawerFragment extends Fragment {
         // setting list adapter
         mDrawerListView.setAdapter(listAdapter);
         mDrawerListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
@@ -179,9 +176,8 @@ public class NavigationDrawerFragment extends Fragment {
 
         mDrawerListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                                        int groupPosition, long id) {
-                if(groupPosition == 0 || groupPosition == 4 || groupPosition == 5) {
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if(groupPosition == 0 || groupPosition == 1 || groupPosition == 4 || groupPosition == 5) {
                     NavListItem item = new NavListItem();
                     item.name = (String)parent.getExpandableListAdapter().getGroup(groupPosition);
                     item.groupPosition = groupPosition;
@@ -243,14 +239,7 @@ public class NavigationDrawerFragment extends Fragment {
                 item.name = headerItems.get(groupPosition);
             }
             else if(groupPosition == 1) {
-                if(childPosition == 0) {
-                    item.name = "Topical Bible";
-                    item.color = getResources().getColor(R.color.open_bible_brown);
-                }
-                else {
-                    item.name = "Import Verses";
-                    item.color = getResources().getColor(R.color.all_verses);
-                }
+                item.name = headerItems.get(groupPosition);
             }
             else if(groupPosition == 2) {
                 item.name = db.getStateName(item.id);
@@ -385,7 +374,7 @@ public class NavigationDrawerFragment extends Fragment {
      */
     public void setUp(ActionBarActivity activity,
                     Toolbar tb,
-                    View parentContainer,
+                    final View parentContainer,
                     DrawerLayout drawerLayout) {
         mFragmentContainerView = parentContainer;
         this.parentActivity = activity;
@@ -458,7 +447,7 @@ public class NavigationDrawerFragment extends Fragment {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null) {
-            MetaSettings.putDrawerSelection(parentActivity, item.groupPosition, item.childPosition);
+            MetaSettings.putDrawerSelection(parentActivity, item.groupPosition, item.id);
             switch(item.groupPosition) {
                 case 0:
                     mCallbacks.toDashboard();

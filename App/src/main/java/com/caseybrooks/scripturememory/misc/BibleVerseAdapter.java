@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
@@ -36,6 +37,7 @@ public class BibleVerseAdapter extends BaseAdapter {
         ImageView iconBackground;
         Drawable circle;
         TextView iconText;
+        ImageView iconCheck;
 
         ImageView overflow;
         LinearLayout tagsLayout;
@@ -49,6 +51,7 @@ public class BibleVerseAdapter extends BaseAdapter {
 
             iconBackground = (ImageView) inflater.findViewById(R.id.ref_icon_background);
             iconText = (TextView) inflater.findViewById(R.id.ref_icon_text);
+            iconCheck = (ImageView) inflater.findViewById(R.id.ref_icon_check);
 
             overflow = (ImageView) inflater.findViewById(R.id.overflow);
             tagsLayout = (LinearLayout) inflater.findViewById(R.id.tags_layout);
@@ -68,14 +71,16 @@ public class BibleVerseAdapter extends BaseAdapter {
     }
 
     Context context;
+    ListView lv;
     Verses<Passage> items;
     OnMultiSelectListener multiSelectListener;
     OnItemClickListener itemClickListener;
     OnOverflowClickListener overflowClickListener;
 
-    public BibleVerseAdapter(Context context, Verses<Passage> items) {
+    public BibleVerseAdapter(Context context, Verses<Passage> items, ListView lv) {
         this.context = context;
         this.items = items;
+        this.lv = lv;
     }
 
     public void setOnMultiSelectListener(OnMultiSelectListener listener) {
@@ -106,14 +111,22 @@ public class BibleVerseAdapter extends BaseAdapter {
     }
 
     public void deselectAll() {
+        int firstVisible = lv.getFirstVisiblePosition();
+        int lastVisible = lv.getLastVisiblePosition();
+
         for(int i = 0; i < items.size(); i++) {
             if(items.get(i).getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) {
-                View v = getView(i, null, null);
-                ViewHolder vh = (ViewHolder) v.getTag();
-                iconClick.onClick(vh.iconBackground);
+                if(i >= firstVisible && i <= lastVisible) {
+                    //if this item is visible, animate it as if it were clicked
+                    View v = lv.getChildAt(i);
+                    iconClick.onClick(v);
+                }
+                else {
+                    //if this item is not visible, simply uncheck it
+                    items.get(i).getMetaData().putBoolean(DefaultMetaData.IS_CHECKED, false);
+                }
             }
         }
-        notifyDataSetChanged();
     }
 
     @Override
@@ -149,6 +162,8 @@ public class BibleVerseAdapter extends BaseAdapter {
         vh.cardview.setOnLongClickListener(longClick);
         vh.cardview.setOnClickListener(cardClick);
         vh.cardview.setTag(R.id.ref_icon_background, vh);
+        vh.cardview.setMaxCardElevation(context.getResources().getDisplayMetrics().density * 4f);
+
 
         vh.overflow.setOnClickListener(overflowClick);
 
@@ -167,11 +182,17 @@ public class BibleVerseAdapter extends BaseAdapter {
             a.recycle();
             vh.circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
             vh.iconBackground.setImageDrawable(vh.circle);
+
+            vh.iconCheck.setVisibility(View.VISIBLE);
+            vh.iconText.setVisibility(View.INVISIBLE);
         }
         else {
             int selectedColor = db.getStateColor(passage.getMetaData().getInt(DefaultMetaData.STATE));
             vh.circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
             vh.iconBackground.setImageDrawable(vh.circle);
+
+            vh.iconCheck.setVisibility(View.INVISIBLE);
+            vh.iconText.setVisibility(View.VISIBLE);
         }
         vh.iconBackground.setTag(vh);
         vh.iconBackground.setOnClickListener(iconClick);
@@ -234,7 +255,7 @@ public class BibleVerseAdapter extends BaseAdapter {
     View.OnClickListener iconClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            final ViewHolder vh = (ViewHolder)v.getTag();
+            final ViewHolder vh = (ViewHolder) v.getTag();
 
             final Animation a = AnimationUtils.loadAnimation(context, R.anim.flip_to_middle);
             final Animation b = AnimationUtils.loadAnimation(context, R.anim.flip_from_middle);
@@ -242,11 +263,13 @@ public class BibleVerseAdapter extends BaseAdapter {
             if(!vh.passage.getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) {
 
                 vh.passage.getMetaData().putBoolean(DefaultMetaData.IS_CHECKED, true);
-                if(multiSelectListener != null) multiSelectListener.onMultiSelect(v, vh.position);
+                if(multiSelectListener != null) multiSelectListener.onMultiSelect(vh.iconBackground, vh.position);
 
                 a.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation arg0) {
+                        vh.iconText.setVisibility(View.VISIBLE);
+                        vh.iconCheck.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
@@ -262,20 +285,27 @@ public class BibleVerseAdapter extends BaseAdapter {
                         vh.circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
                         vh.iconBackground.setImageDrawable(vh.circle);
 
+                        vh.iconText.setVisibility(View.INVISIBLE);
+                        vh.iconCheck.setVisibility(View.VISIBLE);
+
                         vh.iconBackground.startAnimation(b);
-                        vh.iconText.startAnimation(b);
+                        vh.iconCheck.startAnimation(b);
                     }
                 });
+                vh.iconBackground.startAnimation(a);
+                vh.iconText.startAnimation(a);
+                vh.cardview.setCardElevation(context.getResources().getDisplayMetrics().density * 4f);
             }
             else {
 
                 vh.passage.getMetaData().putBoolean(DefaultMetaData.IS_CHECKED, false);
-                if(multiSelectListener != null) multiSelectListener.onMultiSelect(v, vh.position);
+                if(multiSelectListener != null) multiSelectListener.onMultiSelect(vh.iconBackground, vh.position);
 
                 a.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation arg0) {
-
+                        vh.iconText.setVisibility(View.INVISIBLE);
+                        vh.iconCheck.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -291,14 +321,17 @@ public class BibleVerseAdapter extends BaseAdapter {
                         vh.circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
                         vh.iconBackground.setImageDrawable(vh.circle);
 
+                        vh.iconText.setVisibility(View.VISIBLE);
+                        vh.iconCheck.setVisibility(View.INVISIBLE);
+
                         vh.iconBackground.startAnimation(b);
                         vh.iconText.startAnimation(b);
+                        vh.cardview.setCardElevation(context.getResources().getDisplayMetrics().density * 1f);
                     }
                 });
+                vh.iconBackground.startAnimation(a);
+                vh.iconCheck.startAnimation(a);
             }
-
-            vh.iconBackground.startAnimation(a);
-            vh.iconText.startAnimation(a);
         }
     };
 }

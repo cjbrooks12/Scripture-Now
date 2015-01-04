@@ -41,6 +41,16 @@
                 android:fontFamily="sans-serif-light"
                 android:textSize="28sp"
                 />
+
+            <ImageView
+                android:id="@+id/ref_icon_check"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:src="?attr/ic_action_done"
+                android:visibility="invisible"
+                />
         </RelativeLayout>
 
         <RelativeLayout
