@@ -1,8 +1,0 @@
-<!-- From: file:/Users/blazsolar/Documents/workspace/fika/android/FlowLayoutProject/FlowLayout/src/main/AndroidManifest.xml --><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="6" android:versionName="0.3.4" package="com.wefika.flowlayout">
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19"/>
-
-    <application android:allowBackup="true">
-
-    </application>
-
-</manifest>
