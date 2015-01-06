@@ -22,4 +22,4 @@
 		android:valueType="floatType" 
 		android:interpolator="@android:anim/decelerate_interpolator" />
 </set>
-<!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/animator/slide_in_left.xml -->
+<!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/animator/slide_in_left.xml -->

@@ -5,10 +5,11 @@
     android:id="@+id/verse_list_card_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    cardView:cardBackgroundColor="?attr/color_card"
     android:foreground="@drawable/bg_transparent"
+    cardView:cardBackgroundColor="?attr/color_card"
     cardView:cardCornerRadius="4dp"
-    android:layout_margin="0dp">
+    cardView:cardMaxElevation="4dp"
+    cardView:cardElevation="2dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -48,7 +49,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:src="?attr/ic_action_done"
+                android:src="@drawable/ic_action_done_light"
                 android:visibility="invisible"
                 />
         </RelativeLayout>

@@ -54,44 +54,83 @@ public class MetaData {
         return items.get(key);
     }
 
-    public int getInt(String key) {
-        if(items.get(key).getClass().equals(Integer.class)) {
-            return (int) items.get(key);
-        }
-        else {
-            throw new ClassCastException("Key [" + key + "] expected result of type [" + Integer.class.toString() + "], found [" + items.get(key).getClass().toString() + "]");
-        }
-    }
-
-    public Long getLong(String key) {
+    /** Returns the integer value of @key from the map. If the object with key @key is not an
+     * Integer, throw an exception. If the key does not exist, return the default value.
+     * */
+    public int getInt(String key, int defValue) {
         if(items.containsKey(key)) {
-            if (items.get(key).getClass().equals(Long.class)) {
-                return (long) items.get(key);
-            } else {
-                throw new ClassCastException("Key [" + key + "] expected result of type [" + Long.class.toString() + "], found [" + items.get(key).getClass().toString() + "]");
+            Object item = items.get(key);
+            if (item != null) {
+                if (!items.get(key).getClass().equals(Integer.class)) {
+                    throw new ClassCastException("Key [" + key + "] expected result of type [" + Integer.class.toString() + "], found [" + items.get(key).getClass().toString() + "]");
+                }
+                else {
+                    return (int) item;
+                }
             }
         }
-        else return 0l; //default value of 0
+        return defValue;
+    }
+
+    public int getInt(String key) {
+        return getInt(key, 0);
+    }
+
+    public long getLong(String key, long defValue) {
+        if(items.containsKey(key)) {
+            Object item = items.get(key);
+            if (item != null) {
+                if (!items.get(key).getClass().equals(Long.class)) {
+                    throw new ClassCastException("Key [" + key + "] expected result of type [" + Long.class.toString() + "], found [" + items.get(key).getClass().toString() + "]");
+                }
+                else {
+                    return (long) item;
+                }
+            }
+        }
+        return defValue;
+    }
+
+    public long getLong(String key) {
+        return getLong(key, 0l);
+    }
+
+    public boolean getBoolean(String key, boolean defValue) {
+        if(items.containsKey(key)) {
+            Object item = items.get(key);
+            if (item != null) {
+                if (!items.get(key).getClass().equals(Boolean.class)) {
+                    throw new ClassCastException("Key [" + key + "] expected result of type [" + Boolean.class.toString() + "], found [" + items.get(key).getClass().toString() + "]");
+                }
+                else {
+                    return (boolean) item;
+                }
+            }
+        }
+        return defValue;
     }
 
     public boolean getBoolean(String key) {
-        if(items.containsKey(key)) {
-            if (items.get(key).getClass().equals(Boolean.class)) {
-                return (boolean) items.get(key);
-            } else {
-                throw new ClassCastException("Key [" + key + "] expected result of type [" + Boolean.class.toString() + "], found [" + items.get(key).getClass().toString() + "]");
-            }
-        }
-        else return false; //default value of false
+        return getBoolean(key, false);
     }
 
-    public int getString(String key) {
-        if(items.get(key).getClass().equals(String.class)) {
-            return (int) items.get(key);
+    public String getString(String key, String defValue) {
+        if(items.containsKey(key)) {
+            Object item = items.get(key);
+            if (item != null) {
+                if (!items.get(key).getClass().equals(String.class)) {
+                    throw new ClassCastException("Key [" + key + "] expected result of type [" + String.class.toString() + "], found [" + items.get(key).getClass().toString() + "]");
+                }
+                else {
+                    return (String) item;
+                }
+            }
         }
-        else {
-            throw new ClassCastException("Key [" + key + "] expected result of type [" + String.class.toString() + "], found [" + items.get(key).getClass().toString() + "]");
-        }
+        return defValue;
+    }
+
+    public String getString(String key) {
+        return getString(key, "");
     }
 
     public static class Comparator implements java.util.Comparator<AbstractVerse> {

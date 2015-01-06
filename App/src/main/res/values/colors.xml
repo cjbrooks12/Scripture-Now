@@ -27,8 +27,8 @@
     <color name="primary_dark">#00796B</color>
     <color name="primary_accent">#D32F2F</color>
 
-    <color name="text_light">#DEFFFFFF</color>
-    <color name="text_dark">#DE000000</color>
+    <color name="text_light">#91FFFFFF</color>
+    <color name="text_dark">#91000000</color>
 
 
 

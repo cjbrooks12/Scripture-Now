@@ -26,4 +26,4 @@
         android:layout_toEndOf="@id/header_image"
         android:textStyle="bold"
         android:textSize="22sp" />
-</RelativeLayout><!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/layout/nav_list_header.xml -->
+</RelativeLayout><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/layout/nav_list_header.xml -->

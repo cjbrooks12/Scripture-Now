@@ -39,6 +39,11 @@ public class VOTDService {
                 && today.get(Calendar.DAY_OF_YEAR) == current.get(Calendar.DAY_OF_YEAR));
 
             if(isCurrent) {
+                mostRecent.getMetaData().putBoolean("IS_CURRENT", true);
+                return mostRecent;
+            }
+            else {
+                mostRecent.getMetaData().putBoolean("IS_CURRENT", false);
                 return mostRecent;
             }
         }

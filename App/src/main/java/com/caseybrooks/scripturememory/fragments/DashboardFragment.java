@@ -78,6 +78,8 @@ public class DashboardFragment extends Fragment {
         ColorDrawable colorDrawable = new ColorDrawable(color);
         ab.setBackgroundDrawable(colorDrawable);
         ab.setTitle("Dashboard");
+
+        MetaSettings.putDrawerSelection(context, 0, 0);
     }
 
 	@Override

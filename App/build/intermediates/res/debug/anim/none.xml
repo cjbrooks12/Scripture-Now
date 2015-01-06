@@ -3,4 +3,4 @@
     android:shareInterpolator="false" >
     <translate android:duration="350" android:fromXDelta="0%" android:toXDelta="0%"/>
     <alpha android:duration="350" android:fromAlpha="1.0" android:toAlpha="1.0" />
-</set><!-- From: file:/home/casey/Desktop/scripturememory/App/src/main/res/anim/none.xml -->
+</set><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/anim/none.xml -->

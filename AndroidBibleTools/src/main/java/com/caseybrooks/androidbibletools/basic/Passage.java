@@ -30,7 +30,7 @@ public class Passage extends AbstractVerse {
 
     private static Pattern hashtag = Pattern.compile("#((\\w+)|(\"[\\w ]+\"))");
 
-    //Constructors
+//Constructors
 //------------------------------------------------------------------------------
     public Passage(Reference reference) {
         super(reference);
@@ -39,10 +39,10 @@ public class Passage extends AbstractVerse {
         this.verses = new ArrayList<Verse>();
 
         for(int i = 0; i < this.reference.verses.size(); i++) {
-            this.verses.add(
-                    new Verse(new Reference(this.reference.book,
+            Verse verse = new  Verse(new Reference(this.reference.book,
                             this.reference.chapter,
-                            this.reference.verses.get(i))));
+                            this.reference.verses.get(i)));
+            verse.setVersion(this.version);
         }
     }
 
@@ -62,7 +62,17 @@ public class Passage extends AbstractVerse {
 
 //Setters and Getters
 //------------------------------------------------------------------------------
-	public Passage setText(String text) {
+
+
+    @Override
+    public void setVersion(Version version) {
+        super.setVersion(version);
+        for(Verse verse : verses) {
+            verse.setVersion(this.version);
+        }
+    }
+
+    public Passage setText(String text) {
         //parse input string and extract any tags, denoted as standard hastags
         Matcher m = hashtag.matcher(text);
 

@@ -77,6 +77,8 @@ public class SettingsFragment extends PreferenceFragment {
         ColorDrawable colorDrawable = new ColorDrawable(color);
         ab.setBackgroundDrawable(colorDrawable);
         ab.setTitle("Settings");
+
+        MetaSettings.putDrawerSelection(context, 4, 0);
     }
 
     //Backup and Restore Preference Listeners

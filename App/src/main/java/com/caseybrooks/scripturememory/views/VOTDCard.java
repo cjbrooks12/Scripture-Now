@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
@@ -36,7 +37,6 @@ public class VOTDCard extends FrameLayout {
     LinearLayout layout;
 
     Passage currentVerse;
-    boolean redownload;
 
     //status of Verse of the Day.
     //0: No attempt has been made to retrieve the Verse
@@ -58,7 +58,6 @@ public class VOTDCard extends FrameLayout {
     
     void initialize() {
         status = 0;
-        redownload = false;
 
         overflowButton = (ImageButton) findViewById(R.id.overflowButton);
         overflowButton.setOnClickListener(votdRemove);
@@ -82,7 +81,16 @@ public class VOTDCard extends FrameLayout {
         status = 1;
         currentVerse = VOTDService.getCurrentVerse(context);
 
-        if(currentVerse == null || redownload) {
+        //if verse is old, delete it from database (no need to keep it around, its not in any lists),
+        // and set currentVerse to null so that we download it again
+        if(currentVerse != null && !currentVerse.getMetaData().getBoolean("IS_CURRENT")) {
+            VerseDB db = new VerseDB(context).open();
+            db.deleteVerse(currentVerse);
+            db.close();
+            currentVerse = null;
+        }
+
+        if(currentVerse == null) {
             new VOTDService.GetVOTD(context, new VOTDService.GetVerseListener() {
 
                 @Override
@@ -172,23 +180,29 @@ public class VOTDCard extends FrameLayout {
                     removeFromParent();
                     return true;
                 case R.id.context_votd_card_redownload:
-                    redownload = true;
+                    if(currentVerse != null) {
+                        VerseDB db = new VerseDB(context).open();
+                        db.deleteVerse(currentVerse);
+                        db.close();
+                    }
                     retrieve();
                     return true;
                 case R.id.context_votd_card_save:
                     saveVerse();
+                    Toast.makeText(context, currentVerse.getReference().toString() + " has been saved", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.context_votd_card_post:
                     saveVerse();
                     MetaSettings.putVerseId(context, currentVerse.getMetaData().getInt(DefaultMetaData.ID));
                     MetaSettings.putNotificationActive(context, true);
                     MainNotification.notify(context).show();
+                    Toast.makeText(context, currentVerse.getReference().toString() + " has been saved and set as notification", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.context_votd_card_browser:
-                    String url = currentVerse.getURL();
                     Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(url));
+                    i.setData(Uri.parse("http://www.verseoftheday.com/"));
                     context.startActivity(i);
+                    Toast.makeText(context, "Opening browser...", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
                     return false;

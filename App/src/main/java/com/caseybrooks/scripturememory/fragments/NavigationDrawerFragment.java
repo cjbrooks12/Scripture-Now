@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -191,6 +194,39 @@ public class NavigationDrawerFragment extends Fragment {
         });
     }
 
+    private void selectItem(NavListItem item) {
+        if (mDrawerLayout != null) {
+            mDrawerLayout.closeDrawer(mFragmentContainerView);
+        }
+        if (mCallbacks != null) {
+            MetaSettings.putDrawerSelection(parentActivity, item.groupPosition, item.id);
+            if(listAdapter != null) listAdapter.notifyDataSetChanged();
+
+            switch(item.groupPosition) {
+                case 0:
+                    mCallbacks.toDashboard();
+                    break;
+                case 1:
+                    if (item.childPosition == 0) mCallbacks.toTopicalBible();
+                    else mCallbacks.toImportVerses();
+                    break;
+                case 2:
+                    mCallbacks.toVerseList(VerseListFragment.STATE, item.id);
+                    break;
+                case 3:
+                    mCallbacks.toVerseList(VerseListFragment.TAGS, item.id);
+                    break;
+                case 4:
+                    mCallbacks.toSettings();
+                    break;
+                case 5:
+                    mCallbacks.toHelp();
+                    break;
+                default:
+            }
+        }
+    }
+
     public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         private Context context;
@@ -340,7 +376,28 @@ public class NavigationDrawerFragment extends Fragment {
                 headerText.setText(headerTitle);
             }
             Drawable headerDrawable = getResources().getDrawable(a.getResourceId(groupPosition, 0));
-            headerDrawable.setAlpha(140);
+
+            int selectedGroup = MetaSettings.getDrawerSelection(context).first;
+            TypedArray selectedColorAttrs = context.getTheme().obtainStyledAttributes(
+                    new int[]{R.attr.colorAccent, R.attr.color_text, R.attr.color_background});
+            int selectedColor = selectedColorAttrs.getColor(0, 0);
+            int unselectedColor = selectedColorAttrs.getColor(1, 0);
+            int backgroundColor = selectedColorAttrs.getColor(2, 0);
+            a.recycle();
+
+            if(groupPosition == selectedGroup) {
+                headerDrawable.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.SRC_IN));
+
+                headerText.setTextColor(selectedColor);
+                convertView.setBackgroundColor(Color.parseColor("#20000000"));
+            }
+            else {
+                headerDrawable.setColorFilter(new PorterDuffColorFilter(unselectedColor, PorterDuff.Mode.SRC_IN));
+
+                headerText.setTextColor(unselectedColor);
+                convertView.setBackgroundColor(backgroundColor);
+            }
+
             headerImage.setImageDrawable(headerDrawable);
             a.recycle();
 
@@ -440,37 +497,6 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-    }
-
-    private void selectItem(NavListItem item) {
-        if (mDrawerLayout != null) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-        }
-        if (mCallbacks != null) {
-            MetaSettings.putDrawerSelection(parentActivity, item.groupPosition, item.id);
-            switch(item.groupPosition) {
-                case 0:
-                    mCallbacks.toDashboard();
-                    break;
-                case 1:
-                    if (item.childPosition == 0) mCallbacks.toTopicalBible();
-                    else mCallbacks.toImportVerses();
-                    break;
-                case 2:
-                    mCallbacks.toVerseList(VerseListFragment.STATE, item.id);
-                    break;
-                case 3:
-                    mCallbacks.toVerseList(VerseListFragment.TAGS, item.id);
-                    break;
-                case 4:
-                    mCallbacks.toSettings();
-                    break;
-                case 5:
-                    mCallbacks.toHelp();
-                    break;
-                default:
-            }
-        }
     }
 
     @Override

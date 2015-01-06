@@ -48,6 +48,8 @@ public class HelpFragment extends PreferenceFragment {
         ColorDrawable colorDrawable = new ColorDrawable(color);
         ab.setBackgroundDrawable(colorDrawable);
         ab.setTitle("Help");
+
+        MetaSettings.putDrawerSelection(context, 5, 0);
     }
 
     //Rate App (go to Play Store) listener

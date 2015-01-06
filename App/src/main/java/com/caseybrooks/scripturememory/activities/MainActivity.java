@@ -365,7 +365,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
     public void setFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.push_up_in, 0)
+//                .setCustomAnimations(R.anim.push_up_in, 0)
                 .replace(R.id.mainFragmentContainer, fragment)
                 .addToBackStack(null)
                 .commit();

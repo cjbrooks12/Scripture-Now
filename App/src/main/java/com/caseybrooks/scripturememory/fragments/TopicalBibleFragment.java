@@ -81,6 +81,8 @@ public class TopicalBibleFragment extends Fragment {
         ColorDrawable colorDrawable = new ColorDrawable(context.getResources().getColor(R.color.open_bible_brown));
         ab.setBackgroundDrawable(colorDrawable);
         ab.setTitle("Topical Bible");
+
+        MetaSettings.putDrawerSelection(context, 1, 0);
     }
 
     @Override

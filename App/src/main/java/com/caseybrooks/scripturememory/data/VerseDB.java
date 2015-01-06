@@ -301,6 +301,12 @@ public class VerseDB {
         cleanupTags();
     }
 
+    public boolean deleteVerse(Passage passage) {
+        return db.delete(TABLE_VERSES,
+                KEY_VERSES_ID + " = " + passage.getMetaData().getInt(DefaultMetaData.ID) + " OR "+
+                KEY_VERSES_REFERENCE + " LIKE '" + passage.getReference().toString() + "'", null) > 0;
+    }
+
 //I may need to clean up below this line
 //------------------------------------------------------------------------------
 

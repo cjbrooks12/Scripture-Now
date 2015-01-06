@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.view.View;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
@@ -19,6 +20,7 @@ import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaReceiver;
 import com.caseybrooks.scripturememory.data.MetaSettings;
+import com.caseybrooks.scripturememory.data.VOTDService;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import java.util.Calendar;
@@ -170,6 +172,71 @@ public class VOTDNotification {
 //                }
 //            }
 //        }).execute();
+
+        Passage currentVerse = VOTDService.getCurrentVerse(context);
+
+        //if verse is old, delete it from database (no need to keep it around, its not in any lists),
+        // and set currentVerse to null so that we download it again
+        if(currentVerse != null && !currentVerse.getMetaData().getBoolean("IS_CURRENT")) {
+            VerseDB db = new VerseDB(context).open();
+            db.deleteVerse(currentVerse);
+            db.close();
+            currentVerse = null;
+        }
+
+        if(currentVerse == null) {
+            new VOTDService.GetVOTD(context, new VOTDService.GetVerseListener() {
+
+                @Override
+                public void onPreDownload() {
+                }
+
+                @Override
+                public void onVerseDownloaded(Passage passage) {
+                    if(passage != null) {
+                        int currentAPIVersion = android.os.Build.VERSION.SDK_INT;
+                        if (currentAPIVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                            //If device has Jelly Bean expanded notifications, set getText to
+                            //	only show reference on small, and verse getText on big
+                            ref = passage.getReference().toString();
+                            ver = " - " + passage.getText();
+                        }
+                        else {
+                            //If device does not have expanded notifications, let notification
+                            //	always show reference and getText
+                            ref = passage.getReference() + " - " + passage.getText();
+                            ver = "";
+                        }
+                        ref_save = passage.getReference().toString();
+                        ver_save = passage.getText();
+                        create();
+                        show();
+                    }
+                    else {
+
+                    }
+                }
+            }).execute();
+        }
+        else {
+            int currentAPIVersion = android.os.Build.VERSION.SDK_INT;
+            if (currentAPIVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                //If device has Jelly Bean expanded notifications, set getText to
+                //	only show reference on small, and verse getText on big
+                ref = currentVerse.getReference().toString();
+                ver = " - " + currentVerse.getText();
+            }
+            else {
+                //If device does not have expanded notifications, let notification
+                //	always show reference and getText
+                ref = currentVerse.getReference() + " - " + currentVerse.getText();
+                ver = "";
+            }
+            ref_save = currentVerse.getReference().toString();
+            ver_save = currentVerse.getText();
+            create();
+            show();
+        }
         return this;
 	}
 	
