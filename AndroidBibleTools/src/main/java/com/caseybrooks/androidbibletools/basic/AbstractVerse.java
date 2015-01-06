@@ -1,7 +1,7 @@
 package com.caseybrooks.androidbibletools.basic;
 
 import com.caseybrooks.androidbibletools.data.Formatter;
-import com.caseybrooks.androidbibletools.data.MetaData;
+import com.caseybrooks.androidbibletools.data.Metadata;
 import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.androidbibletools.enumeration.Version;
@@ -16,14 +16,14 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
 	protected Version version;
     protected final Reference reference;
     protected Formatter formatter;
-    protected MetaData metaData;
+    protected Metadata metadata;
 	protected TreeSet<String> tags;
 
 	public AbstractVerse(Reference reference) {
 		this.version = Version.KJV;
         this.reference = reference;
         this.formatter = new DefaultFormatter();
-        this.metaData = new MetaData();
+        this.metadata = new Metadata();
 		this.tags = new TreeSet<String>();
 	}
 
@@ -31,7 +31,7 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
         this.version = Version.KJV;
         this.reference = new Reference(reference);
         this.formatter = new DefaultFormatter();
-        this.metaData = new MetaData();
+        this.metadata = new Metadata();
         this.tags = new TreeSet<String>();
     }
 
@@ -42,8 +42,8 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
     public Reference getReference() { return reference; }
     public Formatter getFormatter() { return formatter; }
     public void setFormatter(Formatter formatter) { this.formatter = formatter; }
-    public MetaData getMetaData() { return metaData; }
-    public void setMetaData(MetaData metaData) { this.metaData = metaData; }
+    public Metadata getMetadata() { return metadata; }
+    public void setMetadata(Metadata metadata) { this.metadata = metadata; }
 
     public AbstractVerse removeAllTags() {
         tags.clear();

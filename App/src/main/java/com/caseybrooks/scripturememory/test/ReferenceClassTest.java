@@ -152,19 +152,19 @@ public class ReferenceClassTest extends InstrumentationTestCase {
         assertEquals(18, (int)ref.verses.get(2));
     }
 
-    public void testExtractSharedVerse() {
-        String youVersion = "http://bible.com/111/gen.3.1.niv Now the serpent was more crafty";
-        Reference youVersionRef = Reference.extractReference(youVersion);
-        assertNotNull(youVersionRef);
-        assertEquals(Book.Genesis, youVersionRef.book);
-        assertEquals(3, youVersionRef.chapter);
-        assertEquals(1, (int)youVersionRef.verse);
-
-        String faithlife = "\"Now the serpent was more crafty\"\n\n http://ref.ly/r/niv2011/Ge3.1 via the FaithLife";
-        Reference faithlifeRef = Reference.extractReference(faithlife);
-        assertNotNull(faithlifeRef);
-        assertEquals(Book.Genesis, faithlifeRef.book);
-        assertEquals(3, faithlifeRef.chapter);
-        assertEquals(1, (int)faithlifeRef.verse);
-    }
+//    public void testExtractSharedVerse() {
+//        String youVersion = "http://bible.com/111/gen.3.1.niv Now the serpent was more crafty";
+//        Reference youVersionRef = Reference.extractReference(youVersion);
+//        assertNotNull(youVersionRef);
+//        assertEquals(Book.Genesis, youVersionRef.book);
+//        assertEquals(3, youVersionRef.chapter);
+//        assertEquals(1, (int)youVersionRef.verse);
+//
+//        String faithlife = "\"Now the serpent was more crafty\"\n\n http://ref.ly/r/niv2011/Ge3.1 via the FaithLife";
+//        Reference faithlifeRef = Reference.extractReference(faithlife);
+//        assertNotNull(faithlifeRef);
+//        assertEquals(Book.Genesis, faithlifeRef.book);
+//        assertEquals(3, faithlifeRef.chapter);
+//        assertEquals(1, (int)faithlifeRef.verse);
+//    }
 }

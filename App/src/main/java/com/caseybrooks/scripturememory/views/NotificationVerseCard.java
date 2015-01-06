@@ -19,13 +19,14 @@ import android.widget.TextView;
 import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.androidbibletools.data.Formatter;
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.notifications.MainNotification;
+
+import java.util.ArrayList;
 
 public class NotificationVerseCard extends FrameLayout {
 //Data Members
@@ -137,10 +138,10 @@ public class NotificationVerseCard extends FrameLayout {
             //look through all "current" lists and get the first verse it finds. If there are none
             //in states 1-4, tell the user to add more
             for(int i = 1; i <= 4; i++) {
-                Verses<Passage> allCurrent = db.getStateVerses(i);
+                ArrayList<Passage> allCurrent = db.getStateVerses(i);
                 if (allCurrent.size() > 0) {
                     passage = allCurrent.get(0);
-                    MetaSettings.putVerseId(context, (int) passage.getMetaData().getInt(DefaultMetaData.ID));
+                    MetaSettings.putVerseId(context, (int) passage.getMetadata().getInt(DefaultMetaData.ID));
                     ref.setText(passage.getReference().toString());
                     ver.setText(passage.getText());
                     break;
@@ -210,7 +211,7 @@ public class NotificationVerseCard extends FrameLayout {
 	        case R.id.context_notification_card_edit:
                 try {
                     mCallbacks = (NavigationCallbacks) context;
-                    mCallbacks.toVerseEdit(passage.getMetaData().getInt(DefaultMetaData.ID));
+                    mCallbacks.toVerseEdit(passage.getMetadata().getInt(DefaultMetaData.ID));
                 } catch (ClassCastException e) {
                     e.printStackTrace();
                 }

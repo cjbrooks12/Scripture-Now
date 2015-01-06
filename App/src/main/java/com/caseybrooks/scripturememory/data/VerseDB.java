@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
@@ -215,11 +214,11 @@ public class VerseDB {
 
         try {
             Passage passage = new Passage(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
-            passage.getMetaData().putInt(DefaultMetaData.ID, c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
+            passage.getMetadata().putInt(DefaultMetaData.ID, c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
             passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
             passage.setVersion(Version.parseVersion(c.getString(c.getColumnIndex(KEY_VERSES_VERSION))));
-            passage.getMetaData().putLong(DefaultMetaData.TIME_CREATED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
-            passage.getMetaData().putInt(DefaultMetaData.STATE, c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
+            passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
+            passage.getMetadata().putInt(DefaultMetaData.STATE, c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
 
             String commaSeparatedTags = c.getString(c.getColumnIndex(KEY_VERSES_TAGS));
 
@@ -252,7 +251,7 @@ public class VerseDB {
         values.put(KEY_VERSES_VERSION, passage.getVersion().getCode());
         values.put(KEY_VERSES_DATE_ADDED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
-        values.put(KEY_VERSES_STATE, passage.getMetaData().getInt(DefaultMetaData.STATE));
+        values.put(KEY_VERSES_STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
 
         //ensure tags on this verse are up-to-date
         String[] tags = passage.getTags();
@@ -279,7 +278,7 @@ public class VerseDB {
         values.put(KEY_VERSES_VERSE, passage.getText());
         values.put(KEY_VERSES_VERSION, passage.getVersion().getCode());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
-        values.put(KEY_VERSES_STATE, passage.getMetaData().getInt(DefaultMetaData.STATE));
+        values.put(KEY_VERSES_STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
 
         //ensure tags on this verse are up-to-date
         String[] tags = passage.getTags();
@@ -296,14 +295,14 @@ public class VerseDB {
         }
         values.put(KEY_VERSES_TAGS, tag_string);
 
-        db.update(TABLE_VERSES, values, KEY_VERSES_ID + "=" + passage.getMetaData().getInt(DefaultMetaData.ID), null);
+        db.update(TABLE_VERSES, values, KEY_VERSES_ID + "=" + passage.getMetadata().getInt(DefaultMetaData.ID), null);
 
         cleanupTags();
     }
 
     public boolean deleteVerse(Passage passage) {
         return db.delete(TABLE_VERSES,
-                KEY_VERSES_ID + " = " + passage.getMetaData().getInt(DefaultMetaData.ID) + " OR "+
+                KEY_VERSES_ID + " = " + passage.getMetadata().getInt(DefaultMetaData.ID) + " OR "+
                 KEY_VERSES_REFERENCE + " LIKE '" + passage.getReference().toString() + "'", null) > 0;
     }
 
@@ -456,7 +455,7 @@ public class VerseDB {
         return color;
     }
 
-    public Verses<Passage> getTaggedVerses(int tagId) {
+    public ArrayList<Passage> getTaggedVerses(int tagId) {
         String selectQuery =
                 "SELECT *" +
                     " FROM " + TABLE_VERSES +
@@ -466,9 +465,9 @@ public class VerseDB {
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) c.moveToFirst();
-        else return new Verses<Passage>();
+        else return new ArrayList<Passage>();
 
-        Verses<Passage> verses = new Verses<Passage>();
+        ArrayList<Passage> verses = new ArrayList<Passage>();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             verses.add(getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID))));
         }
@@ -531,7 +530,7 @@ public class VerseDB {
 
     public void deleteTag(int id) {
         //TODO: change to just iterate over a cursor and update the tag fields directly
-        Verses<Passage> verses = getTaggedVerses(id);
+        ArrayList<Passage> verses = getTaggedVerses(id);
         for(int i = 0; i < verses.size(); i++) {
             String[] tags = verses.get(i).getTags();
             ArrayList<String> tagsList = new ArrayList<String>();
@@ -599,7 +598,7 @@ public class VerseDB {
         else return 0;
     }
 
-    public Verses<Passage> getAllVerses() {
+    public ArrayList<Passage> getAllVerses() {
         String selectQuery =
                 "SELECT *" +
                 " FROM " + TABLE_VERSES +
@@ -607,9 +606,9 @@ public class VerseDB {
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) c.moveToFirst();
-        else return new Verses<Passage>();
+        else return new ArrayList<Passage>();
 
-        Verses<Passage> verses = new Verses<Passage>();
+        ArrayList<Passage> verses = new ArrayList<Passage>();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             verses.add(getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID))));
         }
@@ -617,7 +616,7 @@ public class VerseDB {
         return verses;
     }
 
-    public Verses<Passage> getAllCurrentVerses() {
+    public ArrayList<Passage> getAllCurrentVerses() {
         String selectQuery =
                 "SELECT *" +
                 " FROM " + TABLE_VERSES +
@@ -625,9 +624,9 @@ public class VerseDB {
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) c.moveToFirst();
-        else return new Verses<Passage>();
+        else return new ArrayList<Passage>();
 
-        Verses<Passage> verses = new Verses<Passage>();
+        ArrayList<Passage> verses = new ArrayList<Passage>();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             verses.add(getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID))));
         }
@@ -635,7 +634,7 @@ public class VerseDB {
         return verses;
     }
 
-    public Verses<Passage> getStateVerses(int id) {
+    public ArrayList<Passage> getStateVerses(int id) {
         if(id == ALL_VERSES) return getAllVerses();
         else if(id == CURRENT) return getAllCurrentVerses();
         else {
@@ -646,9 +645,9 @@ public class VerseDB {
 
             Cursor c = db.rawQuery(selectQuery, null);
             if (c != null && c.getCount() > 0) c.moveToFirst();
-            else return new Verses<Passage>();
+            else return new ArrayList<Passage>();
 
-            Verses<Passage> verses = new Verses<Passage>();
+            ArrayList<Passage> verses = new ArrayList<Passage>();
             for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
                 verses.add(getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID))));
             }

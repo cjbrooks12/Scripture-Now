@@ -31,7 +31,7 @@ public class VOTDService {
             //if the current verse is not today, it needs to get updated
             Calendar today = Calendar.getInstance();
             Calendar current = Calendar.getInstance();
-            current.setTimeInMillis(mostRecent.getMetaData().getLong(DefaultMetaData.TIME_CREATED));
+            current.setTimeInMillis(mostRecent.getMetadata().getLong(DefaultMetaData.TIME_CREATED));
 
             boolean isCurrent =
                 (today.get(Calendar.ERA) == current.get(Calendar.ERA)
@@ -39,11 +39,11 @@ public class VOTDService {
                 && today.get(Calendar.DAY_OF_YEAR) == current.get(Calendar.DAY_OF_YEAR));
 
             if(isCurrent) {
-                mostRecent.getMetaData().putBoolean("IS_CURRENT", true);
+                mostRecent.getMetadata().putBoolean("IS_CURRENT", true);
                 return mostRecent;
             }
             else {
-                mostRecent.getMetaData().putBoolean("IS_CURRENT", false);
+                mostRecent.getMetadata().putBoolean("IS_CURRENT", false);
                 return mostRecent;
             }
         }
@@ -75,7 +75,7 @@ public class VOTDService {
 
                 if(passage != null) {
                     passage.addTag("VOTD");
-                    passage.getMetaData().putInt(DefaultMetaData.STATE, VerseDB.VOTD);
+                    passage.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.VOTD);
 
                     VerseDB db = new VerseDB(context).open();
                     db.insertVerse(passage);

@@ -5,10 +5,10 @@ import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import java.util.HashMap;
 import java.util.Set;
 
-public class MetaData {
+public class Metadata {
     private HashMap<String, Object> items;
 
-    public MetaData() {
+    public Metadata() {
         items = new HashMap<>();
     }
 
@@ -28,9 +28,12 @@ public class MetaData {
         return items.keySet();
     }
 
-    private void put(String key, Object value) {
+    public void put(String key, Object value) {
         if(value instanceof Comparable) {
             items.put(key, value);
+        }
+        else {
+            throw new IllegalArgumentException("Objects must implement " + Comparable.class.getName() + ". [" + value.getClass().getName() + "] does not name a Comparable type");
         }
     }
 
@@ -142,6 +145,7 @@ public class MetaData {
             this.key = key;
         }
 
+        //TODO: first check to see if Metadata objects contain the appropriate key, and throw exception if either does not
         @Override
         public int compare(AbstractVerse a, AbstractVerse b) {
             if(key.equals(KEY_REFERENCE)) {
@@ -151,8 +155,8 @@ public class MetaData {
                 return a.getReference().toString().compareTo(b.getReference().toString());
             }
             else {
-                Object lhs = a.getMetaData().get(key);
-                Object rhs = b.getMetaData().get(key);
+                Object lhs = a.getMetadata().get(key);
+                Object rhs = b.getMetadata().get(key);
                 if (lhs.getClass().equals(rhs.getClass())) {
                     return ((Comparable) lhs).compareTo((Comparable) rhs);
                 } else {

@@ -4,7 +4,6 @@ package com.caseybrooks.androidbibletools.data;
  * on the Verse itself, set flags on this Formatter and assign the formatter to
  * the Verse. This makes it easier to have consistent output, because the same
  * Formatter can be assigned to multiple Verses
- *
  */
 public interface Formatter {
     //called before we begin formatting the actual verses.

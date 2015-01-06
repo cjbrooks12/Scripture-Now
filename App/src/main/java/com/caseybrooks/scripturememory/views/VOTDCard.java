@@ -83,7 +83,7 @@ public class VOTDCard extends FrameLayout {
 
         //if verse is old, delete it from database (no need to keep it around, its not in any lists),
         // and set currentVerse to null so that we download it again
-        if(currentVerse != null && !currentVerse.getMetaData().getBoolean("IS_CURRENT")) {
+        if(currentVerse != null && !currentVerse.getMetadata().getBoolean("IS_CURRENT")) {
             VerseDB db = new VerseDB(context).open();
             db.deleteVerse(currentVerse);
             db.close();
@@ -143,7 +143,7 @@ public class VOTDCard extends FrameLayout {
 				public void onClick(DialogInterface dialog, int id) {
                     VerseDB db = new VerseDB(context);
                     db.open();
-                    currentVerse.getMetaData().putInt(DefaultMetaData.STATE, 1);
+                    currentVerse.getMetadata().putInt(DefaultMetaData.STATE, 1);
                     db.updateVerse(currentVerse);
                     db.close();
 				}
@@ -193,7 +193,7 @@ public class VOTDCard extends FrameLayout {
                     return true;
                 case R.id.context_votd_card_post:
                     saveVerse();
-                    MetaSettings.putVerseId(context, currentVerse.getMetaData().getInt(DefaultMetaData.ID));
+                    MetaSettings.putVerseId(context, currentVerse.getMetadata().getInt(DefaultMetaData.ID));
                     MetaSettings.putNotificationActive(context, true);
                     MainNotification.notify(context).show();
                     Toast.makeText(context, currentVerse.getReference().toString() + " has been saved and set as notification", Toast.LENGTH_SHORT).show();

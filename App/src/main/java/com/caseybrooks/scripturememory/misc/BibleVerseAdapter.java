@@ -1,13 +1,11 @@
 package com.caseybrooks.scripturememory.misc;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.container.Verses;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -68,7 +65,7 @@ public class BibleVerseAdapter extends BaseAdapter {
         int count = 0;
 
         for(Passage passage : items) {
-            if(passage.getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) count++;
+            if(passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) count++;
         }
 
         return count;
@@ -79,8 +76,8 @@ public class BibleVerseAdapter extends BaseAdapter {
 
         for(int i = 0; i < items.size(); i++) {
             Passage passage = items.get(i);
-            passage.getMetaData().putInt("LIST_POSITION", i);
-            if(passage.getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) selectedItems.add(passage);
+            passage.getMetadata().putInt("LIST_POSITION", i);
+            if(passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) selectedItems.add(passage);
         }
 
         return selectedItems;
@@ -89,13 +86,13 @@ public class BibleVerseAdapter extends BaseAdapter {
     @Override
     public Passage getItem(int position) {
         Passage passage = items.get(position);
-        passage.getMetaData().putInt("LIST_POSITION", position);
+        passage.getMetadata().putInt("LIST_POSITION", position);
         return passage;
     }
 
     @Override
     public long getItemId(int position) {
-        return items.get(position).getMetaData().getInt(DefaultMetaData.ID);
+        return items.get(position).getMetadata().getInt(DefaultMetaData.ID);
     }
 
     public void removeItem(Passage item) {
@@ -231,7 +228,7 @@ public class BibleVerseAdapter extends BaseAdapter {
                 @Override
                 public void onAnimationEnd(Animation arg0) {
                     VerseDB db = new VerseDB(context).open();
-                    int selectedColor = db.getStateColor(passage.getMetaData().getInt(DefaultMetaData.STATE));
+                    int selectedColor = db.getStateColor(passage.getMetadata().getInt(DefaultMetaData.STATE));
                     db.close();
 
                     circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
@@ -260,11 +257,11 @@ public class BibleVerseAdapter extends BaseAdapter {
         }
 
         private int getPosition() {
-            return passage.getMetaData().getInt("LIST_POSITION");
+            return passage.getMetadata().getInt("LIST_POSITION");
         }
 
         private int getId() {
-            return passage.getMetaData().getInt(DefaultMetaData.ID);
+            return passage.getMetadata().getInt(DefaultMetaData.ID);
         }
 
         private void initialize(Passage passage) {
@@ -278,7 +275,7 @@ public class BibleVerseAdapter extends BaseAdapter {
             iconText.setText(passageBookCode.replaceFirst("(\\d)", "$1 "));
 
             VerseDB db = new VerseDB(context).open();
-            if(passage.getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) {
+            if(passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
                 TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{R.attr.colorAccent});
                 int selectedColor = a.getColor(0, 0);
                 a.recycle();
@@ -289,7 +286,7 @@ public class BibleVerseAdapter extends BaseAdapter {
                 iconText.setVisibility(View.INVISIBLE);
             }
             else {
-                int selectedColor = db.getStateColor(passage.getMetaData().getInt(DefaultMetaData.STATE));
+                int selectedColor = db.getStateColor(passage.getMetadata().getInt(DefaultMetaData.STATE));
                 circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
                 iconBackground.setImageDrawable(circle);
 
@@ -321,16 +318,16 @@ public class BibleVerseAdapter extends BaseAdapter {
         }
 
         public void multiSelect() {
-            if(!passage.getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) {
+            if(!passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
 
-                passage.getMetaData().putBoolean(DefaultMetaData.IS_CHECKED, true);
+                passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, true);
 
                 iconBackground.startAnimation(a_not_selected);
                 iconText.startAnimation(a_not_selected);
                 cardview.setCardElevation(context.getResources().getDisplayMetrics().density * 4f);
             }
             else {
-                passage.getMetaData().putBoolean(DefaultMetaData.IS_CHECKED, false);
+                passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, false);
 
                 iconBackground.startAnimation(a_selected);
                 iconCheck.startAnimation(a_selected);

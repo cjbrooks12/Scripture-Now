@@ -110,11 +110,11 @@ public class VersesDatabase {
                 Passage passage = new Passage(c.getString(c.getColumnIndex(KEY_REFERENCE)));
                 passage.setText(c.getString(c.getColumnIndex(KEY_VERSE)));
                 passage.setVersion(MetaSettings.getBibleVersion(context));
-                passage.getMetaData().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
+                passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
                 if (c.getString(c.getColumnIndex(KEY_LIST)).equals("memorized")) {
-                    passage.getMetaData().putInt(DefaultMetaData.STATE, 5);
+                    passage.getMetadata().putInt(DefaultMetaData.STATE, 5);
                 } else {
-                    passage.getMetaData().putInt(DefaultMetaData.STATE, 1 + (int) (Math.random() * 4));
+                    passage.getMetadata().putInt(DefaultMetaData.STATE, 1 + (int) (Math.random() * 4));
                 }
 
                 while (passage.getTags().length < 1 + (int) (Math.random() * 6)) {
@@ -322,9 +322,9 @@ public class VersesDatabase {
                 Passage passage = new Passage(str[1]);
                 passage.setText(str[2]);
                 if (str[3].equals("memorized"))
-                    passage.getMetaData().putInt(DefaultMetaData.STATE, 4);
+                    passage.getMetadata().putInt(DefaultMetaData.STATE, 4);
                 else
-                    passage.getMetaData().putInt(DefaultMetaData.STATE, 1);
+                    passage.getMetadata().putInt(DefaultMetaData.STATE, 1);
 
 //            id = verseDB.insertVerse(passage);
                 id = (int) createEntry(str[1], str[2], str[3]);

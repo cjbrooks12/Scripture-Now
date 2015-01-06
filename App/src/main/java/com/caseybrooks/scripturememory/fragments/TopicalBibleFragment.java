@@ -22,7 +22,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,7 +42,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 
 public class TopicalBibleFragment extends Fragment {
     Context context;
@@ -266,7 +264,7 @@ public class TopicalBibleFragment extends Fragment {
                         public void onClick(View v) {
                             VerseDB db = new VerseDB(context).open();
                             Passage passage = currentItem.passage;
-                            passage.getMetaData().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
+                            passage.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
                             passage.addTag(currentItem.searchTerm);
                             db.insertVerse(passage);
                             dialog.cancel();

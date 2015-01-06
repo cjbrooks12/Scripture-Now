@@ -7,13 +7,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.TaskStackBuilder;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
-import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VOTDService;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
@@ -80,7 +78,7 @@ public class VOTDWidget extends AppWidgetProvider {
 
         //if verse is old, delete it from database (no need to keep it around, its not in any lists),
         // and set currentVerse to null so that we download it again
-        if(currentVerse != null && !currentVerse.getMetaData().getBoolean("IS_CURRENT")) {
+        if(currentVerse != null && !currentVerse.getMetadata().getBoolean("IS_CURRENT")) {
             VerseDB db = new VerseDB(context).open();
             db.deleteVerse(currentVerse);
             db.close();

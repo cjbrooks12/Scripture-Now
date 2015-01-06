@@ -176,8 +176,8 @@ public class VerseInputCard extends FrameLayout {
                     Passage newVerse = new Passage(editReference.getText().toString());
                     newVerse.setText(editVerse.getText().toString());
                     newVerse.setVersion(MetaSettings.getBibleVersion(context));
-                    newVerse.getMetaData().putInt(DefaultMetaData.STATE, 1);
-                    newVerse.getMetaData().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
+                    newVerse.getMetadata().putInt(DefaultMetaData.STATE, 1);
+                    newVerse.getMetadata().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
                     VerseDB db = new VerseDB(context);
                     db.open();
                     db.insertVerse(newVerse);

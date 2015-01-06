@@ -12,10 +12,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.PopupMenu;
-import android.text.method.CharacterPickerDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,13 +23,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.container.Verses;
-import com.caseybrooks.androidbibletools.data.MetaData;
+import com.caseybrooks.androidbibletools.data.Metadata;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
@@ -171,7 +167,7 @@ public class VerseListFragment extends ListFragment {
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.context_list_post:
-                            MetaSettings.putVerseId(context, vh.passage.getMetaData().getInt(DefaultMetaData.ID));
+                            MetaSettings.putVerseId(context, vh.passage.getMetadata().getInt(DefaultMetaData.ID));
                             MetaSettings.putNotificationActive(context, true);
                             MainNotification.notify(context).show();
                             Toast.makeText(context, vh.passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
@@ -206,7 +202,7 @@ public class VerseListFragment extends ListFragment {
     };
 
 	private void populateBibleVerses() {
-		Verses<Passage> verses;
+        ArrayList<Passage> verses;
         MainActivity mainActivity = (MainActivity) getActivity();
 
 		db.open();
@@ -234,25 +230,25 @@ public class VerseListFragment extends ListFragment {
 
         switch(MetaSettings.getSortBy(context)) {
             case 0:
-                comparator = new MetaData.Comparator(DefaultMetaData.TIME_CREATED);
+                comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED);
                 break;
             case 1:
-                comparator = new MetaData.Comparator(MetaData.Comparator.KEY_REFERENCE);
+                comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE);
                 break;
             case 2:
-                comparator = new MetaData.Comparator(MetaData.Comparator.KEY_REFERENCE_ALPHABETICAL);
+                comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL);
                 break;
             case 3:
-                comparator = new MetaData.Comparator(DefaultMetaData.STATE);
+                comparator = new Metadata.Comparator(DefaultMetaData.STATE);
                 break;
             default:
-                comparator = new MetaData.Comparator("ID");
+                comparator = new Metadata.Comparator("ID");
                 break;
         }
 
-        Collections.sort(verses.verses, comparator);
+        Collections.sort(verses, comparator);
 
-		bibleVerseAdapter = new BibleVerseAdapter(context, verses.verses, getListView());
+		bibleVerseAdapter = new BibleVerseAdapter(context, verses, getListView());
         bibleVerseAdapter.setOnItemClickListener(itemClick);
         bibleVerseAdapter.setOnItemMultiselectListener(iconClick);
         bibleVerseAdapter.setOnItemOverflowClickListener(overflowClick);
@@ -350,9 +346,9 @@ public class VerseListFragment extends ListFragment {
                     int lastPosition = firstPosition + getListView().getChildCount() - 1;
 
                     for(Passage passage : items) {
-                        int position = passage.getMetaData().getInt("LIST_POSITION");
+                        int position = passage.getMetadata().getInt("LIST_POSITION");
 
-                        if(!passage.getMetaData().getBoolean(DefaultMetaData.IS_CHECKED)) {
+                        if(!passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
                             if (position >= firstPosition && position <= lastPosition) {
                                 View view = getListView().getChildAt(position - firstPosition);
                                 if (view != null) {
@@ -361,7 +357,7 @@ public class VerseListFragment extends ListFragment {
                                 }
                             }
                             else {
-                                passage.getMetaData().putBoolean(DefaultMetaData.IS_CHECKED, true);
+                                passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, true);
                             }
                         }
                     }
@@ -410,7 +406,7 @@ public class VerseListFragment extends ListFragment {
             int lastPosition = firstPosition + getListView().getChildCount() - 1;
 
             for(Passage passage : selectedItems) {
-                int position = passage.getMetaData().getInt("LIST_POSITION");
+                int position = passage.getMetadata().getInt("LIST_POSITION");
                 if( position >= firstPosition && position <= lastPosition) {
 
                     View view = getListView().getChildAt(position - firstPosition);
@@ -420,7 +416,7 @@ public class VerseListFragment extends ListFragment {
                     }
                 }
                 else {
-                    passage.getMetaData().putBoolean(DefaultMetaData.IS_CHECKED, false);
+                    passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, false);
                 }
             }
             //just to ensure that all verses correctly reflect their selected state in case of issues

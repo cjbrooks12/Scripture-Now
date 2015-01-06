@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.view.View;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
@@ -177,7 +176,7 @@ public class VOTDNotification {
 
         //if verse is old, delete it from database (no need to keep it around, its not in any lists),
         // and set currentVerse to null so that we download it again
-        if(currentVerse != null && !currentVerse.getMetaData().getBoolean("IS_CURRENT")) {
+        if(currentVerse != null && !currentVerse.getMetadata().getBoolean("IS_CURRENT")) {
             VerseDB db = new VerseDB(context).open();
             db.deleteVerse(currentVerse);
             db.close();
@@ -249,8 +248,8 @@ public class VOTDNotification {
                 Passage newVerse = new Passage(intent.getStringExtra("REF_SAVE"));
                 newVerse.setText(intent.getStringExtra("VER_SAVE"));
                 newVerse.setVersion(MetaSettings.getBibleVersion(context));
-                newVerse.getMetaData().putInt(DefaultMetaData.STATE, 1);
-                newVerse.getMetaData().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
+                newVerse.getMetadata().putInt(DefaultMetaData.STATE, 1);
+                newVerse.getMetadata().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
 				VerseDB db = new VerseDB(context);
 				db.open();
 				db.insertVerse(newVerse);
