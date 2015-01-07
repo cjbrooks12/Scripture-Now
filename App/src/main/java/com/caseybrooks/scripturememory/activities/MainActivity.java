@@ -122,7 +122,8 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                                 new StreamSource(getResources().openRawResource(R.raw.share_the_gospel)),
                                 new StreamSource(getResources().openRawResource(R.raw.the_command_of_christ)),
                                 new StreamSource(getResources().openRawResource(R.raw.the_person_of_christ)),
-                                new StreamSource(getResources().openRawResource(R.raw.the_work_of_christ))
+                                new StreamSource(getResources().openRawResource(R.raw.the_work_of_christ)),
+                                new StreamSource(getResources().openRawResource(R.raw.roman_road))
                         };
 
                         File[] outputStream = new File[]{
@@ -131,7 +132,8 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                                 new File(path, "share_the_gospel.xml"),
                                 new File(path, "the_command_of_christ.xml"),
                                 new File(path, "the_person_of_christ.xml"),
-                                new File(path, "the_work_of_christ.xml")
+                                new File(path, "the_work_of_christ.xml"),
+                                new File(path, "roman_road.xml")
                         };
 
                         TransformerFactory factory = TransformerFactory.newInstance();

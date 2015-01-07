@@ -106,7 +106,7 @@ public class BibleVerseAdapter extends BaseAdapter {
         ViewHolder vh;
         View view = convertView;
         if(view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.list_card_new, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.list_verses, parent, false);
             vh = new ViewHolder(context, view);
             view.setTag(vh);
         }

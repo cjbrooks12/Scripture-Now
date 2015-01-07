@@ -1,50 +1,33 @@
 package com.caseybrooks.scripturememory.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
-import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.Util;
-import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
 
 public class ImportVersesFragment extends Fragment {
     Context context;
@@ -108,7 +91,7 @@ public class ImportVersesFragment extends Fragment {
                 Document doc = Jsoup.parse(file[i], null);
 
                 if(doc.select("verses").size() > 0) {
-                    View itemView = LayoutInflater.from(context).inflate(R.layout.open_bible_verse_card, null);
+                    View itemView = LayoutInflater.from(context).inflate(R.layout.list_open_bible, null);
                     TextView reference = (TextView) itemView.findViewById(R.id.reference);
                     TextView version = (TextView) itemView.findViewById(R.id.version);
                     TextView verse = (TextView) itemView.findViewById(R.id.verse);

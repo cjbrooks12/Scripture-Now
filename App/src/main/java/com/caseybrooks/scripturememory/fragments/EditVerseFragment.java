@@ -241,7 +241,7 @@ public class EditVerseFragment extends Fragment {
             ViewHolder vh;
             View view = convertView;
             if(view == null) {
-                view = LayoutInflater.from(context).inflate(R.layout.chip_tag_full, parent, false);
+                view = LayoutInflater.from(context).inflate(R.layout.list_tag_chip, parent, false);
                 vh = new ViewHolder(view);
                 view.setTag(vh);
             }

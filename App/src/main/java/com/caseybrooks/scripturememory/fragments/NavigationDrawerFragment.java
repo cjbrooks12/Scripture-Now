@@ -15,10 +15,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,7 +110,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void populateList() {
-        RelativeLayout header = (RelativeLayout) LayoutInflater.from(parentActivity).inflate(R.layout.nav_drawer_header, null);
+        RelativeLayout header = (RelativeLayout) LayoutInflater.from(parentActivity).inflate(R.layout.parallax_drawer_header, null);
         mDrawerListView.addParallaxedHeaderView(header);
 
         List<String> listDataHeader = new ArrayList<String>();
@@ -308,7 +306,7 @@ public class NavigationDrawerFragment extends Fragment {
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) this.context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.nav_list_subitem, null);
+                convertView = infalInflater.inflate(R.layout.list_drawer_child_view, null);
             }
 
             NavListItem item = getChild(groupPosition, childPosition);
@@ -353,7 +351,7 @@ public class NavigationDrawerFragment extends Fragment {
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.nav_list_header, null);
+                convertView = LayoutInflater.from(context).inflate(R.layout.list_drawer_group_view, null);
             }
 
             String headerTitle = getGroup(groupPosition);

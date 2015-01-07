@@ -37,7 +37,7 @@ public class TagChip extends RelativeLayout {
         super(context);
         this.context = context;
 
-        LayoutInflater.from(context).inflate(R.layout.chip_tag_full, this);
+        LayoutInflater.from(context).inflate(R.layout.list_tag_chip, this);
 
         initialize();
     }
@@ -46,7 +46,7 @@ public class TagChip extends RelativeLayout {
         super(context, attrs);
         this.context = context;
 
-        LayoutInflater.from(context).inflate(R.layout.chip_tag_full, this);
+        LayoutInflater.from(context).inflate(R.layout.list_tag_chip, this);
 
         initialize();
     }

@@ -33,6 +33,6 @@ public class NavDrawerHeader extends RelativeLayout {
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        LayoutInflater.from(context).inflate(R.layout.nav_drawer_header, this);
+        LayoutInflater.from(context).inflate(R.layout.parallax_drawer_header, this);
     }
 }

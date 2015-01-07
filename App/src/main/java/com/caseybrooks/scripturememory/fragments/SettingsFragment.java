@@ -42,7 +42,8 @@ public class SettingsFragment extends PreferenceFragment {
 
 		findPreference("Backup").setOnPreferenceClickListener(backupClick);
 		findPreference("Restore").setOnPreferenceClickListener(restoreClick);
-		findPreference("PREF_VOTD_NOTIFICATION").setOnPreferenceChangeListener(VOTDCheckedChange);
+        findPreference("Import").setOnPreferenceClickListener(importClick);
+        findPreference("PREF_VOTD_NOTIFICATION").setOnPreferenceChangeListener(VOTDCheckedChange);
 		findPreference("PREF_VOTD_TIME").setOnPreferenceChangeListener(VOTDTimeChange);
 
 		ListPreference appTheme = (ListPreference) findPreference("PREF_SELECTED_THEME");
@@ -181,6 +182,14 @@ public class SettingsFragment extends PreferenceFragment {
 			return false;
 		}
 	};
+
+    OnPreferenceClickListener importClick = new OnPreferenceClickListener() {
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+
+            return false;
+        }
+    };
 	
 //Verse of the Day Preference Listeners
 //------------------------------------------------------------------------------
