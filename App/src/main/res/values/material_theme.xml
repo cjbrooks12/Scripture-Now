@@ -30,6 +30,7 @@
         <item name="ic_action_share">@drawable/ic_action_share_light</item>
         <item name="ic_action_delete">@drawable/ic_action_delete_light</item>
         <item name="ic_action_select_all">@drawable/ic_action_select_all_light</item>
+        <item name="ic_action_save">@drawable/ic_action_save_light</item>
 
         <item name="ic_action_home">@drawable/ic_action_home_light</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>

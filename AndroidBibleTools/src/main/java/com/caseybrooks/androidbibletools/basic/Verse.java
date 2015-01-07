@@ -200,7 +200,7 @@ public class Verse extends AbstractVerse {
     }
 
     @Override
-	public Verse retrieve() throws IOException{
+	public Verse retrieve() throws IOException {
         Document doc = Jsoup.connect(getURL()).get();
 
 		Elements passage = doc.select(".versetext");

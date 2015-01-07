@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/contextual_open_bible_select_all"
+        app:showAsAction="ifRoom"
+        android:icon="?attr/ic_action_select_all"
+        android:title="Select All" />
+    <item
+        android:id="@+id/contextual_open_bible_save"
+        app:showAsAction="ifRoom"
+        android:icon="?attr/ic_action_save"
+        android:title="Save Verses" />
+    <item
+        android:id="@+id/contextual_open_bible_redownload"
+        app:showAsAction="ifRoom"
+        android:icon="?attr/ic_action_refresh"
+        android:title="Redownload" />
+</menu>

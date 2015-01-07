@@ -1,6 +1,7 @@
 package com.caseybrooks.androidbibletools.search;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.enumeration.Version;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,6 +24,7 @@ public class OpenBibleInfo {
         for(Element element : passages) {
             try {
                 Passage passage = new Passage(element.select(".bibleref").first().ownText());
+                passage.setVersion(Version.ESV);
                 passage.setText(element.select("p").get(1).text());
 
                 String notesString = element.select(".note").get(0).ownText();

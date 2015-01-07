@@ -22,6 +22,7 @@
     <attr name="ic_action_share" format="reference" />
     <attr name="ic_action_delete" format="reference" />
     <attr name="ic_action_select_all" format="reference" />
+    <attr name="ic_action_save" format="reference" />
 
     <attr name="ic_action_home" format="reference" />
     <attr name="ic_action_find_in_page" format="reference" />

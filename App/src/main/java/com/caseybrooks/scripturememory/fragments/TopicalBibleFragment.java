@@ -3,7 +3,6 @@ package com.caseybrooks.scripturememory.fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -13,10 +12,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
+import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -56,6 +61,7 @@ public class TopicalBibleFragment extends Fragment {
     ParallaxListView listView;
     OpenBibleAdapter adapter;
 
+    ActionMode mActionMode;
     NavigationCallbacks mCallbacks;
     ProgressBar progress;
 
@@ -76,6 +82,12 @@ public class TopicalBibleFragment extends Fragment {
         ab.setTitle("Topical Bible");
 
         MetaSettings.putDrawerSelection(context, 1, 0);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(mActionMode != null) mActionMode.finish();
     }
 
     @Override
@@ -155,6 +167,16 @@ public class TopicalBibleFragment extends Fragment {
         adapter.setOnItemMultiselectListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(mActionMode == null) {
+                    mActionMode = ((ActionBarActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+                    mActionMode.setTitle("1");
+                }
+                else if(adapter.getSelectedCount() == 0) {
+                    mActionMode.finish();
+                }
+                else {
+                    mActionMode.setTitle(adapter.getSelectedCount() + "");
+                }
             }
         });
         adapter.setOnItemOverflowClickListener(new AdapterView.OnItemClickListener() {
@@ -164,9 +186,116 @@ public class TopicalBibleFragment extends Fragment {
         });
         listView.setAdapter(adapter);
 
-
         return view;
     }
+
+//ActionMode callbacks to handle CAB lifecycle and menu pressed on it
+//------------------------------------------------------------------------------
+
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        // Called when the action mode is created; startActionMode() was called
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate a menu resource providing context menu items
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.contextual_open_bible, menu);
+            return true;
+        }
+
+        // Called each time the action mode is shown. Always called after onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                //clicked back button to close the CAB
+                case android.R.id.home:
+                    mode.finish();
+                    return true;
+                //select all verses in the list
+                case R.id.contextual_open_bible_select_all:
+                    ArrayList<Passage> items = adapter.getItems();
+
+                    int firstPosition = listView.getFirstVisiblePosition();
+                    int lastPosition = firstPosition + listView.getChildCount() - 1;
+
+                    for(Passage passage : items) {
+                        int position = passage.getMetadata().getInt("LIST_POSITION");
+
+                        if(!passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
+                            if (position >= firstPosition && position <= lastPosition) {
+                                ViewHolder vh = (ViewHolder) listView.getChildAt(position - firstPosition).getTag();
+                                if (vh != null) {
+                                    vh.multiSelect();
+                                }
+                                else {
+                                    Toast.makeText(context, "Position [" + position + "] has no tag: " + passage.getReference().toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else {
+                                passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, true);
+                            }
+                        }
+                    }
+
+                    //update count in toolbar
+                    mActionMode.setTitle(adapter.getSelectedCount() + " Selected");
+
+                    //just to ensure that all verses correctly reflect their selected state in case of issues
+                    adapter.notifyDataSetChanged();
+
+                    return true;
+                case R.id.contextual_open_bible_redownload:
+                    new RedownloadAsync().execute(adapter.getSelectedItems());
+                    return true;
+                case R.id.contextual_open_bible_save:
+                    save(adapter.getSelectedItems());
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        // Called when the user exits the action mode
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+
+            //deselect all items
+            ArrayList<Passage> selectedItems = adapter.getSelectedItems();
+
+            int firstPosition = listView.getFirstVisiblePosition();
+            int lastPosition = firstPosition + listView.getChildCount() - 1;
+
+            for(Passage passage : selectedItems) {
+                int position = passage.getMetadata().getInt("LIST_POSITION");
+                if( position >= firstPosition && position <= lastPosition) {
+
+                    View view = listView.getChildAt(position - firstPosition);
+                    if(view != null) {
+                        ViewHolder vh = (ViewHolder) listView.getChildAt(position - firstPosition).getTag();
+                        if (vh != null) {
+                            vh.multiSelect();
+                        }
+                        else {
+                            Toast.makeText(context, "Position [" + position + "] has no tag: " + passage.getReference().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                else {
+                    passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, false);
+                }
+            }
+            //just to ensure that all verses correctly reflect their selected state in case of issues
+            adapter.notifyDataSetChanged();
+        }
+    };
 
 //TODO: merge the ViewHolder for this class with the ViewHolder for the VerseListFragment and use the one adapter for either one
 //Adapter for the listview in this fragment
@@ -222,9 +351,10 @@ public class TopicalBibleFragment extends Fragment {
 
             for (int i = 0; i < items.size(); i++) {
                 Passage passage = items.get(i);
-                passage.getMetadata().putInt("LIST_POSITION", i);
-                if (passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED))
+                passage.getMetadata().putInt("LIST_POSITION", i + 1);
+                if (passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
                     selectedItems.add(passage);
+                }
             }
 
             return selectedItems;
@@ -232,7 +362,7 @@ public class TopicalBibleFragment extends Fragment {
 
         @Override
         public Passage getItem(int position) {
-            Passage passage = items.get(position);
+            Passage passage = items.get(position-1);
             passage.getMetadata().putInt("LIST_POSITION", position);
             return passage;
         }
@@ -249,8 +379,20 @@ public class TopicalBibleFragment extends Fragment {
             }
         }
 
+        public void add(Passage item) {
+            this.items.add(item);
+        }
+
+        public void add(Passage item, int index) {
+            this.items.add(index, item);
+        }
+
         public void addAll(ArrayList<Passage> items) {
             this.items = items;
+            for(int i = 0; i < this.items.size(); i++) {
+                this.items.get(i).getMetadata().putInt("LIST_POSITION", i + 1);
+            }
+
             notifyDataSetChanged();
         }
 
@@ -272,10 +414,6 @@ public class TopicalBibleFragment extends Fragment {
             }
 
             vh.initialize(items.get(position));
-
-            vh.iconBackground.setTag(vh);
-            vh.view.setTag(vh);
-            vh.overflow.setTag(vh);
 
             vh.view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -314,6 +452,11 @@ public class TopicalBibleFragment extends Fragment {
                 }
             });
 
+            view.setTag(vh);
+            vh.iconBackground.setTag(vh);
+            vh.view.setTag(vh);
+            vh.overflow.setTag(vh);
+
             return view;
         }
     }
@@ -331,6 +474,7 @@ public class TopicalBibleFragment extends Fragment {
         TextView reference;
         TextView verseText;
         TextView version;
+        TextView upcount;
 
         ImageView iconBackground;
         TextView iconText;
@@ -398,6 +542,7 @@ public class TopicalBibleFragment extends Fragment {
             reference = (TextView) inflater.findViewById(R.id.item_reference);
             verseText = (TextView) inflater.findViewById(R.id.item_verse);
             version = (TextView) inflater.findViewById(R.id.item_version);
+            upcount = (TextView) inflater.findViewById(R.id.item_upcount);
 
             iconBackground = (ImageView) inflater.findViewById(R.id.icon_background);
             iconText = (TextView) inflater.findViewById(R.id.icon_text);
@@ -420,6 +565,7 @@ public class TopicalBibleFragment extends Fragment {
             reference.setText(passage.getReference().toString());
             verseText.setText(passage.getText());
             version.setText(passage.getVersion().getCode().toUpperCase());
+            upcount.setText(passage.getMetadata().getInt("UPVOTES") + " helpful votes");
 
             iconText.setText(passage.getMetadata().getInt("UPVOTES") + "");
 
@@ -550,8 +696,39 @@ public class TopicalBibleFragment extends Fragment {
 
 //Perform actions of groups of verses selected from the list of retrieved verses
 //------------------------------------------------------------------------------
-    public void redownload(ArrayList<Passage> verses) {
 
+    private class RedownloadAsync extends AsyncTask<ArrayList<Passage>, Passage, Void> {
+
+        @Override
+        protected void onProgressUpdate(Passage... values) {
+            super.onProgressUpdate(values);
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected Void doInBackground(ArrayList<Passage>... params) {
+            for(Passage passage : params[0]) {
+                try {
+//                    int position = passage.getMetadata().getInt("LIST_POSITION");
+//                    adapter.removeItem(passage);
+
+                    passage.setVersion(MetaSettings.getBibleVersion(context));
+                    passage.retrieve();
+                    publishProgress(passage);
+                }
+                catch(IOException ioe) {
+                    ioe.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     //ToDO: get helpful feedback about which verses to add in the popup and a count of verses added in a toast
@@ -561,6 +738,13 @@ public class TopicalBibleFragment extends Fragment {
         builder.setView(view);
 
         final AlertDialog dialog = builder.create();
+
+        TextView verseList = (TextView) view.findViewById(R.id.verse_list);
+        String message = "";
+        for(Passage passage : verses) {
+            message += passage.getReference().toString() + "\n";
+        }
+        verseList.setText(message.trim());
 
         TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -580,6 +764,7 @@ public class TopicalBibleFragment extends Fragment {
                     db.insertVerse(passage);
                 }
                 dialog.cancel();
+                mActionMode.finish();
             }
         });
 

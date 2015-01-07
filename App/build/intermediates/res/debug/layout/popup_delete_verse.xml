@@ -32,13 +32,17 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="16dp"
             android:text="Are you sure you want to delete the following verses? This cannot be undone."/>
-        <TextView
-            android:id="@+id/verse_list"
+        <ScrollView
             android:layout_below="@+id/description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="128dp"
             android:layout_marginLeft="32dp"
-            android:layout_marginStart="32dp" />
+            android:layout_marginStart="32dp" >
+            <TextView
+                android:id="@+id/verse_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
     </RelativeLayout>
 
     <RelativeLayout
