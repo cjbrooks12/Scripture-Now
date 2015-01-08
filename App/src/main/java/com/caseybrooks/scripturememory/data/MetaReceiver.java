@@ -3,12 +3,21 @@ package com.caseybrooks.scripturememory.data;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Pair;
 
+import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.data.Metadata;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
+import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.notifications.MainNotification;
 import com.caseybrooks.scripturememory.notifications.QuickNotification;
 import com.caseybrooks.scripturememory.notifications.VOTDNotification;
 import com.caseybrooks.scripturememory.widgets.MainVerseWidget;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MetaReceiver extends BroadcastReceiver {
     public static final String NEXT_VERSE = ".MetaReceiver.NEXT_VERSE";
@@ -31,17 +40,62 @@ public class MetaReceiver extends BroadcastReceiver {
 
     //methods to actually do the stuff when the intent comes in
     private void getNextVerse() {
-//        VersesDatabase db = new VersesDatabase(context);
-//        db.open();
-//        try {
-//            Passage verse = db.getEntryAfter(MetaSettings.getVerseId(context), "current");
-//            MetaSettings.putVerseId(context, (int)verse.getId());
-//            updateAll();
-//        }
-//        catch(SQLException e) {
-//            new QuickNotification(context, "Error Getting Verse", e.getMessage());
-//        }
-//        db.close();
+        Pair<Integer, Integer> activeList = MetaSettings.getActiveList(context);
+        if(activeList.first == -1) return;
+
+        int currentVerseId = MetaSettings.getVerseId(context);
+        VerseDB db = new VerseDB(context).open();
+
+        ArrayList<Passage> passages;
+        if(activeList.first == VerseListFragment.STATE) {
+            passages = db.getStateVerses(activeList.second);
+        }
+        else if(activeList.first == VerseListFragment.TAGS) {
+            passages = db.getTaggedVerses(activeList.second);
+        }
+        else return;
+
+        db.close();
+
+        Comparator comparator;
+
+        switch(MetaSettings.getSortBy(context)) {
+            case 0:
+                comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED);
+                break;
+            case 1:
+                comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE);
+                break;
+            case 2:
+                comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL);
+                break;
+            case 3:
+                comparator = new Metadata.Comparator(DefaultMetaData.STATE);
+                break;
+            default:
+                comparator = new Metadata.Comparator("ID");
+                break;
+        }
+
+        Collections.sort(passages, comparator);
+
+        for(int i = 0; i < passages.size(); i++) {
+            if(passages.get(i).getMetadata().getInt(DefaultMetaData.ID) == currentVerseId) {
+                if(i == passages.size() - 1) {
+                    int oldId = currentVerseId;
+                    currentVerseId = passages.get(0).getMetadata().getInt(DefaultMetaData.ID);
+                    MetaSettings.putVerseId(context, currentVerseId);
+                    break;
+                }
+                else {
+                    int oldId = currentVerseId;
+                    currentVerseId = passages.get(i+1).getMetadata().getInt(DefaultMetaData.ID);
+                    MetaSettings.putVerseId(context, currentVerseId);
+                    break;
+                }
+            }
+        }
+        updateAll();
     }
 
     private void getVOTD() {
@@ -50,7 +104,6 @@ public class MetaReceiver extends BroadcastReceiver {
             //	that there is a new verse to be seen
             if(Util.isConnected(context)) {
                 new VOTDNotification(context).retrieveInternetVerse();
-                //startService(new Intent(context, VOTDService.class).putExtraBoolean(true));
             }
             else {
                 new QuickNotification(context, "Verse of the Day", "Click here to see today's new Scripture!");

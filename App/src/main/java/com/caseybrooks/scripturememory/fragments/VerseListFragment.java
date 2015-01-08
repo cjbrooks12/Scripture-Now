@@ -136,7 +136,7 @@ public class VerseListFragment extends ListFragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if(mActionMode == null) {
                 mActionMode = ((ActionBarActivity) getActivity()).startSupportActionMode(mActionModeCallback);
-                mActionMode.setTitle("1");
+                mActionMode.setTitle(bibleVerseAdapter.getSelectedCount() + "");
             }
             else if(bibleVerseAdapter.getSelectedCount() == 0) {
                 mActionMode.finish();
@@ -169,6 +169,7 @@ public class VerseListFragment extends ListFragment {
                         case R.id.context_list_post:
                             MetaSettings.putVerseId(context, vh.passage.getMetadata().getInt(DefaultMetaData.ID));
                             MetaSettings.putNotificationActive(context, true);
+                            MetaSettings.putActiveList(context, listType, listId);
                             MainNotification.notify(context).show();
                             Toast.makeText(context, vh.passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
                             return true;
@@ -340,6 +341,7 @@ public class VerseListFragment extends ListFragment {
                     return true;
                 //select all verses in the list
                 case R.id.contextual_list_select_all:
+                    //deselect all items
                     ArrayList<Passage> items = bibleVerseAdapter.getItems();
 
                     int firstPosition = getListView().getFirstVisiblePosition();
@@ -350,10 +352,12 @@ public class VerseListFragment extends ListFragment {
 
                         if(!passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
                             if (position >= firstPosition && position <= lastPosition) {
-                                View view = getListView().getChildAt(position - firstPosition);
-                                if (view != null) {
-                                    BibleVerseAdapter.ViewHolder vh = (BibleVerseAdapter.ViewHolder) view.getTag();
+                                BibleVerseAdapter.ViewHolder vh = (BibleVerseAdapter.ViewHolder) getListView().getChildAt(position - firstPosition).getTag();
+                                if (vh != null) {
                                     vh.multiSelect();
+                                }
+                                else {
+                                    Toast.makeText(context, "Position [" + position + "] has no tag: " + passage.getReference().toString(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                             else {
@@ -363,7 +367,7 @@ public class VerseListFragment extends ListFragment {
                     }
 
                     //update count in toolbar
-                    mActionMode.setTitle(bibleVerseAdapter.getSelectedCount() + " Selected");
+                    mActionMode.setTitle(bibleVerseAdapter.getSelectedCount() + "");
 
                     //just to ensure that all verses correctly reflect their selected state in case of issues
                     bibleVerseAdapter.notifyDataSetChanged();

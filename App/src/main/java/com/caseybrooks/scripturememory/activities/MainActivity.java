@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ViewConfiguration;
@@ -21,11 +20,11 @@ import android.widget.Toast;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
-import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
-import com.caseybrooks.scripturememory.fragments.TopicalBibleFragment;
 import com.caseybrooks.scripturememory.fragments.HelpFragment;
+import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.fragments.SettingsFragment;
+import com.caseybrooks.scripturememory.fragments.TopicalBibleFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
@@ -409,6 +408,9 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
         Intent intent = new Intent(this, DetailActivity.class);
         Bundle extras = new Bundle();
         extras.putInt("KEY_ID", id);
+        extras.putInt("KEY_LIST_TYPE", MetaSettings.getActiveList(context).first);
+        extras.putInt("KEY_LisT_ID", MetaSettings.getActiveList(context).second);
+
         intent.putExtras(extras);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, 0);

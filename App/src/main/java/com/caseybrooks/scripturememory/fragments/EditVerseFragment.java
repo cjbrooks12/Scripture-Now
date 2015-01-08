@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -49,6 +48,8 @@ public class EditVerseFragment extends Fragment {
 	Context context;
 	View view;
     Passage passage;
+    int listType;
+    int listId;
     NavigationCallbacks mCallbacks;
 	
 	EditText editRef, editVer;
@@ -58,10 +59,12 @@ public class EditVerseFragment extends Fragment {
     FlowLayout tagChipsLayout;
     SeekBar seekbar;
 
-    public static Fragment newInstance(int id) {
+    public static Fragment newInstance(int verseId, int listType, int listId) {
         Fragment fragment = new EditVerseFragment();
         Bundle extras = new Bundle();
-        extras.putInt("KEY_ID", id);
+        extras.putInt("KEY_ID", verseId);
+        extras.putInt("KEY_LIST_TYPE", listType);
+        extras.putInt("KEY_LIST_ID", listId);
         fragment.setArguments(extras);
         return fragment;
     }
@@ -96,6 +99,8 @@ public class EditVerseFragment extends Fragment {
 
     private void initialize() {
 		long id = getArguments().getInt("KEY_ID", 1);
+        listType = MetaSettings.getActiveList(context).first;
+        listId = MetaSettings.getActiveList(context).first;
 
         VerseDB db = new VerseDB(context).open();
 		passage = db.getVerse(id);
@@ -114,10 +119,9 @@ public class EditVerseFragment extends Fragment {
             Drawable line = seekbar.getProgressDrawable();
             line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
 
-            if(Build.VERSION.SDK_INT >= 16) {
-                Drawable thumb = seekbar.getThumb();
-                thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-            }
+            Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
+            thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            seekbar.setThumb(thumb);
 
             seekbar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
                 @Override
@@ -131,10 +135,10 @@ public class EditVerseFragment extends Fragment {
                     Drawable line = seekBar.getProgressDrawable();
                     line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
 
-                    if(Build.VERSION.SDK_INT >= 16) {
-                        Drawable thumb = seekBar.getThumb();
-                        thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-                    }
+                    Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
+                    thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                    seekbar.setThumb(thumb);
+
                 }
 
                 @Override

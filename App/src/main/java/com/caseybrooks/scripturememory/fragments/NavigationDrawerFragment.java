@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
@@ -68,16 +67,36 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Select either the default item (0, 0) or the last selected item.
 
-        Pair<Integer, Integer> lastSelected = MetaSettings.getDrawerSelection(parentActivity);
         NavListItem item = new NavListItem();
-        if(lastSelected.first != -1) {
-            item.groupPosition = lastSelected.first;
-            item.id = lastSelected.second;
+
+        switch(MetaSettings.getDefaultScreen(getActivity())) {
+            case 0:
+                Pair<Integer, Integer> lastSelected = MetaSettings.getDrawerSelection(parentActivity);
+                item.groupPosition = lastSelected.first;
+                item.id = lastSelected.second;
+                break;
+            case 1:
+                item.groupPosition = 0;
+                item.id = 0;
+                break;
+            case 2:
+                item.groupPosition = 1;
+                item.id = 0;
+                break;
+            case 3:
+                item.groupPosition = 2;
+                item.id = MetaSettings.getDefaultScreenList(getActivity());
+                break;
+            case 4:
+                item.groupPosition = 3;
+                item.id = MetaSettings.getDefaultScreenList(getActivity());
+                break;
+            default:
+                item.groupPosition = 0;
+                item.id = 0;
+                break;
         }
-        else {
-            item.groupPosition = 0;
-            item.childPosition = 0;
-        }
+
         selectItem(item);
     }
 
@@ -374,20 +393,23 @@ public class NavigationDrawerFragment extends Fragment {
                 headerText.setText(headerTitle);
             }
             Drawable headerDrawable = getResources().getDrawable(a.getResourceId(groupPosition, 0));
+            a.recycle();
+
 
             int selectedGroup = MetaSettings.getDrawerSelection(context).first;
             TypedArray selectedColorAttrs = context.getTheme().obtainStyledAttributes(
-                    new int[]{R.attr.colorAccent, R.attr.color_text, R.attr.color_background});
+                    new int[]{R.attr.colorAccent, R.attr.color_text, R.attr.color_background, R.attr.color_background_selected});
             int selectedColor = selectedColorAttrs.getColor(0, 0);
             int unselectedColor = selectedColorAttrs.getColor(1, 0);
             int backgroundColor = selectedColorAttrs.getColor(2, 0);
-            a.recycle();
+            int selectedBackgroundColor = selectedColorAttrs.getColor(3, 0);
+            selectedColorAttrs.recycle();
 
             if(groupPosition == selectedGroup) {
                 headerDrawable.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.SRC_IN));
 
                 headerText.setTextColor(selectedColor);
-                convertView.setBackgroundColor(Color.parseColor("#20000000"));
+                convertView.setBackgroundColor(selectedBackgroundColor);
             }
             else {
                 headerDrawable.setColorFilter(new PorterDuffColorFilter(unselectedColor, PorterDuff.Mode.SRC_IN));

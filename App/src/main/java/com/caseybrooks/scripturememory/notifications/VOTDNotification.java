@@ -84,15 +84,7 @@ public class VOTDNotification {
 				1000*60*60*24,
 				alarmIntent);	
 	}
-	
-//	public void cancelAlarm() {
-//		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-//		Intent intent = new Intent(context, VOTDAlarmReceiver.class);
-//		PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-//
-//		alarmManager.cancel(alarmIntent);
-//	}
-	
+
 	//Call when the verse has already been set in the object
 	public VOTDNotification create() {
 		if(ref_save != null && ver_save != null) {
@@ -123,7 +115,7 @@ public class VOTDNotification {
 			mb.setStyle(new NotificationCompat.BigTextStyle().bigText(ref + ver));
 			mb.setContentIntent(resultPI);
 			mb.setAutoCancel(true);
-			mb.addAction(android.R.drawable.ic_menu_close_clear_cancel, "Save Verse", savePI);
+			mb.addAction(R.drawable.ic_action_save_dark, "Save Verse", savePI);
 			mb.setLights(ledColor, 500, 4500);
 			notification = mb.build();
 			notification.sound = ringtone;
@@ -146,40 +138,16 @@ public class VOTDNotification {
 //------------------------------------------------------------------------------
 	//Call to download and issue a notification for the VOTD
 	public VOTDNotification retrieveInternetVerse() {
-//        new VOTDGetTask(context, MetaSettings.getBibleVersion(context), new OnTaskCompletedListener() {
-//            @Override
-//            public void onTaskCompleted(Object param) {
-//                if(param != null) {
-//					Passage passage = (Passage) param;
-//                    int currentAPIVersion = android.os.Build.VERSION.SDK_INT;
-//                    if (currentAPIVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-//                        //If device has Jelly Bean expanded notifications, set getText to
-//                        //	only show reference on small, and verse getText on big
-//                        ref = passage.getReference().toString();
-//                        ver = " - " + passage.getText();
-//                    }
-//                    else {
-//                        //If device does not have expanded notifications, let notification
-//                        //	always show reference and getText
-//                        ref = passage.getReference() + " - " + passage.getText();
-//                        ver = "";
-//                    }
-//                    ref_save = passage.getReference().toString();
-//                    ver_save = passage.getText();
-//                    create();
-//                    show();
-//                }
-//            }
-//        }).execute();
-
         Passage currentVerse = VOTDService.getCurrentVerse(context);
 
         //if verse is old, delete it from database (no need to keep it around, its not in any lists),
         // and set currentVerse to null so that we download it again
         if(currentVerse != null && !currentVerse.getMetadata().getBoolean("IS_CURRENT")) {
-            VerseDB db = new VerseDB(context).open();
-            db.deleteVerse(currentVerse);
-            db.close();
+            if(currentVerse.getMetadata().getInt(DefaultMetaData.STATE) == VerseDB.VOTD) {
+                VerseDB db = new VerseDB(context).open();
+                db.deleteVerse(currentVerse);
+                db.close();
+            }
             currentVerse = null;
         }
 
@@ -245,15 +213,17 @@ public class VOTDNotification {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			try {
-                Passage newVerse = new Passage(intent.getStringExtra("REF_SAVE"));
-                newVerse.setText(intent.getStringExtra("VER_SAVE"));
-                newVerse.setVersion(MetaSettings.getBibleVersion(context));
-                newVerse.getMetadata().putInt(DefaultMetaData.STATE, 1);
-                newVerse.getMetadata().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
-				VerseDB db = new VerseDB(context);
-				db.open();
-				db.insertVerse(newVerse);
-				db.close();
+                Passage newVerse = VOTDService.getCurrentVerse(context);
+                if(newVerse != null && !newVerse.getMetadata().getBoolean("IS_CURRENT")) {
+                    newVerse.getMetadata().putInt(DefaultMetaData.STATE, 1);
+                    VerseDB db = new VerseDB(context);
+                    db.open();
+                    db.updateVerse(newVerse);
+                    db.close();
+                }
+                else {
+                    new QuickNotification(context, "Verse of the Day", "Today's verse could not be added, try again within the app");
+                }
 			}
 			catch(Exception e) {
 				new QuickNotification(context, "Verse of the Day", "There was an error saving the verse");

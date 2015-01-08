@@ -13,17 +13,18 @@ public class MetaSettings {
     //settings saved through app settings
     public static final String PERSIST_MAIN_NOTIFICATION = "PREF_PERSIST_NOTIFICATION";
     public static final String VOTD_SHOW_NOTIFICATION = "PREF_VOTD_NOTIFICATION";
-    public static final String VOTD_NOTIFY_TIME = "PREF_VOTD_TIME";
     public static final String VOTD_NOTIFICATION_SOUND = "PREF_VOTD_SOUND";
     public static final String APP_THEME = "PREF_SELECTED_THEME";
-    public static final String WIDGET_THEME = "PREF_WIDGET_THEME";
     public static final String DEFAULT_SCREEN = "PREF_DEFAULT_SCREEN";
+    public static final String DEFAULT_SCREEN_LIST = "PREF_DEFAULT_SCREEN_LIST";
     public static final String BIBLE_VERSION = "PREF_SELECTED_VERSION";
 
     //settings set throughout app
     public static final String FIRST_TIME = "FIRST_TIME";
     public static final String PROMPT_ON_START_INT = "PROMPT_ON_START_INT";
     public static final String MAIN_NOTIFICATION_ACTIVE = "ACTIVE";
+    public static final String ACTIVE_LIST_TYPE = "ACTIVE_LIST_TYPE";
+    public static final String ACTIVE_LIST_ID = "ACTIVE_LIST_ID";
     public static final String VERSE_ID = "SQL_ID";
     public static final String VERSE_DISPLAY_MODE = "VERSE_DISPLAY_MODE";
     public static final String RANDOMNESS_LEVEL = "RANDOMNESS_LEVEL";
@@ -39,10 +40,6 @@ public class MetaSettings {
         return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(APP_THEME, "0"));
     }
 
-    public static int getWidgetTheme(Context context) {
-        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(WIDGET_THEME, "0"));
-    }
-
     public static Version getBibleVersion(Context context) {
         String version = PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION, "King James Version");
         return Version.parseVersion(version);
@@ -50,6 +47,10 @@ public class MetaSettings {
 
     public static int getDefaultScreen(Context context) {
         return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(DEFAULT_SCREEN, "0"));
+    }
+
+    public static int getDefaultScreenList(Context context) {
+        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(DEFAULT_SCREEN_LIST, "0"));
     }
 
     public static void putDrawerSelection(Context context, int group, int child) {
@@ -71,10 +72,6 @@ public class MetaSettings {
 
     public static boolean getVOTDShow(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(VOTD_SHOW_NOTIFICATION, false);
-    }
-
-    public static long getVOTDTime(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getLong(VOTD_NOTIFY_TIME, 0);
     }
 
     public static String getVOTDSound(Context context) {
@@ -113,6 +110,17 @@ public class MetaSettings {
 
     public static void putNotificationActive(Context context, boolean value) {
         context.getSharedPreferences(settings_file, 0).edit().putBoolean(MAIN_NOTIFICATION_ACTIVE, value).commit();
+    }
+
+    public static void putActiveList(Context context, int listType, int listId) {
+        context.getSharedPreferences(settings_file, 0).edit().putInt(ACTIVE_LIST_TYPE, listType).commit();
+        context.getSharedPreferences(settings_file, 0).edit().putInt(ACTIVE_LIST_ID, listId).commit();
+    }
+
+    public static Pair<Integer, Integer> getActiveList(Context context) {
+        int group = context.getSharedPreferences(settings_file, 0).getInt(ACTIVE_LIST_TYPE, -1);
+        int child = context.getSharedPreferences(settings_file, 0).getInt(ACTIVE_LIST_ID, -1);
+        return new Pair<Integer, Integer>(group, child);
     }
 
     public static int getVerseDisplayMode(Context context) {

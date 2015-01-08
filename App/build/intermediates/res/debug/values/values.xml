@@ -84,14 +84,18 @@
     <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="pref_default_screen">
+        <item>Last Open</item>
         <item>Dashboard</item>
-        <item>Current Verses</item>
-        <item>Memorized Verses</item>
+        <item>Topical Bible</item>
+        <item>Memorization State...</item>
+        <item>Tag...</item>
     </string-array>
     <string-array name="pref_default_screen_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
     <string-array name="pref_themes">
         <item>Light</item>
@@ -106,9 +110,28 @@
         <item>Classical Reference</item>
         <item>Alphabetical</item>
     </string-array>
+    <string-array name="state_ids">
+        <item>-1</item>
+        <item>-2</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="state_names">
+        <item>All Verses</item>
+        <item>Current</item>
+        <item>Memorized</item>
+        <item>Current - All</item>
+        <item>Current - Most</item>
+        <item>Current - Some</item>
+        <item>Current - None</item>
+    </string-array>
     <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/attrs.xml -->
     <eat-comment/>
     <attr format="color" name="color_background"/>
+    <attr format="color" name="color_background_selected"/>
     <attr format="color" name="color_card"/>
     <attr format="color" name="color_text"/>
     <attr format="color" name="color_toolbar"/>
@@ -121,6 +144,7 @@
     <attr format="reference" name="ic_action_add"/>
     <attr format="reference" name="ic_action_arrow_right"/>
     <attr format="reference" name="ic_action_clear"/>
+    <attr format="reference" name="ic_action_create"/>
     <attr format="reference" name="ic_action_delete"/>
     <attr format="reference" name="ic_action_done"/>
     <attr format="reference" name="ic_action_filter"/>
@@ -163,6 +187,11 @@
     <eat-comment/>
     <color name="all_current_verses">#559955</color>
     <color name="all_verses">#555555</color>
+    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors_apptheme.xml -->
+    <eat-comment/>
+    <color name="apptheme_color">#ffffff</color>
+    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
+    <eat-comment/>
     <color name="background_dark">#404040</color>
     <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
@@ -175,6 +204,13 @@
     <eat-comment/>
     <color name="background_material_dark">#ff303030</color>
     <color name="background_material_light">#ffeeeeee</color>
+    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="background_selected_dark">#606060</color>
+    <color name="background_selected_light">#c0c0c0</color>
+    <color name="background_selected_transparent">#20000000</color>
+    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
     <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
@@ -1441,6 +1477,7 @@
         <!-- ActionBar Icons -->
 
         <!-- Colors -->
+        <item name="color_background_selected">@color/background_selected_dark</item>
         <item name="color_background">@color/background_dark</item>
         <item name="color_card">@color/card_dark</item>
         <item name="color_toolbar">@color/primary</item>
@@ -1463,6 +1500,7 @@
         <item name="ic_action_delete">@drawable/ic_action_delete_dark</item>
         <item name="ic_action_select_all">@drawable/ic_action_select_all_dark</item>
         <item name="ic_action_save">@drawable/ic_action_save_dark</item>
+        <item name="ic_action_create">@drawable/ic_action_create_dark</item>
 
         <item name="ic_action_home">@drawable/ic_action_home_dark</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_dark</item>
@@ -1481,6 +1519,7 @@
         <item name="android:windowIsTranslucent">true</item>
 
         <!-- Colors -->
+        <item name="color_background_selected">@color/background_selected_light</item>
         <item name="color_background">@color/background_light</item>
         <item name="color_toolbar">@color/primary</item>
         <item name="color_card">@color/card_light</item>
@@ -1503,6 +1542,8 @@
         <item name="ic_action_delete">@drawable/ic_action_delete_light</item>
         <item name="ic_action_select_all">@drawable/ic_action_select_all_light</item>
         <item name="ic_action_save">@drawable/ic_action_save_light</item>
+        <item name="ic_action_create">@drawable/ic_action_create_light</item>
+
 
         <item name="ic_action_home">@drawable/ic_action_home_light</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>

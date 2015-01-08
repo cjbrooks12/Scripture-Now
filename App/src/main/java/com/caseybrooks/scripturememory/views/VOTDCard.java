@@ -2,7 +2,6 @@ package com.caseybrooks.scripturememory.views;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.PopupMenu;
@@ -15,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +24,7 @@ import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VOTDService;
 import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.notifications.MainNotification;
 
 public class VOTDCard extends FrameLayout {
@@ -84,9 +85,11 @@ public class VOTDCard extends FrameLayout {
         //if verse is old, delete it from database (no need to keep it around, its not in any lists),
         // and set currentVerse to null so that we download it again
         if(currentVerse != null && !currentVerse.getMetadata().getBoolean("IS_CURRENT")) {
-            VerseDB db = new VerseDB(context).open();
-            db.deleteVerse(currentVerse);
-            db.close();
+            if(currentVerse.getMetadata().getInt(DefaultMetaData.STATE) == VerseDB.VOTD) {
+                VerseDB db = new VerseDB(context).open();
+                db.deleteVerse(currentVerse);
+                db.close();
+            }
             currentVerse = null;
         }
 
@@ -134,29 +137,40 @@ public class VOTDCard extends FrameLayout {
 
 //Helper Methods
 //------------------------------------------------------------------------------
-	public void saveVerse() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setCancelable(true);
-			builder.setTitle("Verse of the Day");
-			builder.setMessage("Save " + ref.getText().toString() + " to verse list?");
-			builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-                    VerseDB db = new VerseDB(context);
-                    db.open();
-                    currentVerse.getMetadata().putInt(DefaultMetaData.STATE, 1);
-                    db.updateVerse(currentVerse);
-                    db.close();
-				}
-			});
-			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog,int id) {
-					
-				}
-			});
-			
-		AlertDialog dialog = builder.create();
-		dialog.show();	
-	}
+    public void saveVerse() {
+        final View view = LayoutInflater.from(context).inflate(R.layout.popup_add_verse, null);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(view);
+
+        final AlertDialog dialog = builder.create();
+
+        ScrollView scrollArea = (ScrollView) view.findViewById(R.id.scroll_area);
+        scrollArea.setVisibility(View.GONE);
+
+        TextView verseList = (TextView) view.findViewById(R.id.description);
+        verseList.setText("Add " + currentVerse.getReference().toString() + " to your list?");
+
+        TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        TextView addVerseButton = (TextView) view.findViewById(R.id.add_verse_button);
+        addVerseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VerseDB db = new VerseDB(context).open();
+                currentVerse.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
+                currentVerse.addTag("VOTD");
+                db.updateVerse(currentVerse);
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
     
 //Click Listeners
 //------------------------------------------------------------------------------     
@@ -192,9 +206,14 @@ public class VOTDCard extends FrameLayout {
                     Toast.makeText(context, currentVerse.getReference().toString() + " has been saved", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.context_votd_card_post:
-                    saveVerse();
+                    VerseDB db = new VerseDB(context).open();
+                    currentVerse.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
+                    currentVerse.addTag("VOTD");
+                    db.updateVerse(currentVerse);
+
                     MetaSettings.putVerseId(context, currentVerse.getMetadata().getInt(DefaultMetaData.ID));
                     MetaSettings.putNotificationActive(context, true);
+                    MetaSettings.putActiveList(context, VerseListFragment.TAGS, (int)db.getTagID("VOTD"));
                     MainNotification.notify(context).show();
                     Toast.makeText(context, currentVerse.getReference().toString() + " has been saved and set as notification", Toast.LENGTH_SHORT).show();
                     return true;

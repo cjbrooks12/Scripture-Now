@@ -1,6 +1,9 @@
 package com.caseybrooks.scripturememory.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.util.AttributeSet;
@@ -16,9 +19,9 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
-import com.caseybrooks.androidbibletools.data.Formatter;
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.data.Formatter;
+import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
@@ -84,6 +87,19 @@ public class NotificationVerseCard extends FrameLayout {
 
         randomnessLevelSlider = (SeekBar) findViewById(R.id.randomnessLevelSlider);
         randomnessLevelSlider.setOnSeekBarChangeListener(seekBarChangeListener);
+
+        int selectedGroup = MetaSettings.getDrawerSelection(context).first;
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                new int[]{R.attr.colorAccent});
+        int accentColor = a.getColor(0, 0);
+        a.recycle();
+
+        Drawable line = randomnessLevelSlider.getProgressDrawable();
+        line.setColorFilter(accentColor, PorterDuff.Mode.SRC_IN);
+
+        Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
+        thumb.setColorFilter(accentColor, PorterDuff.Mode.SRC_IN);
+        randomnessLevelSlider.setThumb(thumb);
 
 		expandedSection = (RelativeLayout) findViewById(R.id.expandedLayout);
 		expandedSection.setVisibility(View.GONE);

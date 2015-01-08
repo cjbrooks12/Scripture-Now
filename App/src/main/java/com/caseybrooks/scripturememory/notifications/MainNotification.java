@@ -7,13 +7,12 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.SQLException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
-import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaReceiver;
@@ -49,76 +48,70 @@ public class MainNotification {
 
         VerseDB db = new VerseDB(context);
 
-        try {
-            db.open();
-            Passage verse = db.getVerse(instance.id);
-            db.close();
+        db.open();
+        Passage verse = db.getVerse(instance.id);
+        db.close();
 
-            if(verse == null) return instance;
+        if(verse == null) return instance;
 
-            switch (MetaSettings.getVerseDisplayMode(context)) {
-                case 0:
-                    verse.setFormatter(new DefaultFormatter.Normal());
-                    break;
-                case 1:
-                    verse.setFormatter(new DefaultFormatter.Dashes());
-                    break;
-                case 2:
-                    verse.setFormatter(new DefaultFormatter.FirstLetters());
-                    break;
-                case 3:
-                    verse.setFormatter(new DefaultFormatter.DashedLetter());
-                    break;
-                case 4:
-                    float randomness = MetaSettings.getRandomnessLevel(context);
-                    int offset = MetaSettings.getRandomSeedOffset(context);
-                    verse.setFormatter(new DefaultFormatter.RandomWords(randomness, offset));
-                    break;
-                default:
-                    break;
-            }
-
-            boolean persists = MetaSettings.getNotificationPersist(context);
-
-            //Opens the dashboard when clicked
-            Intent resultIntent = new Intent(context, MainActivity.class);
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-            stackBuilder.addParentStack(MainActivity.class);
-            stackBuilder.addNextIntent(resultIntent);
-            PendingIntent resultPI = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            //Removes the notification when the user hits "Dismiss"
-            Intent dismiss = new Intent(context, DismissVerseReceiver.class);
-            PendingIntent dismissPI = PendingIntent.getBroadcast(context, 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            //goes to the next verse when the user hits "Next"
-            Intent next = new Intent(MetaReceiver.NEXT_VERSE);
-            next.putExtra("notificationId", 1);
-            next.putExtra("SQL_ID", MetaSettings.getVerseId(context));
-            PendingIntent nextPI = PendingIntent.getBroadcast(context, 0, next, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            //Builds the notification
-            NotificationCompat.Builder mb = new NotificationCompat.Builder(context);
-
-            if (persists) {
-                mb.setOngoing(true);
-                mb.addAction(android.R.drawable.ic_menu_close_clear_cancel, "Dismiss", dismissPI);
-            }
-            mb.setSmallIcon(R.drawable.ic_cross);
-            mb.setContentTitle(verse.getReference().toString());
-            mb.setContentText(verse.getText());
-            mb.setPriority(NotificationCompat.PRIORITY_LOW);
-            mb.setStyle(new NotificationCompat.BigTextStyle().bigText(verse.getText()));
-            mb.setContentIntent(resultPI);
-            mb.addAction(android.R.drawable.ic_menu_close_clear_cancel, "Next", nextPI);
-            instance.notification = mb.build();
-
-            return instance;
+        switch (MetaSettings.getVerseDisplayMode(context)) {
+            case 0:
+                verse.setFormatter(new DefaultFormatter.Normal());
+                break;
+            case 1:
+                verse.setFormatter(new DefaultFormatter.Dashes());
+                break;
+            case 2:
+                verse.setFormatter(new DefaultFormatter.FirstLetters());
+                break;
+            case 3:
+                verse.setFormatter(new DefaultFormatter.DashedLetter());
+                break;
+            case 4:
+                float randomness = MetaSettings.getRandomnessLevel(context);
+                int offset = MetaSettings.getRandomSeedOffset(context);
+                verse.setFormatter(new DefaultFormatter.RandomWords(randomness, offset));
+                break;
+            default:
+                break;
         }
-        catch(SQLException e) {
-            new QuickNotification(context, "Error Getting Verse", e.getMessage()).show();
-            return instance;
+
+        boolean persists = MetaSettings.getNotificationPersist(context);
+
+        //Opens the dashboard when clicked
+        Intent resultIntent = new Intent(context, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPI = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //Removes the notification when the user hits "Dismiss"
+        Intent dismiss = new Intent(context, DismissVerseReceiver.class);
+        PendingIntent dismissPI = PendingIntent.getBroadcast(context, 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        //goes to the next verse when the user hits "Next"
+        Intent next = new Intent(MetaReceiver.NEXT_VERSE);
+        next.putExtra("notificationId", 1);
+        next.putExtra("SQL_ID", MetaSettings.getVerseId(context));
+        PendingIntent nextPI = PendingIntent.getBroadcast(context, 0, next, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        //Builds the notification
+        NotificationCompat.Builder mb = new NotificationCompat.Builder(context);
+
+        if (persists) {
+            mb.setOngoing(true);
+            mb.addAction(R.drawable.ic_action_clear_dark, "Dismiss", dismissPI);
         }
+        mb.setSmallIcon(R.drawable.ic_cross);
+        mb.setContentTitle(verse.getReference().toString());
+        mb.setContentText(verse.getText());
+        mb.setPriority(NotificationCompat.PRIORITY_LOW);
+        mb.setStyle(new NotificationCompat.BigTextStyle().bigText(verse.getText()));
+        mb.setContentIntent(resultPI);
+        mb.addAction(R.drawable.ic_action_arrow_right_dark, "Next", nextPI);
+        instance.notification = mb.build();
+
+        return instance;
 	}
 	
 	public void show() {

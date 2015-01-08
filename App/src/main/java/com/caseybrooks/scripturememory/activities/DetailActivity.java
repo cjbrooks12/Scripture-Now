@@ -34,10 +34,12 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
         setSupportActionBar(tb);
 
         int id = getIntent().getExtras().getInt("KEY_ID", 0);
+        int listType = getIntent().getExtras().getInt("KEY_LIST_TYPE", 0);
+        int listId = getIntent().getExtras().getInt("KEY_LIST_ID", 0);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.mainFragmentContainer, EditVerseFragment.newInstance(id))
+                .add(R.id.mainFragmentContainer, EditVerseFragment.newInstance(id, listType, listId))
                 .commit();
     }
 

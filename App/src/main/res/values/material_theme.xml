@@ -9,6 +9,7 @@
         <item name="android:windowIsTranslucent">true</item>
 
         <!-- Colors -->
+        <item name="color_background_selected">@color/background_selected_light</item>
         <item name="color_background">@color/background_light</item>
         <item name="color_toolbar">@color/primary</item>
         <item name="color_card">@color/card_light</item>
@@ -31,6 +32,8 @@
         <item name="ic_action_delete">@drawable/ic_action_delete_light</item>
         <item name="ic_action_select_all">@drawable/ic_action_select_all_light</item>
         <item name="ic_action_save">@drawable/ic_action_save_light</item>
+        <item name="ic_action_create">@drawable/ic_action_create_light</item>
+
 
         <item name="ic_action_home">@drawable/ic_action_home_light</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>

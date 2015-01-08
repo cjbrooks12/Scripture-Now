@@ -22,6 +22,10 @@
 	        android:entries="@array/pref_default_screen"
 	        android:entryValues="@array/pref_default_screen_values"
 	        android:defaultValue="0" />
+        <ListPreference
+            android:key="PREF_DEFAULT_SCREEN_LIST"
+            android:title="List"
+            android:dialogTitle="List" />
         <PreferenceScreen
             android:title="Verse of the Day" >
             <CheckBoxPreference

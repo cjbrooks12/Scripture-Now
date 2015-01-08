@@ -219,6 +219,8 @@ public class VerseDB {
             passage.setVersion(Version.parseVersion(c.getString(c.getColumnIndex(KEY_VERSES_VERSION))));
             passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
             passage.getMetadata().putInt(DefaultMetaData.STATE, c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
+            passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, false);
+
 
             String commaSeparatedTags = c.getString(c.getColumnIndex(KEY_VERSES_TAGS));
 

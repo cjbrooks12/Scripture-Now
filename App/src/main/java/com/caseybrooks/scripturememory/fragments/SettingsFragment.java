@@ -20,6 +20,7 @@ import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
+import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.data.VersesDatabase;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
 import com.caseybrooks.scripturememory.notifications.VOTDNotification;
@@ -31,6 +32,8 @@ import java.io.IOException;
 
 public class SettingsFragment extends PreferenceFragment {
 	Context context;
+
+    ListPreference prefDefaultScreenList;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,27 @@ public class SettingsFragment extends PreferenceFragment {
 		String[] screens = getResources().getStringArray(R.array.pref_default_screen);
 		prefDefaultScreen.setSummary(screens[defaultScreen]);
 		prefDefaultScreen.setOnPreferenceChangeListener(defaultScreenChange);
-	}
+
+        prefDefaultScreenList = (ListPreference) findPreference("PREF_DEFAULT_SCREEN_LIST");
+
+        if(MetaSettings.getDefaultScreen(context) == 3) {
+            prefDefaultScreenList.setEnabled(true);
+
+            VerseDB db = new VerseDB(context).open();
+            prefDefaultScreenList.setSummary(db.getStateName(MetaSettings.getDefaultScreenList(context)));
+            db.close();
+        }
+        else if(MetaSettings.getDefaultScreen(context) == 3) {
+            prefDefaultScreenList.setEnabled(true);
+            VerseDB db = new VerseDB(context).open();
+            prefDefaultScreenList.setSummary(db.getTagName(MetaSettings.getDefaultScreenList(context)));
+            db.close();
+        }
+        else {
+            prefDefaultScreenList.setEnabled(false);
+            prefDefaultScreenList.setSummary("Not Available");
+        }
+    }
 
     @Override
     public void onResume() {
@@ -255,6 +278,32 @@ public class SettingsFragment extends PreferenceFragment {
 			String[] screens = getResources().getStringArray(R.array.pref_default_screen);
 			int selection = Integer.parseInt(newValue.toString());
 			lp.setSummary(screens[selection]);
+
+            if(selection == 3) {
+                prefDefaultScreenList.setEnabled(true);
+                String[] states = getResources().getStringArray(R.array.state_names);
+                String[] statesValues = getResources().getStringArray(R.array.state_names);
+                prefDefaultScreenList.setEntries(states);
+                prefDefaultScreenList.setEntryValues(statesValues);
+            }
+            else if(selection == 4) {
+                prefDefaultScreenList.setEnabled(true);
+
+                VerseDB db = new VerseDB(context).open();
+                String[] tags = db.getAllTagNames();
+
+                String[] tagValues = new String[tags.length];
+                for(int i = 0; i < tagValues.length; i++) {
+                    tagValues[i] = db.getTagID(tags[i]) + "";
+                }
+
+                prefDefaultScreenList.setEntries(tags);
+                prefDefaultScreenList.setEntryValues(tagValues);
+                db.close();
+            }
+            else {
+                prefDefaultScreenList.setEnabled(false);
+            }
 
 			return true;
 		}

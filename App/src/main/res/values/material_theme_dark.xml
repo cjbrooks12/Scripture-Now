@@ -11,6 +11,7 @@
         <!-- ActionBar Icons -->
 
         <!-- Colors -->
+        <item name="color_background_selected">@color/background_selected_dark</item>
         <item name="color_background">@color/background_dark</item>
         <item name="color_card">@color/card_dark</item>
         <item name="color_toolbar">@color/primary</item>
@@ -33,6 +34,7 @@
         <item name="ic_action_delete">@drawable/ic_action_delete_dark</item>
         <item name="ic_action_select_all">@drawable/ic_action_select_all_dark</item>
         <item name="ic_action_save">@drawable/ic_action_save_dark</item>
+        <item name="ic_action_create">@drawable/ic_action_create_dark</item>
 
         <item name="ic_action_home">@drawable/ic_action_home_dark</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_dark</item>

@@ -22,6 +22,10 @@
     <color name="background_dark">#404040</color>
     <color name="card_dark">#505050</color>
 
+    <color name="background_selected_transparent">#20000000</color>
+    <color name="background_selected_dark">#606060</color>
+    <color name="background_selected_light">#c0c0c0</color>
+
     <!-- Toolbar Colors (Current main colors) -->
     <color name="primary">#45B29D</color>
     <color name="primary_dark">#00796B</color>

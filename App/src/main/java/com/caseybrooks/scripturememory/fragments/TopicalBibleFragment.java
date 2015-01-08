@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
-import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -169,7 +168,7 @@ public class TopicalBibleFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(mActionMode == null) {
                     mActionMode = ((ActionBarActivity) getActivity()).startSupportActionMode(mActionModeCallback);
-                    mActionMode.setTitle("1");
+                    mActionMode.setTitle(adapter.getSelectedCount() + "");
                 }
                 else if(adapter.getSelectedCount() == 0) {
                     mActionMode.finish();
@@ -245,7 +244,7 @@ public class TopicalBibleFragment extends Fragment {
                     }
 
                     //update count in toolbar
-                    mActionMode.setTitle(adapter.getSelectedCount() + " Selected");
+                    mActionMode.setTitle(adapter.getSelectedCount() + "");
 
                     //just to ensure that all verses correctly reflect their selected state in case of issues
                     adapter.notifyDataSetChanged();
