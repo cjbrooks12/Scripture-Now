@@ -78,7 +78,7 @@ public class VerseListFragment extends ListFragment {
         float density = getResources().getDisplayMetrics().density;
 
         getListView().setDivider(null);
-		getListView().setDividerHeight(0);//(int)(2*density));
+		getListView().setDividerHeight(0);
 		getListView().setSelector(new StateListDrawable());
 		getListView().setFastScrollEnabled(true);
         getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
@@ -94,7 +94,7 @@ public class VerseListFragment extends ListFragment {
 	public void onResume() {
 		super.onResume();
 
-		ab = ((MainActivity) context).getSupportActionBar();
+		ab = ((ActionBarActivity) context).getSupportActionBar();
 		ab.setHomeButtonEnabled(true);
 		ab.setDisplayHomeAsUpEnabled(true);
         setHasOptionsMenu(true);
@@ -114,7 +114,7 @@ public class VerseListFragment extends ListFragment {
             MetaSettings.putDrawerSelection(context, 2, listId);
         }
 
-        ((MainActivity)context).getSupportActionBar().setTitle(title);
+        ((ActionBarActivity) context).getSupportActionBar().setTitle(title);
 
         db.close();
 

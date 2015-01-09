@@ -217,7 +217,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                             } else if (lineType.equals("p:")) {
                                 passage.text = line.substring(2).trim();
                             } else {
-                                passage.text += " " + line.substring(2).trim();
+                                passage.text += " " + line;
                             }
                         }
 
@@ -409,7 +409,9 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
         Bundle extras = new Bundle();
         extras.putInt("KEY_ID", id);
         extras.putInt("KEY_LIST_TYPE", MetaSettings.getActiveList(context).first);
-        extras.putInt("KEY_LisT_ID", MetaSettings.getActiveList(context).second);
+        extras.putInt("KEY_LIST_ID", MetaSettings.getActiveList(context).second);
+        extras.putInt("FRAGMENT", 0);
+
 
         intent.putExtras(extras);
         startActivity(intent);

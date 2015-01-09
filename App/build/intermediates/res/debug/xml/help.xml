@@ -15,7 +15,7 @@
                 android:title="Changelog" >
                 <intent android:action="android.intent.action.VIEW"
                         android:targetPackage="com.caseybrooks.scripturememory"
-                        android:targetClass="com.caseybrooks.scripturememory.activities.Changelog" />
+                        android:targetClass="com.caseybrooks.scripturememory.activities.Changelog"/>
             </Preference>
             <Preference
                 android:title="Licences" >

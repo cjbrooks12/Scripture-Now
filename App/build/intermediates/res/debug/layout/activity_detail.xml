@@ -17,5 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/mainFragmentContainer"
-        android:foreground="?android:windowContentOverlay"/>
+        android:foreground="?android:windowContentOverlay">
+    </FrameLayout>
 </LinearLayout><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/layout/activity_detail.xml -->

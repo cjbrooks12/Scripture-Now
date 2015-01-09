@@ -730,7 +730,7 @@ public class TopicalBibleFragment extends Fragment {
         }
     }
 
-    //ToDO: get helpful feedback about which verses to add in the popup and a count of verses added in a toast
+    //TODO: get helpful feedback about which verses to add in the popup and a count of verses added in a toast
     public void save(final ArrayList<Passage> verses) {
         final View view = LayoutInflater.from(context).inflate(R.layout.popup_add_verse, null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -763,7 +763,7 @@ public class TopicalBibleFragment extends Fragment {
                     db.insertVerse(passage);
                 }
                 dialog.cancel();
-                mActionMode.finish();
+                if(mActionMode != null) mActionMode.finish();
             }
         });
 

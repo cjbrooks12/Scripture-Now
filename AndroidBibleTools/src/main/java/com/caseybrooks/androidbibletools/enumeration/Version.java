@@ -39,6 +39,11 @@ public enum Version {
      * @return Version the version enum if found
      */
     public static Version parseVersion(String name) {
+        if(name.equalsIgnoreCase("nasb")) return NASB;
+        if(name.equalsIgnoreCase("hcsb")) return HCSB;
+        if(name.equalsIgnoreCase("gwt")) return GWT;
+        if(name.equalsIgnoreCase("nrsv")) return NRSV;
+
         for (Version version : EnumSet.allOf(Version.class)) {
             if(version.getName().toLowerCase().contains(name.toLowerCase())) return version;
             else if(version.getCode().contains(name.toLowerCase())) return version;

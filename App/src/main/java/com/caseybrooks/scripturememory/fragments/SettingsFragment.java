@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.activities.DetailActivity;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -76,17 +77,34 @@ public class SettingsFragment extends PreferenceFragment {
             VerseDB db = new VerseDB(context).open();
             prefDefaultScreenList.setSummary(db.getStateName(MetaSettings.getDefaultScreenList(context)));
             db.close();
+
+            String[] states = getResources().getStringArray(R.array.state_names);
+            String[] statesValues = getResources().getStringArray(R.array.state_ids);
+            prefDefaultScreenList.setEntries(states);
+            prefDefaultScreenList.setEntryValues(statesValues);
         }
-        else if(MetaSettings.getDefaultScreen(context) == 3) {
+        else if(MetaSettings.getDefaultScreen(context) == 4) {
             prefDefaultScreenList.setEnabled(true);
             VerseDB db = new VerseDB(context).open();
             prefDefaultScreenList.setSummary(db.getTagName(MetaSettings.getDefaultScreenList(context)));
+
+            String[] tags = db.getAllTagNames();
+
+            String[] tagValues = new String[tags.length];
+            for(int i = 0; i < tagValues.length; i++) {
+                tagValues[i] = Long.toString(db.getTagID(tags[i]));
+            }
+
+            prefDefaultScreenList.setEntries(tags);
+            prefDefaultScreenList.setEntryValues(tagValues);
             db.close();
         }
         else {
             prefDefaultScreenList.setEnabled(false);
             prefDefaultScreenList.setSummary("Not Available");
         }
+
+        prefDefaultScreenList.setOnPreferenceChangeListener(defaultListChange);
     }
 
     @Override
@@ -209,6 +227,11 @@ public class SettingsFragment extends PreferenceFragment {
     OnPreferenceClickListener importClick = new OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {
+            Intent intent = new Intent(context, DetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("FRAGMENT", 1);
+            intent.putExtras(bundle);
+            startActivity(intent);
 
             return false;
         }
@@ -240,6 +263,27 @@ public class SettingsFragment extends PreferenceFragment {
 			return false;
 		}
 	};
+
+    OnPreferenceChangeListener defaultListChange = new OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            int newId = Integer.parseInt((String) newValue);
+            int currentGroup = MetaSettings.getDefaultScreen(context);
+
+            VerseDB db = new VerseDB(context).open();
+
+            if(currentGroup == 3) {
+                prefDefaultScreenList.setSummary(db.getStateName(newId));
+            }
+            else {
+                prefDefaultScreenList.setSummary(db.getTagName(newId));
+            }
+
+            db.close();
+
+            return false;
+        }
+    };
 
 	OnPreferenceChangeListener appThemeChange = new OnPreferenceChangeListener() {
 		@Override
@@ -279,17 +323,22 @@ public class SettingsFragment extends PreferenceFragment {
 			int selection = Integer.parseInt(newValue.toString());
 			lp.setSummary(screens[selection]);
 
+            VerseDB db = new VerseDB(context).open();
+
+
             if(selection == 3) {
                 prefDefaultScreenList.setEnabled(true);
+                prefDefaultScreenList.setSummary(db.getStateName(MetaSettings.getDefaultScreenList(context)));
+
                 String[] states = getResources().getStringArray(R.array.state_names);
-                String[] statesValues = getResources().getStringArray(R.array.state_names);
+                String[] statesValues = getResources().getStringArray(R.array.state_ids);
                 prefDefaultScreenList.setEntries(states);
                 prefDefaultScreenList.setEntryValues(statesValues);
             }
             else if(selection == 4) {
                 prefDefaultScreenList.setEnabled(true);
+                prefDefaultScreenList.setSummary(db.getTagName(MetaSettings.getDefaultScreenList(context)));
 
-                VerseDB db = new VerseDB(context).open();
                 String[] tags = db.getAllTagNames();
 
                 String[] tagValues = new String[tags.length];
@@ -299,11 +348,12 @@ public class SettingsFragment extends PreferenceFragment {
 
                 prefDefaultScreenList.setEntries(tags);
                 prefDefaultScreenList.setEntryValues(tagValues);
-                db.close();
             }
             else {
                 prefDefaultScreenList.setEnabled(false);
             }
+
+            db.close();
 
 			return true;
 		}

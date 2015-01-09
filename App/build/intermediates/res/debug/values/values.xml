@@ -187,11 +187,6 @@
     <eat-comment/>
     <color name="all_current_verses">#559955</color>
     <color name="all_verses">#555555</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors_apptheme.xml -->
-    <eat-comment/>
-    <color name="apptheme_color">#ffffff</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
-    <eat-comment/>
     <color name="background_dark">#404040</color>
     <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
@@ -1473,6 +1468,7 @@
         <item name="colorAccent">@color/primary_accent</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@drawable/toolbar_dropshadow</item>
 
         <!-- ActionBar Icons -->
 
@@ -1517,6 +1513,7 @@
         <item name="colorAccent">@color/primary_accent</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@drawable/toolbar_dropshadow</item>
 
         <!-- Colors -->
         <item name="color_background_selected">@color/background_selected_light</item>

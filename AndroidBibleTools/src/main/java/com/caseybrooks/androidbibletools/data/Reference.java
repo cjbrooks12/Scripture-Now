@@ -1,6 +1,5 @@
 package com.caseybrooks.androidbibletools.data;
 
-import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import com.caseybrooks.androidbibletools.enumeration.Book;
 
 import java.text.ParseException;
@@ -159,7 +158,7 @@ public class Reference implements Comparable<Reference> {
         int a = verse();
         if(a > 0) {
             Token b = ts.get();
-            if(b != null && b.equals(Token.DASH)) {
+            if(b != null && (b.equals(Token.DASH))) {
                 int c = verse();
                 if(c > 0) {
                     ArrayList<Integer> verses = new ArrayList<Integer>();
@@ -187,7 +186,7 @@ public class Reference implements Comparable<Reference> {
     private ArrayList<Integer> verseList() {
         ArrayList<Integer> verseList = new ArrayList<Integer>();
         Token a = ts.get();
-        if(a != null && a.equals(Token.COLON)) {
+        if(a != null && (a.equals(Token.COLON) || a.equals(Token.COMMA))) {
             while (true) {
                 ArrayList<Integer> b = verseSequence();
                 if (b != null && b.size() > 0) {

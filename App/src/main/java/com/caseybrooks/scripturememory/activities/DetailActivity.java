@@ -2,15 +2,15 @@ package com.caseybrooks.scripturememory.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.EditVerseFragment;
+import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
@@ -37,9 +37,22 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
         int listType = getIntent().getExtras().getInt("KEY_LIST_TYPE", 0);
         int listId = getIntent().getExtras().getInt("KEY_LIST_ID", 0);
 
+        Fragment fragment;
+
+        if(getIntent().getExtras().getInt("FRAGMENT", 0) == 0) {
+            fragment = EditVerseFragment.newInstance(id, listType, listId);
+        }
+        else if(getIntent().getExtras().getInt("FRAGMENT", 0) == 1) {
+            fragment = ImportVersesFragment.newInstance();
+        }
+        else {
+            finish();
+            return;
+        }
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.mainFragmentContainer, EditVerseFragment.newInstance(id, listType, listId))
+                .add(R.id.mainFragmentContainer, fragment)
                 .commit();
     }
 
