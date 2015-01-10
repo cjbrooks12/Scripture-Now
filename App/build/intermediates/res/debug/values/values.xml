@@ -149,6 +149,7 @@
     <attr format="reference" name="ic_action_done"/>
     <attr format="reference" name="ic_action_filter"/>
     <attr format="reference" name="ic_action_find_in_page"/>
+    <attr format="reference" name="ic_action_get_app"/>
     <attr format="reference" name="ic_action_group_work"/>
     <attr format="reference" name="ic_action_help"/>
     <attr format="reference" name="ic_action_home"/>
@@ -1499,7 +1500,7 @@
         <item name="ic_action_save">@drawable/ic_action_save_dark</item>
         <item name="ic_action_create">@drawable/ic_action_create_dark</item>
         <item name="ic_action_visibility">@drawable/ic_action_visibility_dark</item>
-
+        <item name="ic_action_get_app">@drawable/ic_action_get_app_dark</item>
 
         <item name="ic_action_home">@drawable/ic_action_home_dark</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_dark</item>
@@ -1544,6 +1545,7 @@
         <item name="ic_action_save">@drawable/ic_action_save_light</item>
         <item name="ic_action_create">@drawable/ic_action_create_light</item>
         <item name="ic_action_visibility">@drawable/ic_action_visibility_light</item>
+        <item name="ic_action_get_app">@drawable/ic_action_get_app_light</item>
 
         <item name="ic_action_home">@drawable/ic_action_home_light</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>

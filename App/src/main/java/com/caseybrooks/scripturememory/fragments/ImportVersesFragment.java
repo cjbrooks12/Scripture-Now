@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -151,19 +152,12 @@ public class ImportVersesFragment extends Fragment {
                     ViewHolder vh = (ViewHolder) view.getTag();
 
                     if (vh != null) {
-                        new SaveVerses().execute(vh.file);
+                        new SaveVerses().showPopup(vh.file);
                     }
                 }
             });
             return null;
         }
-    }
-
-    private class VerseStrings {
-        String ref;
-        String version;
-        String tags;
-        String text;
     }
 
     private class FindFiles extends AsyncTask<Void, Void, Void> {
@@ -229,7 +223,7 @@ public class ImportVersesFragment extends Fragment {
                 for(File file : folderB.listFiles()) {
                     if(isCancelled()) break;
 
-                    ArrayList<VerseStrings> verses = new ArrayList<VerseStrings>();
+                    ArrayList<Passage> verses = new ArrayList<Passage>();
                     if(file.getName().equals("books_of_bible.txt")) continue;
                     if(!file.getName().contains(".txt")) continue;
 
@@ -238,7 +232,8 @@ public class ImportVersesFragment extends Fragment {
                         BufferedReader in = new BufferedReader(new FileReader(file));
 
                         String line;
-                        VerseStrings passage = null;
+                        Passage passage = null;
+                        String text = "";
 
                         while (true) {
                             if(isCancelled()) break;
@@ -251,26 +246,23 @@ public class ImportVersesFragment extends Fragment {
 
                             if (lineType.equals("r:")) {
                                 if (passage == null) {
-                                    passage = new VerseStrings();
-                                } else {
-                                    if(passage.ref == null || passage.version == null || passage.tags == null || passage.text == null){
-
-                                    }
-                                    else {
+                                    passage = new Passage(line.substring(2).trim());
+                                }
+                                else {
+                                    if(text != null && text.length() > 0) {
+                                        passage.setText(text);
                                         verses.add(passage);
                                     }
-
-                                    passage = new VerseStrings();
+                                    passage = new Passage(line.substring(2).trim());
                                 }
-                                passage.ref = line.substring(2).trim();
-                            } else if (lineType.equals("q:")) {
-                                passage.version = line.substring(2).trim();
-                            } else if (lineType.equals("t:")) {
-                                passage.tags = line.substring(2).trim();
+                            } else if (lineType.equals("q:") && passage != null) {
+                                passage.setVersion(Version.parseVersion(line.substring(2).trim()));
+                            } else if (lineType.equals("t:") && passage != null) {
+                                passage.setTags(line.substring(2).trim().split(","));
                             } else if (lineType.equals("p:")) {
-                                passage.text = line.substring(2).trim();
+                                text = line.substring(2).trim();
                             } else {
-                                passage.text += " " + line;
+                                text += " " + line.trim();
                             }
                         }
                         if(isCancelled()) break;
@@ -290,20 +282,24 @@ public class ImportVersesFragment extends Fragment {
                             root.appendChild(passageElement);
 
                             org.w3c.dom.Element r = doc.createElement("R");
-                            r.appendChild(doc.createTextNode(verses.get(i).ref));
+                            r.appendChild(doc.createTextNode(verses.get(i).getReference().toString()));
                             passageElement.appendChild(r);
 
                             org.w3c.dom.Element q = doc.createElement("Q");
-                            q.appendChild(doc.createTextNode(verses.get(i).version));
+                            q.appendChild(doc.createTextNode(verses.get(i).getVersion().getName()));
                             passageElement.appendChild(q);
 
                             //TODO: write all tags to file
                             org.w3c.dom.Element t = doc.createElement("T");
-                            t.appendChild(doc.createTextNode(verses.get(i).tags));
                             passageElement.appendChild(t);
+                            for(String string : passage.getTags()) {
+                                org.w3c.dom.Element tagItem = doc.createElement("item");
+                                tagItem.appendChild(doc.createTextNode(string));
+                                t.appendChild(tagItem);
+                            }
 
                             org.w3c.dom.Element p = doc.createElement("P");
-                            p.appendChild(doc.createTextNode(verses.get(i).text));
+                            p.appendChild(doc.createTextNode(verses.get(i).getText()));
                             passageElement.appendChild(p);
                         }
                         if(isCancelled()) break;
@@ -314,6 +310,9 @@ public class ImportVersesFragment extends Fragment {
                         DOMSource source = new DOMSource(doc);
                         StreamResult result = new StreamResult(new File(folderA, file.getName().replaceAll(".txt", ".xml")));
                         transformer.transform(source, result);
+                    }
+                    catch (ParseException pe) {
+                        pe.printStackTrace();
                     }
                     catch(FileNotFoundException fnfe) {
                         fnfe.printStackTrace();
@@ -337,15 +336,15 @@ public class ImportVersesFragment extends Fragment {
         }
     }
 
-    private class SaveVerses extends AsyncTask<File, Void, Void> {
+    private class SaveVerses extends AsyncTask<Void, Void, Void> {
 
         View view;
         AlertDialog dialog;
         ArrayList<Passage> verses;
+        File file;
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+        public void showPopup(final File file) {
+            this.file = file;
 
             verses = new ArrayList<Passage>();
 
@@ -353,48 +352,61 @@ public class ImportVersesFragment extends Fragment {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setView(view);
 
+            view.findViewById(R.id.share_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/xml");
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getAbsolutePath()));
+                    startActivity(Intent.createChooser(intent, "Send file to..."));
+                }
+            });
+
+            view.findViewById(R.id.import_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    execute();
+                }
+            });
+
             dialog = builder.create();
+            dialog.show();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
 
             view.findViewById(R.id.progress).setVisibility(View.VISIBLE);
             view.findViewById(R.id.description).setVisibility(View.GONE);
             view.findViewById(R.id.import_button).setVisibility(View.GONE);
-
-            dialog.show();
+            view.findViewById(R.id.share_button).setVisibility(View.GONE);
         }
-
-
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            view.findViewById(R.id.progress).setVisibility(View.GONE);
-            view.findViewById(R.id.description).setVisibility(View.VISIBLE);
-            view.findViewById(R.id.import_button).setVisibility(View.VISIBLE);
-
-            TextView addVerseButton = (TextView) view.findViewById(R.id.import_button);
-            addVerseButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    VerseDB db = new VerseDB(context).open();
-                    for(Passage passage : verses) {
-                        db.insertVerse(passage);
-                    }
-                    dialog.dismiss();
-                }
-            });
+            VerseDB db = new VerseDB(context).open();
+            int beforeCount = db.getStateCount(VerseDB.ALL_VERSES);
+            for(Passage passage : verses) {
+                db.insertVerse(passage);
+            }
+            int afterCount = db.getStateCount(VerseDB.ALL_VERSES);
+            db.close();
+            Toast.makeText(context, (afterCount - beforeCount) + " new verses added", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
         }
 
         @Override
-        protected Void doInBackground(File... params) {
+        protected Void doInBackground(Void... params) {
             try {
-                Document doc = Jsoup.parse(params[0], null);
+                Document doc = Jsoup.parse(file, null);
 
                 TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
                         cancel(true);
                     }
                 });
@@ -404,7 +416,11 @@ public class ImportVersesFragment extends Fragment {
                         if(isCancelled()) break;
                         Passage passage = new Passage(element.select("R").text());
                         passage.setVersion(Version.parseVersion(element.select("Q").text()));
-                        passage.addTag(element.select("T").text());
+
+                        for(org.jsoup.nodes.Element tagElement : element.select("T").select("item")) {
+                            passage.addTag(tagElement.text());
+                        }
+
                         passage.setText(element.select("P").text());
                         passage.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
 
@@ -529,12 +545,6 @@ public class ImportVersesFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.menu_import_open_directory:
-                Uri selectedUri = Uri.parse(Environment.getExternalStorageDirectory() + "/scripturememory/");
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(selectedUri, "resource/folder");
-                startActivity(Intent.createChooser(intent, "Open folder"));
-                return true;
             case R.id.menu_import_find_files:
                 new FindFiles().showPopup();
                 return true;
@@ -542,24 +552,4 @@ public class ImportVersesFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-
-//Host Activity Interface
-//------------------------------------------------------------------------------
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        try {
-//            mCallbacks = (NavigationCallbacks) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException("Activity must implement NavigationCallbacks.");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mCallbacks = null;
-//    }
 }

@@ -9,7 +9,7 @@
     <item
         android:id="@+id/contextual_list_export"
         app:showAsAction="ifRoom"
-        android:icon="?attr/ic_action_share"
+        android:icon="?attr/ic_action_get_app"
         android:title="Export" />
     <item
         android:id="@+id/contextual_list_add_tag"

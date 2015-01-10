@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,9 +40,21 @@ import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.notifications.MainNotification;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 public class VerseListFragment extends ListFragment {
 //enums for creating new fragment
@@ -381,7 +396,7 @@ public class VerseListFragment extends ListFragment {
 
                 //export selected verses to XML file and save to SD card
                 case R.id.contextual_list_export:
-                    export(bibleVerseAdapter.getSelectedItems());
+                    new ExportVerses().showPopup(bibleVerseAdapter.getSelectedItems());
                     return true;
 
                 //add a tag to all selected verses
@@ -477,9 +492,124 @@ public class VerseListFragment extends ListFragment {
         dialog.show();
     }
 
-    //TODO: implement exporting of verse lists as XML
-    private void export(ArrayList<Passage> items) {
+    private class ExportVerses extends AsyncTask<Void, Void, Void> {
 
+        View view;
+        AlertDialog dialog;
+        ArrayList<Passage> passages;
+        File file;
+
+        public void showPopup(ArrayList<Passage> passages) {
+            this.passages = passages;
+            view = LayoutInflater.from(context).inflate(R.layout.popup_export_verses, null);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setView(view);
+
+            dialog = builder.create();
+
+            final EditText editText = (EditText) view.findViewById(R.id.edit_text);
+
+            view.findViewById(R.id.export_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(editText.getText().toString().length() > 0) {
+                        String pathA = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
+                        file = new File(pathA, editText.getText().toString().trim().replaceAll("\\..*", "").replaceAll("\\s", "_") + ".xml");
+                        execute();
+                    }
+                }
+            });
+            view.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            view.findViewById(R.id.progress).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.description).setVisibility(View.GONE);
+            view.findViewById(R.id.export_button).setVisibility(View.GONE);
+            view.findViewById(R.id.edit_text).setVisibility(View.GONE);
+            view.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cancel(true);
+                }
+            });
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            dialog.dismiss();
+            Toast.makeText(context, "Verses exported to " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                //print verses to an XML file
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+
+                org.w3c.dom.Document doc = builder.newDocument();
+                org.w3c.dom.Element root = doc.createElement("verses");
+                root.setAttribute("name", file.getName().replaceAll("_", " "));
+                doc.appendChild(root);
+
+                for (int i = 0; i < passages.size(); i++) {
+                    if (isCancelled()) break;
+                    org.w3c.dom.Element passageElement = doc.createElement("passage");
+                    root.appendChild(passageElement);
+
+                    org.w3c.dom.Element r = doc.createElement("R");
+                    r.appendChild(doc.createTextNode(passages.get(i).getReference().toString()));
+                    passageElement.appendChild(r);
+
+                    org.w3c.dom.Element q = doc.createElement("Q");
+                    q.appendChild(doc.createTextNode(passages.get(i).getVersion().getName()));
+                    passageElement.appendChild(q);
+
+                    org.w3c.dom.Element t = doc.createElement("T");
+                    passageElement.appendChild(t);
+                    for (String string : passages.get(i).getTags()) {
+                        org.w3c.dom.Element tagItem = doc.createElement("item");
+                        tagItem.appendChild(doc.createTextNode(string));
+                        t.appendChild(tagItem);
+                    }
+
+                    org.w3c.dom.Element p = doc.createElement("P");
+                    p.appendChild(doc.createTextNode(passages.get(i).getText()));
+                    passageElement.appendChild(p);
+                }
+
+                if (isCancelled()) return null;
+
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                DOMSource source = new DOMSource(doc);
+                StreamResult result = new StreamResult(file);
+                transformer.transform(source, result);
+                return null;
+            } catch (ParserConfigurationException pce) {
+                pce.printStackTrace();
+            } catch (TransformerConfigurationException tce) {
+                tce.printStackTrace();
+            } catch (TransformerException te) {
+                te.printStackTrace();
+            }
+            return null;
+        }
     }
 
     //TODO: implement change of state through alert dialog

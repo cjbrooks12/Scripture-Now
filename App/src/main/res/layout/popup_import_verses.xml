@@ -31,7 +31,7 @@
             android:layout_below="@+id/title"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="16dp"
-            android:text="Do you want to import this pack of verses? It will not affect any of your existing verses, but may add new verses to your existing tags. Actual number of verses added may be fewer than shown if importing file contains duplicates or if a verse already exists in the app."/>
+            android:text="Do you want to import this pack of verses? It will not affect any of your existing verses, but may add new verses to your existing tags. Actual number of verses added may be fewer than shown if importing file contains duplicates or if a verse already exists in the app. Alternatively, you may send this file to another app or device."/>
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="wrap_content"
@@ -53,11 +53,12 @@
         android:layout_marginBottom="8dp">
 
         <TextView
-            android:id="@+id/import_button"
+            android:id="@+id/share_button"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="6dp"
@@ -65,14 +66,31 @@
             android:textColor="@color/primary_dark"
             android:background="@drawable/bg_transparent"
             android:textSize="18sp"
-            android:text="YES, IMPORT"/>
+            android:text="SHARE"/>
+
+        <TextView
+            android:id="@+id/import_button"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/share_button"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:textColor="@color/primary_dark"
+            android:background="@drawable/bg_transparent"
+            android:textSize="18sp"
+            android:text="IMPORT"/>
 
         <TextView
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:layout_toLeftOf="@+id/save_edit_button"
-            android:layout_toStartOf="@+id/save_edit_button"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignBaseline="@+id/import_button"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="6dp"

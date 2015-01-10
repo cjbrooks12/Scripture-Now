@@ -37,7 +37,7 @@
         <item name="ic_action_save">@drawable/ic_action_save_dark</item>
         <item name="ic_action_create">@drawable/ic_action_create_dark</item>
         <item name="ic_action_visibility">@drawable/ic_action_visibility_dark</item>
-
+        <item name="ic_action_get_app">@drawable/ic_action_get_app_dark</item>
 
         <item name="ic_action_home">@drawable/ic_action_home_dark</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_dark</item>
