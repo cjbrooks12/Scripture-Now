@@ -15,24 +15,32 @@ public class MetaSettings {
     public static final String VOTD_SHOW_NOTIFICATION = "PREF_VOTD_NOTIFICATION";
     public static final String VOTD_NOTIFICATION_SOUND = "PREF_VOTD_SOUND";
     public static final String APP_THEME = "PREF_SELECTED_THEME";
-    public static final String DEFAULT_SCREEN = "PREF_DEFAULT_SCREEN";
-    public static final String DEFAULT_SCREEN_LIST = "PREF_DEFAULT_SCREEN_LIST";
     public static final String BIBLE_VERSION = "PREF_SELECTED_VERSION";
 
     //settings set throughout app
     public static final String FIRST_TIME = "FIRST_TIME";
     public static final String PROMPT_ON_START_INT = "PROMPT_ON_START_INT";
+
     public static final String MAIN_NOTIFICATION_ACTIVE = "ACTIVE";
-    public static final String ACTIVE_LIST_TYPE = "ACTIVE_LIST_TYPE";
-    public static final String ACTIVE_LIST_ID = "ACTIVE_LIST_ID";
+
+    //the list one is memorizing verses from
+    public static final String ACTIVE_LIST_GROUP = "ACTIVE_LIST_GROUP";
+    public static final String ACTIVE_LIST_CHILD = "ACTIVE_LIST_CHILD";
+
+    //the last fragment that was open
+    public static final String DRAWER_SELECTED_GROUP = "DRAWER_SELECTED_GROUP";
+    public static final String DRAWER_SELECTED_CHILD = "DRAWER_SELECTED_CHILD";
+
+    //the fragment that should be open by default
+    public static final String DEFAULT_SCREEN_GROUP = "PREF_DEFAULT_SCREEN_GROUP";
+    public static final String DEFAULT_SCREEN_CHILD = "PREF_DEFAULT_SCREEN_CHILD";
+
     public static final String VERSE_ID = "SQL_ID";
     public static final String VERSE_DISPLAY_MODE = "VERSE_DISPLAY_MODE";
     public static final String RANDOMNESS_LEVEL = "RANDOMNESS_LEVEL";
     public static final String RANDOM_OFFSET = "RANDOM_OFFSET";
 	public static final String SORT_BY = "SORT_BY";
     public static final String USER_LEARNED_DRAWER = "USER_LEARNED_DRAWER";
-    public static final String DRAWER_SELECTED_GROUP = "DRAWER_SELECTED_GROUP";
-    public static final String DRAWER_SELECTED_CHILD = "DRAWER_SELECTED_CHILD";
 
 //Display settings
 //------------------------------------------------------------------------------
@@ -45,12 +53,22 @@ public class MetaSettings {
         return Version.parseVersion(version);
     }
 
-    public static int getDefaultScreen(Context context) {
-        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(DEFAULT_SCREEN, "0"));
+    public static void putActiveList(Context context, int listType, int listId) {
+        context.getSharedPreferences(settings_file, 0).edit().putInt(ACTIVE_LIST_GROUP, listType).commit();
+        context.getSharedPreferences(settings_file, 0).edit().putInt(ACTIVE_LIST_CHILD, listId).commit();
     }
 
-    public static int getDefaultScreenList(Context context) {
-        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(DEFAULT_SCREEN_LIST, "0"));
+    public static Pair<Integer, Integer> getActiveList(Context context) {
+        int group = context.getSharedPreferences(settings_file, 0).getInt(ACTIVE_LIST_GROUP, -1);
+        int child = context.getSharedPreferences(settings_file, 0).getInt(ACTIVE_LIST_CHILD, -1);
+        return new Pair<Integer, Integer>(group, child);
+    }
+
+    public static Pair<Integer, Integer> getDefaultScreen(Context context) {
+        int group = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(DEFAULT_SCREEN_GROUP, "-1"));
+        int child = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(DEFAULT_SCREEN_CHILD, "-1"));
+
+        return new Pair<Integer, Integer>(group, child);
     }
 
     public static void putDrawerSelection(Context context, int group, int child) {
@@ -110,17 +128,6 @@ public class MetaSettings {
 
     public static void putNotificationActive(Context context, boolean value) {
         context.getSharedPreferences(settings_file, 0).edit().putBoolean(MAIN_NOTIFICATION_ACTIVE, value).commit();
-    }
-
-    public static void putActiveList(Context context, int listType, int listId) {
-        context.getSharedPreferences(settings_file, 0).edit().putInt(ACTIVE_LIST_TYPE, listType).commit();
-        context.getSharedPreferences(settings_file, 0).edit().putInt(ACTIVE_LIST_ID, listId).commit();
-    }
-
-    public static Pair<Integer, Integer> getActiveList(Context context) {
-        int group = context.getSharedPreferences(settings_file, 0).getInt(ACTIVE_LIST_TYPE, -1);
-        int child = context.getSharedPreferences(settings_file, 0).getInt(ACTIVE_LIST_ID, -1);
-        return new Pair<Integer, Integer>(group, child);
     }
 
     public static int getVerseDisplayMode(Context context) {

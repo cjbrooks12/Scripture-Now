@@ -421,19 +421,7 @@ public class EditVerseFragment extends Fragment {
 	
 //ActionBar
 //------------------------------------------------------------------------------
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
 
-        if(passage != null) {
-            if (MetaSettings.getVerseId(context) == (int) passage.getMetadata().getInt(DefaultMetaData.ID)) {
-                menu.removeItem(R.id.menu_edit_delete);
-            }
-            if (passage.getMetadata().getInt(DefaultMetaData.STATE) == 4) {
-                menu.removeItem(R.id.menu_edit_set_notification);
-            }
-        }
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

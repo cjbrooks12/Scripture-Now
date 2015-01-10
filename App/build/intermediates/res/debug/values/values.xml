@@ -87,8 +87,8 @@
         <item>Last Open</item>
         <item>Dashboard</item>
         <item>Topical Bible</item>
-        <item>Memorization State...</item>
-        <item>Tag...</item>
+        <item>Memorization State…</item>
+        <item>Tag…</item>
     </string-array>
     <string-array name="pref_default_screen_values">
         <item>0</item>
@@ -162,6 +162,7 @@
     <attr format="reference" name="ic_action_sort"/>
     <attr format="reference" name="ic_action_tag"/>
     <attr format="reference" name="ic_action_today"/>
+    <attr format="reference" name="ic_action_visibility"/>
     <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="boolean" name="isLightTheme"/>
@@ -1497,6 +1498,8 @@
         <item name="ic_action_select_all">@drawable/ic_action_select_all_dark</item>
         <item name="ic_action_save">@drawable/ic_action_save_dark</item>
         <item name="ic_action_create">@drawable/ic_action_create_dark</item>
+        <item name="ic_action_visibility">@drawable/ic_action_visibility_dark</item>
+
 
         <item name="ic_action_home">@drawable/ic_action_home_dark</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_dark</item>
@@ -1540,7 +1543,7 @@
         <item name="ic_action_select_all">@drawable/ic_action_select_all_light</item>
         <item name="ic_action_save">@drawable/ic_action_save_light</item>
         <item name="ic_action_create">@drawable/ic_action_create_light</item>
-
+        <item name="ic_action_visibility">@drawable/ic_action_visibility_light</item>
 
         <item name="ic_action_home">@drawable/ic_action_home_light</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>

@@ -13,6 +13,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.support.v7.app.ActionBar;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.widget.Toast;
 
@@ -22,19 +23,16 @@ import com.caseybrooks.scripturememory.activities.DetailActivity;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
-import com.caseybrooks.scripturememory.data.VersesDatabase;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
 import com.caseybrooks.scripturememory.notifications.VOTDNotification;
 import com.caseybrooks.scripturememory.widgets.VOTDWidget;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class SettingsFragment extends PreferenceFragment {
 	Context context;
 
-    ListPreference prefDefaultScreenList;
+    ListPreference prefDefaultScreenChild;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,30 +61,32 @@ public class SettingsFragment extends PreferenceFragment {
 		selectVersion.setEntries(Version.getAllNames());
 		selectVersion.setEntryValues(Version.getAllNames());
 
-		ListPreference prefDefaultScreen = (ListPreference) findPreference("PREF_DEFAULT_SCREEN");
-		int defaultScreen = MetaSettings.getDefaultScreen(context);
+        Pair<Integer, Integer> defaultScreen = MetaSettings.getDefaultScreen(context);
+
+
+        ListPreference prefDefaultScreenGroup = (ListPreference) findPreference("PREF_DEFAULT_SCREEN_GROUP");
 		String[] screens = getResources().getStringArray(R.array.pref_default_screen);
-		prefDefaultScreen.setSummary(screens[defaultScreen]);
-		prefDefaultScreen.setOnPreferenceChangeListener(defaultScreenChange);
+        prefDefaultScreenGroup.setSummary(screens[defaultScreen.first]);
+        prefDefaultScreenGroup.setOnPreferenceChangeListener(defaultScreenChange);
 
-        prefDefaultScreenList = (ListPreference) findPreference("PREF_DEFAULT_SCREEN_LIST");
+        prefDefaultScreenChild = (ListPreference) findPreference("PREF_DEFAULT_SCREEN_CHILD");
 
-        if(MetaSettings.getDefaultScreen(context) == 3) {
-            prefDefaultScreenList.setEnabled(true);
+        if(defaultScreen.first == 3) {
+            prefDefaultScreenChild.setEnabled(true);
 
             VerseDB db = new VerseDB(context).open();
-            prefDefaultScreenList.setSummary(db.getStateName(MetaSettings.getDefaultScreenList(context)));
+            prefDefaultScreenChild.setSummary(db.getStateName(defaultScreen.second));
             db.close();
 
             String[] states = getResources().getStringArray(R.array.state_names);
             String[] statesValues = getResources().getStringArray(R.array.state_ids);
-            prefDefaultScreenList.setEntries(states);
-            prefDefaultScreenList.setEntryValues(statesValues);
+            prefDefaultScreenChild.setEntries(states);
+            prefDefaultScreenChild.setEntryValues(statesValues);
         }
-        else if(MetaSettings.getDefaultScreen(context) == 4) {
-            prefDefaultScreenList.setEnabled(true);
+        else if(defaultScreen.first == 4) {
+            prefDefaultScreenChild.setEnabled(true);
             VerseDB db = new VerseDB(context).open();
-            prefDefaultScreenList.setSummary(db.getTagName(MetaSettings.getDefaultScreenList(context)));
+            prefDefaultScreenChild.setSummary(db.getTagName(defaultScreen.second));
 
             String[] tags = db.getAllTagNames();
 
@@ -95,16 +95,16 @@ public class SettingsFragment extends PreferenceFragment {
                 tagValues[i] = Long.toString(db.getTagID(tags[i]));
             }
 
-            prefDefaultScreenList.setEntries(tags);
-            prefDefaultScreenList.setEntryValues(tagValues);
+            prefDefaultScreenChild.setEntries(tags);
+            prefDefaultScreenChild.setEntryValues(tagValues);
             db.close();
         }
         else {
-            prefDefaultScreenList.setEnabled(false);
-            prefDefaultScreenList.setSummary("Not Available");
+            prefDefaultScreenChild.setEnabled(false);
+            prefDefaultScreenChild.setSummary("Not Available");
         }
 
-        prefDefaultScreenList.setOnPreferenceChangeListener(defaultListChange);
+        prefDefaultScreenChild.setOnPreferenceChangeListener(defaultScreenChildChange);
     }
 
     @Override
@@ -134,30 +134,25 @@ public class SettingsFragment extends PreferenceFragment {
 			builder.setMessage("Backup verses? This will overwrite existing backup file.");
 			builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					VersesDatabase db = new VersesDatabase(context);
-					db.open();
-					try {
-						String state = Environment.getExternalStorageState();
-						if (Environment.MEDIA_MOUNTED.equals(state)) {
-							String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
-							File folder = new File(path);
+					VerseDB db = new VerseDB(context).open();
+                    String state = Environment.getExternalStorageState();
+                    if (Environment.MEDIA_MOUNTED.equals(state)) {
+                        String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
+                        File folder = new File(path);
 
-							if(!folder.exists()) {
-								folder.mkdirs();
-							}
-							if(folder.exists()) {
-								File externalStorage = new File(path, "backup.csv");
-								db.exportToCSV(externalStorage);
-								Toast.makeText(context, "Backup Successful", Toast.LENGTH_LONG).show();
-							}
-						}
-						else {
-							Toast.makeText(context, "Unable to open external storage. Check if SD card is installed properly", Toast.LENGTH_LONG).show();
-						}
-					}
-					catch(IOException e) {
-						Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-					}
+                        if(!folder.exists()) {
+                            folder.mkdirs();
+                        }
+                        if(folder.exists()) {
+                            File externalStorage = new File(path, "backup.xml");
+                            db.exportToBackupFile(externalStorage);
+                            Toast.makeText(context, "Backup Successful", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else {
+                        Toast.makeText(context, "Unable to open external storage. Check if SD card is installed properly", Toast.LENGTH_LONG).show();
+                    }
+
 					db.close();
 				}
 			});
@@ -182,7 +177,7 @@ public class SettingsFragment extends PreferenceFragment {
 				File folder = new File(path);
 
 				if(folder.exists()) {
-					final File externalStorage = new File(path, "backup.csv");
+					final File externalStorage = new File(path, "backup.xml");
 					if(externalStorage.exists()) {
 						AlertDialog.Builder builder = new AlertDialog.Builder(context);
 						builder.setCancelable(true);
@@ -190,20 +185,10 @@ public class SettingsFragment extends PreferenceFragment {
 						builder.setMessage("Restore verses from backup? This will replace all currently saved verses.");
 						builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								try {
-									VersesDatabase db = new VersesDatabase(context);
-									db.open();
-									db.importFromCSV(externalStorage);
-                                    db.migrate();
-									db.close();
-									Toast.makeText(context, "Restore Successful", Toast.LENGTH_LONG).show();
-								}
-								catch(FileNotFoundException e) {
-									Toast.makeText(context, "No Suitable Backup Exists", Toast.LENGTH_LONG).show();
-								}
-								catch(IOException e) {
-									Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-								}
+                                VerseDB db = new VerseDB(context).open();
+                                db.importFromBackupFile(externalStorage);
+                                db.close();
+                                Toast.makeText(context, "Restore Successful", Toast.LENGTH_LONG).show();
 							}
 						});
 						builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -264,24 +249,23 @@ public class SettingsFragment extends PreferenceFragment {
 		}
 	};
 
-    OnPreferenceChangeListener defaultListChange = new OnPreferenceChangeListener() {
+    OnPreferenceChangeListener defaultScreenChildChange = new OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             int newId = Integer.parseInt((String) newValue);
-            int currentGroup = MetaSettings.getDefaultScreen(context);
 
             VerseDB db = new VerseDB(context).open();
 
-            if(currentGroup == 3) {
-                prefDefaultScreenList.setSummary(db.getStateName(newId));
+            if(MetaSettings.getDefaultScreen(context).first == 3) {
+                prefDefaultScreenChild.setSummary(db.getStateName(newId));
             }
-            else {
-                prefDefaultScreenList.setSummary(db.getTagName(newId));
+            else if(MetaSettings.getDefaultScreen(context).first == 4) {
+                prefDefaultScreenChild.setSummary(db.getTagName(newId));
             }
 
             db.close();
 
-            return false;
+            return true;
         }
     };
 
@@ -327,17 +311,17 @@ public class SettingsFragment extends PreferenceFragment {
 
 
             if(selection == 3) {
-                prefDefaultScreenList.setEnabled(true);
-                prefDefaultScreenList.setSummary(db.getStateName(MetaSettings.getDefaultScreenList(context)));
+                prefDefaultScreenChild.setEnabled(true);
+                prefDefaultScreenChild.setSummary(db.getStateName(MetaSettings.getDefaultScreen(context).second));
 
                 String[] states = getResources().getStringArray(R.array.state_names);
                 String[] statesValues = getResources().getStringArray(R.array.state_ids);
-                prefDefaultScreenList.setEntries(states);
-                prefDefaultScreenList.setEntryValues(statesValues);
+                prefDefaultScreenChild.setEntries(states);
+                prefDefaultScreenChild.setEntryValues(statesValues);
             }
             else if(selection == 4) {
-                prefDefaultScreenList.setEnabled(true);
-                prefDefaultScreenList.setSummary(db.getTagName(MetaSettings.getDefaultScreenList(context)));
+                prefDefaultScreenChild.setEnabled(true);
+                prefDefaultScreenChild.setSummary(db.getTagName(MetaSettings.getDefaultScreen(context).second));
 
                 String[] tags = db.getAllTagNames();
 
@@ -346,11 +330,11 @@ public class SettingsFragment extends PreferenceFragment {
                     tagValues[i] = db.getTagID(tags[i]) + "";
                 }
 
-                prefDefaultScreenList.setEntries(tags);
-                prefDefaultScreenList.setEntryValues(tagValues);
+                prefDefaultScreenChild.setEntries(tags);
+                prefDefaultScreenChild.setEntryValues(tagValues);
             }
             else {
-                prefDefaultScreenList.setEnabled(false);
+                prefDefaultScreenChild.setEnabled(false);
             }
 
             db.close();

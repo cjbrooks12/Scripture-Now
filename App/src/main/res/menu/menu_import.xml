@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    <item
+        android:id="@+id/menu_import_open_directory"
+        app:showAsAction="ifRoom"
+        android:icon="?attr/ic_action_find_in_page"
+        android:title="Open Directory"/>
+    <item
+        android:id="@+id/menu_import_find_files"
+        app:showAsAction="ifRoom"
+        android:icon="?attr/ic_action_visibility"
+        android:title="Search for Files"/>
+</menu>

@@ -7,16 +7,34 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.util.Log;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
 
+import org.jsoup.Jsoup;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 /**
  * Redesigned verses database, designed to replace VersesDatabase class
@@ -89,6 +107,7 @@ public class VerseDB {
     public static final int CACHED = 8;
     public static final int VOTD = 9;
     public static final int ALL_VERSES = -1;
+    public static final int UNTAGGED = -1;
     public static final int CURRENT = -2;
 
     //Database helper class
@@ -200,6 +219,129 @@ public class VerseDB {
         helper.close();
     }
 
+    public void exportToBackupFile(File file) {
+        //print verses to an XML file
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
+            Document doc = builder.newDocument();
+            Element root = doc.createElement("backup");
+            doc.appendChild(root);
+
+            Element tags = doc.createElement("tags");
+            root.appendChild(tags);
+
+            Element verses = doc.createElement("verses");
+            root.appendChild(verses);
+
+            //add all current tags to the backup file
+            String[] allTagNames = getAllTagNames();
+            for(String tagName : allTagNames) {
+                Element tagElement = doc.createElement("tag");
+                tagElement.setAttribute("name", tagName);
+
+                int color = getTagColor(tagName);
+                int red = Color.red(color);
+                int green = Color.green(color);
+                int blue = Color.blue(color);
+                String s = String.format("#%02X%02X%02X", red, green, blue);
+
+                tagElement.setAttribute("color", s);
+                tags.appendChild(tagElement);
+            }
+
+            ArrayList<Passage> allVerses = getAllVerses();
+            for(Passage passage : allVerses) {
+                Element passageElement = doc.createElement("passage");
+                verses.appendChild(passageElement);
+
+                passageElement.setAttribute("state", Integer.toString(passage.getMetadata().getInt(DefaultMetaData.STATE)));
+                passageElement.setAttribute("time_created", Long.toString(passage.getMetadata().getLong(DefaultMetaData.TIME_CREATED)));
+                passageElement.setAttribute("time_modified", Long.toString(passage.getMetadata().getLong(DefaultMetaData.TIME_MODIFIED)));
+
+                Element r = doc.createElement("R");
+                r.appendChild(doc.createTextNode(passage.getReference().toString()));
+                passageElement.appendChild(r);
+
+                Element q = doc.createElement("Q");
+                q.appendChild(doc.createTextNode(passage.getVersion().getName()));
+                passageElement.appendChild(q);
+
+                Element t = doc.createElement("T");
+                passageElement.appendChild(t);
+                for(String string : passage.getTags()) {
+                    Element tagItem = doc.createElement("item");
+                    tagItem.appendChild(doc.createTextNode(string));
+                    t.appendChild(tagItem);
+                }
+
+                Element p = doc.createElement("P");
+                p.appendChild(doc.createTextNode(passage.getText()));
+                passageElement.appendChild(p);
+            }
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(file);
+            transformer.transform(source, result);
+        }
+        catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+        }
+        catch (TransformerConfigurationException tce) {
+            tce.printStackTrace();
+        }
+        catch (TransformerException te) {
+            te.printStackTrace();
+        }
+    }
+
+    public void importFromBackupFile(File file) {
+        clear();
+        try {
+            open();
+            org.jsoup.nodes.Document doc = Jsoup.parse(file, null);
+
+            //add all tags and their colors to the
+            if(doc.select("tags").size() > 0) {
+                for(org.jsoup.nodes.Element element : doc.select("tags").select("tag")) {
+                    addTag(element.attr("name"), element.attr("color"));
+                }
+            }
+
+            if(doc.select("verses").size() > 0) {
+                for(org.jsoup.nodes.Element element : doc.select("passage")) {
+                    Passage passage = new Passage(element.select("R").text());
+
+                    passage.getMetadata().putInt(DefaultMetaData.STATE, Integer.parseInt(element.attr("state")));
+                    passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, Long.parseLong(element.attr("time_created")));
+                    passage.getMetadata().putLong(DefaultMetaData.TIME_MODIFIED, Long.parseLong(element.attr("time_modified")));
+
+                    passage.setVersion(Version.parseVersion(element.select("Q").text()));
+                    passage.setText(element.select("P").text());
+
+                    for(org.jsoup.nodes.Element tagElement : element.select("T").select("item")) {
+                        passage.addTag(tagElement.text());
+                    }
+
+                    insertVerse(passage);
+                }
+            }
+        }
+        catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        catch(ParseException pe) {
+            pe.printStackTrace();
+        }
+        finally {
+            close();
+        }
+    }
+
 //public getter functions
 //------------------------------------------------------------------------------
     public Passage getVerse(long verse_id) {
@@ -218,9 +360,9 @@ public class VerseDB {
             passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
             passage.setVersion(Version.parseVersion(c.getString(c.getColumnIndex(KEY_VERSES_VERSION))));
             passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
+            passage.getMetadata().putLong(DefaultMetaData.TIME_MODIFIED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_MODIFIED)));
             passage.getMetadata().putInt(DefaultMetaData.STATE, c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
             passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, false);
-
 
             String commaSeparatedTags = c.getString(c.getColumnIndex(KEY_VERSES_TAGS));
 
@@ -372,19 +514,21 @@ public class VerseDB {
 
         Collections.sort(tagNames);
 
-        int[] tagIds = new int[tagNames.size()];
+        int[] tagIds = new int[tagNames.size() + 1];
         for(int i = 0; i < tagNames.size(); i++) {
             tagIds[i] = (int)getTagID(tagNames.get(i));
         }
+        tagIds[tagIds.length - 1] = UNTAGGED;
 
         c.close();
+
         return tagIds;
     }
 
     public String[] getAllTagNames() {
         String selectQuery =
                 "SELECT *" +
-                        " FROM " + TABLE_TAGS;
+                " FROM " + TABLE_TAGS;
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) c.moveToFirst();
@@ -407,23 +551,28 @@ public class VerseDB {
         }
 
         c.close();
+
+        tagNames.add("Untagged");
         return tagNamesArray;
     }
 
     //Get information about tags
     public String getTagName(long tag_id) {
-        String selectQuery =
-                "SELECT *" +
-                " FROM " + TABLE_TAGS +
-                " WHERE " + KEY_TAGS_ID + " = " + tag_id;
+        if(tag_id == UNTAGGED) return "Untagged";
+        else {
+            String selectQuery =
+                    "SELECT *" +
+                    " FROM " + TABLE_TAGS +
+                    " WHERE " + KEY_TAGS_ID + " = " + tag_id;
 
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null && c.getCount() > 0) c.moveToFirst();
-        else return "";
+            Cursor c = db.rawQuery(selectQuery, null);
+            if (c != null && c.getCount() > 0) c.moveToFirst();
+            else return "";
 
-        String name = c.getString(c.getColumnIndex(KEY_TAGS_TAG));
-        c.close();
-        return name;
+            String name = c.getString(c.getColumnIndex(KEY_TAGS_TAG));
+            c.close();
+            return name;
+        }
     }
 
     public long getTagID(String tag) {
@@ -450,20 +599,47 @@ public class VerseDB {
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) c.moveToFirst();
-        else return Color.parseColor("#508A4C");
+        else return context.getResources().getColor(R.color.all_verses);
 
         int color = Color.parseColor(c.getString(c.getColumnIndex(KEY_TAGS_COLOR)));
         c.close();
         return color;
     }
 
-    public ArrayList<Passage> getTaggedVerses(int tagId) {
-        String selectQuery =
-                "SELECT *" +
-                    " FROM " + TABLE_VERSES +
-                    " WHERE " + KEY_VERSES_TAGS + " LIKE '%," + tagId + ",%'" +
-                    " AND " + KEY_VERSES_STATE + " < 6";
+    public int getTagColor(int id) {
+        if(id == UNTAGGED) return context.getResources().getColor(R.color.all_verses);
+        else {
+            String selectQuery =
+                    "SELECT *" +
+                    " FROM " + TABLE_TAGS +
+                    " WHERE " + KEY_TAGS_ID + " = " + id;;
 
+            Cursor c = db.rawQuery(selectQuery, null);
+            if (c != null && c.getCount() > 0) c.moveToFirst();
+            else return context.getResources().getColor(R.color.all_verses);
+
+            int color = Color.parseColor(c.getString(c.getColumnIndex(KEY_TAGS_COLOR)));
+            c.close();
+            return color;
+        }
+    }
+
+    public ArrayList<Passage> getTaggedVerses(int tagId) {
+        String selectQuery = "";
+        if(tagId == UNTAGGED) {
+            selectQuery =
+                "SELECT *" +
+                " FROM " + TABLE_VERSES +
+                " WHERE " + KEY_VERSES_TAGS + " LIKE ','" +
+                " AND " + KEY_VERSES_STATE + " < 6";
+        }
+        else {
+            selectQuery =
+                "SELECT *" +
+                " FROM " + TABLE_VERSES +
+                " WHERE " + KEY_VERSES_TAGS + " LIKE '%," + tagId + ",%'" +
+                " AND " + KEY_VERSES_STATE + " < 6";
+        }
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) c.moveToFirst();
@@ -479,11 +655,21 @@ public class VerseDB {
     }
 
     public int getTagCount(int tagId) {
-        String selectQuery =
+        String selectQuery = "";
+        if(tagId == UNTAGGED) {
+            selectQuery =
+                "SELECT *" +
+                " FROM " + TABLE_VERSES +
+                " WHERE " + KEY_VERSES_TAGS + " LIKE ','" +
+                " AND " + KEY_VERSES_STATE + " < 6";
+        }
+        else {
+            selectQuery =
                 "SELECT *" +
                 " FROM " + TABLE_VERSES +
                 " WHERE " + KEY_VERSES_TAGS + " LIKE '%," + tagId + ",%'" +
                 " AND " + KEY_VERSES_STATE + " < 6";
+        }
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) {
@@ -498,7 +684,8 @@ public class VerseDB {
         ContentValues tag_values = new ContentValues();
         tag_values.put(KEY_TAGS_TAG, tagName);
 
-        if(hexColor == null || hexColor.length() == 0 || !hexColor.matches("#\\d{6}")) {
+        if(hexColor == null || hexColor.length() == 0 || !hexColor.matches("#{1}[a-fA-F0-9]{6}")) {
+            Log.w("INSERTING TAG WITH NO COLOR", "");
             int red = (int) (Math.random() * 255);
             int green = (int) (Math.random() * 255);
             int blue = (int) (Math.random() * 255);
@@ -574,7 +761,7 @@ public class VerseDB {
 
             Cursor c = db.rawQuery(selectQuery, null);
             if (c != null && c.getCount() > 0) c.moveToFirst();
-            else return Color.parseColor("#508A4C");
+            else return context.getResources().getColor(R.color.all_verses);
 
             return Color.parseColor(c.getString(c.getColumnIndex(KEY_STATE_COLOR)));
         }
@@ -657,13 +844,4 @@ public class VerseDB {
             return verses;
         }
     }
-
-    public void updateState(int id, String color) {
-        ContentValues values = new ContentValues();
-        values.put(KEY_STATE_COLOR, color);
-
-        db.update(TABLE_STATE, values, KEY_STATE_ID + "=" + id, null);
-    }
-
-
 }

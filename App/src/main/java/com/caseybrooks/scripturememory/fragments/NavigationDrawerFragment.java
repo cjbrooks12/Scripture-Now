@@ -69,7 +69,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         NavListItem item = new NavListItem();
 
-        switch(MetaSettings.getDefaultScreen(getActivity())) {
+        switch(MetaSettings.getDefaultScreen(getActivity()).first) {
             case 0:
                 Pair<Integer, Integer> lastSelected = MetaSettings.getDrawerSelection(parentActivity);
                 item.groupPosition = lastSelected.first;
@@ -85,11 +85,11 @@ public class NavigationDrawerFragment extends Fragment {
                 break;
             case 3:
                 item.groupPosition = 2;
-                item.id = MetaSettings.getDefaultScreenList(getActivity());
+                item.id = MetaSettings.getDefaultScreen(getActivity()).second;
                 break;
             case 4:
                 item.groupPosition = 3;
-                item.id = MetaSettings.getDefaultScreenList(getActivity());
+                item.id = MetaSettings.getDefaultScreen(getActivity()).second;
                 break;
             default:
                 item.groupPosition = 0;
@@ -301,7 +301,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
             else if(groupPosition == 3) {
                 item.name = db.getTagName(item.id);
-                item.color = db.getTagColor(db.getTagName(item.id));
+                item.color = db.getTagColor(item.id);
                 item.count = db.getTagCount(item.id);
             }
             else if(groupPosition == 4) {
@@ -387,7 +387,7 @@ public class NavigationDrawerFragment extends Fragment {
             });
 
             if(groupPosition == 3) {
-                headerText.setText(headerTitle + " (" + getChildrenCount(groupPosition) + ")");
+                headerText.setText(headerTitle + " (" + (getChildrenCount(groupPosition)-1) + ")");
             }
             else {
                 headerText.setText(headerTitle);
