@@ -355,6 +355,7 @@ public class ImportVersesFragment extends Fragment {
             view.findViewById(R.id.share_button).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    dialog.dismiss();
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/xml");
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getAbsolutePath()));

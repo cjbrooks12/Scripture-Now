@@ -11,7 +11,7 @@
         <item>V2.3 - May 21, 2014</item>
         <item>V2.4 - July 2, 2014</item>
         <item>V2.5 - August 25, 2014</item>
-
+        <item>V3.0 - January 11, 2015</item>
     </string-array>
     
     <string-array name="changelog_detail">
@@ -58,6 +58,13 @@
             -Massive internal code revision and bug fixes\n
             -Input Card now supports searching the internet for the verse given in the "Reference" field\n
             -Verse list can now be sorted alphabetically, according to date the verses were added, and their order in the Bible. "Next verse" from notification and widget follow the chosen sort order
+        </item>
+        <item>
+            -Scripture Memory has been completely rewritten and is better and more beautiful than ever before!\n
+            -App name has been changed to Scripture Now to accompany UI update to Material Design, with inspiration from Google Now\n
+            -Verses can now be organized according to how well they are memorized. In addition, verses can be tagged for another level of organization\n
+            -Finding new verses has never been easier! The Discover screen lets you search OpenBible.info and add verses directly from an arbitrary search query\n
+            -Packs of verses can be imported from Settings. In addition, you can export your verses to the same format, and share these files with other apps or devices. You can add verses new verse packs to the \'/scripturememory\' folder on your sdcard to add new packs that were shared with you\n
         </item>
     </string-array>
 </resources>

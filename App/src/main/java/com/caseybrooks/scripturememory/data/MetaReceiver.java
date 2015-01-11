@@ -3,7 +3,10 @@ package com.caseybrooks.scripturememory.data;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.Pair;
+import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.data.Metadata;
@@ -15,9 +18,19 @@ import com.caseybrooks.scripturememory.notifications.QuickNotification;
 import com.caseybrooks.scripturememory.notifications.VOTDNotification;
 import com.caseybrooks.scripturememory.widgets.MainVerseWidget;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 public class MetaReceiver extends BroadcastReceiver {
     public static final String NEXT_VERSE = ".MetaReceiver.NEXT_VERSE";
@@ -32,6 +45,29 @@ public class MetaReceiver extends BroadcastReceiver {
         this.context = context;
 
         if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) { onBootCompleted(); }
+        else if(intent.getAction().equals(Intent.ACTION_SEND)) {
+            try {
+                Uri contentUri = (Uri) intent.getExtras().get(Intent.EXTRA_STREAM);
+                FileInputStream in = new FileInputStream(contentUri.getPath());
+
+                TransformerFactory factory = TransformerFactory.newInstance();
+                Transformer transformer = factory.newTransformer();
+
+                String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
+
+                int lastIndex = contentUri.getPath().lastIndexOf("/");
+                String fileName = contentUri.getPath().substring(lastIndex);
+
+                Document doc = Jsoup.parse(in, null, null);
+                if(doc.select("verses").size() > 0) {
+                    transformer.transform(new StreamSource(in), new StreamResult(new File(path, fileName)));
+                    Toast.makeText(context, "File added successfully", Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         else if(intent.getAction().equals(NEXT_VERSE)) { getNextVerse(); }
         else if(intent.getAction().equals(VOTD_ALARM)) { getVOTD(); }
         else if(intent.getAction().equals(UPDATE_ALL)) { updateAll(); }

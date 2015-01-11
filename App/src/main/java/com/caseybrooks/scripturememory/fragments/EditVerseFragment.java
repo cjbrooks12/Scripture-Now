@@ -1,6 +1,5 @@
 package com.caseybrooks.scripturememory.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -37,7 +36,6 @@ import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.FlowLayout;
-import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.notifications.MainNotification;
 
 import java.util.ArrayList;
@@ -50,13 +48,13 @@ public class EditVerseFragment extends Fragment {
     Passage passage;
     int listType;
     int listId;
-    NavigationCallbacks mCallbacks;
-	
+
 	EditText editRef, editVer;
 
     TagAdapter tagAdapter;
 
     FlowLayout tagChipsLayout;
+    TextView seekbarText;
     SeekBar seekbar;
 
     public static Fragment newInstance(int verseId, int listType, int listId) {
@@ -111,8 +109,27 @@ public class EditVerseFragment extends Fragment {
             editVer = (EditText) view.findViewById(R.id.updateVerse);
             editVer.setText(passage.getText());
 
+            seekbarText = (TextView) view.findViewById(R.id.seekbar_text);
+            switch (passage.getMetadata().getInt(DefaultMetaData.STATE)) {
+                case VerseDB.CURRENT_NONE:
+                    seekbarText.setText("Current - None");
+                    break;
+                case VerseDB.CURRENT_SOME:
+                    seekbarText.setText("Current - Some");
+                    break;
+                case VerseDB.CURRENT_MOST:
+                    seekbarText.setText("Current - Most");
+                    break;
+                case VerseDB.CURRENT_ALL:
+                    seekbarText.setText("Current - All");
+                    break;
+                case VerseDB.MEMORIZED:
+                    seekbarText.setText("Memorized");
+                    break;
+            }
+
             seekbar = (SeekBar) view.findViewById(R.id.stateSeekBar);
-            seekbar.setProgress((int) passage.getMetadata().getInt(DefaultMetaData.STATE) - 1);
+            seekbar.setProgress(passage.getMetadata().getInt(DefaultMetaData.STATE) - 1);
 
             int color = db.getStateColor(seekbar.getProgress() + 1);
 
@@ -138,6 +155,24 @@ public class EditVerseFragment extends Fragment {
                     Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
                     thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
                     seekbar.setThumb(thumb);
+
+                    switch (passage.getMetadata().getInt(DefaultMetaData.STATE)) {
+                        case VerseDB.CURRENT_NONE:
+                            seekbarText.setText("Current - None");
+                            break;
+                        case VerseDB.CURRENT_SOME:
+                            seekbarText.setText("Current - Some");
+                            break;
+                        case VerseDB.CURRENT_MOST:
+                            seekbarText.setText("Current - Most");
+                            break;
+                        case VerseDB.CURRENT_ALL:
+                            seekbarText.setText("Current - All");
+                            break;
+                        case VerseDB.MEMORIZED:
+                            seekbarText.setText("Memorized");
+                            break;
+                    }
 
                 }
 
@@ -309,7 +344,7 @@ public class EditVerseFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
 
@@ -323,7 +358,7 @@ public class EditVerseFragment extends Fragment {
                     db.updateTag(tagId, text, null);
                     db.close();
                     tagAdapter.notifyDataSetChanged();
-                    dialog.cancel();
+                    dialog.dismiss();
                 }
             }
         });
@@ -341,7 +376,7 @@ public class EditVerseFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
         TextView thisVerseButton = (TextView) view.findViewById(R.id.this_verse_button);
@@ -354,7 +389,7 @@ public class EditVerseFragment extends Fragment {
                 db.close();
                 tagAdapter.removeTag(tagId);
                 tagAdapter.notifyDataSetChanged();
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
         TextView allVersesButton = (TextView) view.findViewById(R.id.all_verses_button);
@@ -368,7 +403,7 @@ public class EditVerseFragment extends Fragment {
                 db.close();
                 tagAdapter.removeTag(tagId);
                 tagAdapter.notifyDataSetChanged();
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
 
@@ -397,7 +432,7 @@ public class EditVerseFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
 
@@ -412,7 +447,7 @@ public class EditVerseFragment extends Fragment {
                     db.updateVerse(passage);
                     tagAdapter.addTag((int)db.getTagID(text));
                     tagAdapter.notifyDataSetChanged();
-                    dialog.cancel();
+                    dialog.dismiss();
                 }
             }
         });
@@ -436,9 +471,11 @@ public class EditVerseFragment extends Fragment {
         switch (item.getItemId()) {
 	    case R.id.menu_edit_set_notification:
             if(passage != null) {
-                MetaSettings.putVerseId(context, (int) passage.getMetadata().getInt(DefaultMetaData.ID));
+                MetaSettings.putVerseId(context, passage.getMetadata().getInt(DefaultMetaData.ID));
+                MetaSettings.putNotificationActive(context, true);
+                MetaSettings.putActiveList(context, listType, listId);
                 MainNotification.notify(context).show();
-                Toast.makeText(context, "Notification Set", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
             }
 	    	return true;
 	    case R.id.menu_edit_save_changes:
@@ -447,14 +484,42 @@ public class EditVerseFragment extends Fragment {
                 passage.setText(editVer.getText().toString());
                 db.updateVerse(passage);
                 db.close();
-                Toast.makeText(context, "Verse Updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, passage.getReference().toString() + " Updated", Toast.LENGTH_SHORT).show();
+                ((ActionBarActivity) context).finish();
             }
 	    	return true;
 	    case R.id.menu_edit_delete:
             if(passage != null) {
-                passage.getMetadata().putInt(DefaultMetaData.STATE, Integer.valueOf(6));
-                db.updateVerse(passage);
-                db.close();
+                final View view = LayoutInflater.from(context).inflate(R.layout.popup_delete_verse, null);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setView(view);
+
+                final AlertDialog dialog = builder.create();
+
+                view.findViewById(R.id.verse_list).setVisibility(View.GONE);
+
+                TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                TextView deleteButton = (TextView) view.findViewById(R.id.delete_button);
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        VerseDB db = new VerseDB(context).open();
+                        db.deleteVerse(passage);
+                        db.close();
+                        dialog.dismiss();
+
+                        Toast.makeText(context, passage.getReference().toString() + " deleted", Toast.LENGTH_SHORT).show();
+                        ((ActionBarActivity) context).finish();
+                    }
+                });
+
+                dialog.show();
             }
 	    	return true;
 	    case R.id.menu_edit_share:
@@ -473,22 +538,4 @@ public class EditVerseFragment extends Fragment {
             return super.onOptionsItemSelected(item);
 	    }
 	}
-	
-//Host Activity Interface
-//------------------------------------------------------------------------------
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mCallbacks = (NavigationCallbacks) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Activity must implement NavigationCallbacks.");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = null;
-    }
 }

@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/primary_accent</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowContentOverlay">@drawable/toolbar_dropshadow</item>
+        <item name="android:windowContentOverlay">@drawable/toolbar_shadow</item>
 
         <!-- Colors -->
         <item name="color_background_selected">@color/background_selected_light</item>

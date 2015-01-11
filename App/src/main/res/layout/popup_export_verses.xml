@@ -32,15 +32,13 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="16dp"
             android:text="Enter a name for a file to export verses to."/>
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/edit_text"
-            style="@style/Base.Widget.AppCompat.EditText"
             android:layout_below="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapWords"
-            android:completionThreshold="1"
-            android:hint="File Name"/>
+            android:inputType="textUri"
+            android:hint="New Name"/>
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="wrap_content"
