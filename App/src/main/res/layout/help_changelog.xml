@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <!-- V3.0 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="8dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V3.0 - January 14, 2015" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Scripture Memory has been completely rewritten and is better and more beautiful than ever before!\n-App name has been changed to Scripture Now to accompany UI update to Material Design, with inspiration from Google Now\n-Verses can now be organized according to how well they are memorized. In addition, verses can be tagged for another level of organization\n-Finding new verses has never been easier! The Discover screen lets you search OpenBible.info and add verses directly from an arbitrary search query\n-Packs of verses can be imported from Settings. In addition, you can export your verses to the same format, and share these files with other apps or devices. You can add verses new verse packs to the \'/scripturememory\' folder on your sdcard to add new packs that were shared with you"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <!-- V2.5 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V2.5 - August 25, 2014" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Massive internal code revision and bug fixes\n-Input Card now supports searching the internet for the verse given in the &quot;Reference&quot; field\n-Verse list can now be sorted alphabetically, according to date the verses were added, and their order in the Bible. &quot;Next verse&quot; from notification and widget follow the chosen sort order"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- V2.4 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V2.4 - July 2, 2014" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Verse of the Day now available in multiple Bible translations\n-Added homescreen and lockscreen widgets"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- V2.3 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V2.3 - May 21, 2014" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Dark theme is now available!"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- V2.2 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V2.2 - May 19, 2014" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Added display options to encourage better memorization! Notifications can not show the verse as dashes, the first letter of each word, or both."/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- V2.1 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V2.1 - May 17, 2014" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Added daily Verse of the Day notifications \n-Improved UI: added transition animations and made everything reflect changes immediately \n-Significant internal code revision, improved overall stability "/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- V2.0 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V2.0 - January 25, 2014" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Complete UI redesign. Changed app icon, added navigation drawer, and moved many buttons to the actionbar. In general, cleaned up interface and created a consistent theme \n-Dramatically improved support on older Android versions. Now pre-ICS devices look nice and modern!-Added ability to share verses to and from the app"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- V1.3 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V1.3 - January 6, 2013" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Added backup and restore feature. Data can be backed up to external storage which persists through uninstall and reinstall \n-Fixed bug which sometimes caused crash when updating from V1.1.01 to 1.2. Thanks to everyone who reported it!"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- V1.2 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V1.2 - January 1, 2013" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Added ability to set verses as memorized and display them in a separate list. Memorized verses will not be displayed in a notification \n-Added ability to edit verses \n-Various bugfixes "/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- V1.1 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V1.1 - November 14, 2013" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Added Verse of the Day card\n-Updated interface\n-Added a Settings and About page in the menu\n-Improved support for older devices\n-General code optimization"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- V1.0 -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="@drawable/bg_transparent"
+            android:layout_marginBottom="4dp"
+            cardView:cardBackgroundColor="?attr/color_card"
+            cardView:cardCornerRadius="4dp"
+            cardView:cardElevation="2dp" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="@dimen/title_text_size"
+                    android:fontFamily="sans-serif-light"
+                    android:text="V1.0 - November 3, 2013" />
+
+                <View
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="-Initial Launch"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>

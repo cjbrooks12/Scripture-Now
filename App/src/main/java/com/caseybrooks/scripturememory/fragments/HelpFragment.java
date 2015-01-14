@@ -9,8 +9,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.caseybrooks.scripturememory.R;
@@ -19,6 +24,40 @@ import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
 
 public class HelpFragment extends PreferenceFragment {
+
+    public static class ViewTopicFragment extends Fragment {
+
+        public static Fragment newInstance(int resId) {
+            Fragment fragment = new ViewTopicFragment();
+            Bundle args = new Bundle();
+            args.putInt("RES_ID", resId);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            int resId = getArguments().getInt("RES_ID", R.layout.help_overview);
+            View view = inflater.inflate(resId, container, false);
+
+            ActionBar ab = ((ActionBarActivity) getActivity()).getSupportActionBar();
+            ColorDrawable colorDrawable = new ColorDrawable(getActivity().getResources().getColor(R.color.memorized));
+            ab.setBackgroundDrawable(colorDrawable);
+            ab.setHomeButtonEnabled(true);
+            ab.setDisplayHomeAsUpEnabled(true);
+
+            if (resId == R.layout.help_overview) ab.setTitle("Overview");
+            else if (resId == R.layout.help_adding_verses) ab.setTitle("Adding Verses");
+            else if (resId == R.layout.help_memorization_state) ab.setTitle("Memorization State");
+            else if (resId == R.layout.help_tags) ab.setTitle("Tags");
+            else if (resId == R.layout.help_changelog) ab.setTitle("Changelog");
+            else if (resId == R.layout.help_licenses) ab.setTitle("Licenses");
+
+
+            return view;
+        }
+    }
+
     Context context;
 
     @Override

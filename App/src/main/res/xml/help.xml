@@ -4,26 +4,59 @@
 
     <PreferenceCategory
         android:title="How To Use" >
+        <Preference
+            android:title="Overview" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="1">
+            </intent>
+        </Preference>
+        <Preference
+            android:title="Adding Verses" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="2">
+            </intent>
+        </Preference>
+        <Preference
+            android:title="Memorization State" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="3">
+            </intent>
+        </Preference>
+        <Preference
+            android:title="Tags" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="4">
+            </intent>
+        </Preference>
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="About" >
-        <PreferenceScreen
-            android:title="About" >
-            <Preference
-                android:title="Changelog" >
-                <intent android:action="android.intent.action.VIEW"
-                        android:targetPackage="com.caseybrooks.scripturememory"
-                        android:targetClass="com.caseybrooks.scripturememory.activities.Changelog"/>
-            </Preference>
-            <Preference
-                android:title="Licences" >
-                <intent android:action="android.intent.action.VIEW"
-                        android:targetPackage="com.caseybrooks.scripturememory"
-                        android:targetClass="com.caseybrooks.scripturememory.activities.About" />
-            </Preference>
-        </PreferenceScreen>
+        <Preference
+            android:title="Changelog" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="5">
+            </intent>
+        </Preference>
+        <Preference
+            android:title="Licenses" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="6">
+            </intent>
+        </Preference>
     </PreferenceCategory>
 
     <PreferenceScreen

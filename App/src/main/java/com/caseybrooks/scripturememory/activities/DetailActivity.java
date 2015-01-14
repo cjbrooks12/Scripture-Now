@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.EditVerseFragment;
+import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
@@ -33,21 +34,30 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
         tb = (Toolbar) findViewById(R.id.activity_toolbar);
         setSupportActionBar(tb);
 
-        int id = getIntent().getExtras().getInt("KEY_ID", 0);
-        int listType = getIntent().getExtras().getInt("KEY_LIST_TYPE", 0);
-        int listId = getIntent().getExtras().getInt("KEY_LIST_ID", 0);
+        Fragment fragment = ImportVersesFragment.newInstance();
 
-        Fragment fragment;
+        if(getIntent().getExtras() != null) {
+            int id = getIntent().getExtras().getInt("KEY_ID", 0);
+            int listType = getIntent().getExtras().getInt("KEY_LIST_TYPE", 0);
+            int listId = getIntent().getExtras().getInt("KEY_LIST_ID", 0);
 
-        if(getIntent().getExtras().getInt("FRAGMENT", 0) == 0) {
-            fragment = EditVerseFragment.newInstance(id, listType, listId);
+            if (getIntent().getExtras().getInt("FRAGMENT", -1) == 0) { //edit a verse
+                fragment = EditVerseFragment.newInstance(id, listType, listId);
+            }
         }
-        else if(getIntent().getExtras().getInt("FRAGMENT", 0) == 1) {
-            fragment = ImportVersesFragment.newInstance();
-        }
-        else {
-            finish();
-            return;
+        else if (getIntent().getDataString() != null) { //help topic: overview
+            int item = Integer.parseInt(getIntent().getDataString());
+
+            if (item == 0) fragment = ImportVersesFragment.newInstance();
+
+            else if (item == 1) fragment = HelpFragment.ViewTopicFragment.newInstance(R.layout.help_overview);
+            else if (item == 2) fragment = HelpFragment.ViewTopicFragment.newInstance(R.layout.help_adding_verses);
+            else if (item == 3) fragment = HelpFragment.ViewTopicFragment.newInstance(R.layout.help_memorization_state);
+            else if (item == 4) fragment = HelpFragment.ViewTopicFragment.newInstance(R.layout.help_tags);
+
+            else if (item == 5) fragment = HelpFragment.ViewTopicFragment.newInstance(R.layout.help_changelog);
+            else if (item == 6) fragment = HelpFragment.ViewTopicFragment.newInstance(R.layout.help_licenses);
+
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();

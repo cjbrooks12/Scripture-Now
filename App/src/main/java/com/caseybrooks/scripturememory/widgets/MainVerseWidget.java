@@ -7,16 +7,14 @@ import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.database.SQLException;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaReceiver;
@@ -113,8 +111,8 @@ public class MainVerseWidget extends AppWidgetProvider {
 
         VerseDB db = new VerseDB(context);
         db.open();
-        try {
-            verse = db.getVerse(id);
+        verse = db.getVerse(id);
+        if(verse != null) {
 			switch(MetaSettings.getVerseDisplayMode(context)) {
 				case 0:
 					verse.setFormatter(new DefaultFormatter.Normal());
@@ -140,14 +138,13 @@ public class MainVerseWidget extends AppWidgetProvider {
             views.setTextViewText(R.id.widget_main_reference, verse.getReference().toString());
             views.setTextViewText(R.id.widget_main_verse, verse.getText());
 
-
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
-        catch(SQLException e) {
+        else {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
-            views.setTextViewText(R.id.widget_main_reference, "Error");
-            views.setTextViewText(R.id.widget_main_verse, Log.getStackTraceString(e));
+            views.setTextViewText(R.id.widget_main_reference, "All verses memorized!");
+            views.setTextViewText(R.id.widget_main_verse, "Why don't you try adding some more, or start memorizing a different list?");
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);

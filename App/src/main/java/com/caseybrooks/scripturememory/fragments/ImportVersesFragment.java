@@ -58,8 +58,6 @@ public class ImportVersesFragment extends Fragment {
     ListView lv;
     FileAdapter adapter;
 
-//    NavigationCallbacks mCallbacks;
-
     public static Fragment newInstance() {
         Fragment fragment = new ImportVersesFragment();
         Bundle args = new Bundle();
@@ -178,6 +176,12 @@ public class ImportVersesFragment extends Fragment {
                     execute();
                 }
             });
+            view.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
 
             dialog.show();
         }
@@ -276,30 +280,30 @@ public class ImportVersesFragment extends Fragment {
                         root.setAttribute("name", file.getName().replaceAll("_", " ").replaceAll(".txt", ""));
                         doc.appendChild(root);
 
-                        for(int i = 0; i < verses.size(); i++) {
+                        for(Passage item : verses) {
                             if(isCancelled()) break;
                             org.w3c.dom.Element passageElement = doc.createElement("passage");
                             root.appendChild(passageElement);
 
                             org.w3c.dom.Element r = doc.createElement("R");
-                            r.appendChild(doc.createTextNode(verses.get(i).getReference().toString()));
+                            r.appendChild(doc.createTextNode(item.getReference().toString()));
                             passageElement.appendChild(r);
 
                             org.w3c.dom.Element q = doc.createElement("Q");
-                            q.appendChild(doc.createTextNode(verses.get(i).getVersion().getName()));
+                            q.appendChild(doc.createTextNode(item.getVersion().getName()));
                             passageElement.appendChild(q);
 
                             //TODO: write all tags to file
                             org.w3c.dom.Element t = doc.createElement("T");
                             passageElement.appendChild(t);
-                            for(String string : passage.getTags()) {
+                            for(String string : item.getTags()) {
                                 org.w3c.dom.Element tagItem = doc.createElement("item");
                                 tagItem.appendChild(doc.createTextNode(string));
                                 t.appendChild(tagItem);
                             }
 
                             org.w3c.dom.Element p = doc.createElement("P");
-                            p.appendChild(doc.createTextNode(verses.get(i).getText()));
+                            p.appendChild(doc.createTextNode(item.getText()));
                             passageElement.appendChild(p);
                         }
                         if(isCancelled()) break;

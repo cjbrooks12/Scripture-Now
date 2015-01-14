@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -35,8 +34,6 @@ public class VOTDCard extends FrameLayout {
 	private TextView ref, ver;
     private ProgressBar progress;
     ImageButton overflowButton;
-    LinearLayout layout;
-
     Passage currentVerse;
 
     //status of Verse of the Day.
@@ -64,8 +61,7 @@ public class VOTDCard extends FrameLayout {
         overflowButton.setOnClickListener(votdRemove);
         ref = (TextView) findViewById(R.id.votdReference);
         ver = (TextView) findViewById(R.id.votdVerse);
-        layout = (LinearLayout) findViewById(R.id.votdLayout);
-        progress = new ProgressBar(context);
+        progress = (ProgressBar) findViewById(R.id.progress);
         progress.setIndeterminate(true);
 
         this.setOnClickListener(votdAdd);
@@ -98,7 +94,7 @@ public class VOTDCard extends FrameLayout {
 
                 @Override
                 public void onPreDownload() {
-                    layout.addView(progress, 1);
+                    progress.setVisibility(View.VISIBLE);
                     ref.setVisibility(View.GONE);
                     ver.setVisibility(View.GONE);
                 }
@@ -108,7 +104,7 @@ public class VOTDCard extends FrameLayout {
                     if(passage != null) {
                         currentVerse = passage;
 
-                        layout.removeView(progress);
+                        progress.setVisibility(View.GONE);
                         ref.setVisibility(View.VISIBLE);
                         ver.setVisibility(View.VISIBLE);
 
@@ -117,7 +113,7 @@ public class VOTDCard extends FrameLayout {
                         status = 2;
                     }
                     else {
-                        layout.removeView(progress);
+                        progress.setVisibility(View.GONE);
                         ref.setVisibility(View.VISIBLE);
                         ver.setVisibility(View.VISIBLE);
 

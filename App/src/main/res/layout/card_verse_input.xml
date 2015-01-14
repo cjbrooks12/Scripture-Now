@@ -1,57 +1,60 @@
 <android.support.v7.widget.CardView
     xmlns:cardView="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/verse_list_card_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     cardView:cardBackgroundColor="?attr/color_card"
     android:layout_marginTop="8dp"
-    cardView:cardCornerRadius="4dp" >
+    cardView:cardCornerRadius="4dp">
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:orientation="vertical" >
+
+        <!-- The header bar -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="48dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="horizontal" >
             <TextView
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:textSize="@dimen/title_text_size"
                 android:fontFamily="sans-serif-light"
-                android:text="@string/input_verse" />
+                android:text="Input Verse"
+                android:textSize="@dimen/title_text_size" />
 
             <ImageButton
                 android:id="@+id/overflowButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:background="@drawable/bg_transparent"
-                android:src="?attr/ic_action_overflow"
-                android:contentDescription="@string/remove" />
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="?attr/ic_action_clear" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:background="@android:color/darker_gray" />
 
         <RelativeLayout
             android:id="@+id/input_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:orientation="vertical">
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp">
 
             <TextView
                 android:id="@+id/textReference"
@@ -106,12 +109,14 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:background="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/addVerse"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/card_button_height"
+            android:layout_height="64dp"
             android:text="@string/add_verse"
             android:layout_gravity="center"
             android:gravity="center"

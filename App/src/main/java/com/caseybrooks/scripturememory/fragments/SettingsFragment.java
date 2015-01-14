@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.activities.DetailActivity;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -44,7 +43,6 @@ public class SettingsFragment extends PreferenceFragment {
 
 		findPreference("Backup").setOnPreferenceClickListener(backupClick);
 		findPreference("Restore").setOnPreferenceClickListener(restoreClick);
-        findPreference("Import").setOnPreferenceClickListener(importClick);
         findPreference("PREF_VOTD_NOTIFICATION").setOnPreferenceChangeListener(VOTDCheckedChange);
 		findPreference("PREF_VOTD_TIME").setOnPreferenceChangeListener(VOTDTimeChange);
 
@@ -208,19 +206,6 @@ public class SettingsFragment extends PreferenceFragment {
 			return false;
 		}
 	};
-
-    OnPreferenceClickListener importClick = new OnPreferenceClickListener() {
-        @Override
-        public boolean onPreferenceClick(Preference preference) {
-            Intent intent = new Intent(context, DetailActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt("FRAGMENT", 1);
-            intent.putExtras(bundle);
-            startActivity(intent);
-
-            return false;
-        }
-    };
 	
 //Verse of the Day Preference Listeners
 //------------------------------------------------------------------------------

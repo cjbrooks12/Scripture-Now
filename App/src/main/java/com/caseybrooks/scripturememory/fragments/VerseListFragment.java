@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,6 +18,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,8 +86,6 @@ public class VerseListFragment extends ListFragment {
 	int listType;
     int listId;
 
-    VerseDB db;
-	
 //Lifecycle and Initialization
 //------------------------------------------------------------------------------
     @Override
@@ -117,7 +119,7 @@ public class VerseListFragment extends ListFragment {
         String title;
         int color;
 
-        db = new VerseDB(context).open();
+        VerseDB db = new VerseDB(context).open();
         if(listType == TAGS) {
             title = db.getTagName(listId);
             color = db.getTagColor(db.getTagName(listId));
@@ -128,10 +130,10 @@ public class VerseListFragment extends ListFragment {
             color = db.getStateColor(listId);
             MetaSettings.putDrawerSelection(context, 2, listId);
         }
+        db.close();
 
         ((ActionBarActivity) context).getSupportActionBar().setTitle(title);
 
-        db.close();
 
         ColorDrawable colorDrawable = new ColorDrawable(color);
         ab.setBackgroundDrawable(colorDrawable);
@@ -141,8 +143,8 @@ public class VerseListFragment extends ListFragment {
 
 	@Override
 	public void onPause() {
-		super.onPause();
         if(mActionMode != null) mActionMode.finish();
+        super.onPause();
     }
 
     AdapterView.OnItemClickListener iconClick = new AdapterView.OnItemClickListener() {
@@ -151,9 +153,8 @@ public class VerseListFragment extends ListFragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if(mActionMode == null) {
                 mActionMode = ((ActionBarActivity) getActivity()).startSupportActionMode(mActionModeCallback);
-                mActionMode.setTitle(bibleVerseAdapter.getSelectedCount() + "");
             }
-            else if(bibleVerseAdapter.getSelectedCount() == 0) {
+            if(bibleVerseAdapter.getSelectedCount() == 0) {
                 mActionMode.finish();
             }
             else {
@@ -221,7 +222,7 @@ public class VerseListFragment extends ListFragment {
         ArrayList<Passage> verses;
         MainActivity mainActivity = (MainActivity) getActivity();
 
-		db.open();
+		VerseDB db = new VerseDB(context).open();
         if(listType == TAGS) {
             verses = db.getTaggedVerses(listId);
             mainActivity.setTitle(db.getTagName(listId));
@@ -358,6 +359,7 @@ public class VerseListFragment extends ListFragment {
                 case R.id.contextual_list_select_all:
                     //deselect all items
                     ArrayList<Passage> items = bibleVerseAdapter.getItems();
+                    Log.i("SELECT ALL", bibleVerseAdapter.getCount() + "," + bibleVerseAdapter.getItems().size() + ":" + bibleVerseAdapter.getSelectedCount() + "," + bibleVerseAdapter.getSelectedItems().size());
 
                     int firstPosition = getListView().getFirstVisiblePosition();
                     int lastPosition = firstPosition + getListView().getChildCount() - 1;
@@ -464,7 +466,7 @@ public class VerseListFragment extends ListFragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
         TextView deleteButton = (TextView) view.findViewById(R.id.delete_button);
@@ -477,7 +479,7 @@ public class VerseListFragment extends ListFragment {
                     bibleVerseAdapter.removeItem(passage);
                 }
                 db.close();
-                dialog.cancel();
+                dialog.dismiss();
                 if(mActionMode != null) mActionMode.finish();
                 bibleVerseAdapter.notifyDataSetChanged();
 
@@ -613,8 +615,114 @@ public class VerseListFragment extends ListFragment {
     }
 
     //TODO: implement change of state through alert dialog
-    private void changeState(ArrayList<Passage> items) {
+    private void changeState(final ArrayList<Passage> items) {
+        final View view = LayoutInflater.from(context).inflate(R.layout.popup_change_state, null);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(view);
 
+        final AlertDialog dialog = builder.create();
+
+        final TextView seekbarText = (TextView) view.findViewById(R.id.seekbar_text);
+        switch (items.get(0).getMetadata().getInt(DefaultMetaData.STATE)) {
+            case VerseDB.CURRENT_NONE:
+                seekbarText.setText("Current - None");
+                break;
+            case VerseDB.CURRENT_SOME:
+                seekbarText.setText("Current - Some");
+                break;
+            case VerseDB.CURRENT_MOST:
+                seekbarText.setText("Current - Most");
+                break;
+            case VerseDB.CURRENT_ALL:
+                seekbarText.setText("Current - All");
+                break;
+            case VerseDB.MEMORIZED:
+                seekbarText.setText("Memorized");
+                break;
+        }
+
+        final SeekBar seekbar = (SeekBar) view.findViewById(R.id.stateSeekBar);
+        seekbar.setProgress(items.get(0).getMetadata().getInt(DefaultMetaData.STATE) - 1);
+
+        VerseDB db = new VerseDB(context).open();
+        int color = db.getStateColor(seekbar.getProgress() + 1);
+        db.close();
+
+        Drawable line = seekbar.getProgressDrawable();
+        line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+        Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
+        thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        seekbar.setThumb(thumb);
+
+        seekbar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                VerseDB db = new VerseDB(context).open();
+                int color = db.getStateColor(progressValue + 1);
+                db.close();
+
+                Drawable line = seekBar.getProgressDrawable();
+                line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+                Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
+                thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                seekbar.setThumb(thumb);
+
+                switch (progressValue + 1) {
+                    case VerseDB.CURRENT_NONE:
+                        seekbarText.setText("Current - None");
+                        break;
+                    case VerseDB.CURRENT_SOME:
+                        seekbarText.setText("Current - Some");
+                        break;
+                    case VerseDB.CURRENT_MOST:
+                        seekbarText.setText("Current - Most");
+                        break;
+                    case VerseDB.CURRENT_ALL:
+                        seekbarText.setText("Current - All");
+                        break;
+                    case VerseDB.MEMORIZED:
+                        seekbarText.setText("Memorized");
+                        break;
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        TextView saveStateButton = (TextView) view.findViewById(R.id.save_state_button);
+        saveStateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VerseDB db = new VerseDB(context).open();
+                int progress = seekbar.getProgress() + 1;
+                for(Passage passage : items) {
+                    passage.getMetadata().putInt(DefaultMetaData.STATE, progress);
+                    db.updateVerse(passage);
+                }
+                db.close();
+                if(mActionMode != null) mActionMode.finish();
+                dialog.dismiss();
+                populateBibleVerses();
+            }
+        });
+        dialog.show();
     }
 
     private void addTag(final ArrayList<Passage> items) {
@@ -634,12 +742,13 @@ public class VerseListFragment extends ListFragment {
                 tagSuggestions
         );
         edit.setAdapter(adapter);
+        db.close();
 
         TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
 
@@ -655,7 +764,7 @@ public class VerseListFragment extends ListFragment {
                         db.updateVerse(passage);
                     }
                     db.close();
-                    dialog.cancel();
+                    dialog.dismiss();
                     if(mActionMode != null) mActionMode.finish();
                     bibleVerseAdapter.notifyDataSetChanged();
 

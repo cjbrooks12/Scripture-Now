@@ -55,7 +55,12 @@
 	        android:title="Restore" 
 	        android:key="Restore" />
         <Preference
-            android:title="Import"
-            android:key="Import" />
+            android:title="Import" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="0">
+            </intent>
+        </Preference>
     </PreferenceCategory>
 </PreferenceScreen><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/xml/settings.xml -->

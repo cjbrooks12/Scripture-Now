@@ -1,9 +1,8 @@
 <android.support.v7.widget.CardView
     xmlns:cardView="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/verse_list_card_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     cardView:cardBackgroundColor="?attr/color_card"
     android:layout_marginTop="8dp"
     cardView:cardCornerRadius="4dp">
@@ -11,21 +10,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:orientation="vertical" >
+
+        <!-- The header bar -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_height="48dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="sans-serif-light"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:text="@string/notification_verse"
+                android:text="Notification Verse"
                 android:textSize="@dimen/title_text_size" />
 
             <ImageButton
@@ -34,61 +34,91 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_transparent"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:src="?attr/ic_action_overflow" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@android:color/darker_gray" />
+
+        <!-- The verse text area -->
         <RelativeLayout
             android:id="@+id/notificationVerseLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="4dp" >
-
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp">
             <View
-                android:id="@+id/hline"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
+                android:id="@+id/active_list_sidebar"
+                android:layout_width="4dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/memorized"
+                android:layout_alignTop="@+id/notificationReference"
+                android:layout_alignBottom="@+id/active_list_text"/>
 
             <TextView
                 android:id="@+id/notificationReference"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/hline"
+                android:layout_toRightOf="@+id/active_list_sidebar"
+                android:layout_toEndOf="@+id/active_list_sidebar"
+                android:layout_alignParentTop="true"
                 android:fontFamily="sans-serif-light"
-                android:paddingBottom="@dimen/card_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/card_vertical_margin"
-                android:text="@string/reference"
                 android:textSize="@dimen/title_text_size" />
+
+            <TextView
+                android:id="@+id/active_list_text"
+                android:layout_below="@+id/notificationReference"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/active_list_sidebar"
+                android:layout_toEndOf="@+id/active_list_sidebar"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/notificationVerse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/active_list_text"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@id/notificationReference"
-                android:fontFamily="sans-serif-light"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:text="@string/verse" />
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-light" />
         </RelativeLayout>
 
+        <View
+            android:id="@+id/expandedhline"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@android:color/darker_gray" />
+
+        <!-- The expandable radiogroup area -->
         <RelativeLayout
             android:id="@+id/expandedLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <View
-                android:id="@+id/expandedhline"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp">
 
             <RadioGroup
-                android:layout_below="@id/expandedhline"
                 android:id="@+id/expandedDisplayOptionsGroup"
+                android:layout_alignParentTop="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 

@@ -7,10 +7,10 @@
             -Initial Launch
         </item>
         <item>
-            -Added Verse of the Day card \n
-            -Updated interface \n
-            -Added a Settings and About page in the menu \n
-            -Improved support for older devices \n
+            -Added Verse of the Day card\n
+            -Updated interface\n
+            -Added a Settings and About page in the menu\n
+            -Improved support for older devices\n
             -General code optimization
         </item>
         <item>
@@ -419,28 +419,8 @@
     <string name="add_new_verse">Add New Verse</string>
     <string name="add_verse">Add Verse</string>
     <string name="add_widget">Add widget</string>
-    <string name="android_actionbar_style">Actionbar theme created with the help of
-        Android ActionBar Style Generator, and all resources generated and used 
-        are licensed under a Creative Commons Attribution 3.0 Unported License. 
-        http://jgilfelt.github.io/android-actionbarstylegenerator/</string>
-    <string name="android_holo_colors">Theme created with the help of 
-        android-holo-colors.com, and all resources generated and used are 
-        licensed under a Creative Commons Attribution 3.0 Unported License. 
-        - See more at: http://android-holo-colors.com/#sthash.AR8FSKdC.dpuf</string>
     <string name="app_name">Scripture Now</string>
     <string name="appwidget_text">EXAMPLE</string>
-    <string name="credits_esv">Initial Scripture quotations are from The Holy 
-        Bible, English Standard Version® (ESV®), copyright © 2001 by Crossway, 
-        a publishing ministry of Good News Publishers. Used by permission. All 
-        rights reserved.</string>
-    <string name="credits_niv">Scriptures from VerseOfTheDay.com taken from the 
-        Holy Bible, New International Version®, NIV®. Copyright © 1973, 1978, 
-        1984, 2011 by Biblica, Inc.™ Used by permission of Zondervan. All rights 
-        reserved worldwide. www.zondervan.com  The “NIV” and “New International 
-        Version” are trademarks registered in the United States Patent and Trademark 
-        Office by Biblica, Inc.™</string>
-    <string name="credits_votd">Scriptures for the Verse of the Day card are 
-        taken from VerseOfTheDay.com with permission.</string>
     <string name="developer">Developed by Casey Brooks</string>
     <string name="drawer_close">Close</string>
     <string name="drawer_open">Open</string>

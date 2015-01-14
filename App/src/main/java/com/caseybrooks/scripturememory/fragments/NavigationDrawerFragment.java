@@ -406,13 +406,13 @@ public class NavigationDrawerFragment extends Fragment {
             selectedColorAttrs.recycle();
 
             if(groupPosition == selectedGroup) {
-                headerDrawable.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.SRC_IN));
+                headerDrawable.mutate().setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.SRC_IN));
 
                 headerText.setTextColor(selectedColor);
                 convertView.setBackgroundColor(selectedBackgroundColor);
             }
             else {
-                headerDrawable.setColorFilter(new PorterDuffColorFilter(unselectedColor, PorterDuff.Mode.SRC_IN));
+                headerDrawable.mutate().setColorFilter(new PorterDuffColorFilter(unselectedColor, PorterDuff.Mode.SRC_IN));
 
                 headerText.setTextColor(unselectedColor);
                 convertView.setBackgroundColor(backgroundColor);
