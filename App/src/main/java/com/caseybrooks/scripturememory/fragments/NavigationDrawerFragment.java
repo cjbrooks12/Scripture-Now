@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -162,7 +163,6 @@ public class NavigationDrawerFragment extends Fragment {
         listDataChild.put(listDataHeader.get(2), states);
 
         // set Tags subitems (each tag, plus untagged)
-        //TODO: set way to get all untagged verses as a list
         int[] tagIds = db.getAllTagIds();
         List<Integer> tags = new ArrayList<Integer>();
         if(tagIds != null && tagIds.length > 0) {
@@ -170,6 +170,10 @@ public class NavigationDrawerFragment extends Fragment {
                 tags.add(id);
             }
         }
+        tags.add(VerseDB.UNTAGGED);
+
+        Log.i("INITIALIZE EXPANDABLE LIST", "tags list has count: " + tags.size());
+
         listDataChild.put(listDataHeader.get(3), tags);
 
         // set Settings subitems (none)
@@ -271,6 +275,7 @@ public class NavigationDrawerFragment extends Fragment {
                     tags.add(id);
                 }
             }
+            tags.add(VerseDB.UNTAGGED);
             childItems.remove(headerItems.get(3));
             childItems.put(headerItems.get(3), tags);
             db.close();
@@ -323,9 +328,9 @@ public class NavigationDrawerFragment extends Fragment {
         public View getChildView(int groupPosition, final int childPosition,
                                  boolean isLastChild, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                LayoutInflater infalInflater = (LayoutInflater) this.context
+                LayoutInflater inflater = (LayoutInflater) this.context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.list_drawer_child_view, null);
+                convertView = inflater.inflate(R.layout.list_drawer_child_view, null);
             }
 
             NavListItem item = getChild(groupPosition, childPosition);
@@ -337,12 +342,7 @@ public class NavigationDrawerFragment extends Fragment {
             tagCircle.setBackgroundDrawable(Util.Drawables.circle(item.color));
 
             TextView tagCircleCount = (TextView) convertView.findViewById(R.id.subitemCircleText);
-            if(groupPosition == 1) {
-                tagCircleCount.setText("");
-            }
-            else {
-                tagCircleCount.setText(Integer.toString(item.count));
-            }
+            tagCircleCount.setText(Integer.toString(item.count));
 
             return convertView;
         }
@@ -387,6 +387,7 @@ public class NavigationDrawerFragment extends Fragment {
             });
 
             if(groupPosition == 3) {
+                Log.i("GROUP VIEW: TAGS", getChildrenCount(groupPosition) + "");
                 headerText.setText(headerTitle + " (" + Math.max(getChildrenCount(groupPosition)-1, 0) + ")");
             }
             else {

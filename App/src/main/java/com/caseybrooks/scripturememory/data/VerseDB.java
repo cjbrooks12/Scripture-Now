@@ -233,6 +233,7 @@ public class VerseDB {
             root.appendChild(tags);
 
             Element verses = doc.createElement("verses");
+            verses.setAttribute("name", "Backup");
             root.appendChild(verses);
 
             //add all current tags to the backup file
@@ -514,11 +515,10 @@ public class VerseDB {
 
         Collections.sort(tagNames);
 
-        int[] tagIds = new int[tagNames.size() + 1];
+        int[] tagIds = new int[tagNames.size()];
         for(int i = 0; i < tagNames.size(); i++) {
             tagIds[i] = (int)getTagID(tagNames.get(i));
         }
-        tagIds[tagIds.length - 1] = UNTAGGED;
 
         c.close();
 
@@ -531,29 +531,33 @@ public class VerseDB {
                 " FROM " + TABLE_TAGS;
 
         Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null && c.getCount() > 0) c.moveToFirst();
-        else return null;
+        if(c != null) {
+            ArrayList<String> tagNames = new ArrayList<String>();
 
-        ArrayList<String> tagNames = new ArrayList<String>();
-        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-            int tagCount = c.getInt(c.getColumnIndex(KEY_TAGS_ID));
+            if (c.getCount() > 0) c.moveToFirst();
+            else return new String[] {};
 
-            if(getTagCount(tagCount) > 0) {
-                tagNames.add(c.getString(c.getColumnIndex(KEY_TAGS_TAG)));
+
+            for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                int tagCount = c.getInt(c.getColumnIndex(KEY_TAGS_ID));
+
+                if (getTagCount(tagCount) > 0) {
+                    tagNames.add(c.getString(c.getColumnIndex(KEY_TAGS_TAG)));
+                }
             }
+
+            Collections.sort(tagNames);
+
+            String[] tagNamesArray = new String[tagNames.size()];
+            for (int i = 0; i < tagNames.size(); i++) {
+                tagNamesArray[i] = tagNames.get(i);
+            }
+
+            c.close();
+
+            return tagNamesArray;
         }
-
-        Collections.sort(tagNames);
-
-        String[] tagNamesArray = new String[tagNames.size()];
-        for(int i = 0; i < tagNames.size(); i++) {
-            tagNamesArray[i] = tagNames.get(i);
-        }
-
-        c.close();
-
-        tagNames.add("Untagged");
-        return tagNamesArray;
+        else return new String[] {};
     }
 
     //Get information about tags

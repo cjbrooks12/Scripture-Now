@@ -553,6 +553,7 @@ public class VerseListFragment extends ListFragment {
             super.onPostExecute(aVoid);
 
             dialog.dismiss();
+            if(mActionMode != null) mActionMode.finish();
             Toast.makeText(context, "Verses exported to " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
         }
 
@@ -614,7 +615,6 @@ public class VerseListFragment extends ListFragment {
         }
     }
 
-    //TODO: implement change of state through alert dialog
     private void changeState(final ArrayList<Passage> items) {
         final View view = LayoutInflater.from(context).inflate(R.layout.popup_change_state, null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -743,12 +743,14 @@ public class VerseListFragment extends ListFragment {
         VerseDB db = new VerseDB(context).open();
 
         String[] tagSuggestions = db.getAllTagNames();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                context,
-                android.R.layout.simple_list_item_1,
-                tagSuggestions
-        );
-        edit.setAdapter(adapter);
+        if(tagSuggestions.length > 0) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    context,
+                    android.R.layout.simple_list_item_1,
+                    tagSuggestions
+            );
+            edit.setAdapter(adapter);
+        }
         db.close();
 
         TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);

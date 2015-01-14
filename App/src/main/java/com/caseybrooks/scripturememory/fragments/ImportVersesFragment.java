@@ -483,7 +483,8 @@ public class ImportVersesFragment extends Fragment {
                         file.getName().equalsIgnoreCase("the_person_of_christ.xml") ||
                         file.getName().equalsIgnoreCase("the_work_of_christ.xml") ||
                         file.getName().equalsIgnoreCase("roman_road.xml") ||
-                        file.getName().equalsIgnoreCase("topical_memory_system.xml")) {
+                        file.getName().equalsIgnoreCase("topical_memory_system.xml") ||
+                        file.getName().equalsIgnoreCase("original_scripturememory_verses.xml")) {
 
                         source.setText("Included with app");
                     }

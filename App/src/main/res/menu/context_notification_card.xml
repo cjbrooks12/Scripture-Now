@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
         android:id="@+id/context_notification_card_edit"
-        android:title="Edit"/>
+        android:title="Edit Verse"/>
     <item
         android:id="@+id/context_notification_card_toggle"
-        android:title="Toggle"/>
+        android:title="Toggle Notification"/>
     <item
         android:id="@+id/context_notification_card_scramble_random"
         android:title="Scramble Random Words"/>

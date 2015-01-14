@@ -226,6 +226,17 @@ public class NotificationVerseCard extends FrameLayout {
                 popup.setOnMenuItemClickListener(menuItemClick);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.context_notification_card, popup.getMenu());
+
+                if(MetaSettings.getVerseDisplayMode(context) == 4) {
+                    popup.getMenu().findItem(R.id.context_notification_card_scramble_random).setVisible(true);
+                    popup.getMenu().findItem(R.id.context_notification_card_reset_random).setVisible(true);
+                }
+                else {
+                    popup.getMenu().findItem(R.id.context_notification_card_scramble_random).setVisible(false);
+                    popup.getMenu().findItem(R.id.context_notification_card_reset_random).setVisible(false);
+                }
+
+
                 popup.show();
             }
         }
