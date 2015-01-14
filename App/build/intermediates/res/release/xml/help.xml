@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:title="How To Use" >
+        <Preference
+            android:title="Overview" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="1">
+            </intent>
+        </Preference>
+        <Preference
+            android:title="Adding Verses" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="2">
+            </intent>
+        </Preference>
+        <Preference
+            android:title="Memorization State" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="3">
+            </intent>
+        </Preference>
+        <Preference
+            android:title="Tags" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="4">
+            </intent>
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="About" >
+        <Preference
+            android:title="Changelog" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="5">
+            </intent>
+        </Preference>
+        <Preference
+            android:title="Licenses" >
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.caseybrooks.scripturememory"
+                android:targetClass="com.caseybrooks.scripturememory.activities.DetailActivity"
+                android:data="6">
+            </intent>
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceScreen
+        android:title="Contact Developer">
+        <Preference
+            android:title="Report a Bug"
+            android:key="CONTACT_BUG" >
+        </Preference>
+        <Preference
+            android:title="Suggest a Feature"
+            android:key="CONTACT_FEATURE" >
+        </Preference>
+        <Preference
+            android:title="Leave a Comment"
+            android:key="CONTACT_COMMENT" >
+        </Preference>
+    </PreferenceScreen>
+
+    <Preference
+        android:title="Rate App"
+        android:key="RateThisApp" >
+    </Preference>
+
+    <Preference
+        android:title="Share"
+        android:key="ShareApp" >
+    </Preference>
+
+</PreferenceScreen><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/xml/help.xml -->

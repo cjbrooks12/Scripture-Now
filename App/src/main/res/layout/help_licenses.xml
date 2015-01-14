@@ -84,6 +84,14 @@
                 android:fontFamily="sans-serif-light"
                 android:text="The included verse packs with the following names were created by Chris Cerrito and Hickory Harvest Church:\nwww.chriscerrito.com www.hickoryharvest.com\nGod's Holiness, Man's Depravity, Share the Gospel, The Command of Christ, The Person of Christ, The Work of Christ" />
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-light"
+                android:text="The Topical Memory System is property of The Navigators" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

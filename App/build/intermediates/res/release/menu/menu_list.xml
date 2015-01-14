@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    <item
+        android:id="@+id/menu_list_sort"
+        app:showAsAction="ifRoom"
+        android:icon="?attr/ic_action_sort"
+        android:title="Sort By...">
+        <menu>
+            <item
+                android:id="@+id/menu_list_sort_date"
+                android:title="Date" />
+            <item
+                android:id="@+id/menu_list_sort_canonical"
+                android:title="Canonical Order" />
+            <item
+                android:id="@+id/menu_list_sort_alphabetically"
+                android:title="Alphabetical" />
+            <item
+                android:id="@+id/menu_list_sort_mem_state"
+                android:title="Memorization State" />
+        </menu>
+    </item>
+</menu>
+<!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/menu/menu_list.xml -->

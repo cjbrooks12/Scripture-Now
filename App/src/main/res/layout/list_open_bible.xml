@@ -113,6 +113,7 @@
 
                 <ImageView
                     android:id="@+id/overflow"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -127,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif-light"
                 android:layout_below="@+id/metadata_layout"/>
         </RelativeLayout>

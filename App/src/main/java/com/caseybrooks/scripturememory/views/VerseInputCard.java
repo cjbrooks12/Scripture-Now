@@ -117,7 +117,7 @@ public class VerseInputCard extends FrameLayout {
 	
 	public void setVerse(String verse) {
 		editVerse.setText(verse);
-	}
+    }
 	
 //OnClickListeners
 //------------------------------------------------------------------------------

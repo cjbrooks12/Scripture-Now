@@ -2,7 +2,6 @@ package com.caseybrooks.scripturememory.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,11 +11,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
+import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
+import com.caseybrooks.scripturememory.data.VersesDatabase;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
@@ -26,12 +31,23 @@ import com.caseybrooks.scripturememory.fragments.TopicalBibleFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
-import java.io.File;
-import java.lang.reflect.Field;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
@@ -76,8 +92,13 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		getOverflowMenu();
 		showFirstTime();
 		showPrompt();
+    }
 
-		receiveImplicitIntent();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("MAIN ACTIVITY", "on resume() called");
+        receiveImplicitIntent();
     }
 
     //TODO: Setup app for first time opened. Will need to remove all current "first" time methods and make brand new one
@@ -86,6 +107,11 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		//If this is the first time opening the app, load a set of verses to memorize
 		if(firstTime) {
             try {
+                //move all verses from the old database to the new one
+                VersesDatabase database = new VersesDatabase(context).open();
+                database.migrate();
+                database.close();
+
                 // initial verse packs are in /res/raw/, but we need them on the sdcard. We must copy
                 // all files from raw to the sdcard the first time we open the app
                 String state = Environment.getExternalStorageState();
@@ -105,7 +131,9 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                                 new StreamSource(getResources().openRawResource(R.raw.the_command_of_christ)),
                                 new StreamSource(getResources().openRawResource(R.raw.the_person_of_christ)),
                                 new StreamSource(getResources().openRawResource(R.raw.the_work_of_christ)),
-                                new StreamSource(getResources().openRawResource(R.raw.roman_road))
+                                new StreamSource(getResources().openRawResource(R.raw.roman_road)),
+                                new StreamSource(getResources().openRawResource(R.raw.original_scripturememory_verses)),
+                                new StreamSource(getResources().openRawResource(R.raw.topical_memory_system))
                         };
 
                         File[] outputStream = new File[]{
@@ -115,7 +143,9 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                                 new File(path, "the_command_of_christ.xml"),
                                 new File(path, "the_person_of_christ.xml"),
                                 new File(path, "the_work_of_christ.xml"),
-                                new File(path, "roman_road.xml")
+                                new File(path, "roman_road.xml"),
+                                new File(path, "original_scripturememory_verses.xml"),
+                                new File(path, "topical_memory_system.xml")
                         };
 
                         TransformerFactory factory = TransformerFactory.newInstance();
@@ -125,6 +155,81 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                             transformer.transform(domSource[i], new StreamResult(outputStream[i]));
                         }
                     }
+
+                    //migrate the old backup format to the new one so that old backups are not lost
+                    File oldBackup = new File(path, "backup.csv");
+                    ArrayList<Passage> passages = new ArrayList<Passage>();
+
+                    BufferedReader buffer = new BufferedReader(new FileReader(oldBackup));
+                    String line = "";
+
+                    while ((line = buffer.readLine()) != null) {
+                        String[] str = line.split("\t");
+
+                        try {
+                            Passage passage = new Passage(str[1]);
+                            passage.setText(str[2]);
+                            if (str[3].equals("memorized"))
+                                passage.getMetadata().putInt(DefaultMetaData.STATE, 4);
+                            else
+                                passage.getMetadata().putInt(DefaultMetaData.STATE, 1);
+                            passage.addTag("Previous Backup");
+                            passages.add(passage);
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    buffer.close();
+
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder = factory.newDocumentBuilder();
+
+                    Document doc = builder.newDocument();
+                    Element root = doc.createElement("backup");
+                    doc.appendChild(root);
+
+                    Element tags = doc.createElement("tags");
+                    root.appendChild(tags);
+
+                    Element verses = doc.createElement("verses");
+                    root.appendChild(verses);
+
+                    for(Passage passage : passages) {
+                        Element passageElement = doc.createElement("passage");
+                        verses.appendChild(passageElement);
+
+                        passageElement.setAttribute("state", Integer.toString(passage.getMetadata().getInt(DefaultMetaData.STATE)));
+                        passageElement.setAttribute("time_created", Long.toString(passage.getMetadata().getLong(DefaultMetaData.TIME_CREATED)));
+                        passageElement.setAttribute("time_modified", Long.toString(passage.getMetadata().getLong(DefaultMetaData.TIME_MODIFIED)));
+
+                        Element r = doc.createElement("R");
+                        r.appendChild(doc.createTextNode(passage.getReference().toString()));
+                        passageElement.appendChild(r);
+
+                        Element q = doc.createElement("Q");
+                        q.appendChild(doc.createTextNode(passage.getVersion().getName()));
+                        passageElement.appendChild(q);
+
+                        Element t = doc.createElement("T");
+                        passageElement.appendChild(t);
+                        for(String string : passage.getTags()) {
+                            Element tagItem = doc.createElement("item");
+                            tagItem.appendChild(doc.createTextNode(string));
+                            t.appendChild(tagItem);
+                        }
+
+                        Element p = doc.createElement("P");
+                        p.appendChild(doc.createTextNode(passage.getText()));
+                        passageElement.appendChild(p);
+                    }
+
+                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                    Transformer transformer = transformerFactory.newTransformer();
+                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                    DOMSource source = new DOMSource(doc);
+                    StreamResult result = new StreamResult(new File(path, "backup.xml"));
+                    transformer.transform(source, result);
                 }
             }
             catch (Exception e) {
@@ -139,56 +244,72 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 
 	private void showPrompt() {
 		if(MetaSettings.getPromptOnStart(context) == 3) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setCancelable(true);
-			builder.setTitle("Love Scripture Memory?");
-			builder.setMessage("Help support this app by rating it on the Google Play Store, or share it with your friends!");
-			builder.setPositiveButton("Rate it", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					final Uri uri = Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
+            MetaSettings.putPromptOnStart(context, 4);
+
+            final View view = LayoutInflater.from(context).inflate(R.layout.popup_rate_app, null);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setView(view);
+
+            final AlertDialog dialog = builder.create();
+
+            view.findViewById(R.id.share_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String shareMessage = getResources().getString(R.string.share_message);
+                    Intent intent = new Intent();
+                    intent.setType("text/plain");
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Try Scripture Memory Notifications for Android");
+                    intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(intent, "Share To..."));
+                    dialog.dismiss();
+                }
+            });
+
+            view.findViewById(R.id.rate_it_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Uri uri = Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
 					final Intent rateAppIntent = new Intent(Intent.ACTION_VIEW, uri);
 
 					if (getPackageManager().queryIntentActivities(rateAppIntent, 0).size() > 0) {
 						startActivity(rateAppIntent);
 					}
-				}
-			});
-			builder.setNegativeButton("No, Thanks", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog,int id) {
-					Toast.makeText(context, "You can always do it again from settings", Toast.LENGTH_LONG).show();
-				}
-			});
-			builder.setNeutralButton("Share", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
 
-					String shareMessage = getResources().getString(R.string.share_message);
-					Intent intent = new Intent();
-					intent.setType("text/plain");
-					intent.setAction(Intent.ACTION_SEND);
-					intent.putExtra(Intent.EXTRA_SUBJECT, "Try Scripture Memory Notifications for Android");
-					intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-					startActivity(Intent.createChooser(intent, "Share To..."));
+            view.findViewById(R.id.no_thanks_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "You can always do it again from settings", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                }
+            });
 
-				}
-			});
-			builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					Toast.makeText(context, "You can always do this later from settings", Toast.LENGTH_LONG).show();
-				}
-			});
+            view.findViewById(R.id.remind_me_later_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MetaSettings.putPromptOnStart(context, 0);
+                    dialog.dismiss();
+                }
+            });
 
-            MetaSettings.putPromptOnStart(context, 4);
-		    AlertDialog dialog = builder.create();
-			dialog.show();
+            dialog.show();
 		}
         else if(MetaSettings.getPromptOnStart(context) < 3){
             MetaSettings.putPromptOnStart(context, MetaSettings.getPromptOnStart(context) + 1);
         }
 	}
 
-	private void receiveImplicitIntent() {
-		Bundle extras = getIntent().getExtras();
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+    private void receiveImplicitIntent() {
+        Bundle extras = getIntent().getExtras();
 		if(extras != null && extras.containsKey(Intent.EXTRA_TEXT)) {
             DashboardFragment dashboard = new DashboardFragment();
             dashboard.setArguments(extras);

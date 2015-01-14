@@ -153,74 +153,44 @@ ADDED from AndroidManifest.xml:67:13
 		ADDED from AndroidManifest.xml:68:17
 	android:value
 		ADDED from AndroidManifest.xml:69:17
-activity#com.caseybrooks.scripturememory.activities.About
-ADDED from AndroidManifest.xml:72:9
-	android:windowSoftInputMode
-		ADDED from AndroidManifest.xml:77:13
+receiver#com.caseybrooks.scripturememory.widgets.MainVerseWidget
+ADDED from AndroidManifest.xml:73:9
 	android:label
 		ADDED from AndroidManifest.xml:75:13
-	android:configChanges
+	android:name
 		ADDED from AndroidManifest.xml:74:13
-	android:parentActivityName
-		ADDED from AndroidManifest.xml:76:13
-	android:name
-		ADDED from AndroidManifest.xml:73:13
-intent-filter#android.intent.action.MAIN+android.intent.category.Default
-ADDED from AndroidManifest.xml:78:13
-category#android.intent.category.Default
-ADDED from AndroidManifest.xml:85:17
-	android:name
-		ADDED from AndroidManifest.xml:85:27
-activity#com.caseybrooks.scripturememory.activities.Changelog
-ADDED from AndroidManifest.xml:88:9
-	android:windowSoftInputMode
-		ADDED from AndroidManifest.xml:93:13
-	android:label
-		ADDED from AndroidManifest.xml:91:13
-	android:configChanges
-		ADDED from AndroidManifest.xml:90:13
-	android:parentActivityName
-		ADDED from AndroidManifest.xml:92:13
-	android:name
-		ADDED from AndroidManifest.xml:89:13
-receiver#com.caseybrooks.scripturememory.widgets.MainVerseWidget
-ADDED from AndroidManifest.xml:100:9
-	android:label
-		ADDED from AndroidManifest.xml:102:13
-	android:name
-		ADDED from AndroidManifest.xml:101:13
 intent-filter#.MainVerseWidget.nextButtonClicked+.MainVerseWidget.updateAllWidgets+android.appwidget.action.APPWIDGET_UPDATE
-ADDED from AndroidManifest.xml:103:13
+ADDED from AndroidManifest.xml:76:13
 action#android.appwidget.action.APPWIDGET_UPDATE
-ADDED from AndroidManifest.xml:104:17
+ADDED from AndroidManifest.xml:77:17
 	android:name
-		ADDED from AndroidManifest.xml:104:25
+		ADDED from AndroidManifest.xml:77:25
 action#.MainVerseWidget.updateAllWidgets
-ADDED from AndroidManifest.xml:105:17
+ADDED from AndroidManifest.xml:78:17
 	android:name
-		ADDED from AndroidManifest.xml:105:25
+		ADDED from AndroidManifest.xml:78:25
 action#.MainVerseWidget.nextButtonClicked
-ADDED from AndroidManifest.xml:106:17
+ADDED from AndroidManifest.xml:79:17
 	android:name
-		ADDED from AndroidManifest.xml:106:25
+		ADDED from AndroidManifest.xml:79:25
 meta-data#android.appwidget.provider
-ADDED from AndroidManifest.xml:109:13
+ADDED from AndroidManifest.xml:82:13
 	android:resource
-		ADDED from AndroidManifest.xml:111:17
+		ADDED from AndroidManifest.xml:84:17
 	android:name
-		ADDED from AndroidManifest.xml:110:17
+		ADDED from AndroidManifest.xml:83:17
 receiver#com.caseybrooks.scripturememory.widgets.VOTDWidget
-ADDED from AndroidManifest.xml:113:9
+ADDED from AndroidManifest.xml:86:9
 	android:label
-		ADDED from AndroidManifest.xml:115:13
+		ADDED from AndroidManifest.xml:88:13
 	android:name
-		ADDED from AndroidManifest.xml:114:13
+		ADDED from AndroidManifest.xml:87:13
 intent-filter#.VOTDWidget.REFRESH_ALL+android.appwidget.action.APPWIDGET_UPDATE
-ADDED from AndroidManifest.xml:116:13
+ADDED from AndroidManifest.xml:89:13
 action#.VOTDWidget.REFRESH_ALL
-ADDED from AndroidManifest.xml:118:17
+ADDED from AndroidManifest.xml:91:17
 	android:name
-		ADDED from AndroidManifest.xml:118:25
+		ADDED from AndroidManifest.xml:91:25
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from scripturememory:AndroidBibleTools:unspecified:7:5

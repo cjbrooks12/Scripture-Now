@@ -387,7 +387,7 @@ public class NavigationDrawerFragment extends Fragment {
             });
 
             if(groupPosition == 3) {
-                headerText.setText(headerTitle + " (" + (getChildrenCount(groupPosition)-1) + ")");
+                headerText.setText(headerTitle + " (" + Math.max(getChildrenCount(groupPosition)-1, 0) + ")");
             }
             else {
                 headerText.setText(headerTitle);

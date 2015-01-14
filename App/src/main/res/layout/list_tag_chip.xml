@@ -5,6 +5,8 @@
     android:id="@+id/full_chip"
     android:layout_width="wrap_content"
     android:layout_height="32dp"
+    android:paddingRight="12dp"
+    android:paddingEnd="12dp"
     android:background="@drawable/bg_chip" >
     <ImageView
         android:id="@+id/chip_tag_circle"
@@ -31,8 +33,6 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/chip_tag_circle"
         android:layout_toEndOf="@+id/chip_tag_circle"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:textSize="14sp"/>

@@ -565,7 +565,7 @@ public class VerseListFragment extends ListFragment {
 
                 org.w3c.dom.Document doc = builder.newDocument();
                 org.w3c.dom.Element root = doc.createElement("verses");
-                root.setAttribute("name", file.getName().replaceAll("_", " "));
+                root.setAttribute("name", file.getName().replaceAll("_", " ").replaceAll("\\.xml", ""));
                 doc.appendChild(root);
 
                 for (int i = 0; i < passages.size(); i++) {
@@ -715,6 +715,13 @@ public class VerseListFragment extends ListFragment {
                 for(Passage passage : items) {
                     passage.getMetadata().putInt(DefaultMetaData.STATE, progress);
                     db.updateVerse(passage);
+
+                    //if this verse is the current notification verse and the active list is its state, then
+                    //change the active list to be whatever state this verse becomes
+                    if(MetaSettings.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
+                            listType == VerseListFragment.STATE) {
+                        MetaSettings.putActiveList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
+                    }
                 }
                 db.close();
                 if(mActionMode != null) mActionMode.finish();

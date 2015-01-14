@@ -482,7 +482,9 @@ public class ImportVersesFragment extends Fragment {
                         file.getName().equalsIgnoreCase("the_command_of_christ.xml") ||
                         file.getName().equalsIgnoreCase("the_person_of_christ.xml") ||
                         file.getName().equalsIgnoreCase("the_work_of_christ.xml") ||
-                        file.getName().equalsIgnoreCase("roman_road.xml")) {
+                        file.getName().equalsIgnoreCase("roman_road.xml") ||
+                        file.getName().equalsIgnoreCase("topical_memory_system.xml")) {
+
                         source.setText("Included with app");
                     }
                     else {
@@ -550,6 +552,10 @@ public class ImportVersesFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.menu_import_show_path:
+                String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
+                Toast.makeText(context, "Files located at: " + path, Toast.LENGTH_LONG).show();
+                return true;
             case R.id.menu_import_find_files:
                 new FindFiles().showPopup();
                 return true;

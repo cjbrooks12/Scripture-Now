@@ -9,7 +9,7 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('/home/casey/Desktop/scripturememory/App')
+            storeFile file('C:\\Users\\Casey\\Documents\\Android\\scripturememory_keystore')
             keyAlias 'scripturememory_keystore'
             storePassword 'TwXlvX08'
             keyPassword 'TwXlvX08'

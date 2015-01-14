@@ -30,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -63,6 +64,7 @@ public class TopicalBibleFragment extends Fragment {
     ActionMode mActionMode;
     NavigationCallbacks mCallbacks;
     ProgressBar progress;
+    ImageButton searchButton;
 
     public static Fragment newInstance() {
         Fragment fragment = new TopicalBibleFragment();
@@ -109,6 +111,16 @@ public class TopicalBibleFragment extends Fragment {
         listView.addParallaxedHeaderView(header);
 
         searchEditText = (AutoCompleteTextView) header.findViewById(R.id.discoverEditText);
+        searchButton = (ImageButton) header.findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = searchEditText.getText().toString();
+                if (text.length() > 1) {
+                    new SearchVerseAsync().execute(text);
+                }
+            }
+        });
         searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -120,6 +132,27 @@ public class TopicalBibleFragment extends Fragment {
                     }
                 }
                 return false;
+            }
+        });
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() == 0) {
+                    searchButton.setVisibility(View.GONE);
+                }
+                else {
+                    searchButton.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
         suggestionsAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1);
@@ -249,9 +282,6 @@ public class TopicalBibleFragment extends Fragment {
                     //just to ensure that all verses correctly reflect their selected state in case of issues
                     adapter.notifyDataSetChanged();
 
-                    return true;
-                case R.id.contextual_open_bible_redownload:
-                    new RedownloadAsync().execute(adapter.getSelectedItems());
                     return true;
                 case R.id.contextual_open_bible_save:
                     save(adapter.getSelectedItems());

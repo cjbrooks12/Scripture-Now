@@ -11,9 +11,4 @@
         app:showAsAction="ifRoom"
         android:icon="?attr/ic_action_save"
         android:title="Save Verses" />
-    <item
-        android:id="@+id/contextual_open_bible_redownload"
-        app:showAsAction="ifRoom"
-        android:icon="?attr/ic_action_refresh"
-        android:title="Redownload" />
 </menu>

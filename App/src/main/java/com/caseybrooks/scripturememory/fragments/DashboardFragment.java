@@ -65,7 +65,7 @@ public class DashboardFragment extends Fragment {
 	    receiver = new RefreshReceiver();
 		context.registerReceiver(receiver, new IntentFilter(REFRESH));
 
-	    notify_card.refresh();
+        notify_card.refresh();
 		if(MetaSettings.getNotificationActive(context)) {
 		    MainNotification.notify(context).show();
 		}
@@ -80,6 +80,7 @@ public class DashboardFragment extends Fragment {
         ab.setTitle("Dashboard");
 
         MetaSettings.putDrawerSelection(context, 0, 0);
+        receiveImplicitIntent();
     }
 
 	@Override
@@ -123,7 +124,6 @@ public class DashboardFragment extends Fragment {
         dashboardLayout.addView(votd_card, 1);
 
         setHasOptionsMenu(true);
-        receiveImplicitIntent();
 	}
 
 
@@ -142,16 +142,17 @@ public class DashboardFragment extends Fragment {
 
 	public void receiveImplicitIntent() {
 		Bundle extras = getArguments();
-		if(extras != null && extras.containsKey(Intent.EXTRA_TEXT)) {
-			String message = extras.getString(Intent.EXTRA_TEXT);
+		if(extras != null) {
+            if(extras.containsKey(Intent.EXTRA_TEXT)) {
+                String message = extras.getString(Intent.EXTRA_TEXT);
 
-			if(input_card.getVisibility() == View.GONE) {
-                input_card.setVisibility(View.VISIBLE);
-                dashboardLayout.addView(input_card, 1);
-                input_card.setVerse(message);
-            }
-            else {
-            	input_card.setVerse(message);
+                if (input_card.getVisibility() == View.GONE) {
+                    input_card.setVisibility(View.VISIBLE);
+                    dashboardLayout.addView(input_card, 1);
+                    input_card.setVerse(message);
+                } else {
+                    input_card.setVerse(message);
+                }
             }
 		}
 	}

@@ -174,6 +174,12 @@ public class EditVerseFragment extends Fragment {
                             break;
                     }
 
+                    //if this verse is the current notification verse and the active list is its state, then
+                    //change the active list to be whatever state this verse becomes
+                    if(MetaSettings.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
+                            listType == VerseListFragment.STATE) {
+                        MetaSettings.putActiveList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
+                    }
                 }
 
                 @Override

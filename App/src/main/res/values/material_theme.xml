@@ -36,6 +36,7 @@
         <item name="ic_action_create">@drawable/ic_action_create_light</item>
         <item name="ic_action_visibility">@drawable/ic_action_visibility_light</item>
         <item name="ic_action_get_app">@drawable/ic_action_get_app_light</item>
+        <item name="ic_action_folder">@drawable/ic_action_folder_light</item>
 
         <item name="ic_action_home">@drawable/ic_action_home_light</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>

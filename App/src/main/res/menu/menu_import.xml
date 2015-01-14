@@ -1,6 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
     <item
+        android:id="@+id/menu_import_show_path"
+        app:showAsAction="ifRoom"
+        android:icon="?attr/ic_action_folder"
+        android:title="Show File Location"/>
+    <item
         android:id="@+id/menu_import_find_files"
         app:showAsAction="ifRoom"
         android:icon="?attr/ic_action_visibility"

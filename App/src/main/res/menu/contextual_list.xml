@@ -7,15 +7,15 @@
         android:icon="?attr/ic_action_select_all"
         android:title="Select All" />
     <item
-        android:id="@+id/contextual_list_change_state"
-        app:showAsAction="ifRoom"
-        android:icon="?attr/ic_action_group_work"
-        android:title="Change State" />
-    <item
         android:id="@+id/contextual_list_add_tag"
         app:showAsAction="ifRoom"
         android:icon="?attr/ic_action_tag"
         android:title="Add Tag" />
+    <item
+        android:id="@+id/contextual_list_change_state"
+        app:showAsAction="ifRoom"
+        android:icon="?attr/ic_action_group_work"
+        android:title="Change State" />
     <item
         android:id="@+id/contextual_list_export"
         app:showAsAction="ifRoom"

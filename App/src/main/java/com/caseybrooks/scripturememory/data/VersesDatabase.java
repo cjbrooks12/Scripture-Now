@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
+import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -101,7 +101,8 @@ public class VersesDatabase {
         verseDB.clear();
         verseDB.open();
 
-        long id = 0;
+        int state = VerseDB.CURRENT_NONE;
+        int id = 0;
 
         Cursor c = database.rawQuery("SELECT * FROM " + DATABASE_TABLE, null);
 
@@ -112,54 +113,24 @@ public class VersesDatabase {
                 passage.setVersion(MetaSettings.getBibleVersion(context));
                 passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
                 if (c.getString(c.getColumnIndex(KEY_LIST)).equals("memorized")) {
-                    passage.getMetadata().putInt(DefaultMetaData.STATE, 5);
+                    passage.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.MEMORIZED);
+                    state = VerseDB.MEMORIZED;
                 } else {
-                    passage.getMetadata().putInt(DefaultMetaData.STATE, 1 + (int) (Math.random() * 4));
+                    passage.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
+                    state = VerseDB.CURRENT_NONE;
                 }
 
-                while (passage.getTags().length < 1 + (int) (Math.random() * 6)) {
-                    int rand = 1 + (int) (Math.random() * 8);
-                    switch (rand) {
-                        case 1:
-                            passage.addTag("Tag A");
-                            break;
-                        case 2:
-                            passage.addTag("Tag B");
-                            break;
-                        case 3:
-                            passage.addTag("Tag C");
-                            break;
-                        case 4:
-                            passage.addTag("Tag D");
-                            break;
-                        case 5:
-                            passage.addTag("Tag E");
-                            break;
-                        case 6:
-                            passage.addTag("Tag F");
-                            break;
-                        case 7:
-                            passage.addTag("Tag G");
-                            break;
-                        case 8:
-                            passage.addTag("Tag H");
-                            break;
-                        default:
-                            passage.addTag("Tag Q");
-                            break;
-                    }
-                }
+                passage.addTag("Migrated");
 
                 id = verseDB.insertVerse(passage);
-                Log.i("INSERT", id + "");
             }
             catch(ParseException e) {
                 e.printStackTrace();
             }
         }
 
-        MetaSettings.putVerseId(context, (int)id);
-
+        MetaSettings.putVerseId(context, id);
+        MetaSettings.putActiveList(context, VerseListFragment.STATE, state);
 
         verseDB.close();
     }
@@ -304,13 +275,13 @@ public class VersesDatabase {
 	}
 
 	public void importFromCSV(File filename) throws SQLException, IOException {
-		database.delete(DATABASE_TABLE, null, null);
-
+//		database.delete(DATABASE_TABLE, null, null);
+//
 //        VerseDB verseDB = new VerseDB(context);
 //        verseDB.clear();
 //        verseDB.open();
-
-        int id = 0;
+//
+//        int id = 0;
 
 		BufferedReader buffer = new BufferedReader(new FileReader(filename));
 		String line = "";
@@ -326,8 +297,7 @@ public class VersesDatabase {
                 else
                     passage.getMetadata().putInt(DefaultMetaData.STATE, 1);
 
-//            id = verseDB.insertVerse(passage);
-                id = (int) createEntry(str[1], str[2], str[3]);
+                createEntry(str[1], str[2], str[3]);
             }
             catch (ParseException e) {
                 e.printStackTrace();
