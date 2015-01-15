@@ -284,6 +284,7 @@ public class BibleVerseAdapter extends BaseAdapter {
 
                 iconCheck.setVisibility(View.VISIBLE);
                 iconText.setVisibility(View.INVISIBLE);
+                cardview.setCardElevation(context.getResources().getDisplayMetrics().density * 4f);
             }
             else {
                 int selectedColor = db.getStateColor(passage.getMetadata().getInt(DefaultMetaData.STATE));
@@ -292,6 +293,7 @@ public class BibleVerseAdapter extends BaseAdapter {
 
                 iconCheck.setVisibility(View.INVISIBLE);
                 iconText.setVisibility(View.VISIBLE);
+                cardview.setCardElevation(context.getResources().getDisplayMetrics().density * 2f);
             }
 
             tagsLayout.removeAllViews();

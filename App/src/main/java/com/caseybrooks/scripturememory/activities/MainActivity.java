@@ -133,7 +133,10 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                                 new StreamSource(getResources().openRawResource(R.raw.the_work_of_christ)),
                                 new StreamSource(getResources().openRawResource(R.raw.roman_road)),
                                 new StreamSource(getResources().openRawResource(R.raw.original_scripturememory_verses)),
-                                new StreamSource(getResources().openRawResource(R.raw.topical_memory_system))
+                                new StreamSource(getResources().openRawResource(R.raw.topical_memory_system)),
+                                new StreamSource(getResources().openRawResource(R.raw.help_with_anger)),
+                                new StreamSource(getResources().openRawResource(R.raw.help_with_despair)),
+                                new StreamSource(getResources().openRawResource(R.raw.help_with_fear))
                         };
 
                         File[] outputStream = new File[]{
@@ -145,7 +148,10 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                                 new File(path, "the_work_of_christ.xml"),
                                 new File(path, "roman_road.xml"),
                                 new File(path, "original_scripturememory_verses.xml"),
-                                new File(path, "topical_memory_system.xml")
+                                new File(path, "topical_memory_system.xml"),
+                                new File(path, "help_with_anger.xml"),
+                                new File(path, "help_with_despair.xml"),
+                                new File(path, "help_with_fear.xml")
                         };
 
                         TransformerFactory factory = TransformerFactory.newInstance();

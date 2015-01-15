@@ -484,7 +484,12 @@ public class ImportVersesFragment extends Fragment {
                         file.getName().equalsIgnoreCase("the_work_of_christ.xml") ||
                         file.getName().equalsIgnoreCase("roman_road.xml") ||
                         file.getName().equalsIgnoreCase("topical_memory_system.xml") ||
-                        file.getName().equalsIgnoreCase("original_scripturememory_verses.xml")) {
+                        file.getName().equalsIgnoreCase("original_scripturememory_verses.xml") ||
+                        file.getName().equalsIgnoreCase("help_with_anger.xml") ||
+                        file.getName().equalsIgnoreCase("help_with_despair.xml") ||
+                        file.getName().equalsIgnoreCase("help_with_fear.xml")
+
+                        ) {
 
                         source.setText("Included with app");
                     }

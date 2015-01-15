@@ -2088,14 +2088,17 @@ containing a value of this type.
     }
     public static final class raw {
         public static final int gods_holiness=0x7f070000;
-        public static final int mans_depravity=0x7f070001;
-        public static final int original_scripturememory_verses=0x7f070002;
-        public static final int roman_road=0x7f070003;
-        public static final int share_the_gospel=0x7f070004;
-        public static final int the_command_of_christ=0x7f070005;
-        public static final int the_person_of_christ=0x7f070006;
-        public static final int the_work_of_christ=0x7f070007;
-        public static final int topical_memory_system=0x7f070008;
+        public static final int help_with_anger=0x7f070001;
+        public static final int help_with_despair=0x7f070002;
+        public static final int help_with_fear=0x7f070003;
+        public static final int mans_depravity=0x7f070004;
+        public static final int original_scripturememory_verses=0x7f070005;
+        public static final int roman_road=0x7f070006;
+        public static final int share_the_gospel=0x7f070007;
+        public static final int the_command_of_christ=0x7f070008;
+        public static final int the_person_of_christ=0x7f070009;
+        public static final int the_work_of_christ=0x7f07000a;
+        public static final int topical_memory_system=0x7f07000b;
     }
     public static final class string {
         public static final int abc_action_bar_home_description=0x7f0e0000;
