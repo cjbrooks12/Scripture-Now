@@ -9,23 +9,23 @@ import android.view.View;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class TimePreference extends DialogPreference {
     private Calendar calendar;
     private TimePicker picker = null;
 
-    public TimePreference(Context ctxt) {
-        this(ctxt, null);
+    public TimePreference(Context context) {
+        this(context, null);
     }
 
-    public TimePreference(Context ctxt, AttributeSet attrs) {
-        this(ctxt, attrs, android.R.attr.dialogPreferenceStyle);
+    public TimePreference(Context context, AttributeSet attrs) {
+        //"hack" to ensure custom Preferences all look the same
+        this(context, attrs, context.getResources().getSystem().getIdentifier("dialogPreferenceStyle", "attr", "android"));
     }
 
-    public TimePreference(Context ctxt, AttributeSet attrs, int defStyle) {
-        super(ctxt, attrs, defStyle);
+    public TimePreference(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
 
         setPositiveButtonText("Set");
         setNegativeButtonText("Cancel");
@@ -35,7 +35,7 @@ public class TimePreference extends DialogPreference {
     @Override
     protected View onCreateDialogView() {
         picker = new TimePicker(getContext());
-        return (picker);
+        return picker;
     }
 
     @Override
@@ -52,12 +52,26 @@ public class TimePreference extends DialogPreference {
         if (positiveResult) {
             calendar.set(Calendar.HOUR_OF_DAY, picker.getCurrentHour());
             calendar.set(Calendar.MINUTE, picker.getCurrentMinute());
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            //If the set and current hours are the same and the set minute is not later than current
+            if(calendar.get(Calendar.HOUR) == Calendar.getInstance().get(Calendar.HOUR) &&
+                    calendar.get(Calendar.MINUTE) <= Calendar.getInstance().get(Calendar.MINUTE)) {
+                calendar.set(Calendar.DATE, Calendar.getInstance().get(Calendar.DATE) + 1);
+            }
+            //If the set hour is before the current hour
+            else if(calendar.get(Calendar.HOUR) < Calendar.getInstance().get(Calendar.HOUR)) {
+                calendar.set(Calendar.DATE, Calendar.getInstance().get(Calendar.HOUR) + 1);
+            }
+            else {
+                calendar.set(Calendar.DATE, Calendar.getInstance().get(Calendar.DATE));
+            }
 
             setSummary(getSummary());
-            if (callChangeListener(calendar.getTimeInMillis())) {
-                persistLong(calendar.getTimeInMillis());
-                notifyChanged();
-            }
+            persistLong(calendar.getTimeInMillis());
+            notifyChanged();
+            callChangeListener(calendar.getTimeInMillis());
         }
     }
 
@@ -90,6 +104,6 @@ public class TimePreference extends DialogPreference {
         if (calendar == null) {
             return null;
         }
-        return DateFormat.getTimeFormat(getContext()).format(new Date(calendar.getTimeInMillis()));
+        return DateFormat.getTimeFormat(getContext()).format(new java.util.Date(calendar.getTimeInMillis()));
     }
 }

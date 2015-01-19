@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -347,6 +348,8 @@ public class ImportVersesFragment extends Fragment {
         ArrayList<Passage> verses;
         File file;
 
+        private boolean running = true;
+
         public void showPopup(final File file) {
             this.file = file;
 
@@ -374,6 +377,13 @@ public class ImportVersesFragment extends Fragment {
                 }
             });
 
+            view.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
             dialog = builder.create();
             dialog.show();
         }
@@ -386,21 +396,38 @@ public class ImportVersesFragment extends Fragment {
             view.findViewById(R.id.description).setVisibility(View.GONE);
             view.findViewById(R.id.import_button).setVisibility(View.GONE);
             view.findViewById(R.id.share_button).setVisibility(View.GONE);
+            view.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cancel(false);
+                }
+            });
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            VerseDB db = new VerseDB(context).open();
-            int beforeCount = db.getStateCount(VerseDB.ALL_VERSES);
-            for(Passage passage : verses) {
-                db.insertVerse(passage);
+            if(!isCancelled()) {
+
+                VerseDB db = new VerseDB(context).open();
+                int beforeCount = db.getStateCount(VerseDB.ALL_VERSES);
+                for (Passage passage : verses) {
+                    db.insertVerse(passage);
+                }
+                int afterCount = db.getStateCount(VerseDB.ALL_VERSES);
+                db.close();
+                Toast.makeText(context, (afterCount - beforeCount) + " new verses added", Toast.LENGTH_SHORT).show();
             }
-            int afterCount = db.getStateCount(VerseDB.ALL_VERSES);
-            db.close();
-            Toast.makeText(context, (afterCount - beforeCount) + " new verses added", Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(context, "Adding verses cancelled", Toast.LENGTH_SHORT).show();
+            }
             dialog.dismiss();
+        }
+
+        @Override
+        protected void onCancelled() {
+            running = false;
         }
 
         @Override
@@ -408,17 +435,10 @@ public class ImportVersesFragment extends Fragment {
             try {
                 Document doc = Jsoup.parse(file, null);
 
-                TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        cancel(true);
-                    }
-                });
-
                 if(doc.select("verses").size() > 0) {
                     for(Element element : doc.select("passage")) {
-                        if(isCancelled()) break;
+                        if(!running) return null;
+
                         Passage passage = new Passage(element.select("R").text());
                         passage.setVersion(Version.parseVersion(element.select("Q").text()));
 
@@ -432,14 +452,13 @@ public class ImportVersesFragment extends Fragment {
                         verses.add(passage);
                     }
                 }
+                return null;
             }
             catch(Exception e) {
                 e.printStackTrace();
                 Toast.makeText(context, "There was an error importing this verse pack", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
+                return null;
             }
-
-            return null;
         }
     }
 
@@ -476,27 +495,18 @@ public class ImportVersesFragment extends Fragment {
 
                     count.setText(doc.select("passage").size() + " verses");
 
-                    if( file.getName().equalsIgnoreCase("gods_holiness.xml") ||
-                        file.getName().equalsIgnoreCase("mans_depravity.xml") ||
-                        file.getName().equalsIgnoreCase("share_the_gospel.xml") ||
-                        file.getName().equalsIgnoreCase("the_command_of_christ.xml") ||
-                        file.getName().equalsIgnoreCase("the_person_of_christ.xml") ||
-                        file.getName().equalsIgnoreCase("the_work_of_christ.xml") ||
-                        file.getName().equalsIgnoreCase("roman_road.xml") ||
-                        file.getName().equalsIgnoreCase("topical_memory_system.xml") ||
-                        file.getName().equalsIgnoreCase("original_scripturememory_verses.xml") ||
-                        file.getName().equalsIgnoreCase("help_with_anger.xml") ||
-                        file.getName().equalsIgnoreCase("help_with_despair.xml") ||
-                        file.getName().equalsIgnoreCase("help_with_fear.xml")
+                    ArrayList<String> includedFileNames = new ArrayList<String>();
+                    Field[] fields = R.raw.class.getFields();
+                    for(Field f : fields) {
+                        includedFileNames.add(f.getName() + ".xml");
+                    }
 
-                        ) {
-
+                    if(includedFileNames.contains(file.getName().toLowerCase())) {
                         source.setText("Included with app");
                     }
                     else {
                         source.setText("From external source");
                     }
-
                 }
             }
             catch(Exception e) {
@@ -506,21 +516,32 @@ public class ImportVersesFragment extends Fragment {
     }
 
     private class FileAdapter extends BaseAdapter {
-        ArrayList<File> files;
+        ArrayList<View> views;
 
 
         public FileAdapter(ArrayList<File> files) {
-            this.files = files;
+            this.views = new ArrayList<View>();
+
+            for(File file : files) {
+                ViewHolder vh;
+                View view = LayoutInflater.from(context).inflate(R.layout.list_import_verses, null, false);
+                vh = new ViewHolder(context, view);
+                view.setTag(vh);
+
+                vh.initialize(file);
+                view.setTag(vh);
+                views.add(view);
+            }
         }
 
         @Override
         public int getCount() {
-            return files.size();
+            return views.size();
         }
 
         @Override
         public File getItem(int position) {
-            return files.get(position);
+            return ((ViewHolder)views.get(position).getTag()).file;
         }
 
         @Override
@@ -530,21 +551,7 @@ public class ImportVersesFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder vh;
-            View view = convertView;
-            if (view == null) {
-                view = LayoutInflater.from(context).inflate(R.layout.list_import_verses, parent, false);
-                vh = new ViewHolder(context, view);
-                view.setTag(vh);
-            }
-            else {
-                vh = (ViewHolder) view.getTag();
-            }
-
-            vh.initialize(files.get(position));
-            view.setTag(vh);
-
-            return view;
+            return views.get(position);
         }
     }
 

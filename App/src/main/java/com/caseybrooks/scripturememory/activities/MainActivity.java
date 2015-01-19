@@ -124,41 +124,65 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                         folder.mkdirs();
                     }
                     if(folder.exists()) {
-                        Source[] domSource = new StreamSource[] {
-                                new StreamSource(getResources().openRawResource(R.raw.gods_holiness)),
-                                new StreamSource(getResources().openRawResource(R.raw.mans_depravity)),
-                                new StreamSource(getResources().openRawResource(R.raw.share_the_gospel)),
-                                new StreamSource(getResources().openRawResource(R.raw.the_command_of_christ)),
-                                new StreamSource(getResources().openRawResource(R.raw.the_person_of_christ)),
-                                new StreamSource(getResources().openRawResource(R.raw.the_work_of_christ)),
-                                new StreamSource(getResources().openRawResource(R.raw.roman_road)),
-                                new StreamSource(getResources().openRawResource(R.raw.original_scripturememory_verses)),
-                                new StreamSource(getResources().openRawResource(R.raw.topical_memory_system)),
-                                new StreamSource(getResources().openRawResource(R.raw.help_with_anger)),
-                                new StreamSource(getResources().openRawResource(R.raw.help_with_despair)),
-                                new StreamSource(getResources().openRawResource(R.raw.help_with_fear))
-                        };
+                        ArrayList<Source> domSource = new ArrayList<Source>();
+                        ArrayList<File> outputStream = new ArrayList<File>();
 
-                        File[] outputStream = new File[]{
-                                new File(path, "gods_holiness.xml"),
-                                new File(path, "mans_depravity.xml"),
-                                new File(path, "share_the_gospel.xml"),
-                                new File(path, "the_command_of_christ.xml"),
-                                new File(path, "the_person_of_christ.xml"),
-                                new File(path, "the_work_of_christ.xml"),
-                                new File(path, "roman_road.xml"),
-                                new File(path, "original_scripturememory_verses.xml"),
-                                new File(path, "topical_memory_system.xml"),
-                                new File(path, "help_with_anger.xml"),
-                                new File(path, "help_with_despair.xml"),
-                                new File(path, "help_with_fear.xml")
-                        };
+
+                        Field[] fields = R.raw.class.getFields();
+                        for(Field f : fields) {
+                            try {
+                                //create objects before adding them to lists.
+                                Source source = new StreamSource(getResources().openRawResource(f.getInt(null)));
+                                File file = new File(path, f.getName() + ".xml");
+
+                                //after we know both have been made correctly, add to lists
+                                domSource.add(source);
+                                outputStream.add(file);
+                            }
+                            catch (IllegalArgumentException e) {
+
+                            }
+                            catch (IllegalAccessException e) {
+
+                            }
+                        }
+
+
+//                        Source[] domSource = new StreamSource[] {
+//                                new StreamSource(getResources().openRawResource(R.raw.gods_holiness)),
+//                                new StreamSource(getResources().openRawResource(R.raw.mans_depravity)),
+//                                new StreamSource(getResources().openRawResource(R.raw.share_the_gospel)),
+//                                new StreamSource(getResources().openRawResource(R.raw.the_command_of_christ)),
+//                                new StreamSource(getResources().openRawResource(R.raw.the_person_of_christ)),
+//                                new StreamSource(getResources().openRawResource(R.raw.the_work_of_christ)),
+//                                new StreamSource(getResources().openRawResource(R.raw.roman_road)),
+//                                new StreamSource(getResources().openRawResource(R.raw.original_scripturememory_verses)),
+//                                new StreamSource(getResources().openRawResource(R.raw.topical_memory_system)),
+//                                new StreamSource(getResources().openRawResource(R.raw.help_with_anger)),
+//                                new StreamSource(getResources().openRawResource(R.raw.help_with_despair)),
+//                                new StreamSource(getResources().openRawResource(R.raw.help_with_fear))
+//                        };
+//
+//                        File[] outputStream = new File[]{
+//                                new File(path, "gods_holiness.xml"),
+//                                new File(path, "mans_depravity.xml"),
+//                                new File(path, "share_the_gospel.xml"),
+//                                new File(path, "the_command_of_christ.xml"),
+//                                new File(path, "the_person_of_christ.xml"),
+//                                new File(path, "the_work_of_christ.xml"),
+//                                new File(path, "roman_road.xml"),
+//                                new File(path, "original_scripturememory_verses.xml"),
+//                                new File(path, "topical_memory_system.xml"),
+//                                new File(path, "help_with_anger.xml"),
+//                                new File(path, "help_with_despair.xml"),
+//                                new File(path, "help_with_fear.xml")
+//                        };
 
                         TransformerFactory factory = TransformerFactory.newInstance();
                         Transformer transformer = factory.newTransformer();
 
-                        for(int i = 0; i < outputStream.length; i++) {
-                            transformer.transform(domSource[i], new StreamResult(outputStream[i]));
+                        for(int i = 0; i < outputStream.size(); i++) {
+                            transformer.transform(domSource.get(i), new StreamResult(outputStream.get(i)));
                         }
                     }
 
