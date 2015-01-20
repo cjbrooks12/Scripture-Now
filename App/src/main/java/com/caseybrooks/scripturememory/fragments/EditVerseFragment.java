@@ -462,8 +462,6 @@ public class EditVerseFragment extends Fragment {
 	
 //ActionBar
 //------------------------------------------------------------------------------
-
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater = ((ActionBarActivity) context).getMenuInflater();

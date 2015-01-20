@@ -187,7 +187,6 @@ public class ImportVersesFragment extends Fragment {
             dialog.show();
         }
 
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -209,6 +208,13 @@ public class ImportVersesFragment extends Fragment {
 
             dialog.dismiss();
             new PopulateList().execute();
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+
+            dialog.dismiss();
         }
 
         @Override
@@ -408,26 +414,22 @@ public class ImportVersesFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if(!isCancelled()) {
+            VerseDB db = new VerseDB(context).open();
+            int beforeCount = db.getStateCount(VerseDB.ALL_VERSES);
+            for (Passage passage : verses) {
+                db.insertVerse(passage);
+            }
+            int afterCount = db.getStateCount(VerseDB.ALL_VERSES);
+            db.close();
+            Toast.makeText(context, (afterCount - beforeCount) + " new verses added", Toast.LENGTH_SHORT).show();
 
-                VerseDB db = new VerseDB(context).open();
-                int beforeCount = db.getStateCount(VerseDB.ALL_VERSES);
-                for (Passage passage : verses) {
-                    db.insertVerse(passage);
-                }
-                int afterCount = db.getStateCount(VerseDB.ALL_VERSES);
-                db.close();
-                Toast.makeText(context, (afterCount - beforeCount) + " new verses added", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(context, "Adding verses cancelled", Toast.LENGTH_SHORT).show();
-            }
             dialog.dismiss();
         }
 
         @Override
         protected void onCancelled() {
-            running = false;
+            super.onCancelled();
+            dialog.dismiss();
         }
 
         @Override

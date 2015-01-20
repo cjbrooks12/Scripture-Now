@@ -203,6 +203,13 @@ public class VerseListFragment extends ListFragment {
                             context.startActivity(i);
                             return true;
                         case R.id.context_list_share:
+                            String shareMessage = vh.passage.getReference() + " - " + vh.passage.getText();
+                            Intent intent = new Intent();
+                            intent.setType("text/plain");
+                            intent.setAction(Intent.ACTION_SEND);
+                            intent.putExtra(Intent.EXTRA_SUBJECT, vh.passage.getReference().toString());
+                            intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                            startActivity(Intent.createChooser(intent, "Share To..."));
                             return true;
                         case R.id.context_list_delete:
                             delete(listOfOne);
