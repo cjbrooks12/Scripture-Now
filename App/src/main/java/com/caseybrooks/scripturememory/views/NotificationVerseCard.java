@@ -52,7 +52,7 @@ public class NotificationVerseCard extends FrameLayout {
     boolean notificationActive, isExpanded;
     int verseDisplayMode;
 
-    //Constructors and Initialization
+//Constructors and Initialization
 //------------------------------------------------------------------------------    
     public NotificationVerseCard(Context context) {
         super(context);

@@ -25,8 +25,14 @@
             android:name="com.caseybrooks.scripturememory.notifications.MainNotification$DismissVerseReceiver"
             android:enabled="true"
             android:exported="false" />
+
+        <!-- Receivers for Verse of the Day -->
         <receiver
-            android:name="com.caseybrooks.scripturememory.notifications.VOTDNotification$VOTDSaveVerseReceiver"
+            android:name="com.caseybrooks.scripturememory.views.VOTD$VOTDSaveVerseReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name="com.caseybrooks.scripturememory.views.VOTD$VOTDAlarmReceiver"
             android:enabled="true"
             android:exported="false" />
         <receiver
@@ -41,10 +47,6 @@
                 <action android:name=".MetaReceiver.UPDATE_ALL" />
             </intent-filter>
         </receiver>
-
-        <!-- Services -->
-        <service android:name="data.MetaService$VOTDService" />
-        <service android:name="data.MetaService$SearchService" />
 
         <!-- Activities -->
         <activity

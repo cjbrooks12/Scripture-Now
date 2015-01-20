@@ -3,17 +3,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/context_votd_card_remove"
-        android:title="Remove"/>
+        android:title="Remove Card"/>
     <item
         android:id="@+id/context_votd_card_redownload"
         android:title="Redownload"/>
     <item
         android:id="@+id/context_votd_card_save"
-        android:title="Save"/>
+        android:title="Save Verse"/>
     <item
         android:id="@+id/context_votd_card_post"
-        android:title="Set As Main Notification"/>
+        android:title="Set as Notification"/>
     <item
         android:id="@+id/context_votd_card_browser"
-        android:title="Open In Browser"/>
-</menu><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/menu/context_votd_card.xml -->
+        android:title="View In Browser"/>
+</menu><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/menu/overflow_votd_card.xml -->

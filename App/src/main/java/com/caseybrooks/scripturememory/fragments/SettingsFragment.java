@@ -23,7 +23,7 @@ import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
-import com.caseybrooks.scripturememory.notifications.VOTDNotification;
+import com.caseybrooks.scripturememory.views.VOTD;
 import com.caseybrooks.scripturememory.widgets.VOTDWidget;
 
 import java.io.File;
@@ -213,14 +213,9 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 			if((Boolean) newValue) {
-				//If user turned notifications on
-				VOTDNotification.setAlarm(context);
+				new VOTD(context).getNotification().setAlarm();
 			}
-			else {
-				//If user turned notifications off
-//				new VOTDNotification(getApplicationContext()).cancelAlarm();
-			}
-			
+
 			return true;
 		}
 	};
@@ -228,9 +223,9 @@ public class SettingsFragment extends PreferenceFragment {
 	OnPreferenceChangeListener VOTDTimeChange = new OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
-			VOTDNotification.setAlarm(context);
-			
-			return false;
+            new VOTD(context).getNotification().setAlarm();
+
+            return false;
 		}
 	};
 

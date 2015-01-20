@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
@@ -201,11 +202,11 @@ public class VerseDB {
     public VerseDB open() throws SQLException {
         helper = new DbHelper(context);
         db = helper.getWritableDatabase();
-
         return this;
     }
 
     public VerseDB close() {
+        cleanupTags();
         helper.close();
         return this;
     }
@@ -345,6 +346,20 @@ public class VerseDB {
 
 //public getter functions
 //------------------------------------------------------------------------------
+    public int getVerseId(Reference reference) {
+        String selectQuery =
+                "SELECT *" +
+                        " FROM " + TABLE_VERSES +
+                        " WHERE " + KEY_VERSES_REFERENCE + " LIKE '" + reference.toString() + "'";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null && c.getCount() > 0) {
+            c.moveToFirst();
+            return c.getInt(c.getColumnIndex(KEY_VERSES_ID));
+        }
+        else return -1;
+    }
+
     public Passage getVerse(long verse_id) {
         String selectQuery =
                 "SELECT *" +
@@ -441,8 +456,6 @@ public class VerseDB {
         values.put(KEY_VERSES_TAGS, tag_string);
 
         db.update(TABLE_VERSES, values, KEY_VERSES_ID + "=" + passage.getMetadata().getInt(DefaultMetaData.ID), null);
-
-        cleanupTags();
     }
 
     public boolean deleteVerse(Passage passage) {
@@ -684,6 +697,30 @@ public class VerseDB {
         else return 0;
     }
 
+    private int getTagCountWithHiddenStates(int tagId) {
+        String selectQuery = "";
+        if(tagId == UNTAGGED) {
+            selectQuery =
+                    "SELECT *" +
+                    " FROM " + TABLE_VERSES +
+                    " WHERE " + KEY_VERSES_TAGS + " LIKE ','";
+        }
+        else {
+            selectQuery =
+                    "SELECT *" +
+                    " FROM " + TABLE_VERSES +
+                    " WHERE " + KEY_VERSES_TAGS + " LIKE '%," + tagId + ",%'";
+        }
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null && c.getCount() > 0) {
+            int count = c.getCount();
+            c.close();
+            return count;
+        }
+        else return 0;
+    }
+
     public long addTag(String tagName, String hexColor) {
         ContentValues tag_values = new ContentValues();
         tag_values.put(KEY_TAGS_TAG, tagName);
@@ -714,7 +751,7 @@ public class VerseDB {
 
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             int tagId = c.getInt(c.getColumnIndex(KEY_TAGS_ID));
-            if(getTagCount(tagId) == 0) {
+            if(getTagCountWithHiddenStates(tagId) == 0) {
                 deleteTag(tagId);
             }
         }
