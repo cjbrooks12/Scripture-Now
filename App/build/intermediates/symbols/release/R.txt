@@ -575,11 +575,6 @@ int id context_notification_card_edit 0x7f0c00c1
 int id context_notification_card_reset_random 0x7f0c00c4
 int id context_notification_card_scramble_random 0x7f0c00c3
 int id context_notification_card_toggle 0x7f0c00c2
-int id context_votd_card_browser 0x7f0c00dd
-int id context_votd_card_post 0x7f0c00dc
-int id context_votd_card_redownload 0x7f0c00da
-int id context_votd_card_remove 0x7f0c00d9
-int id context_votd_card_save 0x7f0c00db
 int id contextual_list_add_tag 0x7f0c00c6
 int id contextual_list_change_state 0x7f0c00c7
 int id contextual_list_delete 0x7f0c00c9
@@ -669,6 +664,11 @@ int id notificationVerse 0x7f0c004a
 int id notificationVerseLayout 0x7f0c0046
 int id overflow 0x7f0c0081
 int id overflowButton 0x7f0c0045
+int id overflow_votd_card_browser 0x7f0c00dd
+int id overflow_votd_card_post 0x7f0c00dc
+int id overflow_votd_card_redownload 0x7f0c00da
+int id overflow_votd_card_remove 0x7f0c00d9
+int id overflow_votd_card_save 0x7f0c00db
 int id parallax_listview 0x7f0c006a
 int id progress 0x7f0c005d
 int id progress_circular 0x7f0c0005

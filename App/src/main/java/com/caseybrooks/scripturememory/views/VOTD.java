@@ -5,7 +5,10 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +35,9 @@ import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.search.VerseOfTheDay;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
+import com.caseybrooks.scripturememory.data.MetaReceiver;
 import com.caseybrooks.scripturememory.data.MetaSettings;
+import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
@@ -53,28 +59,34 @@ public class VOTD {
 
 //Constructors and Initialization
 //------------------------------------------------------------------------------
-    public VOTD(Context context) {
+
+    public static VOTD getInstance(Context context) {
+        return new VOTD(context);
+    }
+
+    private VOTD(Context context) {
         this.context = context;
 
         getCurrentVerse();
 
-        if(currentVerse == null) {
+        if(currentVerse == null && Util.isConnected(context)) {
             new DownloadCurrentVerse().execute();
         }
     }
 
     public VOTDView getView() {
         view = new VOTDView(context);
-        if(currentVerse != null) {
-            view.update();
-        }
+        view.update();
 
         return view;
     }
 
     public VOTDNotification getNotification() {
-        notification = new VOTDNotification();
-        return notification.create();
+        if(notification == null) {
+            notification = new VOTDNotification();
+        }
+        notification.create();
+        return notification;
     }
 
 //dashboard card component of VOTD
@@ -190,7 +202,7 @@ public class VOTD {
                     dialog.show();
                 }
                 else {
-
+                    new DownloadCurrentVerse().execute();
                 }
             }
         };
@@ -214,8 +226,13 @@ public class VOTD {
                 ver.setText(currentVerse.getText());
             }
             else {
-                ref.setText("Problem Retrieving Verse");
-                ver.setText("Please check your internet connection and click to try again");
+                if(Util.isConnected(context)) {
+                    new DownloadCurrentVerse().execute();
+                }
+                else {
+                    ref.setText("Problem Retrieving Verse");
+                    ver.setText("Please check your internet connection and click to try again");
+                }
             }
         }
     }
@@ -225,9 +242,11 @@ public class VOTD {
     public class VOTDNotification {
         Notification notification;
         NotificationManager manager;
+        boolean isActive;
 
         public VOTDNotification() {
             manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            isActive = false;
         }
 
         public void setAlarm() {
@@ -300,20 +319,86 @@ public class VOTD {
             return this;
         }
 
+        public boolean isActive() {
+            return isActive;
+        }
+
         public VOTDNotification show() {
             manager.notify(2, notification);
+            isActive = true;
             return this;
         }
 
         public VOTDNotification dismiss() {
             manager.cancel(2);
+            isActive = false;
             return this;
+        }
+    }
+
+//Widget component of VOTD
+//------------------------------------------------------------------------------
+
+    public static class VOTDWidget extends AppWidgetProvider {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            super.onReceive(context, intent);
+
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, VOTDWidget.class));
+
+            VOTDWidget myWidget = new VOTDWidget();
+            myWidget.onUpdate(context, appWidgetManager, appWidgetIds);
+        }
+
+        @Override
+        public void onEnabled(Context context) {
+            super.onEnabled(context);
+        }
+
+        @Override
+        public void onUpdate(final Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+            //set pendingIntents on entire class of widgets
+            setWidgetClick(context, appWidgetManager);
+
+            VOTD votd = new VOTD(context);
+
+            //if verse is old, delete it from database (no need to keep it around, its not in any lists),
+            // and set currentVerse to null so that we download it again
+            if(votd.currentVerse != null) {
+                RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_votd);
+                views.setTextViewText(R.id.widget_votd_reference, votd.currentVerse.getReference().toString());
+                views.setTextViewText(R.id.widget_votd_verse, votd.currentVerse.getText());
+
+                // Instruct the widget manager to update the widget
+                AppWidgetManager appWidgetManager2 = AppWidgetManager.getInstance(context);
+
+                int[] appWidgetIds2 = appWidgetManager2.getAppWidgetIds(new ComponentName(context, VOTDWidget.class));
+
+                for (int i = 0; i < appWidgetIds2.length; i++) {
+                    appWidgetManager2.updateAppWidget(appWidgetIds2[i], views);
+                }
+            }
+        }
+
+        public void setWidgetClick(Context context, AppWidgetManager appWidgetManager) {
+            Intent resultIntent = new Intent(context, MainActivity.class);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+            stackBuilder.addParentStack(MainActivity.class);
+            stackBuilder.addNextIntent(resultIntent);
+            PendingIntent resultPI = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_votd);
+            remoteViews.setOnClickPendingIntent(R.id.widget_votd_layout, resultPI);
+
+            ComponentName watchWidget = new ComponentName(context, VOTDWidget.class);
+            appWidgetManager.updateAppWidget(watchWidget, remoteViews);
         }
     }
 
 //VOTD lifecycle and verse management
 //------------------------------------------------------------------------------
-
     public static class VOTDSaveVerseReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -332,6 +417,27 @@ public class VOTD {
             if(MetaSettings.getVOTDShow(context)) {
                 new VOTD(context).getNotification().show();
             }
+        }
+    }
+
+    public void updateAll() {
+        //update the Dashboard card
+        //only update if current verse isn't null, or risk ending in recursive loop
+        if (view != null && currentVerse != null) {
+            view.update();
+        }
+
+        //update the notification
+        if(notification != null && notification.isActive()) {
+            notification.create().show();
+        }
+
+        //update the widget
+        context.sendBroadcast(new Intent(context, VOTDWidget.class));
+
+        //if the main notification is the current VOTD, send broadcast to update main notification
+        if(MetaSettings.getVerseId(context) == currentVerse.getMetadata().getInt(DefaultMetaData.ID)) {
+            context.sendBroadcast(new Intent(MetaReceiver.UPDATE_ALL));
         }
     }
 
@@ -400,9 +506,18 @@ public class VOTD {
     }
 
     private class DownloadCurrentVerse extends AsyncTask<Void, Void, Void> {
+        int votdState;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            if(currentVerse != null) {
+                votdState = currentVerse.getMetadata().getInt(DefaultMetaData.STATE, VerseDB.VOTD);
+            }
+            else {
+                votdState = VerseDB.VOTD;
+            }
 
             if (view != null) {
                 view.setWorking(true);
@@ -412,21 +527,18 @@ public class VOTD {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
             if (view != null) {
                 view.setWorking(false);
-                view.update();
             }
+
+            updateAll();
         }
 
         @Override
         protected void onCancelled() {
             super.onCancelled();
 
-            if (view != null) {
-                view.setWorking(false);
-                view.update();
-            }
+            updateAll();
         }
 
         @Override
@@ -436,7 +548,7 @@ public class VOTD {
 
                 if (currentVerse != null) {
                     currentVerse.addTag("VOTD");
-                    currentVerse.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.VOTD);
+                    currentVerse.getMetadata().putInt(DefaultMetaData.STATE, votdState);
 
                     VerseDB db = new VerseDB(context).open();
                     int id = db.getVerseId(currentVerse.getReference());

@@ -20,7 +20,6 @@ import java.util.Comparator;
 
 public class MetaReceiver extends BroadcastReceiver {
     public static final String NEXT_VERSE = ".MetaReceiver.NEXT_VERSE";
-//    public static final String VOTD_ALARM = ".MetaReceiver.VOTD_ALARM";
     public static final String UPDATE_ALL = ".MetaReceiver.UPDATE_ALL";
 
     Context context;
@@ -31,7 +30,6 @@ public class MetaReceiver extends BroadcastReceiver {
 
         if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) { onBootCompleted(); }
         else if(intent.getAction().equals(NEXT_VERSE)) { getNextVerse(); }
-//        else if(intent.getAction().equals(VOTD_ALARM)) { getVOTD(); }
         else if(intent.getAction().equals(UPDATE_ALL)) { updateAll(); }
         else { throw new UnsupportedOperationException("Not yet implemented"); }
     }
@@ -112,7 +110,7 @@ public class MetaReceiver extends BroadcastReceiver {
 
     private void onBootCompleted() {
         //Reset the VOTD alarm, because it gets canceled during reset
-        new VOTD(context).getNotification().setAlarm();
+        VOTD.getInstance(context).getNotification().setAlarm();
 
         //If notification was set before the device was turned off, show it again
         if(MetaSettings.getNotificationActive(context)) {

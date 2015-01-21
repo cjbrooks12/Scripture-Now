@@ -1833,11 +1833,6 @@ containing a value of this type.
         public static final int context_notification_card_reset_random=0x7f0c00c4;
         public static final int context_notification_card_scramble_random=0x7f0c00c3;
         public static final int context_notification_card_toggle=0x7f0c00c2;
-        public static final int context_votd_card_browser=0x7f0c00dd;
-        public static final int context_votd_card_post=0x7f0c00dc;
-        public static final int context_votd_card_redownload=0x7f0c00da;
-        public static final int context_votd_card_remove=0x7f0c00d9;
-        public static final int context_votd_card_save=0x7f0c00db;
         public static final int contextual_list_add_tag=0x7f0c00c6;
         public static final int contextual_list_change_state=0x7f0c00c7;
         public static final int contextual_list_delete=0x7f0c00c9;
@@ -1927,6 +1922,11 @@ containing a value of this type.
         public static final int notificationVerseLayout=0x7f0c0046;
         public static final int overflow=0x7f0c0081;
         public static final int overflowButton=0x7f0c0045;
+        public static final int overflow_votd_card_browser=0x7f0c00dd;
+        public static final int overflow_votd_card_post=0x7f0c00dc;
+        public static final int overflow_votd_card_redownload=0x7f0c00da;
+        public static final int overflow_votd_card_remove=0x7f0c00d9;
+        public static final int overflow_votd_card_save=0x7f0c00db;
         public static final int parallax_listview=0x7f0c006a;
         public static final int progress=0x7f0c005d;
         public static final int progress_circular=0x7f0c0005;

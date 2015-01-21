@@ -47,12 +47,14 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 public class ImportVersesFragment extends Fragment {
     Context context;
@@ -228,9 +230,36 @@ public class ImportVersesFragment extends Fragment {
             File folderA = new File(pathA);
             File folderB = new File(pathB);
 
-            if(folderB.exists() && folderB.isDirectory() && folderB.listFiles().length > 0) {
-                //the RememberMe folder exists and has files in it, which must be to imported
+            //re-copy files included with app onto sdcard
+            try {
+                ArrayList<Source> domSource = new ArrayList<Source>();
+                ArrayList<File> outputStream = new ArrayList<File>();
 
+                Field[] fields = R.raw.class.getFields();
+                for (Field f : fields) {
+                    //create objects before adding them to lists.
+                    Source source = new StreamSource(getResources().openRawResource(f.getInt(null)));
+                    File file = new File(pathA, f.getName() + ".xml");
+
+                    //after we know both have been made correctly, add to lists
+                    domSource.add(source);
+                    outputStream.add(file);
+                }
+
+                TransformerFactory factory = TransformerFactory.newInstance();
+                Transformer transformer = factory.newTransformer();
+
+                for (int i = 0; i < outputStream.size(); i++) {
+                    transformer.transform(domSource.get(i), new StreamResult(outputStream.get(i)));
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+
+
+            //the RememberMe folder exists and has files in it, which must be to imported
+            if(folderB.exists() && folderB.isDirectory() && folderB.listFiles().length > 0) {
                 for(File file : folderB.listFiles()) {
                     if(isCancelled()) break;
 

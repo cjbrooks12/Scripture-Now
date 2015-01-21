@@ -119,7 +119,7 @@ public class DashboardFragment extends Fragment {
         input_card.editReference.setOnFocusChangeListener(inputTextboxListener);
         input_card.editVerse.setOnFocusChangeListener(inputTextboxListener);
 
-		votd_card = new VOTD(context).getView();
+		votd_card = VOTD.getInstance(context).getView();
         votd_card.setVisibility(View.VISIBLE);
         dashboardLayout.addView(votd_card, 1);
 

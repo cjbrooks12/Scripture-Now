@@ -36,6 +36,17 @@
             android:enabled="true"
             android:exported="false" />
         <receiver
+            android:name="com.caseybrooks.scripturememory.views.VOTD$VOTDWidget"
+            android:label="Verse of the Day" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/votdwidget_info" />
+        </receiver>
+        <receiver
             android:name="com.caseybrooks.scripturememory.data.MetaReceiver"
             android:enabled="true"
             android:exported="false" >
@@ -90,18 +101,6 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/main_verse_widget_info" />
-        </receiver>
-        <receiver
-            android:name="com.caseybrooks.scripturememory.widgets.VOTDWidget"
-            android:label="SM - Verse of the Day" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name=".VOTDWidget.REFRESH_ALL" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/votdwidget_info" />
         </receiver>
 
         <activity
