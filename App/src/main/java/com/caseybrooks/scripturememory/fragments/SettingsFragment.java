@@ -212,7 +212,7 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 			if((Boolean) newValue) {
-				VOTD.getInstance(context).getNotification().setAlarm();
+				VOTD.VOTDNotification.getInstance(context).setAlarm();
 			}
 
 			return true;
@@ -222,7 +222,7 @@ public class SettingsFragment extends PreferenceFragment {
 	OnPreferenceChangeListener VOTDTimeChange = new OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
-            VOTD.getInstance(context).getNotification().setAlarm();
+            VOTD.VOTDNotification.getInstance(context).setAlarm();
 
             return false;
 		}

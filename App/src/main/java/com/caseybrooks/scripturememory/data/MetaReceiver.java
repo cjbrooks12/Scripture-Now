@@ -94,12 +94,6 @@ public class MetaReceiver extends BroadcastReceiver {
         updateAll();
     }
 
-//    private void getVOTD() {
-//        if(MetaSettings.getVOTDShow(context)) {
-//            new VOTD(context).getNotification().show();
-//        }
-//    }
-
     private void updateAll() {
         MainNotification.notify(context).show();
 
@@ -110,7 +104,7 @@ public class MetaReceiver extends BroadcastReceiver {
 
     private void onBootCompleted() {
         //Reset the VOTD alarm, because it gets canceled during reset
-        VOTD.getInstance(context).getNotification().setAlarm();
+        VOTD.VOTDNotification.getInstance(context).setAlarm();
 
         //If notification was set before the device was turned off, show it again
         if(MetaSettings.getNotificationActive(context)) {

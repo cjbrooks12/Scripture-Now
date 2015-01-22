@@ -119,7 +119,7 @@ public class DashboardFragment extends Fragment {
         input_card.editReference.setOnFocusChangeListener(inputTextboxListener);
         input_card.editVerse.setOnFocusChangeListener(inputTextboxListener);
 
-		votd_card = VOTD.getInstance(context).getView();
+		votd_card = new VOTD.VOTDView(context);
         votd_card.setVisibility(View.VISIBLE);
         dashboardLayout.addView(votd_card, 1);
 
@@ -202,6 +202,7 @@ public class DashboardFragment extends Fragment {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			notify_card.refresh();
+            votd_card.update();
 		}
 	}
 	
