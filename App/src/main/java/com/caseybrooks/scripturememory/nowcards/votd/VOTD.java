@@ -7,15 +7,15 @@ import android.os.AsyncTask;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.scripturememory.data.MetaReceiver;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
-import com.caseybrooks.scripturememory.notifications.MainNotification;
-import com.caseybrooks.scripturememory.notifications.QuickNotification;
-import com.caseybrooks.scripturememory.widgets.MainVerseWidget;
+import com.caseybrooks.scripturememory.misc.QuickNotification;
+import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
+import com.caseybrooks.scripturememory.nowcards.main.MainVerse;
+import com.caseybrooks.scripturememory.nowcards.main.MainWidget;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -73,8 +73,8 @@ public class VOTD {
         //update the widget
         context.sendBroadcast(new Intent(context, VOTDWidget.class));
 
-        //update the dashboard cards
-        context.sendBroadcast(new Intent(MetaReceiver.UPDATE_ALL));
+        MainVerse mv = new MainVerse(context);
+        mv.updateAll();
     }
 
     public void saveVerse() {
@@ -104,7 +104,7 @@ public class VOTD {
             db.close();
 
             //update widgets
-            context.sendBroadcast(new Intent(MainVerseWidget.UPDATE_ALL_WIDGETS));
+            context.sendBroadcast(new Intent(context, MainWidget.class));
             //update dashboard card
             context.sendBroadcast(new Intent(DashboardFragment.REFRESH));
             //post main notification

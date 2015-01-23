@@ -16,7 +16,7 @@ import android.support.v4.app.TaskStackBuilder;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.notifications.QuickNotification;
+import com.caseybrooks.scripturememory.misc.QuickNotification;
 
 import java.util.Calendar;
 

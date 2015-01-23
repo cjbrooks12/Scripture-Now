@@ -42,7 +42,7 @@ import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
-import com.caseybrooks.scripturememory.notifications.MainNotification;
+import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 
 import java.io.File;
 import java.util.ArrayList;

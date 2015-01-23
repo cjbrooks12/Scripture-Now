@@ -20,24 +20,39 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.BaseLight" >
 
-        <!-- General Broadcast Receivers -->
+        <!-- Receivers for Main Verse -->
         <receiver
-            android:name="com.caseybrooks.scripturememory.notifications.MainNotification$DismissVerseReceiver"
+            android:name="com.caseybrooks.scripturememory.nowcards.main.MainVerse$DismissVerseReceiver"
             android:enabled="true"
             android:exported="false" />
+        <receiver
+            android:name="com.caseybrooks.scripturememory.nowcards.main.MainVerse$NextVerseReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name="com.caseybrooks.scripturememory.nowcards.main.MainWidget"
+            android:label="SN! - Main Verse" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/main_verse_widget_info" />
+        </receiver>
 
         <!-- Receivers for Verse of the Day -->
         <receiver
-            android:name="com.caseybrooks.scripturememory.views.VOTD$VOTDSaveVerseReceiver"
+            android:name="com.caseybrooks.scripturememory.nowcards.votd.VOTD$VOTDAlarmReceiver"
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name="com.caseybrooks.scripturememory.views.VOTD$VOTDAlarmReceiver"
+            android:name="com.caseybrooks.scripturememory.nowcards.votd.VOTD$VOTDSaveVerseReceiver"
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name="com.caseybrooks.scripturememory.views.VOTD$VOTDWidget"
-            android:label="Verse of the Day" >
+            android:name="com.caseybrooks.scripturememory.nowcards.votd.VOTDWidget"
+            android:label="SN! - Verse of the Day" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -52,10 +67,6 @@
             android:exported="false" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name=".MetaReceiver.NEXT_VERSE" />
-                <action android:name=".MetaReceiver.SAVE_VERSE" />
-                <action android:name=".MetaReceiver.VOTD_ALARM" />
-                <action android:name=".MetaReceiver.UPDATE_ALL" />
             </intent-filter>
         </receiver>
 
@@ -87,22 +98,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.caseybrooks.scripturememory.activities.MainActivity" />
         </activity>
-
-        <!-- Widgets -->
-        <receiver
-            android:name="com.caseybrooks.scripturememory.widgets.MainVerseWidget"
-            android:label="SM - Notification Verse" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name=".MainVerseWidget.updateAllWidgets" />
-                <action android:name=".MainVerseWidget.nextButtonClicked" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/main_verse_widget_info" />
-        </receiver>
-
         <activity
             android:name="android.support.v7.widget.TestActivity"
             android:label="RecyclerViewTestActivity" />

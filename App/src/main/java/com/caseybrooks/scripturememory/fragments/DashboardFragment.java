@@ -28,9 +28,9 @@ import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
-import com.caseybrooks.scripturememory.notifications.MainNotification;
-import com.caseybrooks.scripturememory.views.NotificationVerseCard;
-import com.caseybrooks.scripturememory.views.VOTD;
+import com.caseybrooks.scripturememory.nowcards.main.MainCard;
+import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
+import com.caseybrooks.scripturememory.nowcards.votd.VOTDCard;
 import com.caseybrooks.scripturememory.views.VerseInputCard;
 
 public class DashboardFragment extends Fragment {
@@ -42,9 +42,9 @@ public class DashboardFragment extends Fragment {
 	LinearLayout dashboardLayout;
     NavigationCallbacks mCallbacks;
 	
-	NotificationVerseCard notify_card;
+	MainCard notify_card;
 	VerseInputCard input_card;
-    VOTD.VOTDView votd_card;
+    VOTDCard votd_card;
 	
 	RefreshReceiver receiver;
 	
@@ -95,7 +95,7 @@ public class DashboardFragment extends Fragment {
 			setLayoutTransition();
 		}
 
-		notify_card = new NotificationVerseCard(context);
+		notify_card = new MainCard(context);
 		dashboardLayout.addView(notify_card);
 
 		input_card = new VerseInputCard(context);
@@ -119,7 +119,7 @@ public class DashboardFragment extends Fragment {
         input_card.editReference.setOnFocusChangeListener(inputTextboxListener);
         input_card.editVerse.setOnFocusChangeListener(inputTextboxListener);
 
-		votd_card = new VOTD.VOTDView(context);
+		votd_card = new VOTDCard(context);
         votd_card.setVisibility(View.VISIBLE);
         dashboardLayout.addView(votd_card, 1);
 

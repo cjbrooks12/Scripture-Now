@@ -36,7 +36,7 @@ import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.FlowLayout;
-import com.caseybrooks.scripturememory.notifications.MainNotification;
+import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 
 import java.util.ArrayList;
 
