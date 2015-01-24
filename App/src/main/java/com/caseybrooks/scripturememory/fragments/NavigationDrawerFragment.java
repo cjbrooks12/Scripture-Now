@@ -225,8 +225,7 @@ public class NavigationDrawerFragment extends Fragment {
                     mCallbacks.toDashboard();
                     break;
                 case 1:
-                    if (item.childPosition == 0) mCallbacks.toTopicalBible();
-                    else mCallbacks.toImportVerses();
+                    mCallbacks.toTopicalBible();
                     break;
                 case 2:
                     mCallbacks.toVerseList(VerseListFragment.STATE, item.id);

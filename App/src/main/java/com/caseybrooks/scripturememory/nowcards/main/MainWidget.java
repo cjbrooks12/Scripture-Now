@@ -13,12 +13,9 @@ import android.support.v4.app.TaskStackBuilder;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.VerseDB;
 
 public class MainWidget extends AppWidgetProvider {
 
@@ -90,47 +87,25 @@ public class MainWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
         int id = MetaSettings.getVerseId(context);
-        Passage verse;
 
-        VerseDB db = new VerseDB(context);
-        db.open();
-        verse = db.getVerse(id);
-        if (verse != null) {
-            switch (MetaSettings.getVerseDisplayMode(context)) {
-                case 0:
-                    verse.setFormatter(new DefaultFormatter.Normal());
-                    break;
-                case 1:
-                    verse.setFormatter(new DefaultFormatter.Dashes());
-                    break;
-                case 2:
-                    verse.setFormatter(new DefaultFormatter.FirstLetters());
-                    break;
-                case 3:
-                    verse.setFormatter(new DefaultFormatter.DashedLetter());
-                    break;
-                case 4:
-                    float randomness = MetaSettings.getRandomnessLevel(context);
-                    verse.setFormatter(new DefaultFormatter.RandomWords(randomness));
-                    break;
-                default:
-                    break;
-            }
+        MainVerse mv = new MainVerse(context);
+        if (mv.passage != null) {
+            mv.setPassageFormatted();
+
             // Construct the RemoteViews object
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
-            views.setTextViewText(R.id.widget_main_reference, verse.getReference().toString());
-            views.setTextViewText(R.id.widget_main_verse, verse.getText());
+            views.setTextViewText(R.id.widget_main_reference, mv.passage.getReference().toString());
+            views.setTextViewText(R.id.widget_main_verse, mv.passage.getText());
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
         } else {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
-            views.setTextViewText(R.id.widget_main_reference, "All verses memorized!");
-            views.setTextViewText(R.id.widget_main_verse, "Why don't you try adding some more, or start memorizing a different list?");
+            views.setTextViewText(R.id.widget_main_reference, "No verse set!");
+            views.setTextViewText(R.id.widget_main_verse, "Why don't you try adding some more verses, or start memorizing a different list?");
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
-        db.close();
     }
 }

@@ -164,8 +164,8 @@ public class MainCard extends FrameLayout {
         else {
             activeListSidebar.setVisibility(View.GONE);
             activeListText.setVisibility(View.GONE);
-            ref.setText("All verses memorized!");
-            ver.setText("Why don't you try adding some more, or start memorizing a different list?");
+            ref.setText("No Verse Set!");
+            ver.setText("Why don't you try adding some more verses, or start memorizing a different list?");
         }
     }
 

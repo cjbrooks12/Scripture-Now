@@ -113,10 +113,6 @@ public class VOTDNotification {
         return this;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
     public VOTDNotification show() {
         manager.notify(2, notification);
         isActive = true;

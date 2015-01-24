@@ -12,7 +12,6 @@ import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.EditVerseFragment;
 import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
-import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 public class DetailActivity extends ActionBarActivity implements NavigationCallbacks {
@@ -64,11 +63,6 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
         fragmentManager.beginTransaction()
                 .add(R.id.mainFragmentContainer, fragment)
                 .commit();
-    }
-
-    @Override
-    public void onNavigationDrawerItemSelected(NavigationDrawerFragment.NavListItem item) {
-
     }
 
     @Override

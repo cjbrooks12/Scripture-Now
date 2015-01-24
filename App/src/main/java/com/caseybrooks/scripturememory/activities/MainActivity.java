@@ -3,6 +3,7 @@ package com.caseybrooks.scripturememory.activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -46,6 +46,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -90,21 +92,20 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                 .commit();
 
 		getOverflowMenu();
-		showFirstTime();
+		onFirstTime();
+        onAppUpgrade();
 		showPrompt();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("MAIN ACTIVITY", "on resume() called");
         receiveImplicitIntent();
     }
 
-    //TODO: Setup app for first time opened. Will need to remove all current "first" time methods and make brand new one
-	private void showFirstTime() {
+	private void onFirstTime() {
 		boolean firstTime = MetaSettings.getFirstTime(context);
-		//If this is the first time opening the app, load a set of verses to memorize
+		//If this is the first time opening the app
 		if(firstTime) {
             try {
                 //move all verses from the old database to the new one
@@ -122,36 +123,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 
                     if(!folder.exists()) {
                         folder.mkdirs();
-                    }
-                    if(folder.exists()) {
-                        ArrayList<Source> domSource = new ArrayList<Source>();
-                        ArrayList<File> outputStream = new ArrayList<File>();
-
-                        Field[] fields = R.raw.class.getFields();
-                        for(Field f : fields) {
-                            try {
-                                //create objects before adding them to lists.
-                                Source source = new StreamSource(getResources().openRawResource(f.getInt(null)));
-                                File file = new File(path, f.getName() + ".xml");
-
-                                //after we know both have been made correctly, add to lists
-                                domSource.add(source);
-                                outputStream.add(file);
-                            }
-                            catch (IllegalArgumentException e) {
-
-                            }
-                            catch (IllegalAccessException e) {
-
-                            }
-                        }
-
-                        TransformerFactory factory = TransformerFactory.newInstance();
-                        Transformer transformer = factory.newTransformer();
-
-                        for(int i = 0; i < outputStream.size(); i++) {
-                            transformer.transform(domSource.get(i), new StreamResult(outputStream.get(i)));
-                        }
                     }
 
                     //migrate the old backup format to the new one so that old backups are not lost
@@ -239,6 +210,65 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
             }
 		}
 	}
+
+    public void onAppUpgrade() {
+        try {
+            int version = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+
+            //we have updated the app
+            if(version > MetaSettings.getAppVersion(context)) {
+                MetaSettings.putAppVersion(context, version);
+
+                String state = Environment.getExternalStorageState();
+                if (Environment.MEDIA_MOUNTED.equals(state)) {
+                    String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
+
+                    File folder = new File(path);
+
+                    if (!folder.exists()) {
+                        folder.mkdirs();
+                    }
+                    if (folder.exists()) {
+                        ArrayList<Source> domSource = new ArrayList<Source>();
+                        ArrayList<File> outputStream = new ArrayList<File>();
+
+                        Field[] fields = R.raw.class.getFields();
+                        for (Field f : fields) {
+                            try {
+                                //create objects before adding them to lists.
+                                Source source = new StreamSource(getResources().openRawResource(f.getInt(null)));
+                                File file = new File(path, f.getName() + ".xml");
+
+                                //after we know both have been made correctly, add to lists
+                                domSource.add(source);
+                                outputStream.add(file);
+                            } catch (IllegalArgumentException e) {
+
+                            } catch (IllegalAccessException e) {
+
+                            }
+                        }
+
+                        TransformerFactory factory = TransformerFactory.newInstance();
+                        Transformer transformer = factory.newTransformer();
+
+                        for (int i = 0; i < outputStream.size(); i++) {
+                            transformer.transform(domSource.get(i), new StreamResult(outputStream.get(i)));
+                        }
+                    }
+                }
+            }
+        }
+        catch(PackageManager.NameNotFoundException nnfe) {
+            nnfe.printStackTrace();
+        }
+        catch (TransformerConfigurationException tce) {
+            tce.printStackTrace();
+        }
+        catch (TransformerException te) {
+            te.printStackTrace();
+        }
+    }
 
 	private void showPrompt() {
 		if(MetaSettings.getPromptOnStart(context) == 3) {
@@ -343,32 +373,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                 .replace(R.id.mainFragmentContainer, fragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    @Override
-    public void onNavigationDrawerItemSelected(NavigationDrawerFragment.NavListItem item) {
-        switch(item.groupPosition) {
-            case 0:
-                toDashboard();
-                break;
-            case 1:
-                if(item.childPosition == 0) toTopicalBible();
-                else toImportVerses();
-                break;
-            case 2:
-                toVerseList(VerseListFragment.STATE, item.id);
-                break;
-            case 3:
-                toVerseList(VerseListFragment.TAGS, item.id);
-                break;
-            case 4:
-                toSettings();
-                break;
-            case 5:
-                toHelp();
-                break;
-            default:
-        }
     }
 
     @Override

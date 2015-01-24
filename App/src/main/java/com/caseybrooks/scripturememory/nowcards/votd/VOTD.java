@@ -14,7 +14,6 @@ import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.QuickNotification;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
-import com.caseybrooks.scripturememory.nowcards.main.MainVerse;
 import com.caseybrooks.scripturememory.nowcards.main.MainWidget;
 
 import org.jsoup.Jsoup;
@@ -46,35 +45,20 @@ public class VOTD {
         }
     }
 
-    //VOTD lifecycle and verse management
+//VOTD lifecycle and verse management
 //------------------------------------------------------------------------------
-    public static class VOTDSaveVerseReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            VOTD votd = new VOTD(context);
-            if(votd.currentVerse != null) {
-                votd.saveVerse();
-                VOTDNotification.getInstance(context).dismiss();
-                new QuickNotification(context, "Verse of the Day", votd.currentVerse.getReference().toString() + " added to list").show();
-            }
-        }
-    }
-
-    public static class VOTDAlarmReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(MetaSettings.getVOTDShow(context)) {
-                VOTDNotification.getInstance(context).show();
-            }
-        }
-    }
-
     public void updateAll() {
-        //update the widget
+        //update the widgets: VOTD (obviously), Main because it may be the VOTD
         context.sendBroadcast(new Intent(context, VOTDWidget.class));
+        context.sendBroadcast(new Intent(context, MainWidget.class));
 
-        MainVerse mv = new MainVerse(context);
-        mv.updateAll();
+        //update the notifications: Main because it may be the VOTD
+        if(MetaSettings.getNotificationActive(context)) {
+            MainNotification.notify(context).show();
+        }
+
+        //update dashboard cards
+        context.sendBroadcast(new Intent(DashboardFragment.REFRESH));
     }
 
     public void saveVerse() {
@@ -94,22 +78,15 @@ public class VOTD {
     }
 
     public void setAsNotification() {
-        if(currentVerse != null) {
-            saveVerse();
-            VerseDB db = new VerseDB(context).open();
-            int id = db.getVerseId(currentVerse.getReference());
-            MetaSettings.putVerseId(context, id);
-            MetaSettings.putNotificationActive(context, true);
-            MetaSettings.putActiveList(context, VerseListFragment.TAGS, (int) db.getTagID("VOTD"));
-            db.close();
+        saveVerse();
+        VerseDB db = new VerseDB(context).open();
+        int id = db.getVerseId(currentVerse.getReference());
+        MetaSettings.putVerseId(context, id);
+        MetaSettings.putNotificationActive(context, true);
+        MetaSettings.putActiveList(context, VerseListFragment.TAGS, (int) db.getTagID("VOTD"));
+        db.close();
 
-            //update widgets
-            context.sendBroadcast(new Intent(context, MainWidget.class));
-            //update dashboard card
-            context.sendBroadcast(new Intent(DashboardFragment.REFRESH));
-            //post main notification
-            MainNotification.notify(context).show();
-        }
+        updateAll();
     }
 
     public void getCurrentVerse() {
@@ -210,6 +187,30 @@ public class VOTD {
             } catch (IOException ioe) {
                 ioe.printStackTrace();
                 return null;
+            }
+        }
+    }
+
+//Broadcast Receivers
+//------------------------------------------------------------------------------
+
+    public static class VOTDAlarmReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(MetaSettings.getVOTDShow(context)) {
+                VOTDNotification.getInstance(context).show();
+            }
+        }
+    }
+
+    public static class VOTDSaveVerseReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            VOTD votd = new VOTD(context);
+            if(votd.currentVerse != null) {
+                votd.saveVerse();
+                VOTDNotification.getInstance(context).dismiss();
+                new QuickNotification(context, "Verse of the Day", votd.currentVerse.getReference().toString() + " added to list").show();
             }
         }
     }

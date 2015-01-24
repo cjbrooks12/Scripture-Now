@@ -42,10 +42,12 @@ public class VOTDCard extends FrameLayout {
         ver = (TextView) findViewById(R.id.votdVerse);
         progress = (ProgressBar) findViewById(R.id.progress);
 
-        update();
-
         overflowButton.setOnClickListener(overflowClick);
         this.setOnClickListener(cardClick);
+
+        setWorking(true);
+
+        update();
     }
 
     public void removeFromParent() {
@@ -110,7 +112,7 @@ public class VOTDCard extends FrameLayout {
         public void onClick(final View v) {
             final VOTD votd = new VOTD(context);
 
-            if(votd.currentVerse != null) {
+            if(votd.currentVerse != null && votd.currentVerse.getMetadata().getInt(DefaultMetaData.STATE) == VerseDB.VOTD) {
                 final View view = LayoutInflater.from(context).inflate(R.layout.popup_add_verse, null);
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setView(view);
@@ -161,17 +163,19 @@ public class VOTDCard extends FrameLayout {
 
     public void update() {
         VOTD votd = new VOTD(context);
-        setWorking(false);
 
         if(votd.currentVerse != null) {
+            setWorking(false);
             ref.setText(votd.currentVerse.getReference().toString());
             ver.setText(votd.currentVerse.getText());
         }
         else {
             if(Util.isConnected(context)) {
+                setWorking(true);
                 votd.downloadCurrentVerseAsync();
             }
             else {
+                setWorking(false);
                 ref.setText("Problem Retrieving Verse");
                 ver.setText("Please check your internet connection and click to try again");
             }

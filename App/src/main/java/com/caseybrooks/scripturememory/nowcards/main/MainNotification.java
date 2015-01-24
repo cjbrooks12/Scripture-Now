@@ -9,11 +9,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
-import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.VerseDB;
 
 public class MainNotification {
     private static MainNotification instance = null;
@@ -21,9 +18,7 @@ public class MainNotification {
     private Notification notification;
     private NotificationManager manager;
 
-    private int id;
-
-    //Constructors and Initialization
+//Constructors and Initialization
 //------------------------------------------------------------------------------
     private MainNotification() {
     }
@@ -37,37 +32,10 @@ public class MainNotification {
         getInstance();
 
         instance.manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        instance.id = MetaSettings.getVerseId(context);
 
-        VerseDB db = new VerseDB(context);
-
-        db.open();
-        Passage verse = db.getVerse(instance.id);
-        db.close();
-
-        if(verse != null) {
-            switch (MetaSettings.getVerseDisplayMode(context)) {
-                case 0:
-                    verse.setFormatter(new DefaultFormatter.Normal());
-                    break;
-                case 1:
-                    verse.setFormatter(new DefaultFormatter.Dashes());
-                    break;
-                case 2:
-                    verse.setFormatter(new DefaultFormatter.FirstLetters());
-                    break;
-                case 3:
-                    verse.setFormatter(new DefaultFormatter.DashedLetter());
-                    break;
-                case 4:
-                    float randomness = MetaSettings.getRandomnessLevel(context);
-                    int offset = MetaSettings.getRandomSeedOffset(context);
-                    verse.setFormatter(new DefaultFormatter.RandomWords(randomness, offset));
-                    break;
-                default:
-                    break;
-            }
-        }
+        MainVerse mv = new MainVerse(context);
+        mv.setPassageFormatted();
+        Passage verse = mv.passage;
 
         //Opens the dashboard when clicked
         Intent resultIntent = new Intent(context, MainActivity.class);
@@ -87,8 +55,6 @@ public class MainNotification {
         //goes to the next verse when the user hits "Next"
         if(verse != null) {
             Intent next = new Intent(context, MainVerse.NextVerseReceiver.class);
-            next.putExtra("notificationId", 1);
-            next.putExtra("SQL_ID", MetaSettings.getVerseId(context));
             PendingIntent nextPI = PendingIntent.getBroadcast(context, 0, next, PendingIntent.FLAG_CANCEL_CURRENT);
             mb.addAction(R.drawable.ic_action_arrow_right_dark, "Next", nextPI);
 
@@ -97,8 +63,8 @@ public class MainNotification {
             mb.setStyle(new NotificationCompat.BigTextStyle().bigText(verse.getText()));
         }
         else {
-            mb.setContentTitle("All verses memorized!");
-            mb.setContentText("Why don't you try adding some more, or start memorizing a different list?");
+            mb.setContentTitle("No verse set!");
+            mb.setContentText("Why don't you try adding some more verses, or start memorizing a different list?");
         }
 
         mb.setOngoing(true);

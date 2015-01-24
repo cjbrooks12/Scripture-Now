@@ -31,7 +31,7 @@ import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.nowcards.main.MainCard;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDCard;
-import com.caseybrooks.scripturememory.views.VerseInputCard;
+import com.caseybrooks.scripturememory.nowcards.input.VerseInputCard;
 
 public class DashboardFragment extends Fragment {
 //Data Members
