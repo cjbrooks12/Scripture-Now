@@ -100,13 +100,13 @@ public class MainVerse {
     }
 
     public void updateAll() {
-        //refresh all the dashboard cards
+        //update all the dashboard cards
         context.sendBroadcast(new Intent(DashboardFragment.REFRESH));
 
-        //refresh all the widgets
+        //update all the widgets
         context.sendBroadcast(new Intent(context, MainWidget.class));
 
-        //refresh the notification
+        //update the notification
         if(MetaSettings.getNotificationActive(context)) {
             MainNotification.notify(context).show();
         }

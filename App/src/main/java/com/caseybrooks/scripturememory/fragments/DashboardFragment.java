@@ -65,7 +65,7 @@ public class DashboardFragment extends Fragment {
 	    receiver = new RefreshReceiver();
 		context.registerReceiver(receiver, new IntentFilter(REFRESH));
 
-        notify_card.refresh();
+        notify_card.update();
 		if(MetaSettings.getNotificationActive(context)) {
 		    MainNotification.notify(context).show();
 		}
@@ -201,7 +201,7 @@ public class DashboardFragment extends Fragment {
  	public class RefreshReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			notify_card.refresh();
+			notify_card.update();
             votd_card.update();
 		}
 	}

@@ -105,10 +105,10 @@ public class MainCard extends FrameLayout {
         expandedhline.setVisibility(View.GONE);
         isExpanded = false;
 
-        refresh();
+        update();
     }
 
-    public void refresh() {
+    public void update() {
         MainVerse mv = new MainVerse(context);
 
         if(mv.passage != null) {
@@ -185,14 +185,14 @@ public class MainCard extends FrameLayout {
         expandedhline.setVisibility(View.VISIBLE);
         expandedSection.setVisibility(View.VISIBLE);
         isExpanded = true;
-        refresh();
+        update();
     }
 
     public void shrinkCard() {
         expandedhline.setVisibility(View.GONE);
         expandedSection.setVisibility(View.GONE);
         isExpanded = false;
-        refresh();
+        update();
     }
 
     //Click Listeners
@@ -262,14 +262,14 @@ public class MainCard extends FrameLayout {
                     case R.id.context_notification_card_scramble_random:
                         MetaSettings.putRandomSeedOffset(context, (int) System.currentTimeMillis());
 
-                        refresh();
+                        update();
                         MainNotification.notify(context).show();
                         MetaSettings.putNotificationActive(context, true);
                         return true;
                     case R.id.context_notification_card_reset_random:
                         MetaSettings.putRandomSeedOffset(context, 0);
 
-                        refresh();
+                        update();
                         MainNotification.notify(context).show();
                         MetaSettings.putNotificationActive(context, true);
                         return true;
@@ -311,7 +311,7 @@ public class MainCard extends FrameLayout {
             MetaSettings.putVerseDisplayMode(context, verseDisplayMode);
             MetaSettings.putNotificationActive(context, true);
 
-            refresh();
+            update();
 
             MainNotification.notify(context).show();
         }
