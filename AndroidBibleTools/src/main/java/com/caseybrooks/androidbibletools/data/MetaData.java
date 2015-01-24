@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Metadata {
+	//test comment
     private HashMap<String, Object> items;
 
     public Metadata() {
