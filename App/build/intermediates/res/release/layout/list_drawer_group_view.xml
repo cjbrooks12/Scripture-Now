@@ -26,4 +26,4 @@
         android:layout_toEndOf="@id/header_image"
         android:textStyle="bold"
         android:textSize="22sp" />
-</RelativeLayout><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/layout/list_drawer_group_view.xml -->
+</RelativeLayout><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/layout/list_drawer_group_view.xml -->
