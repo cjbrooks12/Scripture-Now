@@ -2,4 +2,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true" android:drawable="@drawable/widget_dark_selected" />
     <item android:drawable="@drawable/widget_dark" />
-</selector><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/drawable/bg_widget_dark.xml -->
+</selector><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/drawable/bg_widget_dark.xml -->

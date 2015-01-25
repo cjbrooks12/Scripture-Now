@@ -58,4 +58,4 @@
         android:layout_below="@+id/widget_main_header_bar"
         android:text="@string/verse" />
 </RelativeLayout>
-<!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/layout/widget_main_verse.xml -->
+<!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/layout/widget_main_verse.xml -->

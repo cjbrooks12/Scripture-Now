@@ -19,4 +19,4 @@
         android:id="@+id/context_list_delete"
         android:title="Delete" />
 </menu>
-<!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/menu/context_list.xml -->
+<!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/menu/context_list.xml -->

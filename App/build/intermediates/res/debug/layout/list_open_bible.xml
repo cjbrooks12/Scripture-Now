@@ -133,4 +133,4 @@
                 android:layout_below="@+id/metadata_layout"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-</FrameLayout><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/layout/list_open_bible.xml -->
+</FrameLayout><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/layout/list_open_bible.xml -->

@@ -5,4 +5,4 @@
     <item android:state_selected="true" android:drawable="@drawable/seekbar_thumb_focused" />
     <item android:drawable="@drawable/seekbar_thumb_normal" />
 </selector>
-<!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/drawable/seekbar_thumb.xml -->
+<!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/drawable/seekbar_thumb.xml -->

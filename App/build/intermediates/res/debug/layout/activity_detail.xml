@@ -19,4 +19,4 @@
         android:id="@+id/mainFragmentContainer"
         android:foreground="?android:windowContentOverlay">
     </FrameLayout>
-</LinearLayout><!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/layout/activity_detail.xml -->
+</LinearLayout><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/layout/activity_detail.xml -->

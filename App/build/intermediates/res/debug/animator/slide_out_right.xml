@@ -9,4 +9,4 @@
 		android:valueType="floatType" 
 		android:interpolator="@android:anim/accelerate_interpolator" />
 </set>
-<!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/animator/slide_out_right.xml -->
+<!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/animator/slide_out_right.xml -->

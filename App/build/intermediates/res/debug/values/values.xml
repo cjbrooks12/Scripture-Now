@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/changelog.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/changelog.xml -->
     <eat-comment/>
     <string-array name="changelog_detail">
         <item>
@@ -68,7 +68,7 @@
         <item>V2.5 - August 25, 2014</item>
         <item>V3.0 - January 11, 2015</item>
     </string-array>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/verses.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/verses.xml -->
     <eat-comment/>
     <string-array name="init_references">
         <item>Joshua 1:8</item> 
@@ -88,7 +88,7 @@
         <item>All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work.</item>
         <item>And by this we know that we have come to know him, if we keep his commandments. Whoever says \"I know him\" but does not keep his commandments is a liar, and the truth is not in him, but whoever keeps his word, in him truly the love of God is perfected. By this we may know that we are in him: whoever says he abides in him ought to walk in the same way in which he walked.</item>
     </string-array>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="pref_default_screen">
         <item>Last Open</item>
@@ -135,18 +135,18 @@
         <item>Current - Some</item>
         <item>Current - None</item>
     </string-array>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/attrs.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/attrs.xml -->
     <eat-comment/>
     <attr format="color" name="color_background"/>
     <attr format="color" name="color_background_selected"/>
     <attr format="color" name="color_card"/>
     <attr format="color" name="color_text"/>
     <attr format="color" name="color_toolbar"/>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/attrs.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/attrs.xml -->
     <eat-comment/>
     <attr format="reference" name="ic_action_add"/>
     <attr format="reference" name="ic_action_arrow_right"/>
@@ -172,13 +172,13 @@
     <attr format="reference" name="ic_action_tag"/>
     <attr format="reference" name="ic_action_today"/>
     <attr format="reference" name="ic_action_visibility"/>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="boolean" name="isLightTheme"/>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/attrs.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/attrs.xml -->
     <eat-comment/>
     <attr format="string" name="theme_name"/>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="string" name="title"/>
     <bool name="abc_action_bar_embed_tabs">true</bool>
@@ -193,28 +193,28 @@
     <color name="abc_search_url_text_selected">@android:color/black</color>
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="all_current_verses">#559955</color>
     <color name="all_verses">#555555</color>
     <color name="background_dark">#404040</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="background_floating_material_dark">#ff424242</color>
     <color name="background_floating_material_light">#ffeeeeee</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="background_light">#F0F0F0</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="background_material_dark">#ff303030</color>
     <color name="background_material_light">#ffeeeeee</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="background_selected_dark">#606060</color>
     <color name="background_selected_light">#c0c0c0</color>
     <color name="background_selected_transparent">#20000000</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
@@ -224,33 +224,33 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="card_dark">#505050</color>
     <color name="card_light">#FFFFFF</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml -->
     <eat-comment/>
     <color name="cardview_dark_background">#FF202020</color>
     <color name="cardview_light_background">#FFFAFAFA</color>
     <color name="cardview_shadow_end_color">#03000000</color>
     <color name="cardview_shadow_start_color">#37000000</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="current_all">#937AED</color>
     <color name="current_most">#EFC94C</color>
     <color name="current_none">#DF5A49</color>
     <color name="current_some">#E27A3F</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
     <color name="dim_foreground_material_dark">#ffbebebe</color>
     <color name="dim_foreground_material_light">#ff323232</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="forest_green">#508a4c</color>
     <color name="forest_green_light">#B9D6B6</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
@@ -263,7 +263,7 @@
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_deep_teal_500">#ff009688</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="memorized">#45B29D</color>
     <color name="open_bible_brown">#7E7156</color>
@@ -271,7 +271,7 @@
     <color name="primary">#45B29D</color>
     <color name="primary_accent">#D32F2F</color>
     <color name="primary_dark">#00796B</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
@@ -289,7 +289,7 @@
     <color name="secondary_text_disabled_material_light">#24000000</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="text_dark">#91000000</color>
     <color name="text_light">#91FFFFFF</color>
@@ -300,6 +300,8 @@
     <declare-styleable name="ActionMode"><attr name="titleTextStyle"/><attr name="subtitleTextStyle"/><attr name="background"/><attr name="backgroundSplit"/><attr name="height"/><attr format="reference" name="closeItemLayout"/></declare-styleable>
     <declare-styleable name="ActivityChooserView"><attr format="string" name="initialActivityCount"/><attr format="reference" name="expandActivityOverflowButtonDrawable"/></declare-styleable>
     <declare-styleable name="CardView"><attr format="color" name="cardBackgroundColor"/><attr format="dimension" name="cardCornerRadius"/><attr format="dimension" name="cardElevation"/><attr format="dimension" name="cardMaxElevation"/><attr format="boolean" name="cardUseCompatPadding"/><attr format="boolean" name="cardPreventCornerOverlap"/><attr format="dimension" name="contentPadding"/><attr format="dimension" name="contentPaddingLeft"/><attr format="dimension" name="contentPaddingRight"/><attr format="dimension" name="contentPaddingTop"/><attr format="dimension" name="contentPaddingBottom"/></declare-styleable>
+    <declare-styleable name="ColorBars"><attr format="dimension" name="bar_thickness"/><attr format="dimension" name="bar_length"/><attr format="dimension" name="bar_pointer_radius"/><attr format="dimension" name="bar_pointer_halo_radius"/><attr format="boolean" name="bar_orientation_horizontal"/></declare-styleable>
+    <declare-styleable name="ColorPicker"><attr format="dimension" name="color_wheel_radius"/><attr format="dimension" name="color_wheel_thickness"/><attr format="dimension" name="color_center_radius"/><attr format="dimension" name="color_center_halo_radius"/><attr format="dimension" name="color_pointer_radius"/><attr format="dimension" name="color_pointer_halo_radius"/></declare-styleable>
     <declare-styleable name="CompatTextView"><attr format="reference|boolean" name="textAllCaps"/></declare-styleable>
     <declare-styleable name="DrawerArrowToggle"><attr format="color" name="color"/><attr format="boolean" name="spinBars"/><attr format="dimension" name="drawableSize"/><attr format="dimension" name="gapBetweenBars"/><attr format="dimension" name="topBottomBarArrowSize"/><attr format="dimension" name="middleBarArrowSize"/><attr format="dimension" name="barSize"/><attr format="dimension" name="thickness"/></declare-styleable>
     <declare-styleable name="FlowLayout"><attr name="android:orientation"/><attr format="enum" name="layoutDirection"><enum name="ltr" value="0"/><enum name="rtl" value="1"/></attr><attr format="boolean" name="debugDraw"/><attr format="float" name="weightDefault"/><attr name="android:gravity"/></declare-styleable>
@@ -320,7 +322,7 @@
     <declare-styleable name="Toolbar"><attr format="reference" name="titleTextAppearance"/><attr format="reference" name="subtitleTextAppearance"/><attr name="title"/><attr name="subtitle"/><attr name="android:gravity"/><attr format="dimension" name="titleMargins"/><attr format="dimension" name="titleMarginStart"/><attr format="dimension" name="titleMarginEnd"/><attr format="dimension" name="titleMarginTop"/><attr format="dimension" name="titleMarginBottom"/><attr name="contentInsetStart"/><attr name="contentInsetEnd"/><attr name="contentInsetLeft"/><attr name="contentInsetRight"/><attr format="dimension" name="maxButtonHeight"/><attr format="reference" name="theme"/><attr format="reference" name="collapseIcon"/><attr format="string" name="collapseContentDescription"/><attr name="popupTheme"/><attr format="reference" name="navigationIcon"/><attr format="string" name="navigationContentDescription"/><attr name="android:minHeight"/></declare-styleable>
     <declare-styleable name="View"><attr format="dimension" name="paddingStart"/><attr format="dimension" name="paddingEnd"/><attr name="android:focusable"/></declare-styleable>
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
     <dimen name="abc_action_bar_default_padding_material">4dp</dimen>
@@ -359,19 +361,35 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.larswerkman/HoloColorPicker/1.4/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="bar_length">240dp</dimen>
+    <dimen name="bar_pointer_halo_radius">14dp</dimen>
+    <dimen name="bar_pointer_radius">6dp</dimen>
+    <dimen name="bar_thickness">4dp</dimen>
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/dimens.xml -->
+    <eat-comment/>
     <dimen name="button_text_size">16dp</dimen>
     <dimen name="card_button_height">70dp</dimen>
     <dimen name="card_vertical_margin">4dp</dimen>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="cardview_compat_inset_shadow">1dp</dimen>
     <dimen name="cardview_default_elevation">2dp</dimen>
     <dimen name="cardview_default_radius">2dp</dimen>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.larswerkman/HoloColorPicker/1.4/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="color_center_halo_radius">60dp</dimen>
+    <dimen name="color_center_radius">54dp</dimen>
+    <dimen name="color_pointer_halo_radius">18dp</dimen>
+    <dimen name="color_pointer_radius">14dp</dimen>
+    <dimen name="color_wheel_radius">124dp</dimen>
+    <dimen name="color_wheel_thickness">8dp</dimen>
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -379,13 +397,13 @@
     <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="navigation_drawer_width">280dp</dimen>
     <dimen name="tab_host_default_height">48dp</dimen>
     <dimen name="title_text_size">22dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
@@ -413,7 +431,7 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
@@ -427,16 +445,16 @@
     <string name="drawer_open">Open</string>
     <string name="enter_reference">Enter Reference</string>
     <string name="enter_verse">Enter Verse</string>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/verses.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/verses.xml -->
     <eat-comment/>
     <string name="first_john_ref_icon_test">1 Jn</string>
     <string name="first_john_ref_test">1 John 2:3-6</string>
     <string name="first_john_ver_test">And by this we know that we have come to know him, if we keep his commandments. Whoever says \"I know him\" but does not keep his commandments is a liar, and the truth is not in him, but whoever keeps his word, in him truly the love of God is perfected. By this we may know that we are in him: whoever says he abides in him ought to walk in the same way in which he walked.</string>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_world">Hello world!</string>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/help.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/help.xml -->
     <eat-comment/>
     <string name="help_adding_verses">
 There are several ways to add new verses to Scripture Now, all of which are simple yet robust. The first is to simply add verses directly via the \'Input Verse\' card in the Dashboard. By hitting the icon on the toolbar, you will see a new card with fields to input the reference and the verse text. The reference refers to a passage in the Bible, such as "John 3:16", and the verse text is the actual verse you are trying to memorize. The reference should be formatted well, but is not so rigid that it becomes difficult to write the correct reference: for example, "Jn 3 : 16" will also be a valid reference, and it will be automatically formatted to look nice throughout the app. You can then choose to type the text yourself (for example, if you do not have access to the internet to download the text, or if your preferred translation is not available within the app), or else an icon will appear that can be pressed to try and download the text. If the verse is formatted well and exists in the Bible, it\'s text will be downloaded and added to the second text field. Then, you must hit \'Add Verse\' to add the verse to your list, which will default to the \'Current - None\' memorization state.\n\n
@@ -465,7 +483,7 @@ Verses can now be saved in one of five states, which reflect how strongly you ha
 
 In addition to these verse states, which are expected to change throughout the lifetime of a verse, verses can be organized by tags. These tags indicate a particular topic that fits this verse, and an arbitrary number of tags can be added every verse, including none at all. Some tags are created by default when adding verses, such as "VOTD" for the Verse of the Day, whatever you searched for in the Discover screen, or whatever is listed with the verse when importing it. But you can also add tags to verses by a hashtag when adding directly in the Dashboard Input Verse card, or by selecting the button when viewing the verse, or to groups of verses in one of your lists. There is no restriction of what can be in a tag, how many can go on a verse, or how many verses can have a given tag. When selecting a list to view, only tags that have verses associated with the tag will be displayed, and empty tags will be removed from the database completely. The colors for the tags are chosen randomly the first time they are created, with the result that each tag generally has a very unique color, but if the tag is removed and re-added will have a different color.
     </string>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="input_verse">Input Verse</string>
     <string name="loading">Loading verse…</string>
@@ -483,7 +501,7 @@ In addition to these verse states, which are expected to change throughout the l
     <string name="toggle_notification">Toggle Notification</string>
     <string name="verse">Verse</string>
     <string name="verse_of_the_day">Verse Of The Day</string>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance">
         <item name="android:textColor">?android:textColorPrimary</item>
@@ -1237,7 +1255,7 @@ In addition to these verse states, which are expected to change throughout the l
         <item name="android:scaleType">center</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/res/values/values.xml -->
     <eat-comment/>
     <style name="CardView">
         <item name="cardBackgroundColor">@color/cardview_light_background</item>
@@ -1253,7 +1271,7 @@ In addition to these verse states, which are expected to change throughout the l
     <style name="CardView.Light">
         <item name="cardBackgroundColor">@color/cardview_light_background</item>
     </style>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
         <item name="android:windowNoTitle">true</item>
@@ -1481,7 +1499,7 @@ In addition to these verse states, which are expected to change throughout the l
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/material_theme_dark.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/material_theme_dark.xml -->
     <eat-comment/>
     <style name="Theme.BaseDark" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
@@ -1529,7 +1547,7 @@ In addition to these verse states, which are expected to change throughout the l
         <item name="ic_action_help">@drawable/ic_action_help_dark</item>
         <item name="ic_action_settings">@drawable/ic_action_settings_dark</item>
     </style>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/src/main/res/values/material_theme.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/material_theme.xml -->
     <eat-comment/>
     <style name="Theme.BaseLight" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
@@ -1575,7 +1593,7 @@ In addition to these verse states, which are expected to change throughout the l
         <item name="ic_action_help">@drawable/ic_action_help_light</item>
         <item name="ic_action_settings">@drawable/ic_action_settings_light</item>
     </style>
-    <!-- From: file:/C:/Users/Casey/Documents/Android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="ThemeOverlay.AppCompat" parent="Base.ThemeOverlay.AppCompat"/>
     <style name="ThemeOverlay.AppCompat.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar"/>
