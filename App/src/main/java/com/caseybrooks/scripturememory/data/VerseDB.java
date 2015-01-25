@@ -339,9 +339,6 @@ public class VerseDB {
         catch(ParseException pe) {
             pe.printStackTrace();
         }
-        finally {
-            close();
-        }
     }
 
 //public getter functions
@@ -491,21 +488,18 @@ public class VerseDB {
     }
 
     public void updateTag(int id, String name, String hexColor) {
-        //check to see if the name to change the tag to already exists
-        long existingTagId = getTagID(name);
+		ContentValues values = new ContentValues();
 
-        if(existingTagId == -1) {
-            ContentValues values = new ContentValues();
-            if (name != null && name.length() > 0) {
-                values.put(KEY_TAGS_TAG, name);
-            }
+		if (name != null && name.length() > 0) {
+			values.put(KEY_TAGS_TAG, name);
+		}
 
-            if (hexColor != null && hexColor.length() > 0 && hexColor.matches("#\\d{6}")) {
-                values.put(KEY_TAGS_COLOR, hexColor);
-            }
+		if (hexColor != null && hexColor.length() > 0 && hexColor.matches("#{1}[a-fA-F0-9]{6}")) {
+			values.put(KEY_TAGS_COLOR, hexColor);
+		}
 
-            db.update(TABLE_TAGS, values, KEY_TAGS_ID + "=" + id, null);
-        }
+		db.update(TABLE_TAGS, values, KEY_TAGS_ID + "=" + id, null);
+
     }
 
     public int[] getAllTagIds() {

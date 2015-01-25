@@ -165,7 +165,7 @@ public class SettingsFragment extends PreferenceFragment {
 			return false;
 		}
 	};
-	
+
 	OnPreferenceClickListener restoreClick = new OnPreferenceClickListener() {
 		@Override
 		public boolean onPreferenceClick(Preference preference) {
@@ -205,7 +205,7 @@ public class SettingsFragment extends PreferenceFragment {
 			return false;
 		}
 	};
-	
+
 //Verse of the Day Preference Listeners
 //------------------------------------------------------------------------------
 	OnPreferenceChangeListener VOTDCheckedChange = new OnPreferenceChangeListener() {
@@ -218,7 +218,7 @@ public class SettingsFragment extends PreferenceFragment {
 			return true;
 		}
 	};
-	
+
 	OnPreferenceChangeListener VOTDTimeChange = new OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {

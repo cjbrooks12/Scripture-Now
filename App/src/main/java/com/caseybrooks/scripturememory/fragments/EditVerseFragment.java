@@ -37,6 +37,9 @@ import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.FlowLayout;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
+import com.larswerkman.holocolorpicker.ColorPicker;
+import com.larswerkman.holocolorpicker.SaturationBar;
+import com.larswerkman.holocolorpicker.ValueBar;
 
 import java.util.ArrayList;
 
@@ -74,7 +77,7 @@ public class EditVerseFragment extends Fragment {
 		view = inflater.inflate(R.layout.fragment_edit_verse, container, false);
         context = getActivity();
         initialize();
-      
+
         return view;
 	}
 
@@ -342,11 +345,21 @@ public class EditVerseFragment extends Fragment {
         final AlertDialog dialog = builder.create();
 
         final EditText edit = (EditText) view.findViewById(R.id.edit_text);
-        VerseDB db = new VerseDB(context).open();
-        edit.setText(db.getTagName(tagId));
-        db.close();
 
-        TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
+		VerseDB db = new VerseDB(context).open();
+        edit.setText(db.getTagName(tagId));
+
+		final ColorPicker picker = (ColorPicker) view.findViewById(R.id.color_picker);
+		SaturationBar saturationBar = (SaturationBar) view.findViewById(R.id.saturation_bar);
+		ValueBar valueBar = (ValueBar) view.findViewById(R.id.value_bar);
+		picker.addSaturationBar(saturationBar);
+		picker.addValueBar(valueBar);
+		picker.setOldCenterColor(db.getTagColor(tagId));
+		picker.setColor(db.getTagColor(tagId));
+
+		db.close();
+
+		TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -358,10 +371,14 @@ public class EditVerseFragment extends Fragment {
         saveEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String text = edit.getText().toString().trim();
                 if(text.length() > 0) {
                     VerseDB db = new VerseDB(context).open();
-                    db.updateTag(tagId, text, null);
+
+					int pickerColor = picker.getColor();
+					String colorString = String.format("#%02X%02X%02X", Color.red(pickerColor), Color.green(pickerColor), Color.blue(pickerColor));
+                    db.updateTag(tagId, text, colorString);
                     db.close();
                     tagAdapter.notifyDataSetChanged();
                     dialog.dismiss();
@@ -459,7 +476,7 @@ public class EditVerseFragment extends Fragment {
         });
         dialog.show();
     }
-	
+
 //ActionBar
 //------------------------------------------------------------------------------
     @Override
