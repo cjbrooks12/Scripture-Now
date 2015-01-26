@@ -30,6 +30,10 @@
             android:enabled="true"
             android:exported="false" />
         <receiver
+            android:name="com.caseybrooks.scripturememory.nowcards.main.MainVerse$TextFullReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
             android:name="com.caseybrooks.scripturememory.nowcards.main.MainVerse$MainBootReceiver"
             android:enabled="true"
             android:exported="false" >

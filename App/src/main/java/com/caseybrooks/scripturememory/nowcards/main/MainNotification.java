@@ -5,11 +5,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.widget.RemoteViews;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
+import com.caseybrooks.scripturememory.data.MetaSettings;
 
 public class MainNotification {
 	Notification notification;
@@ -49,22 +52,66 @@ public class MainNotification {
 
 		MainVerse mv = new MainVerse(context);
 		if(mv.passage != null) {
-			mv.setPassageFormatted();
 
-			//Removes the notification when the user hits "Dismiss"
-			Intent dismiss = new Intent(context, MainVerse.DismissVerseReceiver.class);
-			PendingIntent dismissPI = PendingIntent.getBroadcast(context, 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
-			mb.addAction(R.drawable.ic_action_clear_dark, "Dismiss", dismissPI);
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+				if(MetaSettings.getTextIsFull(context)) {
+					mv.setPassageNormal();
+				}
+				else{
+					mv.setPassageFormatted();
+				}
+
+				notification = mb.build();
+				RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_main);
+
+				//click to cancel
+				Intent dismiss = new Intent(context, MainVerse.DismissVerseReceiver.class);
+				PendingIntent dismissPI = PendingIntent.getBroadcast(context, 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
+				contentView.setOnClickPendingIntent(R.id.notification_main_dismiss, dismissPI);
+
+				//go to the next verse
+				Intent nextVerse = new Intent(context, MainVerse.NextVerseReceiver.class);
+				PendingIntent nextVersePI = PendingIntent.getBroadcast(context, 0, nextVerse, PendingIntent.FLAG_CANCEL_CURRENT);
+				contentView.setOnClickPendingIntent(R.id.notification_main_next, nextVersePI);
+
+				//toggle full and formatted text in notification
+				Intent showFull = new Intent(context, MainVerse.TextFullReceiver.class);
+				PendingIntent showFullPI = PendingIntent.getBroadcast(context, 0, showFull, PendingIntent.FLAG_CANCEL_CURRENT);
+				contentView.setOnClickPendingIntent(R.id.notification_main_show_full, showFullPI);
+
+				contentView.setImageViewResource(R.id.notification_main_icon, R.drawable.ic_cross);
+				contentView.setTextViewText(R.id.notification_main_reference, mv.passage.getReference().toString());
+				contentView.setTextViewText(R.id.notification_main_verse, mv.passage.getText());
+				notification.bigContentView = contentView;
+			}
+			else {
+				mv.setPassageFormatted();
+				mb.setContentTitle(mv.passage.getReference().toString());
+				mb.setContentText(mv.passage.getText());
+
+				notification = mb.build();
+			}
+
 
 			//goes to the next verse when the user hits "Next"
-			Intent next = new Intent(context, MainVerse.NextVerseReceiver.class);
-			PendingIntent nextPI = PendingIntent.getBroadcast(context, 0, next, PendingIntent.FLAG_CANCEL_CURRENT);
-			mb.addAction(R.drawable.ic_action_arrow_right_dark, "Next", nextPI);
-
-			//set the Reference and the text of the notification
-			mb.setContentTitle(mv.passage.getReference().toString());
-			mb.setContentText(mv.passage.getText());
-			mb.setStyle(new NotificationCompat.BigTextStyle().bigText(mv.passage.getText()));
+//			Intent showFull = new Intent(context, MainVerse.TextFullReceiver.class);
+//			PendingIntent showFullPI = PendingIntent.getBroadcast(context, 0, showFull, PendingIntent.FLAG_CANCEL_CURRENT);
+//			mb.addAction(R.drawable.ic_action_text_format_dark, "Show all", showFullPI);
+//
+//			//Removes the notification when the user hits "Dismiss"
+//			Intent dismiss = new Intent(context, MainVerse.DismissVerseReceiver.class);
+//			PendingIntent dismissPI = PendingIntent.getBroadcast(context, 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
+//			mb.addAction(R.drawable.ic_action_clear_dark, "Dismiss", dismissPI);
+//
+//			//goes to the next verse when the user hits "Next"
+//			Intent next = new Intent(context, MainVerse.NextVerseReceiver.class);
+//			PendingIntent nextPI = PendingIntent.getBroadcast(context, 0, next, PendingIntent.FLAG_CANCEL_CURRENT);
+//			mb.addAction(R.drawable.ic_action_arrow_right_dark, "Next", nextPI);
+//
+//			//set the Reference and the text of the notification
+//			mb.setContentTitle(mv.passage.getReference().toString());
+//			mb.setContentText(mv.passage.getText());
+//			mb.setStyle(new NotificationCompat.BigTextStyle().bigText(mv.passage.getText()));
 		}
 		else {
 			//no verse is set, so don't add actions
@@ -72,9 +119,10 @@ public class MainNotification {
 			//Just let the user know that no verse is set
 			mb.setContentTitle("No verse set!");
 			mb.setContentText("Why don't you try adding some more verses, or start memorizing a different list?");
+			notification = mb.build();
 		}
 
-		notification = mb.build();
+//		notification = mb.build();
 
 		return this;
     }

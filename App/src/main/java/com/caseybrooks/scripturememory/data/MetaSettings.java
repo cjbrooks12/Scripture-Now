@@ -12,7 +12,8 @@ public class MetaSettings {
 
     //settings saved through app settings
     public static final String PERSIST_MAIN_NOTIFICATION = "PREF_PERSIST_NOTIFICATION";
-    public static final String VOTD_SHOW_NOTIFICATION = "PREF_VOTD_NOTIFICATION";
+	public static final String TEXT_IS_FULL = "TEXT_IS_FULL";
+	public static final String VOTD_SHOW_NOTIFICATION = "PREF_VOTD_NOTIFICATION";
     public static final String VOTD_NOTIFICATION_SOUND = "PREF_VOTD_SOUND";
     public static final String APP_THEME = "PREF_SELECTED_THEME";
     public static final String BIBLE_VERSION = "PREF_SELECTED_VERSION";
@@ -96,6 +97,16 @@ public class MetaSettings {
     public static String getVOTDSound(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(VOTD_NOTIFICATION_SOUND, "DEFAULT_SOUND");
     }
+
+	public static boolean getTextIsFull(Context context) {
+		return context.getSharedPreferences(settings_file, 0).getBoolean(TEXT_IS_FULL, false);
+	}
+
+	public static void putTextIsFull(Context context, boolean value) {
+		context.getSharedPreferences(settings_file, 0).edit().putBoolean(TEXT_IS_FULL, value).commit();
+	}
+
+
 
 //App settings
 //------------------------------------------------------------------------------

@@ -40,8 +40,9 @@
         <item name="ic_action_get_app">@drawable/ic_action_get_app_dark</item>
         <item name="ic_action_folder">@drawable/ic_action_folder_dark</item>
 		<item name="ic_action_cloud_download">@drawable/ic_action_cloud_download_dark</item>
+		<item name="ic_action_text_format">@drawable/ic_action_text_format_dark</item>
 
-        <item name="ic_action_home">@drawable/ic_action_home_dark</item>
+		<item name="ic_action_home">@drawable/ic_action_home_dark</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_dark</item>
         <item name="ic_action_group_work">@drawable/ic_action_group_work_dark</item>
         <item name="ic_action_tag">@drawable/ic_action_tag_dark</item>

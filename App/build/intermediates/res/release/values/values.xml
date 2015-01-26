@@ -146,6 +146,7 @@
     <attr format="reference" name="ic_action_share"/>
     <attr format="reference" name="ic_action_sort"/>
     <attr format="reference" name="ic_action_tag"/>
+    <attr format="reference" name="ic_action_text_format"/>
     <attr format="reference" name="ic_action_today"/>
     <attr format="reference" name="ic_action_visibility"/>
     <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
@@ -1202,6 +1203,15 @@
     <style name="CardView.Light">
         <item name="cardBackgroundColor">@color/cardview_light_background</item>
     </style>
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="NotificationText">
+		<item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+	</style>
+    <style name="NotificationTitle">
+		<item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+		<item name="android:textStyle">bold</item>
+	</style>
     <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
@@ -1471,8 +1481,9 @@
         <item name="ic_action_get_app">@drawable/ic_action_get_app_dark</item>
         <item name="ic_action_folder">@drawable/ic_action_folder_dark</item>
 		<item name="ic_action_cloud_download">@drawable/ic_action_cloud_download_dark</item>
+		<item name="ic_action_text_format">@drawable/ic_action_text_format_dark</item>
 
-        <item name="ic_action_home">@drawable/ic_action_home_dark</item>
+		<item name="ic_action_home">@drawable/ic_action_home_dark</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_dark</item>
         <item name="ic_action_group_work">@drawable/ic_action_group_work_dark</item>
         <item name="ic_action_tag">@drawable/ic_action_tag_dark</item>
@@ -1518,6 +1529,7 @@
         <item name="ic_action_get_app">@drawable/ic_action_get_app_light</item>
         <item name="ic_action_folder">@drawable/ic_action_folder_light</item>
 		<item name="ic_action_cloud_download">@drawable/ic_action_cloud_download_light</item>
+		<item name="ic_action_text_format">@drawable/ic_action_text_format_light</item>
 
 		<item name="ic_action_home">@drawable/ic_action_home_light</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>

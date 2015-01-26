@@ -133,6 +133,14 @@ public class MainVerse {
         }
     }
 
+	public static class TextFullReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			MetaSettings.putTextIsFull(context, !MetaSettings.getTextIsFull(context));
+			MainNotification.getInstance(context).create().show();
+		}
+	}
+
 	public static class MainBootReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {

@@ -26,6 +26,10 @@
             android:enabled="true"
             android:exported="false" />
 		<receiver
+			android:name=".nowcards.main.MainVerse$TextFullReceiver"
+			android:enabled="true"
+			android:exported="false" />
+		<receiver
 			android:name=".nowcards.main.MainVerse$MainBootReceiver"
 			android:enabled="true"
 			android:exported="false" >

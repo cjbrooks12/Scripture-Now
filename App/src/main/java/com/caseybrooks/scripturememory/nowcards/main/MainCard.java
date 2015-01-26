@@ -309,6 +309,7 @@ public class MainCard extends FrameLayout {
             }
             MetaSettings.putVerseDisplayMode(context, verseDisplayMode);
             MetaSettings.putNotificationActive(context, true);
+			MetaSettings.putTextIsFull(context, false);
 
             update();
 
