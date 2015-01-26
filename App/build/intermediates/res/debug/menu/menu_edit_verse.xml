@@ -10,6 +10,11 @@
         app:showAsAction="ifRoom"
         android:icon="?attr/ic_action_delete"
         android:title="Delete" />
+	<item
+		android:id="@+id/menu_edit_redownload"
+		app:showAsAction="ifRoom"
+		android:icon="?attr/ic_action_refresh"
+		android:title="Redownload" />
     <item
         android:id="@+id/menu_edit_set_notification"
         app:showAsAction="ifRoom"

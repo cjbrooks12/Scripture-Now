@@ -55,7 +55,7 @@ import javax.xml.transform.stream.StreamSource;
 
 public class MainActivity extends ActionBarActivity implements NavigationCallbacks {
 //Data members
-//------------------------------------------------------------------------------		
+//------------------------------------------------------------------------------
     Toolbar tb;
     Context context;
 

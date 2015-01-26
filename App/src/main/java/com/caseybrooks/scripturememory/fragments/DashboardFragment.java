@@ -41,13 +41,13 @@ public class DashboardFragment extends Fragment {
 
 	LinearLayout dashboardLayout;
     NavigationCallbacks mCallbacks;
-	
+
 	MainCard notify_card;
 	VerseInputCard input_card;
     VOTDCard votd_card;
-	
+
 	RefreshReceiver receiver;
-	
+
 //Lifecycle and Initialization
 //------------------------------------------------------------------------------
 	@Override
@@ -58,7 +58,7 @@ public class DashboardFragment extends Fragment {
 
         return view;
     }
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -67,7 +67,7 @@ public class DashboardFragment extends Fragment {
 
         notify_card.update();
 		if(MetaSettings.getNotificationActive(context)) {
-		    MainNotification.notify(context).show();
+		    MainNotification.getInstance(context).create().show();
 		}
 
         ActionBar ab = ((MainActivity) context).getSupportActionBar();
@@ -205,7 +205,7 @@ public class DashboardFragment extends Fragment {
             votd_card.update();
 		}
 	}
-	
+
 //Host Activity Interface
 //------------------------------------------------------------------------------
     @Override

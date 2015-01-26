@@ -37,8 +37,9 @@
         <item name="ic_action_visibility">@drawable/ic_action_visibility_light</item>
         <item name="ic_action_get_app">@drawable/ic_action_get_app_light</item>
         <item name="ic_action_folder">@drawable/ic_action_folder_light</item>
+		<item name="ic_action_cloud_download">@drawable/ic_action_cloud_download_light</item>
 
-        <item name="ic_action_home">@drawable/ic_action_home_light</item>
+		<item name="ic_action_home">@drawable/ic_action_home_light</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>
         <item name="ic_action_group_work">@drawable/ic_action_group_work_light</item>
         <item name="ic_action_tag">@drawable/ic_action_tag_light</item>

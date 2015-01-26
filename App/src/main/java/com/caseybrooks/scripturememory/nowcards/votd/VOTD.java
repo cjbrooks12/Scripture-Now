@@ -48,33 +48,37 @@ public class VOTD {
 //VOTD lifecycle and verse management
 //------------------------------------------------------------------------------
     public void updateAll() {
+		//update dashboard cards
+		context.sendBroadcast(new Intent(DashboardFragment.REFRESH));
+
         //update the widgets: VOTD (obviously), Main because it may be the VOTD
+		context.sendBroadcast(new Intent(context, MainWidget.class));
         context.sendBroadcast(new Intent(context, VOTDWidget.class));
-        context.sendBroadcast(new Intent(context, MainWidget.class));
 
         //update the notifications: Main because it may be the VOTD
         if(MetaSettings.getNotificationActive(context)) {
-            MainNotification.notify(context).show();
+			MainNotification.getInstance(context).create().show();
         }
-
-        //update dashboard cards
-        context.sendBroadcast(new Intent(DashboardFragment.REFRESH));
     }
 
-    public void saveVerse() {
-        VerseDB db = new VerseDB(context).open();
-        currentVerse.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
-        currentVerse.addTag("VOTD");
-        int id = db.getVerseId(currentVerse.getReference());
-        if (id == -1) {
-            id = db.insertVerse(currentVerse);
-            currentVerse.getMetadata().putInt(DefaultMetaData.ID, id);
-        }
-        else {
-            currentVerse.getMetadata().putInt(DefaultMetaData.ID, id);
-            db.updateVerse(currentVerse);
-        }
-        db.close();
+    public boolean saveVerse() {
+		if(currentVerse != null) {
+			VerseDB db = new VerseDB(context).open();
+			currentVerse.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
+			currentVerse.addTag("VOTD");
+			int id = db.getVerseId(currentVerse.getReference());
+			if(id == -1) {
+				id = db.insertVerse(currentVerse);
+				currentVerse.getMetadata().putInt(DefaultMetaData.ID, id);
+			}
+			else {
+				currentVerse.getMetadata().putInt(DefaultMetaData.ID, id);
+				db.updateVerse(currentVerse);
+			}
+			db.close();
+			return true;
+		}
+		else return false;
     }
 
     public void setAsNotification() {
@@ -198,7 +202,7 @@ public class VOTD {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(MetaSettings.getVOTDShow(context)) {
-                VOTDNotification.getInstance(context).show();
+				VOTDNotification.getInstance(context).create().show();
             }
         }
     }
@@ -214,4 +218,14 @@ public class VOTD {
             }
         }
     }
+
+	//reset the alarm to show daily notification when the device boots
+	public static class VOTDBootReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if(MetaSettings.getVOTDShow(context)) {
+				VOTDNotification.getInstance(context).setAlarm();
+			}
+		}
+	}
 }

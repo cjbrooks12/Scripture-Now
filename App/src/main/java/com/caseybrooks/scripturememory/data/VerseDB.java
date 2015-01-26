@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.data.Reference;
@@ -187,6 +188,7 @@ public class VerseDB {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_VERSES);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATE);
+			Toast.makeText(context, "onUpgrade()", Toast.LENGTH_SHORT).show();
 
             // create new tables
             onCreate(db);

@@ -596,15 +596,15 @@ public class ImportVersesFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.menu_import_show_path:
-                String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
-                Toast.makeText(context, "Files located at: " + path, Toast.LENGTH_LONG).show();
-                return true;
-            case R.id.menu_import_find_files:
-                new FindFiles().showPopup();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+		case R.id.menu_import_show_path:
+			String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
+			Toast.makeText(context, "Files located at: " + path, Toast.LENGTH_LONG).show();
+			return true;
+		case R.id.menu_import_find_files:
+			new FindFiles().showPopup();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
     }
 }

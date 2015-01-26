@@ -30,21 +30,25 @@ public class MainVerse {
     }
 
     public void setPassageNormal() {
-        passage.setFormatter(new DefaultFormatter.Normal());
+		if(passage != null) {
+			passage.setFormatter(new DefaultFormatter.Normal());
+		}
     }
 
     public void setPassageFormatted() {
-        switch (MetaSettings.getVerseDisplayMode(context)) {
-            case 0: passage.setFormatter(new DefaultFormatter.Normal()); break;
-            case 1: passage.setFormatter(new DefaultFormatter.Dashes()); break;
-            case 2: passage.setFormatter(new DefaultFormatter.FirstLetters()); break;
-            case 3: passage.setFormatter(new DefaultFormatter.DashedLetter()); break;
-            case 4: passage.setFormatter(
-                    new DefaultFormatter.RandomWords(
-                            MetaSettings.getRandomnessLevel(context),
-                            MetaSettings.getRandomSeedOffset(context))); break;
-            default: passage.setFormatter(new DefaultFormatter.Normal()); break;
-        }
+		if(passage != null) {
+			switch (MetaSettings.getVerseDisplayMode(context)) {
+				case 0: passage.setFormatter(new DefaultFormatter.Normal()); break;
+				case 1: passage.setFormatter(new DefaultFormatter.Dashes()); break;
+				case 2: passage.setFormatter(new DefaultFormatter.FirstLetters()); break;
+				case 3: passage.setFormatter(new DefaultFormatter.DashedLetter()); break;
+				case 4: passage.setFormatter(
+						new DefaultFormatter.RandomWords(
+								MetaSettings.getRandomnessLevel(context),
+								MetaSettings.getRandomSeedOffset(context))); break;
+				default: passage.setFormatter(new DefaultFormatter.Normal()); break;
+			}
+		}
     }
 
     private void getNextVerse() {
@@ -108,7 +112,7 @@ public class MainVerse {
 
         //update the notification
         if(MetaSettings.getNotificationActive(context)) {
-            MainNotification.notify(context).show();
+			MainNotification.getInstance(context).create().show();
         }
     }
 
@@ -121,12 +125,20 @@ public class MainVerse {
         }
     }
 
-    //Button to dismiss the ongoing notification
     public static class DismissVerseReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             MetaSettings.putNotificationActive(context, false);
-            MainNotification.getInstance().dismiss();
+			MainNotification.getInstance(context).dismiss();
         }
     }
+
+	public static class MainBootReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if(MetaSettings.getNotificationActive(context)) {
+				MainNotification.getInstance(context).create().show();
+			}
+		}
+	}
 }

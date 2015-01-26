@@ -163,6 +163,7 @@ public class Passage extends AbstractVerse {
 
     @Override
 	public Passage retrieve() throws IOException {
+		allText = null;
         for(Verse verse : verses) {
             verse.retrieve();
         }

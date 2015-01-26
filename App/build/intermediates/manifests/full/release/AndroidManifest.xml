@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.caseybrooks.scripturememory"
-    android:versionCode="22"
-    android:versionName="3.0.1" >
+    android:versionCode="23"
+    android:versionName="3.0.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -30,6 +30,14 @@
             android:enabled="true"
             android:exported="false" />
         <receiver
+            android:name="com.caseybrooks.scripturememory.nowcards.main.MainVerse$MainBootReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
             android:name="com.caseybrooks.scripturememory.nowcards.main.MainWidget"
             android:label="SN! - Main Verse" >
             <intent-filter>
@@ -51,6 +59,14 @@
             android:enabled="true"
             android:exported="false" />
         <receiver
+            android:name="com.caseybrooks.scripturememory.nowcards.votd.VOTD$VOTDBootReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
             android:name="com.caseybrooks.scripturememory.nowcards.votd.VOTDWidget"
             android:label="SN! - Verse of the Day" >
             <intent-filter>
@@ -60,14 +76,6 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/votdwidget_info" />
-        </receiver>
-        <receiver
-            android:name="com.caseybrooks.scripturememory.data.MetaReceiver"
-            android:enabled="true"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
         </receiver>
 
         <!-- Activities -->
@@ -92,15 +100,12 @@
         </activity>
         <activity
             android:name="com.caseybrooks.scripturememory.activities.DetailActivity"
-            android:label="@string/title_activity_detail"
+            android:label="@string/app_name"
             android:parentActivityName="com.caseybrooks.scripturememory.activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.caseybrooks.scripturememory.activities.MainActivity" />
         </activity>
-        <activity
-            android:name="android.support.v7.widget.TestActivity"
-            android:label="RecyclerViewTestActivity" />
     </application>
 
 </manifest>

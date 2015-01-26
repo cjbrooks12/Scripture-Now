@@ -373,28 +373,33 @@ public class NavigationDrawerFragment extends Fragment {
             TextView headerText = (TextView) convertView.findViewById(R.id.navListHeader);
             ImageView headerImage = (ImageView) convertView.findViewById(R.id.header_image);
 
-            TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {
-                    R.attr.ic_action_home,
-                    R.attr.ic_action_find_in_page,
-                    R.attr.ic_action_group_work,
-                    R.attr.ic_action_tag,
-                    R.attr.ic_action_settings,
-                    R.attr.ic_action_help
-            });
+			if(groupPosition == 3) {
+				headerText.setText(headerTitle + " (" + Math.max(getChildrenCount(groupPosition)-1, 0) + ")");
+			}
+			else {
+				headerText.setText(headerTitle);
+			}
 
-            if(groupPosition == 3) {
-                headerText.setText(headerTitle + " (" + Math.max(getChildrenCount(groupPosition)-1, 0) + ")");
-            }
-            else {
-                headerText.setText(headerTitle);
-            }
-            Drawable headerDrawable = getResources().getDrawable(a.getResourceId(groupPosition, 0));
-            a.recycle();
+			TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{
+					  R.attr.ic_action_home,
+					  R.attr.ic_action_find_in_page,
+					  R.attr.ic_action_group_work,
+					  R.attr.ic_action_tag,
+					  R.attr.ic_action_settings,
+					  R.attr.ic_action_help
+			});
+
+			Drawable headerDrawable = getResources().getDrawable(a.getResourceId(groupPosition, 0));
+			a.recycle();
 
 
             int selectedGroup = MetaSettings.getDrawerSelection(context).first;
-            TypedArray selectedColorAttrs = context.getTheme().obtainStyledAttributes(
-                    new int[]{R.attr.colorAccent, R.attr.color_text, R.attr.color_background, R.attr.color_background_selected});
+            TypedArray selectedColorAttrs = context.getTheme().obtainStyledAttributes(new int[]{
+						R.attr.colorAccent,
+						R.attr.color_text,
+						R.attr.color_background,
+						R.attr.color_background_selected });
+
             int selectedColor = selectedColorAttrs.getColor(0, 0);
             int unselectedColor = selectedColorAttrs.getColor(1, 0);
             int backgroundColor = selectedColorAttrs.getColor(2, 0);
@@ -415,7 +420,6 @@ public class NavigationDrawerFragment extends Fragment {
             }
 
             headerImage.setImageDrawable(headerDrawable);
-            a.recycle();
 
             return convertView;
         }

@@ -18,7 +18,7 @@ public class MetaSettings {
     public static final String BIBLE_VERSION = "PREF_SELECTED_VERSION";
 
     //settings set throughout app
-    public static final String FIRST_TIME = "FIRST_TIME";
+    public static final String FIRST_TIME = "FIRST_TIME_V3.0";
     public static final String CURRENT_VERSION = "CURRENT_VERSION";
     public static final String PROMPT_ON_START_INT = "PROMPT_ON_START_INT";
 

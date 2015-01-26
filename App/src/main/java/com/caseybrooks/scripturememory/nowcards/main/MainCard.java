@@ -36,7 +36,6 @@ public class MainCard extends FrameLayout {
     ImageView contextMenu;
     RelativeLayout expandedSection;
     View expandedhline;
-    View root;
 
     RadioButton normal, dashes, letters, letteredDashes, randomWords;
     SeekBar randomnessLevelSlider;
@@ -62,7 +61,7 @@ public class MainCard extends FrameLayout {
     }
 
     void initialize() {
-        root = LayoutInflater.from(context).inflate(R.layout.card_notification_verse, this);
+        LayoutInflater.from(context).inflate(R.layout.card_notification_verse, this);
 
         ref = (TextView) findViewById(R.id.notificationReference);
         ver = (TextView) findViewById(R.id.notificationVerse);
@@ -251,11 +250,11 @@ public class MainCard extends FrameLayout {
                         return true;
                     case R.id.context_notification_card_toggle:
                         if (MetaSettings.getNotificationActive(context)) {
-                            MainNotification.getInstance().dismiss();
+                            MainNotification.getInstance(context).dismiss();
                             MetaSettings.putNotificationActive(context, false);
                         }
                         else {
-                            MainNotification.notify(context).show();
+							MainNotification.getInstance(context).create().show();
                             MetaSettings.putNotificationActive(context, true);
                         }
                         return true;
@@ -263,14 +262,14 @@ public class MainCard extends FrameLayout {
                         MetaSettings.putRandomSeedOffset(context, (int) System.currentTimeMillis());
 
                         update();
-                        MainNotification.notify(context).show();
+						MainNotification.getInstance(context).create().show();
                         MetaSettings.putNotificationActive(context, true);
                         return true;
                     case R.id.context_notification_card_reset_random:
                         MetaSettings.putRandomSeedOffset(context, 0);
 
                         update();
-                        MainNotification.notify(context).show();
+						MainNotification.getInstance(context).create().show();
                         MetaSettings.putNotificationActive(context, true);
                         return true;
                     default:
@@ -313,7 +312,7 @@ public class MainCard extends FrameLayout {
 
             update();
 
-            MainNotification.notify(context).show();
+			MainNotification.getInstance(context).create().show();
         }
     };
 
@@ -344,7 +343,7 @@ public class MainCard extends FrameLayout {
             ver.setText(mv.passage.getText());
 
             if(MetaSettings.getNotificationActive(context)) {
-                MainNotification.notify(context).show();
+				MainNotification.getInstance(context).create().show();
             }
         }
     };

@@ -213,6 +213,11 @@ public class SettingsFragment extends PreferenceFragment {
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 			if((Boolean) newValue) {
 				VOTDNotification.getInstance(context).setAlarm();
+				Toast.makeText(context, "Notification will show daily at " + findPreference("PREF_VOTD_TIME").getSummary(), Toast.LENGTH_LONG).show();
+			}
+			else {
+				VOTDNotification.getInstance(context).cancelAlarm();
+				Toast.makeText(context, "Notification disabled ", Toast.LENGTH_LONG).show();
 			}
 
 			return true;
@@ -223,8 +228,9 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
             VOTDNotification.getInstance(context).setAlarm();
+			Toast.makeText(context, "Notification will show daily at " + preference.getSummary(), Toast.LENGTH_LONG).show();
 
-            return false;
+			return false;
 		}
 	};
 

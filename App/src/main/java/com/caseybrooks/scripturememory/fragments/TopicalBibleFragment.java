@@ -250,6 +250,7 @@ public class TopicalBibleFragment extends Fragment {
                 case android.R.id.home:
                     mode.finish();
                     return true;
+
                 //select all verses in the list
                 case R.id.contextual_open_bible_select_all:
                     ArrayList<Passage> items = adapter.getItems();
@@ -283,6 +284,9 @@ public class TopicalBibleFragment extends Fragment {
                     adapter.notifyDataSetChanged();
 
                     return true;
+				case R.id.contextual_open_bible_redownload:
+					new RedownloadAsync().execute(adapter.getSelectedItems());
+					return true;
                 case R.id.contextual_open_bible_save:
                     save(adapter.getSelectedItems());
                     return true;
@@ -649,13 +653,13 @@ public class TopicalBibleFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            progress.setVisibility(View.GONE);
             int threshold = searchEditText.getThreshold();
             searchEditText.setThreshold(1);
             searchEditText.showDropDown();
             searchEditText.setThreshold(threshold);
             suggestionsAdapter.notifyDataSetChanged();
-        }
+			progress.setVisibility(View.GONE);
+		}
 
         @Override
         protected Void doInBackground(Character... params) {
@@ -728,22 +732,38 @@ public class TopicalBibleFragment extends Fragment {
 
     private class RedownloadAsync extends AsyncTask<ArrayList<Passage>, Passage, Void> {
 
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progress.setVisibility(View.VISIBLE);
+			progress.setIndeterminate(true);
+			progress.setProgress(0);
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
+			adapter.notifyDataSetChanged();
+			progress.setVisibility(View.GONE);
+		}
+
         @Override
         protected void onProgressUpdate(Passage... values) {
             super.onProgressUpdate(values);
             adapter.notifyDataSetChanged();
+			progress.setIndeterminate(false);
+			progress.setProgress(progress.getProgress() + 1);
         }
 
         @Override
         protected Void doInBackground(ArrayList<Passage>... params) {
+			progress.setMax(params[0].size());
+
             for(Passage passage : params[0]) {
                 try {
-//                    int position = passage.getMetadata().getInt("LIST_POSITION");
-//                    adapter.removeItem(passage);
-
                     passage.setVersion(MetaSettings.getBibleVersion(context));
                     passage.retrieve();
-                    publishProgress(passage);
+					publishProgress(passage);
                 }
                 catch(IOException ioe) {
                     ioe.printStackTrace();
@@ -751,12 +771,6 @@ public class TopicalBibleFragment extends Fragment {
             }
 
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            adapter.notifyDataSetChanged();
         }
     }
 

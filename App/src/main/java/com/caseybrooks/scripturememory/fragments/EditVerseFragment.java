@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -25,12 +28,14 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
+import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -41,6 +46,7 @@ import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.SaturationBar;
 import com.larswerkman.holocolorpicker.ValueBar;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class EditVerseFragment extends Fragment {
@@ -53,14 +59,16 @@ public class EditVerseFragment extends Fragment {
     int listId;
 
 	EditText editRef, editVer;
+	TextView version;
 
     TagAdapter tagAdapter;
 
     FlowLayout tagChipsLayout;
     TextView seekbarText;
     SeekBar seekbar;
+	ProgressBar progress;
 
-    public static Fragment newInstance(int verseId, int listType, int listId) {
+	public static Fragment newInstance(int verseId, int listType, int listId) {
         Fragment fragment = new EditVerseFragment();
         Bundle extras = new Bundle();
         extras.putInt("KEY_ID", verseId);
@@ -112,6 +120,9 @@ public class EditVerseFragment extends Fragment {
             editVer = (EditText) view.findViewById(R.id.updateVerse);
             editVer.setText(passage.getText());
 
+			version = (TextView) view.findViewById(R.id.version);
+			version.setText(passage.getVersion().getCode().toUpperCase());
+
             seekbarText = (TextView) view.findViewById(R.id.seekbar_text);
             switch (passage.getMetadata().getInt(DefaultMetaData.STATE)) {
                 case VerseDB.CURRENT_NONE:
@@ -133,6 +144,11 @@ public class EditVerseFragment extends Fragment {
 
             seekbar = (SeekBar) view.findViewById(R.id.stateSeekBar);
             seekbar.setProgress(passage.getMetadata().getInt(DefaultMetaData.STATE) - 1);
+
+			ColorFilter filter = new PorterDuffColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_IN);
+			progress = (ProgressBar) view.findViewById(R.id.progress);
+			progress.getProgressDrawable().setColorFilter(filter);
+			progress.getIndeterminateDrawable().setColorFilter(filter);
 
             int color = db.getStateColor(seekbar.getProgress() + 1);
 
@@ -495,10 +511,57 @@ public class EditVerseFragment extends Fragment {
                 MetaSettings.putVerseId(context, passage.getMetadata().getInt(DefaultMetaData.ID));
                 MetaSettings.putNotificationActive(context, true);
                 MetaSettings.putActiveList(context, listType, listId);
-                MainNotification.notify(context).show();
+				MainNotification.getInstance(context).create().show();
                 Toast.makeText(context, passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
             }
 	    	return true;
+		case R.id.menu_edit_redownload:
+			if(passage != null) {
+				new AsyncTask<Void, Void, Boolean>() {
+
+					@Override
+					protected void onPreExecute() {
+						super.onPreExecute();
+						progress.setVisibility(View.VISIBLE);
+						progress.setIndeterminate(true);
+						progress.setProgress(0);
+					}
+
+					@Override
+					protected void onPostExecute(Boolean aVoid) {
+						super.onPostExecute(aVoid);
+						progress.setVisibility(View.GONE);
+
+						if(aVoid) {
+							editVer.setText(passage.getText());
+							version.setText(passage.getVersion().getCode().toUpperCase());
+						}
+						else {
+							Toast.makeText(context, "Could not redownload verse at this time", Toast.LENGTH_SHORT).show();
+						}
+					}
+
+					@Override
+					protected Boolean doInBackground(Void... params) {
+						if(Util.isConnected(context)) {
+							Version version = passage.getVersion();
+							try {
+								passage.setVersion(MetaSettings.getBibleVersion(context));
+								passage.retrieve();
+								return true;
+							}
+							catch(IOException ioe) {
+								ioe.printStackTrace();
+								passage.setVersion(version);
+								return false;
+							}
+						}
+						else return false;
+					}
+
+				}.execute();
+			}
+			return true;
 	    case R.id.menu_edit_save_changes:
             if(passage != null) {
                 passage.getMetadata().putInt(DefaultMetaData.STATE, seekbar.getProgress() + 1);

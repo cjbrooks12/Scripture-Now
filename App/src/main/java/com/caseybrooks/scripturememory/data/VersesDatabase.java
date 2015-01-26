@@ -27,11 +27,11 @@ public class VersesDatabase {
 	public static final String KEY_REFERENCE = "reference";
 	public static final String KEY_VERSE = "verse";
 	public static final String KEY_LIST = "list";
-	
+
 	private static final String DATABASE_NAME = "bible_verses";
 	private static final String DATABASE_TABLE = "verse_list";
 	private static final int DATABASE_VERSION = 2;
-	
+
 	private DbHelper helper;
 	private final Context context;
 	private SQLiteDatabase database;
@@ -60,45 +60,44 @@ public class VersesDatabase {
 				Cursor c = db.query(DATABASE_TABLE, columns, null, null, null, null, null);
 				ArrayList<String> refs = new ArrayList<String>();
 				ArrayList<String> verses = new ArrayList<String>();
-				
-				for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {	
+
+				for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
 					refs.add(c.getString(1));
 					verses.add(c.getString(2));
 				}
 				db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
 				onCreate(db);
-				
+
 				for(int i = 0; i < refs.size(); i++) {
 					ContentValues cv = new ContentValues();
 					cv.put(KEY_REFERENCE, refs.get(i));
 					cv.put(KEY_VERSE, verses.get(i));
 					cv.put(KEY_LIST, "current");
-					
+
 					db.insert(DATABASE_TABLE, null, cv);
 				}
 			}
-		}	
+		}
 	}
-	
+
 //Public interface constructor and initialization
 //------------------------------------------------------------------------------
 	public VersesDatabase(Context context) {
 		this.context = context;
 	}
-	
+
 	public VersesDatabase open() throws SQLException {
 		helper = new DbHelper(context);
 		database = helper.getWritableDatabase();
 		return this;
 	}
-	
+
 	public void close() {
 		helper.close();
 	}
 
     public void migrate() {
         VerseDB verseDB = new VerseDB(context);
-        verseDB.clear();
         verseDB.open();
 
         int state = VerseDB.CURRENT_NONE;

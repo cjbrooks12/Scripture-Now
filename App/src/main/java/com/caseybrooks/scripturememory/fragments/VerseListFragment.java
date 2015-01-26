@@ -18,7 +18,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -100,13 +99,13 @@ public class VerseListFragment extends ListFragment {
 		getListView().setFastScrollEnabled(true);
         getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
         getListView().setPadding((int)(8*density), 0, (int)(8*density), 0);
-		
+
 		context = getActivity();
 		Bundle extras = getArguments();
         listType = extras.getInt("KEY_LIST_TYPE");
         listId = extras.getInt("KEY_LIST_ID");
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -186,7 +185,7 @@ public class VerseListFragment extends ListFragment {
                             MetaSettings.putVerseId(context, vh.passage.getMetadata().getInt(DefaultMetaData.ID));
                             MetaSettings.putNotificationActive(context, true);
                             MetaSettings.putActiveList(context, listType, listId);
-                            MainNotification.notify(context).show();
+							MainNotification.getInstance(context).create().show();
                             Toast.makeText(context, vh.passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
                             return true;
                         case R.id.context_list_add_tag:
@@ -366,7 +365,6 @@ public class VerseListFragment extends ListFragment {
                 case R.id.contextual_list_select_all:
                     //deselect all items
                     ArrayList<Passage> items = bibleVerseAdapter.getItems();
-                    Log.i("SELECT ALL", bibleVerseAdapter.getCount() + "," + bibleVerseAdapter.getItems().size() + ":" + bibleVerseAdapter.getSelectedCount() + "," + bibleVerseAdapter.getSelectedItems().size());
 
                     int firstPosition = getListView().getFirstVisiblePosition();
                     int lastPosition = firstPosition + getListView().getChildCount() - 1;
@@ -454,7 +452,6 @@ public class VerseListFragment extends ListFragment {
 
 //Actions to perform on verses within the listview. Size-generic, so one call for both single and multiples
 //------------------------------------------------------------------------------
-
     private void delete(final ArrayList<Passage> items) {
         final View view = LayoutInflater.from(context).inflate(R.layout.popup_delete_verse, null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
