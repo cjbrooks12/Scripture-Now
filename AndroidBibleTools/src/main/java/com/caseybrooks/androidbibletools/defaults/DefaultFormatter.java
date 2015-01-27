@@ -110,7 +110,7 @@ public class DefaultFormatter implements Formatter {
             for(String word : words) {
                 float randomValue = randomizer.nextFloat();
                 if(randomValue > level) {
-                    text += word.replaceAll("\\w", "_") + " ";
+                    text += onFormatSpecial(word) + " ";
                 }
                 else  {
                     text += word + " ";
@@ -119,5 +119,10 @@ public class DefaultFormatter implements Formatter {
 
             return text;
         }
-    }
+
+		@Override
+		public String onFormatSpecial(String special) {
+			return special.replaceAll("\\w", "_");
+		}
+	}
 }
