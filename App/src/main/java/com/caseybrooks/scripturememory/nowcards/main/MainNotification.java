@@ -81,6 +81,7 @@ public class MainNotification {
 				contentView.setImageViewResource(R.id.notification_main_icon, R.drawable.ic_cross);
 				contentView.setTextViewText(R.id.notification_main_reference, mv.passage.getReference().toString());
 				contentView.setTextViewText(R.id.notification_main_verse, mv.passage.getText());
+
 				notification.bigContentView = contentView;
 			}
 			else {
