@@ -3,12 +3,14 @@ package com.caseybrooks.scripturememory.fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -78,11 +80,20 @@ public class TopicalBibleFragment extends Fragment {
         super.onResume();
 
         ActionBar ab = ((MainActivity) context).getSupportActionBar();
-        ColorDrawable colorDrawable = new ColorDrawable(context.getResources().getColor(R.color.open_bible_brown));
+		int color = context.getResources().getColor(R.color.open_bible_brown);
+        ColorDrawable colorDrawable = new ColorDrawable(color);
         ab.setBackgroundDrawable(colorDrawable);
         ab.setTitle("Topical Bible");
 
-        MetaSettings.putDrawerSelection(context, 1, 0);
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			float[] hsv = new float[3];
+			Color.colorToHSV(color, hsv);
+			hsv[2] *= 0.8f; // value component
+
+			((MainActivity) context).getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+		}
+
+		MetaSettings.putDrawerSelection(context, 1, 0);
     }
 
     @Override

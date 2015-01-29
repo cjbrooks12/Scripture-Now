@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.ListPreference;
@@ -57,11 +59,11 @@ public class SettingsFragment extends PreferenceFragment {
 			String[] themeNames = new String[themes.length];
 			String[] themeValues = new String[themes.length];
 			for(int i = 0; i < themes.length; i++) {
-				themeNames[i] = themes[i].getName().substring(5);
+				themeNames[i] = themes[i].getName().substring(6);
 				themeValues[i] = themes[i].getName();
 			}
 
-			appTheme.setSummary(MetaSettings.getAppTheme(context));
+			appTheme.setSummary(MetaSettings.getAppTheme(context).substring(6));
 			appTheme.setEntries(themeNames);
 			appTheme.setEntryValues(themeValues);
 		}
@@ -134,6 +136,14 @@ public class SettingsFragment extends PreferenceFragment {
         ColorDrawable colorDrawable = new ColorDrawable(color);
         ab.setBackgroundDrawable(colorDrawable);
         ab.setTitle("Settings");
+
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			float[] hsv = new float[3];
+			Color.colorToHSV(color, hsv);
+			hsv[2] *= 0.8f; // value component
+
+			((MainActivity) context).getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+		}
 
         MetaSettings.putDrawerSelection(context, 4, 0);
     }
@@ -275,10 +285,7 @@ public class SettingsFragment extends PreferenceFragment {
 	OnPreferenceChangeListener appThemeChange = new OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
-//			ListPreference lp = (ListPreference) preference;
-//			String[] themes = getResources().getStringArray(R.array.pref_themes);
-//			int selection = Integer.parseInt(newValue.toString());
-//			lp.setSummary(themes[selection]);
+			preference.setSummary(((String) newValue).substring(6));
 
 			Intent intent = getActivity().getIntent();
             getActivity().overridePendingTransition(0, android.R.anim.fade_out);

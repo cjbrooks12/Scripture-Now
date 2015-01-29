@@ -11,9 +11,7 @@
 				android:title="App Theme"
 				android:summary="?attr/theme_name"
 				android:dialogTitle="App Theme"
-				android:entries="@array/pref_themes"
-				android:entryValues="@array/pref_themes_values"
-				android:defaultValue="0" />
+				android:defaultValue="Theme_Light" />
 			<ListPreference
 				android:key="PREF_SELECTED_VERSION"
 				android:title="Bible Version"

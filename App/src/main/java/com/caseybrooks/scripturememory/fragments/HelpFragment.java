@@ -3,6 +3,7 @@ package com.caseybrooks.scripturememory.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -88,11 +89,19 @@ public class HelpFragment extends PreferenceFragment {
         ab.setBackgroundDrawable(colorDrawable);
         ab.setTitle("Help");
 
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			float[] hsv = new float[3];
+			Color.colorToHSV(color, hsv);
+			hsv[2] *= 0.8f; // value component
+
+			((MainActivity) context).getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+		}
+
         MetaSettings.putDrawerSelection(context, 5, 0);
     }
 
     //Rate App (go to Play Store) listener
-//------------------------------------------------------------------------------	
+//------------------------------------------------------------------------------
     OnPreferenceClickListener rateAppClick = new OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {

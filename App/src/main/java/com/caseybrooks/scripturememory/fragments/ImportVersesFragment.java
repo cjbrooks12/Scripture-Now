@@ -3,9 +3,11 @@ package com.caseybrooks.scripturememory.fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -28,6 +30,7 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import org.jsoup.Jsoup;
@@ -88,12 +91,21 @@ public class ImportVersesFragment extends Fragment {
         super.onResume();
 
         ActionBar ab = ((ActionBarActivity) context).getSupportActionBar();
-        ColorDrawable colorDrawable = new ColorDrawable(context.getResources().getColor(R.color.memorized));
+		int color = context.getResources().getColor(R.color.memorized);
+        ColorDrawable colorDrawable = new ColorDrawable(color);
         ab.setBackgroundDrawable(colorDrawable);
         ab.setTitle("Import");
         ab.setHomeButtonEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
         setHasOptionsMenu(true);
+
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			float[] hsv = new float[3];
+			Color.colorToHSV(color, hsv);
+			hsv[2] *= 0.8f; // value component
+
+			((MainActivity) context).getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+		}
 
         new PopulateList().execute();
     }

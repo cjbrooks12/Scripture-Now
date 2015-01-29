@@ -253,6 +253,13 @@
         <item name="popupPromptView">@layout/abc_simple_dropdown_hint</item>
     </style>
     <style name="Base.Widget.AppCompat.Toolbar.Button.Navigation" parent="android:Widget.Material.Toolbar.Button.Navigation"/>
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values-v21/styles.xml -->
+    <eat-comment/>
+    <style name="NotificationText" parent="android:TextAppearance.Material.Notification"/>
+    <style name="NotificationTime" parent="android:TextAppearance.Material.Notification.Time"/>
+    <style name="NotificationTitle" parent="android:TextAppearance.Material.Notification.Title"/>
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values-v21/values.xml -->
+    <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme.Material">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
