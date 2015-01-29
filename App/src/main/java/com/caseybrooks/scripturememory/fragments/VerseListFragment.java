@@ -42,6 +42,7 @@ import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
+import com.caseybrooks.scripturememory.nowcards.main.MainVerse;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -182,9 +183,9 @@ public class VerseListFragment extends ListFragment {
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.context_list_post:
-                            MetaSettings.putVerseId(context, vh.passage.getMetadata().getInt(DefaultMetaData.ID));
-                            MetaSettings.putNotificationActive(context, true);
-                            MetaSettings.putActiveList(context, listType, listId);
+                            MainVerse.putVerseId(context, vh.passage.getMetadata().getInt(DefaultMetaData.ID));
+                            MainVerse.setActive(context, true);
+                            MainVerse.putWorkingList(context, listType, listId);
 							MainNotification.getInstance(context).create().show();
                             Toast.makeText(context, vh.passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
                             return true;
@@ -722,9 +723,9 @@ public class VerseListFragment extends ListFragment {
 
                     //if this verse is the current notification verse and the active list is its state, then
                     //change the active list to be whatever state this verse becomes
-                    if(MetaSettings.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
+                    if(MainVerse.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
                             listType == VerseListFragment.STATE) {
-                        MetaSettings.putActiveList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
+                        MainVerse.putWorkingList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
                     }
                 }
                 db.close();

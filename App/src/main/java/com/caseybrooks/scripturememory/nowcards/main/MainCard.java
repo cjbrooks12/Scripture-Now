@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
@@ -112,7 +111,7 @@ public class MainCard extends FrameLayout {
 
         if(mv.passage != null) {
             //set the radio buttons and text based on user selection and whether the card is expanded
-            switch (MetaSettings.getVerseDisplayMode(context)) {
+            switch (MainVerse.getDisplayMode(context)) {
                 case 0: ((RadioButton) findViewById(R.id.radioNormal)).setChecked(true); break;
                 case 1: ((RadioButton) findViewById(R.id.radioDashes)).setChecked(true); break;
                 case 2: ((RadioButton) findViewById(R.id.radioLetters)).setChecked(true); break;
@@ -120,7 +119,7 @@ public class MainCard extends FrameLayout {
                 case 4:
                     ((RadioButton) findViewById(R.id.radioRandomWords)).setChecked(true);
                     randomnessLevelSlider.setVisibility(View.VISIBLE);
-                    randomnessLevelSlider.setProgress(((int) (MetaSettings.getRandomnessLevel(context) * 1000)));
+                    randomnessLevelSlider.setProgress(((int) (MainVerse.getRandomness(context).first * 1000)));
                     break;
                 default: ((RadioButton) findViewById(R.id.radioNormal)).setChecked(true); break;
             }
@@ -136,7 +135,7 @@ public class MainCard extends FrameLayout {
 
             //set the active list
             VerseDB db = new VerseDB(context);
-            Pair<Integer, Integer> activeList = MetaSettings.getActiveList(context);
+            Pair<Integer, Integer> activeList = MainVerse.getWorkingList(context);
             if(activeList.first == VerseListFragment.STATE) {
                 db.open();
                 activeListSidebar.setVisibility(View.VISIBLE);
@@ -206,7 +205,7 @@ public class MainCard extends FrameLayout {
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.context_notification_card, popup.getMenu());
 
-                if(MetaSettings.getVerseDisplayMode(context) == 4) {
+                if(MainVerse.getDisplayMode(context) == 4) {
                     popup.getMenu().findItem(R.id.context_notification_card_scramble_random).setVisible(true);
                     popup.getMenu().findItem(R.id.context_notification_card_reset_random).setVisible(true);
                 }
@@ -249,28 +248,29 @@ public class MainCard extends FrameLayout {
                         }
                         return true;
                     case R.id.context_notification_card_toggle:
-                        if (MetaSettings.getNotificationActive(context)) {
+                        if (MainVerse.isActive(context)) {
                             MainNotification.getInstance(context).dismiss();
-                            MetaSettings.putNotificationActive(context, false);
+							MainVerse.setActive(context, false);
                         }
                         else {
 							MainNotification.getInstance(context).create().show();
-                            MetaSettings.putNotificationActive(context, true);
+							MainVerse.setActive(context, true);
                         }
                         return true;
                     case R.id.context_notification_card_scramble_random:
-                        MetaSettings.putRandomSeedOffset(context, (int) System.currentTimeMillis());
+						MainVerse.putRandomness(context, -1, (int) System.currentTimeMillis());
 
                         update();
 						MainNotification.getInstance(context).create().show();
-                        MetaSettings.putNotificationActive(context, true);
+						MainVerse.setActive(context, true);
                         return true;
                     case R.id.context_notification_card_reset_random:
-                        MetaSettings.putRandomSeedOffset(context, 0);
+						MainVerse.putRandomness(context, -1, 0);
 
-                        update();
+
+						update();
 						MainNotification.getInstance(context).create().show();
-                        MetaSettings.putNotificationActive(context, true);
+                        MainVerse.setActive(context, true);
                         return true;
                     default:
                         return false;
@@ -307,9 +307,9 @@ public class MainCard extends FrameLayout {
                     randomnessLevelSlider.setVisibility(View.VISIBLE);
                     break;
             }
-            MetaSettings.putVerseDisplayMode(context, verseDisplayMode);
-            MetaSettings.putNotificationActive(context, true);
-			MetaSettings.putTextIsFull(context, false);
+            MainVerse.putDisplayMode(context, verseDisplayMode);
+			MainVerse.setActive(context, true);
+			MainVerse.setTextFull(context, false);
 
             update();
 
@@ -324,7 +324,7 @@ public class MainCard extends FrameLayout {
             if(Math.abs(progress - last) >= 10) {
                 last = progress;
 
-                MetaSettings.putRandomnessLevel(context, seekBar.getProgress() / 1000f);
+                MainVerse.putRandomness(context, seekBar.getProgress() / 1000f, -1);
                 MainVerse mv = new MainVerse(context);
                 mv.setPassageFormatted();
                 ver.setText(mv.passage.getText());
@@ -338,12 +338,12 @@ public class MainCard extends FrameLayout {
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            MetaSettings.putRandomnessLevel(context, seekBar.getProgress() / 1000f);
+			MainVerse.putRandomness(context, seekBar.getProgress() / 1000f, -1);
             MainVerse mv = new MainVerse(context);
             mv.setPassageFormatted();
             ver.setText(mv.passage.getText());
 
-            if(MetaSettings.getNotificationActive(context)) {
+            if(MainVerse.isActive(context)) {
 				MainNotification.getInstance(context).create().show();
             }
         }

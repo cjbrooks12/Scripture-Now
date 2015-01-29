@@ -14,7 +14,6 @@ import android.support.v4.app.TaskStackBuilder;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
-import com.caseybrooks.scripturememory.data.MetaSettings;
 
 import java.util.Calendar;
 
@@ -68,7 +67,7 @@ public class VOTDNotification {
 		mb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
 		mb.setLights(context.getResources().getColor(R.color.memorized), 500, 4500);
-		mb.setSound(Uri.parse(MetaSettings.getVOTDSound(context)));
+		mb.setSound(Uri.parse(VOTD.getSound(context)));
 
 		//Opens the dashboard when clicked
 		Intent resultIntent = new Intent(context, MainActivity.class);
@@ -77,6 +76,10 @@ public class VOTDNotification {
 		stackBuilder.addNextIntent(resultIntent);
 		PendingIntent resultPI = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		mb.setContentIntent(resultPI);
+
+		Intent deleteIntent = new Intent(context, VOTD.VOTDNotificationDismissedReceiver.class);
+		PendingIntent deletePI = PendingIntent.getBroadcast(context, 0, deleteIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+		mb.setDeleteIntent(deletePI);
 
 		VOTD votd = new VOTD(context);
         if(votd.currentVerse != null) {
@@ -104,9 +107,11 @@ public class VOTDNotification {
 
     public void show() {
         manager.notify(2, notification);
+		VOTD.setActive(context, true);
     }
 
     public void dismiss() {
         manager.cancel(2);
+		VOTD.setActive(context, false);
     }
 }

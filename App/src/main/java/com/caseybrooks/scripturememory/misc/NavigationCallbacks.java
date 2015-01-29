@@ -1,7 +1,7 @@
 package com.caseybrooks.scripturememory.misc;
 
 public interface NavigationCallbacks {
-    void toVerseList(int listType, int id);
+	void toVerseList(int listType, int id);
     void toVerseDetail(int id);
     void toVerseEdit(int id);
     void toDashboard();

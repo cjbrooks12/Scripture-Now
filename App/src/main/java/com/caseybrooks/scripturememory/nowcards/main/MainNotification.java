@@ -12,7 +12,6 @@ import android.widget.RemoteViews;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
-import com.caseybrooks.scripturememory.data.MetaSettings;
 
 public class MainNotification {
 	Notification notification;
@@ -54,7 +53,7 @@ public class MainNotification {
 		if(mv.passage != null) {
 
 			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-				if(MetaSettings.getTextIsFull(context)) {
+				if(MainVerse.isTextFull(context)) {
 					mv.setPassageNormal();
 				}
 				else{

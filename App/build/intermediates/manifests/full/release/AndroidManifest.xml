@@ -18,7 +18,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.BaseLight" >
+        android:theme="@style/Theme.Light" >
 
         <!-- Receivers for Main Verse -->
         <receiver
@@ -60,6 +60,10 @@
             android:exported="false" />
         <receiver
             android:name="com.caseybrooks.scripturememory.nowcards.votd.VOTD$VOTDSaveVerseReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name="com.caseybrooks.scripturememory.nowcards.votd.VOTD$VOTDNotificationDismissedReceiver"
             android:enabled="true"
             android:exported="false" />
         <receiver

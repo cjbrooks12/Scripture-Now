@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-//https://gist.github.com/hzqtc/7940858
+//https://nishantvnair.wordpress.com/2010/09/28/flowlayout-in-android/
 
 public class FlowLayout extends ViewGroup {
     public static final int DEFAULT_HORIZONTAL_SPACING = 5;

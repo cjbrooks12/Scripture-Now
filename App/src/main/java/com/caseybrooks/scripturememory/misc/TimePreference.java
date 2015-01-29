@@ -5,12 +5,16 @@ import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
+//based on answer t o SO question: http://stackoverflow.com/questions/5533078/timepicker-in-preferencescreen
+//modified to correctly set the initial value in the local timezone given millis UTC
 
 public class TimePreference extends DialogPreference {
     private Calendar calendar;
@@ -32,7 +36,7 @@ public class TimePreference extends DialogPreference {
 
         setPositiveButtonText("Set");
         setNegativeButtonText("Cancel");
-        calendar = new GregorianCalendar();
+        calendar = Calendar.getInstance();
     }
 
     @Override
@@ -87,21 +91,29 @@ public class TimePreference extends DialogPreference {
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+		Calendar time8am = Calendar.getInstance();
+		time8am.set(Calendar.HOUR_OF_DAY, 8);
+		time8am.set(Calendar.MINUTE, 0);
+		time8am.set(Calendar.SECOND, 0);
 
-        if (restoreValue) {
-            if (defaultValue == null) {
-                calendar.setTimeInMillis(getPersistedLong(System.currentTimeMillis()));
-            } else {
-                calendar.setTimeInMillis(Long.parseLong(getPersistedString((String) defaultValue)));
-            }
+		if (restoreValue) {
+			calendar.setTimeInMillis(getPersistedLong(time8am.getTimeInMillis()));
         } else {
-            if (defaultValue == null) {
-                calendar.setTimeInMillis(System.currentTimeMillis());
-            } else {
-                calendar.setTimeInMillis(Long.parseLong((String) defaultValue));
-            }
-        }
+			time8am.setTimeInMillis(Long.parseLong((String) defaultValue));
+			Log.i("TimePreference", "time8am[h:" + time8am.get(Calendar.HOUR_OF_DAY) + ", m:" + time8am.get(Calendar.MINUTE) + ", s:" + time8am.get(Calendar.SECOND));
+
+			Calendar defCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+			defCalendar.setTimeInMillis(Long.parseLong((String) defaultValue));
+			calendar.set(Calendar.HOUR_OF_DAY, defCalendar.get(Calendar.HOUR_OF_DAY));
+			calendar.set(Calendar.MINUTE, defCalendar.get(Calendar.MINUTE));
+			calendar.set(Calendar.SECOND, defCalendar.get(Calendar.SECOND));
+			calendar.set(Calendar.MILLISECOND, defCalendar.get(Calendar.MILLISECOND));
+		}
         setSummary(getSummary());
+
+		if(shouldPersist()) {
+			persistLong(calendar.getTimeInMillis());
+		}
     }
 
     @Override

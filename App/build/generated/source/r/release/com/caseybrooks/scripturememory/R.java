@@ -2474,8 +2474,8 @@ containing a value of this type.
         public static final int Theme_AppCompat_Light_DialogWhenLarge=0x7f0f00a9;
         public static final int Theme_AppCompat_Light_NoActionBar=0x7f0f00aa;
         public static final int Theme_AppCompat_NoActionBar=0x7f0f00ab;
-        public static final int Theme_BaseDark=0x7f0f00ac;
-        public static final int Theme_BaseLight=0x7f0f00ad;
+        public static final int Theme_Dark=0x7f0f00ac;
+        public static final int Theme_Light=0x7f0f00ad;
         public static final int ThemeOverlay_AppCompat=0x7f0f00ae;
         public static final int ThemeOverlay_AppCompat_ActionBar=0x7f0f00af;
         public static final int ThemeOverlay_AppCompat_Dark=0x7f0f00b0;

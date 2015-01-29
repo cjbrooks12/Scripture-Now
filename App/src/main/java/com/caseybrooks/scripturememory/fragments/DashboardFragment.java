@@ -30,6 +30,7 @@ import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.nowcards.main.MainCard;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
+import com.caseybrooks.scripturememory.nowcards.main.MainVerse;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDCard;
 import com.caseybrooks.scripturememory.nowcards.input.VerseInputCard;
 
@@ -66,7 +67,7 @@ public class DashboardFragment extends Fragment {
 		context.registerReceiver(receiver, new IntentFilter(REFRESH));
 
         notify_card.update();
-		if(MetaSettings.getNotificationActive(context)) {
+		if(MainVerse.isActive(context)) {
 		    MainNotification.getInstance(context).create().show();
 		}
 

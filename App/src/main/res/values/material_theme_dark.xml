@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- - - - - - - - - Theme Header Section - - - - - - - - -->
-    <style name="Theme.BaseDark" parent="@style/Theme.AppCompat.NoActionBar">
+    <style name="Theme.Dark" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/primary_accent</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@drawable/toolbar_shadow</item>
-
-        <!-- ActionBar Icons -->
 
         <!-- Colors -->
         <item name="color_background_selected">@color/background_selected_dark</item>

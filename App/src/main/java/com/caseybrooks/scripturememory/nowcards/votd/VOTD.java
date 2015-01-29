@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
@@ -14,6 +15,7 @@ import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.QuickNotification;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
+import com.caseybrooks.scripturememory.nowcards.main.MainVerse;
 import com.caseybrooks.scripturememory.nowcards.main.MainWidget;
 
 import org.jsoup.Jsoup;
@@ -25,7 +27,31 @@ import java.text.ParseException;
 import java.util.Calendar;
 
 public class VOTD {
-    //Data Members
+//Shared preferences related to the Verse of the Day
+	public static final String settings_file = "my_settings";
+
+	private static final String PREFIX = "VOTD_";
+	private static final String ENABLED = "ENABLED";
+	private static final String SOUND = "SOUND";
+	private static final String ACTIVE = "ACTIVE";
+
+	public static boolean isEnabled(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREFIX + ENABLED, false);
+	}
+
+	public static boolean isActive(Context context) {
+		return context.getSharedPreferences(settings_file, 0).getBoolean(PREFIX + ACTIVE, false);
+	}
+
+	public static void setActive(Context context, boolean value) {
+		context.getSharedPreferences(settings_file, 0).edit().putBoolean(PREFIX + ACTIVE, value).commit();
+	}
+
+	public static String getSound(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getString(PREFIX + SOUND, "DEFAULT_SOUND");
+	}
+
+//Data Members
 //------------------------------------------------------------------------------
     Context context;
     public Passage currentVerse;
@@ -56,9 +82,14 @@ public class VOTD {
         context.sendBroadcast(new Intent(context, VOTDWidget.class));
 
         //update the notifications: Main because it may be the VOTD
-        if(MetaSettings.getNotificationActive(context)) {
+        if(MainVerse.isActive(context)) {
 			MainNotification.getInstance(context).create().show();
         }
+
+		//update the notification to ensure it has the text that is in the database
+		if(isActive(context)) {
+			VOTDNotification.getInstance(context).create().show();
+		}
     }
 
     public boolean saveVerse() {
@@ -85,9 +116,9 @@ public class VOTD {
         saveVerse();
         VerseDB db = new VerseDB(context).open();
         int id = db.getVerseId(currentVerse.getReference());
-        MetaSettings.putVerseId(context, id);
-        MetaSettings.putNotificationActive(context, true);
-        MetaSettings.putActiveList(context, VerseListFragment.TAGS, (int) db.getTagID("VOTD"));
+        MainVerse.putVerseId(context, id);
+        MainVerse.setActive(context, true);
+        MainVerse.putWorkingList(context, VerseListFragment.TAGS, (int) db.getTagID("VOTD"));
         db.close();
 
         updateAll();
@@ -201,7 +232,7 @@ public class VOTD {
     public static class VOTDAlarmReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(MetaSettings.getVOTDShow(context)) {
+            if(isEnabled(context)) {
 				VOTDNotification.getInstance(context).create().show();
             }
         }
@@ -219,11 +250,18 @@ public class VOTD {
         }
     }
 
+	public static class VOTDNotificationDismissedReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			VOTD.setActive(context, false);
+		}
+	}
+
 	//reset the alarm to show daily notification when the device boots
 	public static class VOTDBootReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if(MetaSettings.getVOTDShow(context)) {
+			if(isEnabled(context)) {
 				VOTDNotification.getInstance(context).setAlarm();
 			}
 		}

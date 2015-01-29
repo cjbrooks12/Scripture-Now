@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,6 +43,7 @@ import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.FlowLayout;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
+import com.caseybrooks.scripturememory.nowcards.main.MainVerse;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.SaturationBar;
 import com.larswerkman.holocolorpicker.ValueBar;
@@ -55,8 +57,6 @@ public class EditVerseFragment extends Fragment {
 	Context context;
 	View view;
     Passage passage;
-    int listType;
-    int listId;
 
 	EditText editRef, editVer;
 	TextView version;
@@ -67,6 +67,8 @@ public class EditVerseFragment extends Fragment {
     TextView seekbarText;
     SeekBar seekbar;
 	ProgressBar progress;
+
+	Pair<Integer, Integer> displayedList;
 
 	public static Fragment newInstance(int verseId, int listType, int listId) {
         Fragment fragment = new EditVerseFragment();
@@ -108,8 +110,7 @@ public class EditVerseFragment extends Fragment {
 
     private void initialize() {
 		long id = getArguments().getInt("KEY_ID", 1);
-        listType = MetaSettings.getActiveList(context).first;
-        listId = MetaSettings.getActiveList(context).first;
+        displayedList = MainVerse.getWorkingList(context);
 
         VerseDB db = new VerseDB(context).open();
 		passage = db.getVerse(id);
@@ -195,9 +196,9 @@ public class EditVerseFragment extends Fragment {
 
                     //if this verse is the current notification verse and the active list is its state, then
                     //change the active list to be whatever state this verse becomes
-                    if(MetaSettings.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
-                            listType == VerseListFragment.STATE) {
-                        MetaSettings.putActiveList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
+                    if(MainVerse.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
+                            displayedList.first == VerseListFragment.STATE) {
+                        MainVerse.putWorkingList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
                     }
                 }
 
@@ -508,9 +509,9 @@ public class EditVerseFragment extends Fragment {
         switch (item.getItemId()) {
 	    case R.id.menu_edit_set_notification:
             if(passage != null) {
-                MetaSettings.putVerseId(context, passage.getMetadata().getInt(DefaultMetaData.ID));
-                MetaSettings.putNotificationActive(context, true);
-                MetaSettings.putActiveList(context, listType, listId);
+                MainVerse.putVerseId(context, passage.getMetadata().getInt(DefaultMetaData.ID));
+                MainVerse.setActive(context, true);
+                MainVerse.putWorkingList(context, displayedList.first, displayedList.second);
 				MainNotification.getInstance(context).create().show();
                 Toast.makeText(context, passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
             }

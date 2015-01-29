@@ -15,7 +15,6 @@ import android.widget.RemoteViews;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
-import com.caseybrooks.scripturememory.data.MetaSettings;
 
 public class MainWidget extends AppWidgetProvider {
 
@@ -86,7 +85,7 @@ public class MainWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
-        int id = MetaSettings.getVerseId(context);
+        int id = MainVerse.getVerseId(context);
 
         MainVerse mv = new MainVerse(context);
         if (mv.passage != null) {

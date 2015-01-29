@@ -1101,8 +1101,8 @@ int style Theme_AppCompat_Light_Dialog 0x7f0f00a8
 int style Theme_AppCompat_Light_DialogWhenLarge 0x7f0f00a9
 int style Theme_AppCompat_Light_NoActionBar 0x7f0f00aa
 int style Theme_AppCompat_NoActionBar 0x7f0f00ab
-int style Theme_BaseDark 0x7f0f00ac
-int style Theme_BaseLight 0x7f0f00ad
+int style Theme_Dark 0x7f0f00ac
+int style Theme_Light 0x7f0f00ad
 int style ThemeOverlay_AppCompat 0x7f0f00ae
 int style ThemeOverlay_AppCompat_ActionBar 0x7f0f00af
 int style ThemeOverlay_AppCompat_Dark 0x7f0f00b0

@@ -26,6 +26,7 @@ import com.caseybrooks.scripturememory.misc.PreferenceFragment;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDNotification;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 public class SettingsFragment extends PreferenceFragment {
 	Context context;
@@ -42,14 +43,31 @@ public class SettingsFragment extends PreferenceFragment {
 
 		findPreference("Backup").setOnPreferenceClickListener(backupClick);
 		findPreference("Restore").setOnPreferenceClickListener(restoreClick);
-        findPreference("PREF_VOTD_NOTIFICATION").setOnPreferenceChangeListener(VOTDCheckedChange);
-		findPreference("PREF_VOTD_TIME").setOnPreferenceChangeListener(VOTDTimeChange);
+        findPreference("VOTD_ENABLED").setOnPreferenceChangeListener(VOTDCheckedChange);
+		findPreference("VOTD_TIME").setOnPreferenceChangeListener(VOTDTimeChange);
 
 		ListPreference appTheme = (ListPreference) findPreference("PREF_SELECTED_THEME");
 		appTheme.setOnPreferenceChangeListener(appThemeChange);
-		String[] themes = getResources().getStringArray(R.array.pref_themes);
-		int appThemeSelection = MetaSettings.getAppTheme(context);
-		appTheme.setSummary(themes[appThemeSelection]);
+
+		try {
+			Field[] themes = new Field[]{
+					R.style.class.getDeclaredField("Theme_Light"),
+					R.style.class.getDeclaredField("Theme_Dark")};
+
+			String[] themeNames = new String[themes.length];
+			String[] themeValues = new String[themes.length];
+			for(int i = 0; i < themes.length; i++) {
+				themeNames[i] = themes[i].getName().substring(5);
+				themeValues[i] = themes[i].getName();
+			}
+
+			appTheme.setSummary(MetaSettings.getAppTheme(context));
+			appTheme.setEntries(themeNames);
+			appTheme.setEntryValues(themeValues);
+		}
+		catch(NoSuchFieldException nsfe) {
+
+		}
 
 		//Populate Version list with versions available in AndroidBibleTools
 		ListPreference selectVersion = (ListPreference) findPreference("PREF_SELECTED_VERSION");
@@ -213,7 +231,7 @@ public class SettingsFragment extends PreferenceFragment {
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 			if((Boolean) newValue) {
 				VOTDNotification.getInstance(context).setAlarm();
-				Toast.makeText(context, "Notification will show daily at " + findPreference("PREF_VOTD_TIME").getSummary(), Toast.LENGTH_LONG).show();
+				Toast.makeText(context, "Notification will show daily at " + findPreference("VOTD_TIME").getSummary(), Toast.LENGTH_LONG).show();
 			}
 			else {
 				VOTDNotification.getInstance(context).cancelAlarm();
@@ -257,10 +275,10 @@ public class SettingsFragment extends PreferenceFragment {
 	OnPreferenceChangeListener appThemeChange = new OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
-			ListPreference lp = (ListPreference) preference;
-			String[] themes = getResources().getStringArray(R.array.pref_themes);
-			int selection = Integer.parseInt(newValue.toString());
-			lp.setSummary(themes[selection]);
+//			ListPreference lp = (ListPreference) preference;
+//			String[] themes = getResources().getStringArray(R.array.pref_themes);
+//			int selection = Integer.parseInt(newValue.toString());
+//			lp.setSummary(themes[selection]);
 
 			Intent intent = getActivity().getIntent();
             getActivity().overridePendingTransition(0, android.R.anim.fade_out);

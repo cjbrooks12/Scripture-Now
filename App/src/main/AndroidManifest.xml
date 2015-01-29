@@ -14,7 +14,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.BaseLight" >
+        android:theme="@style/Theme.Light" >
 
         <!-- Receivers for Main Verse -->
         <receiver
@@ -57,6 +57,10 @@
             android:name=".nowcards.votd.VOTD$VOTDSaveVerseReceiver"
             android:enabled="true"
             android:exported="false" />
+		<receiver
+			android:name=".nowcards.votd.VOTD$VOTDNotificationDismissedReceiver"
+			android:enabled="true"
+			android:exported="false" />
 		<receiver
 			android:name=".nowcards.votd.VOTD$VOTDBootReceiver"
 			android:enabled="true"

@@ -22,9 +22,7 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
     protected void onCreate(Bundle savedInstanceState) {
         context = this;
 
-        int theme = MetaSettings.getAppTheme(context);
-        if(theme == 0) setTheme(R.style.Theme_BaseLight);
-        else setTheme(R.style.Theme_BaseDark);
+		setTheme();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
@@ -64,6 +62,18 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
                 .add(R.id.mainFragmentContainer, fragment)
                 .commit();
     }
+
+	private void setTheme() {
+		try {
+			setTheme(R.style.class.getDeclaredField(MetaSettings.getAppTheme(context)).getInt(null));
+		}
+		catch(NoSuchFieldException nsfe) {
+			nsfe.printStackTrace();
+		}
+		catch(IllegalAccessException iae) {
+			iae.printStackTrace();
+		}
+	}
 
     @Override
     public void toVerseList(int listType, int id) {
