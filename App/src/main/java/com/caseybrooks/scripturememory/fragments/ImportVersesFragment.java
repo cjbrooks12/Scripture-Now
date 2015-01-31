@@ -30,7 +30,6 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import org.jsoup.Jsoup;
@@ -104,7 +103,7 @@ public class ImportVersesFragment extends Fragment {
 			Color.colorToHSV(color, hsv);
 			hsv[2] *= 0.8f; // value component
 
-			((MainActivity) context).getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
 		}
 
         new PopulateList().execute();

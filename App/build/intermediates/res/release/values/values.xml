@@ -247,7 +247,7 @@
     <color name="open_bible_green">#C1E68D</color>
     <color name="primary">#45B29D</color>
     <color name="primary_accent">#D32F2F</color>
-    <color name="primary_dark">#00796B</color>
+    <color name="primary_dark">#378E7D</color>
     <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>

@@ -58,6 +58,11 @@ public class BibleVerseAdapter extends BaseAdapter {
     }
 
     public ArrayList<Passage> getItems() {
+		for(int i = 0; i < items.size(); i++) {
+			Passage passage = items.get(i);
+			passage.getMetadata().putInt("LIST_POSITION", i);
+		}
+
         return items;
     }
 
@@ -319,7 +324,12 @@ public class BibleVerseAdapter extends BaseAdapter {
             db.close();
         }
 
-        public void multiSelect() {
+		public void multiSelect(boolean isChecked) {
+			passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, !isChecked);
+			multiSelect();
+		}
+
+		public void multiSelect() {
             if(!passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
 
                 passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, true);

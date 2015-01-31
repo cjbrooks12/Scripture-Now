@@ -213,9 +213,6 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void selectItem(NavListItem item) {
-        if (mDrawerLayout != null) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-        }
         if (mCallbacks != null) {
             MetaSettings.putDrawerSelection(parentActivity, item.groupPosition, item.id);
             if(listAdapter != null) listAdapter.notifyDataSetChanged();
@@ -242,6 +239,10 @@ public class NavigationDrawerFragment extends Fragment {
                 default:
             }
         }
+
+		if (mDrawerLayout != null) {
+			mDrawerLayout.closeDrawer(mFragmentContainerView);
+		}
     }
 
     public class ExpandableListAdapter extends BaseExpandableListAdapter {

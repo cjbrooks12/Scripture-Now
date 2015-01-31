@@ -38,13 +38,12 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.data.Metadata;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
-import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 import com.caseybrooks.scripturememory.nowcards.main.Main;
+import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -145,7 +144,7 @@ public class VerseListFragment extends ListFragment {
 			Color.colorToHSV(color, hsv);
 			hsv[2] *= 0.8f; // value component
 
-			((MainActivity) context).getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
 		}
 
 		populateBibleVerses();
@@ -236,57 +235,89 @@ public class VerseListFragment extends ListFragment {
     };
 
 	private void populateBibleVerses() {
-        ArrayList<Passage> verses;
-        MainActivity mainActivity = (MainActivity) getActivity();
+		new AsyncTask<Void, Void, Void>() {
 
-		VerseDB db = new VerseDB(context).open();
-        if(listType == TAGS) {
-            verses = db.getTaggedVerses(listId);
-            mainActivity.setTitle(db.getTagName(listId));
-        }
-        else if(listType == STATE) {
-            if(listId != 0) {
-                verses = db.getStateVerses(listId);
-                mainActivity.setTitle(db.getStateName(listId));
-            }
-            else {
-                verses = db.getAllCurrentVerses();
-                mainActivity.setTitle("All");
-            }
-        }
-        else {
-            verses = db.getAllCurrentVerses();
-            mainActivity.setTitle("All");
-        }
-		db.close();
+			@Override
+			protected void onPostExecute(Void aVoid) {
+				super.onPostExecute(aVoid);
 
-        Comparator comparator;
+				ActionBarActivity mainActivity = (ActionBarActivity) getActivity();
 
-        switch(MetaSettings.getSortBy(context)) {
-            case 0:
-                comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED);
-                break;
-            case 1:
-                comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE);
-                break;
-            case 2:
-                comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL);
-                break;
-            case 3:
-                comparator = new Metadata.Comparator(DefaultMetaData.STATE);
-                break;
-            default:
-                comparator = new Metadata.Comparator("ID");
-                break;
-        }
+				VerseDB db = new VerseDB(context).open();
+				if(listType == TAGS) {
+					mainActivity.setTitle(db.getTagName(listId));
+				}
+				else if(listType == STATE) {
+					if(listId != 0) {
+						mainActivity.setTitle(db.getStateName(listId));
+					}
+					else {
+						mainActivity.setTitle("All");
+					}
+				}
+				else {
+					mainActivity.setTitle("All");
+				}
+				db.close();
 
-        Collections.sort(verses, comparator);
+				setListAdapter(bibleVerseAdapter);
+			}
 
-		bibleVerseAdapter = new BibleVerseAdapter(context, verses, getListView());
-        bibleVerseAdapter.setOnItemClickListener(itemClick);
-        bibleVerseAdapter.setOnItemMultiselectListener(iconClick);
-        bibleVerseAdapter.setOnItemOverflowClickListener(overflowClick);
-		setListAdapter(bibleVerseAdapter);
+			@Override
+			protected Void doInBackground(Void... params) {
+				ArrayList<Passage> verses;
+
+				VerseDB db = new VerseDB(context).open();
+				if(listType == TAGS) {
+					verses = db.getTaggedVerses(listId);
+				}
+				else if(listType == STATE) {
+					if(listId != 0) {
+						verses = db.getStateVerses(listId);
+					}
+					else {
+						verses = db.getAllCurrentVerses();
+					}
+				}
+				else {
+					verses = db.getAllCurrentVerses();
+				}
+
+				db.close();
+
+				Comparator comparator;
+
+				switch(MetaSettings.getSortBy(context))
+
+				{
+				case 0:
+					comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED);
+					break;
+				case 1:
+					comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE);
+					break;
+				case 2:
+					comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL);
+					break;
+				case 3:
+					comparator = new Metadata.Comparator(DefaultMetaData.STATE);
+					break;
+				default:
+					comparator = new Metadata.Comparator("ID");
+					break;
+				}
+
+				Collections.sort(verses, comparator);
+
+				bibleVerseAdapter = new BibleVerseAdapter(context, verses, getListView());
+				bibleVerseAdapter.setOnItemClickListener(itemClick);
+				bibleVerseAdapter.setOnItemMultiselectListener(iconClick);
+				bibleVerseAdapter.setOnItemOverflowClickListener(overflowClick);
+
+				return null;
+			}
+
+		}.execute();
 	}
 
 //Host Activity Interface
@@ -377,33 +408,32 @@ public class VerseListFragment extends ListFragment {
                     //deselect all items
                     ArrayList<Passage> items = bibleVerseAdapter.getItems();
 
-                    int firstPosition = getListView().getFirstVisiblePosition();
-                    int lastPosition = firstPosition + getListView().getChildCount() - 1;
+					int firstPosition = getListView().getFirstVisiblePosition();
+					int lastPosition = firstPosition + getListView().getChildCount() - 1;
 
                     for(Passage passage : items) {
-                        int position = passage.getMetadata().getInt("LIST_POSITION");
-
                         if(!passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
-                            if (position >= firstPosition && position <= lastPosition) {
-                                BibleVerseAdapter.ViewHolder vh = (BibleVerseAdapter.ViewHolder) getListView().getChildAt(position - firstPosition).getTag();
-                                if (vh != null) {
-                                    vh.multiSelect();
-                                }
-                                else {
-                                    Toast.makeText(context, "Position [" + position + "] has no tag: " + passage.getReference().toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            else {
-                                passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, true);
-                            }
+
+							int position = passage.getMetadata().getInt("LIST_POSITION");
+
+							if(position >= firstPosition && position <= lastPosition) {
+								View view = getListView().getChildAt(position - firstPosition);
+								if(view != null) {
+									BibleVerseAdapter.ViewHolder vh = (BibleVerseAdapter.ViewHolder) view.getTag();
+									vh.multiSelect();
+								}
+							}
+							else {
+								passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, true);
+							}
                         }
-                    }
+					}
 
                     //update count in toolbar
                     mActionMode.setTitle(bibleVerseAdapter.getSelectedCount() + "");
 
                     //just to ensure that all verses correctly reflect their selected state in case of issues
-                    bibleVerseAdapter.notifyDataSetChanged();
+					bibleVerseAdapter.notifyDataSetChanged();
 
                     return true;
 
@@ -444,6 +474,7 @@ public class VerseListFragment extends ListFragment {
 
             for(Passage passage : selectedItems) {
                 int position = passage.getMetadata().getInt("LIST_POSITION");
+
                 if( position >= firstPosition && position <= lastPosition) {
 
                     View view = getListView().getChildAt(position - firstPosition);

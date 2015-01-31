@@ -39,13 +39,12 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.FlowLayout;
-import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 import com.caseybrooks.scripturememory.nowcards.main.Main;
+import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.SaturationBar;
 import com.larswerkman.holocolorpicker.ValueBar;
@@ -114,7 +113,7 @@ public class EditVerseFragment extends Fragment {
 			Color.colorToHSV(color, hsv);
 			hsv[2] *= 0.8f; // value component
 
-			((MainActivity) context).getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
 		}
     }
 

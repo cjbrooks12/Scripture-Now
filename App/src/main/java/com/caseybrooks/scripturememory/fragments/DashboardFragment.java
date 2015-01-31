@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,15 +26,14 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
+import com.caseybrooks.scripturememory.nowcards.input.VerseInputCard;
+import com.caseybrooks.scripturememory.nowcards.main.Main;
 import com.caseybrooks.scripturememory.nowcards.main.MainCard;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
-import com.caseybrooks.scripturememory.nowcards.main.Main;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDCard;
-import com.caseybrooks.scripturememory.nowcards.input.VerseInputCard;
 
 public class DashboardFragment extends Fragment {
 //Data Members
@@ -72,7 +72,7 @@ public class DashboardFragment extends Fragment {
 		    MainNotification.getInstance(context).create().show();
 		}
 
-        ActionBar ab = ((MainActivity) context).getSupportActionBar();
+        ActionBar ab = ((ActionBarActivity) context).getSupportActionBar();
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = context.getTheme();
         theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
@@ -86,7 +86,7 @@ public class DashboardFragment extends Fragment {
 			Color.colorToHSV(color, hsv);
 			hsv[2] *= 0.8f; // value component
 
-			((MainActivity) context).getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
 		}
 
         MetaSettings.putDrawerSelection(context, 0, 0);

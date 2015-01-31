@@ -7,7 +7,7 @@
 		<!--<PreferenceScreen-->
 			<!--android:title="General" >-->
 			<ListPreference
-				android:key="PREF_SELECTED_THEME"
+				android:key="APP_THEME"
 				android:title="App Theme"
 				android:summary="?attr/theme_name"
 				android:dialogTitle="App Theme"

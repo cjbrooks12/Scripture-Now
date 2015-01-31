@@ -44,7 +44,6 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.search.OpenBibleInfo;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -79,7 +78,7 @@ public class TopicalBibleFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ActionBar ab = ((MainActivity) context).getSupportActionBar();
+        ActionBar ab = ((ActionBarActivity) context).getSupportActionBar();
 		int color = context.getResources().getColor(R.color.open_bible_brown);
         ColorDrawable colorDrawable = new ColorDrawable(color);
         ab.setBackgroundDrawable(colorDrawable);
@@ -90,7 +89,7 @@ public class TopicalBibleFragment extends Fragment {
 			Color.colorToHSV(color, hsv);
 			hsv[2] *= 0.8f; // value component
 
-			((MainActivity) context).getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
 		}
 
 		MetaSettings.putDrawerSelection(context, 1, 0);
