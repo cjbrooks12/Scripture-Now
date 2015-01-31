@@ -16,18 +16,18 @@
         <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\internal_impl-21.0.3-a452ff9af5f551e22e9d8d35cf2360f68bc9f8fc.jar" />
     </item>
     <item
-        jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\classes-e6cfdb49bfeefaa9131e4a8ef3db8fdaf40c558d.jar" />
-    </item>
-    <item
         jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.larswerkman\HoloColorPicker\1.4\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="5d5a825cbf0f67237377034c2c4edf9ba7e60fbe">
         <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\classes-61d97a0d63392e75d0f5034801c435d4d2956951.jar" />
+    </item>
+    <item
+        jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\classes-e6cfdb49bfeefaa9131e4a8ef3db8fdaf40c558d.jar" />
     </item>
     <item
         jar="C:\Users\Casey\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"

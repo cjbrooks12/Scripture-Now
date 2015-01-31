@@ -14,7 +14,7 @@ public class MetaSettings {
 //	public static final String TEXT_IS_FULL = "TEXT_IS_FULL";
 //	public static final String VOTD_SHOW_NOTIFICATION = "PREF_VOTD_NOTIFICATION";
 //    public static final String VOTD_NOTIFICATION_SOUND = "PREF_VOTD_SOUND";
-    public static final String APP_THEME = "PREF_SELECTED_THEME";
+    public static final String APP_THEME = "APP_THEME";
     public static final String BIBLE_VERSION = "PREF_SELECTED_VERSION";
 
     //settings set throughout app

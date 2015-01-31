@@ -49,11 +49,11 @@ public class MainNotification {
 		PendingIntent resultPI = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		mb.setContentIntent(resultPI);
 
-		MainVerse mv = new MainVerse(context);
+		Main mv = new Main(context);
 		if(mv.passage != null) {
 
 			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-				if(MainVerse.isTextFull(context)) {
+				if(Main.isTextFull(context)) {
 					mv.setPassageNormal();
 				}
 				else{
@@ -64,17 +64,17 @@ public class MainNotification {
 				RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_main);
 
 				//click to cancel
-				Intent dismiss = new Intent(context, MainVerse.DismissVerseReceiver.class);
+				Intent dismiss = new Intent(context, Main.DismissVerseReceiver.class);
 				PendingIntent dismissPI = PendingIntent.getBroadcast(context, 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
 				contentView.setOnClickPendingIntent(R.id.notification_main_dismiss, dismissPI);
 
 				//go to the next verse
-				Intent nextVerse = new Intent(context, MainVerse.NextVerseReceiver.class);
+				Intent nextVerse = new Intent(context, Main.NextVerseReceiver.class);
 				PendingIntent nextVersePI = PendingIntent.getBroadcast(context, 0, nextVerse, PendingIntent.FLAG_CANCEL_CURRENT);
 				contentView.setOnClickPendingIntent(R.id.notification_main_next, nextVersePI);
 
 				//toggle full and formatted text in notification
-				Intent showFull = new Intent(context, MainVerse.TextFullReceiver.class);
+				Intent showFull = new Intent(context, Main.TextFullReceiver.class);
 				PendingIntent showFullPI = PendingIntent.getBroadcast(context, 0, showFull, PendingIntent.FLAG_CANCEL_CURRENT);
 				contentView.setOnClickPendingIntent(R.id.notification_main_show_full, showFullPI);
 

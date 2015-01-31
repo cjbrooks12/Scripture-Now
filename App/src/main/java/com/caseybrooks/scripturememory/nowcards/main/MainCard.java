@@ -107,11 +107,11 @@ public class MainCard extends FrameLayout {
     }
 
     public void update() {
-        MainVerse mv = new MainVerse(context);
+        Main mv = new Main(context);
 
         if(mv.passage != null) {
             //set the radio buttons and text based on user selection and whether the card is expanded
-            switch (MainVerse.getDisplayMode(context)) {
+            switch (Main.getDisplayMode(context)) {
                 case 0: ((RadioButton) findViewById(R.id.radioNormal)).setChecked(true); break;
                 case 1: ((RadioButton) findViewById(R.id.radioDashes)).setChecked(true); break;
                 case 2: ((RadioButton) findViewById(R.id.radioLetters)).setChecked(true); break;
@@ -119,7 +119,7 @@ public class MainCard extends FrameLayout {
                 case 4:
                     ((RadioButton) findViewById(R.id.radioRandomWords)).setChecked(true);
                     randomnessLevelSlider.setVisibility(View.VISIBLE);
-                    randomnessLevelSlider.setProgress(((int) (MainVerse.getRandomness(context).first * 1000)));
+                    randomnessLevelSlider.setProgress(((int) (Main.getRandomness(context).first * 1000)));
                     break;
                 default: ((RadioButton) findViewById(R.id.radioNormal)).setChecked(true); break;
             }
@@ -135,7 +135,7 @@ public class MainCard extends FrameLayout {
 
             //set the active list
             VerseDB db = new VerseDB(context);
-            Pair<Integer, Integer> activeList = MainVerse.getWorkingList(context);
+            Pair<Integer, Integer> activeList = Main.getWorkingList(context);
             if(activeList.first == VerseListFragment.STATE) {
                 db.open();
                 activeListSidebar.setVisibility(View.VISIBLE);
@@ -180,10 +180,14 @@ public class MainCard extends FrameLayout {
     //Expand card to show display options for notification
 //------------------------------------------------------------------------------
     public void expandCard() {
-        expandedhline.setVisibility(View.VISIBLE);
-        expandedSection.setVisibility(View.VISIBLE);
-        isExpanded = true;
-        update();
+		Main mv = new Main(context);
+
+		if(mv.passage != null) {
+			expandedhline.setVisibility(View.VISIBLE);
+			expandedSection.setVisibility(View.VISIBLE);
+			isExpanded = true;
+			update();
+		}
     }
 
     public void shrinkCard() {
@@ -198,14 +202,14 @@ public class MainCard extends FrameLayout {
     private View.OnClickListener contextMenuClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            MainVerse mv = new MainVerse(context);
+            Main mv = new Main(context);
             if(mv.passage != null) {
                 PopupMenu popup = new PopupMenu(context, v);
                 popup.setOnMenuItemClickListener(menuItemClick);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.context_notification_card, popup.getMenu());
 
-                if(MainVerse.getDisplayMode(context) == 4) {
+                if(Main.getDisplayMode(context) == 4) {
                     popup.getMenu().findItem(R.id.context_notification_card_scramble_random).setVisible(true);
                     popup.getMenu().findItem(R.id.context_notification_card_reset_random).setVisible(true);
                 }
@@ -235,7 +239,7 @@ public class MainCard extends FrameLayout {
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            MainVerse mv = new MainVerse(context);
+            Main mv = new Main(context);
 
             if (mv.passage != null) {
                 switch (item.getItemId()) {
@@ -248,29 +252,29 @@ public class MainCard extends FrameLayout {
                         }
                         return true;
                     case R.id.context_notification_card_toggle:
-                        if (MainVerse.isActive(context)) {
+                        if (Main.isActive(context)) {
                             MainNotification.getInstance(context).dismiss();
-							MainVerse.setActive(context, false);
+							Main.setActive(context, false);
                         }
                         else {
 							MainNotification.getInstance(context).create().show();
-							MainVerse.setActive(context, true);
+							Main.setActive(context, true);
                         }
                         return true;
                     case R.id.context_notification_card_scramble_random:
-						MainVerse.putRandomness(context, -1, (int) System.currentTimeMillis());
+						Main.putRandomness(context, -1, (int) System.currentTimeMillis());
 
                         update();
 						MainNotification.getInstance(context).create().show();
-						MainVerse.setActive(context, true);
+						Main.setActive(context, true);
                         return true;
                     case R.id.context_notification_card_reset_random:
-						MainVerse.putRandomness(context, -1, 0);
+						Main.putRandomness(context, -1, 0);
 
 
 						update();
 						MainNotification.getInstance(context).create().show();
-                        MainVerse.setActive(context, true);
+                        Main.setActive(context, true);
                         return true;
                     default:
                         return false;
@@ -307,9 +311,9 @@ public class MainCard extends FrameLayout {
                     randomnessLevelSlider.setVisibility(View.VISIBLE);
                     break;
             }
-            MainVerse.putDisplayMode(context, verseDisplayMode);
-			MainVerse.setActive(context, true);
-			MainVerse.setTextFull(context, false);
+            Main.putDisplayMode(context, verseDisplayMode);
+			Main.setActive(context, true);
+			Main.setTextFull(context, false);
 
             update();
 
@@ -324,8 +328,8 @@ public class MainCard extends FrameLayout {
             if(Math.abs(progress - last) >= 10) {
                 last = progress;
 
-                MainVerse.putRandomness(context, seekBar.getProgress() / 1000f, -1);
-                MainVerse mv = new MainVerse(context);
+                Main.putRandomness(context, seekBar.getProgress() / 1000f, -1);
+                Main mv = new Main(context);
                 mv.setPassageFormatted();
                 ver.setText(mv.passage.getText());
             }
@@ -338,12 +342,12 @@ public class MainCard extends FrameLayout {
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-			MainVerse.putRandomness(context, seekBar.getProgress() / 1000f, -1);
-            MainVerse mv = new MainVerse(context);
+			Main.putRandomness(context, seekBar.getProgress() / 1000f, -1);
+            Main mv = new Main(context);
             mv.setPassageFormatted();
             ver.setText(mv.passage.getText());
 
-            if(MainVerse.isActive(context)) {
+            if(Main.isActive(context)) {
 				MainNotification.getInstance(context).create().show();
             }
         }

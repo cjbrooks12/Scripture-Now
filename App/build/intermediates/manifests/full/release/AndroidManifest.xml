@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.caseybrooks.scripturememory"
-    android:versionCode="23"
-    android:versionName="3.0.2" >
+    android:versionCode="25"
+    android:versionName="3.0.4" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -22,19 +22,19 @@
 
         <!-- Receivers for Main Verse -->
         <receiver
-            android:name="com.caseybrooks.scripturememory.nowcards.main.MainVerse$DismissVerseReceiver"
+            android:name="com.caseybrooks.scripturememory.nowcards.main.Main$DismissVerseReceiver"
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name="com.caseybrooks.scripturememory.nowcards.main.MainVerse$NextVerseReceiver"
+            android:name="com.caseybrooks.scripturememory.nowcards.main.Main$NextVerseReceiver"
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name="com.caseybrooks.scripturememory.nowcards.main.MainVerse$TextFullReceiver"
+            android:name="com.caseybrooks.scripturememory.nowcards.main.Main$TextFullReceiver"
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name="com.caseybrooks.scripturememory.nowcards.main.MainVerse$MainBootReceiver"
+            android:name="com.caseybrooks.scripturememory.nowcards.main.Main$MainBootReceiver"
             android:enabled="true"
             android:exported="false" >
             <intent-filter>

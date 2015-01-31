@@ -59,22 +59,18 @@ public class TimePreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
+			Calendar now = Calendar.getInstance();
+
+			calendar.setTimeInMillis(now.getTimeInMillis());
             calendar.set(Calendar.HOUR_OF_DAY, picker.getCurrentHour());
             calendar.set(Calendar.MINUTE, picker.getCurrentMinute());
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
 
-            //If the set and current hours are the same and the set minute is not later than current
-            if(calendar.get(Calendar.HOUR) == Calendar.getInstance().get(Calendar.HOUR) &&
-                    calendar.get(Calendar.MINUTE) <= Calendar.getInstance().get(Calendar.MINUTE)) {
-                calendar.set(Calendar.DATE, Calendar.getInstance().get(Calendar.DATE) + 1);
-            }
-            //If the set hour is before the current hour
-            else if(calendar.get(Calendar.HOUR) < Calendar.getInstance().get(Calendar.HOUR)) {
-                calendar.set(Calendar.DATE, Calendar.getInstance().get(Calendar.DATE) + 1);
-            }
-            else {
-                calendar.set(Calendar.DATE, Calendar.getInstance().get(Calendar.DATE));
+			//if the set time is in the past because the hour picked was earlier
+			//than the current hour, then set the time to tomorrow
+            if(calendar.getTimeInMillis() < now.getTimeInMillis()) {
+				calendar.set(Calendar.DATE, now.get(Calendar.DATE) + 1);
             }
 
             setSummary(getSummary());

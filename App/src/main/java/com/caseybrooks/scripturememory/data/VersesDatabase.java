@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
-import com.caseybrooks.scripturememory.nowcards.main.MainVerse;
+import com.caseybrooks.scripturememory.nowcards.main.Main;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -129,8 +129,8 @@ public class VersesDatabase {
             }
         }
 
-        MainVerse.putVerseId(context, id);
-        MainVerse.putWorkingList(context, VerseListFragment.STATE, state);
+        Main.putVerseId(context, id);
+        Main.putWorkingList(context, VerseListFragment.STATE, state);
 
         verseDB.close();
     }

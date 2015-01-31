@@ -30,7 +30,7 @@ import com.caseybrooks.scripturememory.fragments.SettingsFragment;
 import com.caseybrooks.scripturememory.fragments.TopicalBibleFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
-import com.caseybrooks.scripturememory.nowcards.main.MainVerse;
+import com.caseybrooks.scripturememory.nowcards.main.Main;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -67,10 +67,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
         context = this;
 
 		setTheme();
-
-//        int theme = MetaSettings.getAppTheme(context);
-//		if(theme == 0) setTheme(R.style.Theme_BaseLight);
-//		else setTheme(R.style.Theme_BaseDark);
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
@@ -400,8 +396,8 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
         Intent intent = new Intent(this, DetailActivity.class);
         Bundle extras = new Bundle();
         extras.putInt("KEY_ID", id);
-        extras.putInt("KEY_LIST_TYPE", MainVerse.getWorkingList(context).first);
-        extras.putInt("KEY_LIST_ID", MainVerse.getWorkingList(context).second);
+        extras.putInt("KEY_LIST_TYPE", Main.getWorkingList(context).first);
+        extras.putInt("KEY_LIST_ID", Main.getWorkingList(context).second);
         extras.putInt("FRAGMENT", 0);
 
 

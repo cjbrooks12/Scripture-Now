@@ -8,14 +8,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.MainActivity;
-
-import java.util.Calendar;
 
 public class VOTDNotification {
     Notification notification;
@@ -43,9 +40,8 @@ public class VOTDNotification {
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
         alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-				PreferenceManager.getDefaultSharedPreferences(context).
-					  	getLong("PREF_VOTD_TIME", Calendar.getInstance().getTimeInMillis()),
+                AlarmManager.RTC,
+				VOTD.getNotificationTime(context),
                 1000*60*60*24,
                 alarmIntent);
     }

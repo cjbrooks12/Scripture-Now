@@ -15,7 +15,7 @@ import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.QuickNotification;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
-import com.caseybrooks.scripturememory.nowcards.main.MainVerse;
+import com.caseybrooks.scripturememory.nowcards.main.Main;
 import com.caseybrooks.scripturememory.nowcards.main.MainWidget;
 
 import org.jsoup.Jsoup;
@@ -34,6 +34,7 @@ public class VOTD {
 	private static final String ENABLED = "ENABLED";
 	private static final String SOUND = "SOUND";
 	private static final String ACTIVE = "ACTIVE";
+	private static final String TIME = "TIME";
 
 	public static boolean isEnabled(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREFIX + ENABLED, false);
@@ -49,6 +50,14 @@ public class VOTD {
 
 	public static String getSound(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context).getString(PREFIX + SOUND, "DEFAULT_SOUND");
+	}
+
+	public static long getNotificationTime(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getLong(PREFIX + TIME, 0);
+	}
+
+	public static void setNotificationTime(Context context, long value) {
+		PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(PREFIX + TIME, value).commit();
 	}
 
 //Data Members
@@ -82,7 +91,7 @@ public class VOTD {
         context.sendBroadcast(new Intent(context, VOTDWidget.class));
 
         //update the notifications: Main because it may be the VOTD
-        if(MainVerse.isActive(context)) {
+        if(Main.isActive(context)) {
 			MainNotification.getInstance(context).create().show();
         }
 
@@ -116,9 +125,9 @@ public class VOTD {
         saveVerse();
         VerseDB db = new VerseDB(context).open();
         int id = db.getVerseId(currentVerse.getReference());
-        MainVerse.putVerseId(context, id);
-        MainVerse.setActive(context, true);
-        MainVerse.putWorkingList(context, VerseListFragment.TAGS, (int) db.getTagID("VOTD"));
+        Main.putVerseId(context, id);
+        Main.setActive(context, true);
+        Main.putWorkingList(context, VerseListFragment.TAGS, (int) db.getTagID("VOTD"));
         db.close();
 
         updateAll();

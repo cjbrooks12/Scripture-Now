@@ -45,7 +45,7 @@ import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.FlowLayout;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
-import com.caseybrooks.scripturememory.nowcards.main.MainVerse;
+import com.caseybrooks.scripturememory.nowcards.main.Main;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.SaturationBar;
 import com.larswerkman.holocolorpicker.ValueBar;
@@ -120,7 +120,7 @@ public class EditVerseFragment extends Fragment {
 
     private void initialize() {
 		long id = getArguments().getInt("KEY_ID", 1);
-        displayedList = MainVerse.getWorkingList(context);
+        displayedList = Main.getWorkingList(context);
 
         VerseDB db = new VerseDB(context).open();
 		passage = db.getVerse(id);
@@ -206,9 +206,9 @@ public class EditVerseFragment extends Fragment {
 
                     //if this verse is the current notification verse and the active list is its state, then
                     //change the active list to be whatever state this verse becomes
-                    if(MainVerse.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
+                    if(Main.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
                             displayedList.first == VerseListFragment.STATE) {
-                        MainVerse.putWorkingList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
+                        Main.putWorkingList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
                     }
                 }
 
@@ -519,9 +519,9 @@ public class EditVerseFragment extends Fragment {
         switch (item.getItemId()) {
 	    case R.id.menu_edit_set_notification:
             if(passage != null) {
-                MainVerse.putVerseId(context, passage.getMetadata().getInt(DefaultMetaData.ID));
-                MainVerse.setActive(context, true);
-                MainVerse.putWorkingList(context, displayedList.first, displayedList.second);
+                Main.putVerseId(context, passage.getMetadata().getInt(DefaultMetaData.ID));
+                Main.setActive(context, true);
+                Main.putWorkingList(context, displayedList.first, displayedList.second);
 				MainNotification.getInstance(context).create().show();
                 Toast.makeText(context, passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
             }

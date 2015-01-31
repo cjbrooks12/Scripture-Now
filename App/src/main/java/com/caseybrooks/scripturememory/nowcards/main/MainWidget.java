@@ -59,7 +59,7 @@ public class MainWidget extends AppWidgetProvider {
     }
 
     private void setNextButtonClick(Context context, AppWidgetManager appWidgetManager) {
-        Intent nextIntent = new Intent(context, MainVerse.NextVerseReceiver.class);
+        Intent nextIntent = new Intent(context, Main.NextVerseReceiver.class);
         PendingIntent nextPI = PendingIntent.getBroadcast(context, 0, nextIntent, 0);
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
@@ -85,9 +85,9 @@ public class MainWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
-        int id = MainVerse.getVerseId(context);
+        int id = Main.getVerseId(context);
 
-        MainVerse mv = new MainVerse(context);
+        Main mv = new Main(context);
         if (mv.passage != null) {
             mv.setPassageFormatted();
 

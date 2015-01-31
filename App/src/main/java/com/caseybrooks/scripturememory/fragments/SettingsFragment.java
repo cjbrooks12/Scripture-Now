@@ -25,10 +25,12 @@ import com.caseybrooks.scripturememory.activities.MainActivity;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
+import com.caseybrooks.scripturememory.nowcards.votd.VOTD;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDNotification;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.Calendar;
 
 public class SettingsFragment extends PreferenceFragment {
 	Context context;
@@ -48,7 +50,7 @@ public class SettingsFragment extends PreferenceFragment {
         findPreference("VOTD_ENABLED").setOnPreferenceChangeListener(VOTDCheckedChange);
 		findPreference("VOTD_TIME").setOnPreferenceChangeListener(VOTDTimeChange);
 
-		ListPreference appTheme = (ListPreference) findPreference("PREF_SELECTED_THEME");
+		ListPreference appTheme = (ListPreference) findPreference("APP_THEME");
 		appTheme.setOnPreferenceChangeListener(appThemeChange);
 
 		try {
@@ -240,6 +242,18 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 			if((Boolean) newValue) {
+				Calendar now = Calendar.getInstance();
+
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(VOTD.getNotificationTime(context));
+
+				//if the set time is in the past due to the time being set before
+				//today, then set the next time to fire the alarm to be tomorrow
+				if(calendar.getTimeInMillis() < now.getTimeInMillis()) {
+					calendar.set(Calendar.DATE, now.get(Calendar.DATE) + 1);
+					VOTD.setNotificationTime(context, calendar.getTimeInMillis());
+				}
+
 				VOTDNotification.getInstance(context).setAlarm();
 				Toast.makeText(context, "Notification will show daily at " + findPreference("VOTD_TIME").getSummary(), Toast.LENGTH_LONG).show();
 			}
