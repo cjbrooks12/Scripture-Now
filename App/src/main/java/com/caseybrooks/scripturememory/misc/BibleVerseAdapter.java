@@ -276,7 +276,7 @@ public class BibleVerseAdapter extends BaseAdapter {
             verseText.setText(passage.getText());
             version.setText(passage.getVersion().getCode().toUpperCase());
 
-            String passageBookCode = passage.getVerses()[0].getReference().book.getCode();
+            String passageBookCode = passage.getReference().book.getCode();
             iconText.setText(passageBookCode.replaceFirst("(\\d)", "$1 "));
 
             VerseDB db = new VerseDB(context).open();

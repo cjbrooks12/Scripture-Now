@@ -28,22 +28,23 @@ public class Passage extends AbstractVerse {
 	private ArrayList<Verse> verses;
 	private String allText;
 
-    private static Pattern hashtag = Pattern.compile("#((\\w+)|(\"[\\w ]+\"))");
+	private static String markup_ref = "\\{/ref \"[^\"]+\"\\}";
+	private static String markup_num = "\\{/num \"\\d+\"\\}";
+	private static String markup_tag = "\\{/tag \"[^\"]+\"\\}";
+//	private static String markup_xref = "\\{/ref \"[^\"]+\"\\}";
+//	private static String markup_note = "\\{/ref \"[^\"]+\"\\}";
+//	private static String markup_red_begin = "\\{/ref \"[^\"]+\"\\}";
+//	private static String markup_red_end = "\\{/ref \"[^\"]+\"\\}";
 
-//Constructors
+	private static Pattern hashtag = Pattern.compile("#((\\w+)|(\"[\\w ]+\"))");
+
+	//Constructors
 //------------------------------------------------------------------------------
     public Passage(Reference reference) {
         super(reference);
 
         Collections.sort(this.reference.verses);
         this.verses = new ArrayList<Verse>();
-
-        for(int i = 0; i < this.reference.verses.size(); i++) {
-            Verse verse = new  Verse(new Reference(this.reference.book,
-                            this.reference.chapter,
-                            this.reference.verses.get(i)));
-            verse.setVersion(this.version);
-        }
     }
 
     public Passage(String reference) throws ParseException {
@@ -51,13 +52,6 @@ public class Passage extends AbstractVerse {
 
         Collections.sort(this.reference.verses);
         this.verses = new ArrayList<Verse>();
-
-        for(int i = 0; i < this.reference.verses.size(); i++) {
-            this.verses.add(
-                    new Verse(new Reference(this.reference.book,
-                    this.reference.chapter,
-                    this.reference.verses.get(i))));
-        }
 	}
 
 //Setters and Getters
@@ -73,27 +67,53 @@ public class Passage extends AbstractVerse {
     }
 
     public Passage setText(String text) {
-        //parse input string and extract any tags, denoted as standard hastags
-        Matcher m = hashtag.matcher(text);
+		this.verses.clear();
 
-        while (m.find()) {
-            String match = m.group(1);
-            if(match.charAt(0) == '\"') {
-                addTag(match.substring(1, match.length() - 1));
-            }
-            else {
-                addTag(match);
-            }
-        }
 
-        this.allText =  m.replaceAll("");
+		//attempt to parse the text as if it were marked up
+
+		if(text.contains("\\{/num (\"\\d+\")?\\}")) {
+			String[] parsedVerses = text.split("\\{/num (\"\\d+\")?\\}");
+
+			if(parsedVerses.length == reference.verses.size()) {
+				for(int i = 0; i < this.reference.verses.size(); i++) {
+					this.verses.add(
+					   new Verse(new Reference(this.reference.book,
+						  this.reference.chapter,
+						  this.reference.verses.get(i))));
+					verses.get(i).setVersion(this.version);
+					verses.get(i).setText(parsedVerses[i]);
+				}
+			}
+		}
+
+		//if the text is not marked up, try to extract as much verse information
+		//as we can. Get hashtags and verse numbers, and leave the rest alone
+		else {
+//			parse input string and extract any tags, denoted as standard hastags
+			Matcher m = hashtag.matcher(text);
+
+			while(m.find()) {
+				String match = m.group(1);
+				if(match.charAt(0) == '\"') {
+					addTag(match.substring(1, match.length() - 1));
+				}
+				else {
+					addTag(match);
+				}
+			}
+
+			this.allText = m.replaceAll("");
+//			this.allText = text.replaceAll(markup_num, "").replaceAll(markup_ref, "").replaceAll(markup_tag, "");
+
+		}
 
 		return this;
 	}
 
 	@Override
 	public String getText() {
-        if(allText == null) {
+        if(verses.size() > 0) {
             String text = "";
 
             text += formatter.onPreFormat(reference);
@@ -109,7 +129,9 @@ public class Passage extends AbstractVerse {
                 }
             }
 
-            return text.trim();
+			text += formatter.onPostFormat();
+
+			return text.trim();
         }
         else {
             String text = "";
@@ -155,6 +177,8 @@ public class Passage extends AbstractVerse {
                 "+" +
                 reference.chapter + ":" + reference.verses.get(0);
 
+//		http://www.biblestudytools.com/esv/galatians/passage.aspx?q=galatians+2:20
+
         if(reference.verses.size() > 1) {
             query += "-" + reference.verses.get(reference.verses.size()-1);
         }
@@ -164,9 +188,16 @@ public class Passage extends AbstractVerse {
     @Override
 	public Passage retrieve() throws IOException {
 		allText = null;
-        for(Verse verse : verses) {
-            verse.retrieve();
-        }
+		verses.clear();
+
+		for(int i = 0; i < this.reference.verses.size(); i++) {
+			this.verses.add(
+			   new Verse(new Reference(this.reference.book,
+				  this.reference.chapter,
+				  this.reference.verses.get(i))));
+			verses.get(i).setVersion(this.version);
+			verses.get(i).retrieve();
+		}
 
 		return this;
 	}

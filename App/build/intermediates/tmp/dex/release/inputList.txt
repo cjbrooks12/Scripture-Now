@@ -1,7 +1,7 @@
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\classes\release
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\support-annotations-21.0.3-f269277964e1bd745490fcabf8cffbde400529e5.jar
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\classes-1aa5cbf1f046e73d15996d5353af0d65ba07166e.jar
-C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\classes-2ad83d17d90ff76a3d0556d46158f8e3b113464d.jar
+C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\classes-f44bc2c474af4f7a4f7786acf058622d4257f84a.jar
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\classes-61d97a0d63392e75d0f5034801c435d4d2956951.jar
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\classes-1bc8de7a56ca10bf7e9f07c4f22eb725c4ee8e19.jar
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\release\internal_impl-21.0.3-a452ff9af5f551e22e9d8d35cf2360f68bc9f8fc.jar

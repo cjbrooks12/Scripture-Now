@@ -5,7 +5,6 @@ import com.caseybrooks.androidbibletools.enumeration.Book;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -190,26 +189,24 @@ public class Verse extends AbstractVerse {
 
 //Retrieve verse from the internet
 //------------------------------------------------------------------------------
-    @Override
+    String APIKey = "9vso4MjssaJe27tn3uqahfYZsUUU8T5XGK3iOr9g";
+
+	@Override
     public String getURL() {
-        return "http://www.biblestudytools.com/" + version.getCode() + "/" +
-            reference.book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
-            "/passage.aspx?q=" +
-            reference.book.getName().toLowerCase().trim().replaceAll(" ",  "-") +
-            "+" + reference.chapter + ":" + reference.verse;
+//		return "http://" + APIKey + "bibles.org/v2/versions/eng-ESV:Galatians.2.19/verses.xml";
+		return "http://www.biblestudytools.com/" + version.getCode() + "/" +
+			   reference.book.getName().toLowerCase().replaceAll(" ", "-") + "/" +
+			   reference.chapter + "-" + reference.verse + ".html";
     }
 
     @Override
 	public Verse retrieve() throws IOException {
-        Document doc = Jsoup.connect(getURL()).get();
+		Document doc = Jsoup.connect(getURL()).get();
 
-		Elements passage = doc.select(".versetext");
-
-		for(Element element : passage) {
-			element.select(".versenum").remove();
-			element.select("a").remove();
-			verseText = element.text();
-		}
+		Elements scripture = doc.select(".verse-" + reference.verse);
+		scripture.select("a").remove();
+		scripture.select("strong").remove();
+		verseText = scripture.text();
 
 		return this;
 	}

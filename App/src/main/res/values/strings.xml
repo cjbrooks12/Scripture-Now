@@ -36,7 +36,6 @@
         <item>3</item>
         <item>4</item>
     </string-array>
-
     <string-array name="state_names">
         <item>All Verses</item>
         <item>Current</item>
@@ -70,5 +69,6 @@
     <string name="share_message">Are you looking for a new way to memorize Scripture? You should try this new app called Scripture Memory Notifications! You can add your favorite verses or try to memorize the Verse of the Day. You can even challenge yourself with just the first letter of each word, and much more, all from your phone\'s notification drawer!\n\nLearn more at https://play.google.com/store/apps/details?id=com.caseybrooks.scripturememory</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

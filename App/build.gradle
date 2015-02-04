@@ -22,7 +22,8 @@ android {
     }
     productFlavors {
     }
-    sourceSets {       main {
+    sourceSets {
+        main {
             java.srcDirs = ['src/main/java']
         }
     }
@@ -31,9 +32,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':AndroidBibleTools')
-    compile 'com.android.support:appcompat-v7:21.0.2'
-    compile 'com.android.support:cardview-v7:21.0.2'
-    compile 'com.android.support:support-v4:21.0.2'
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:cardview-v7:21.0.3'
+    compile 'com.android.support:support-v4:21.0.3'
     compile 'com.github.nirhart:parallaxscroll:1.0'
     compile 'com.larswerkman:HoloColorPicker:1.4'
 }

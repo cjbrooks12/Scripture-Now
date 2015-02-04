@@ -1,5 +1,6 @@
 package com.caseybrooks.androidbibletools.defaults;
 
+import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.data.Formatter;
 import com.caseybrooks.androidbibletools.data.Reference;
 
@@ -123,6 +124,52 @@ public class DefaultFormatter implements Formatter {
 		@Override
 		public String onFormatSpecial(String special) {
 			return special.replaceAll("\\w", "_");
+		}
+	}
+
+	/** Replace all words with underscores but keeps the first letter.
+	 * Preserves punctuation, but all letters are shown as upper case.
+	 */
+	public static class Markup implements Formatter {
+		Passage passage;
+
+		public Markup(Passage passage) {
+			this.passage = passage;
+		}
+
+		@Override
+		public String onPreFormat(Reference reference) {
+			return "{/ref \"" + reference.toString() + "\"}";
+		}
+
+		@Override
+		public String onFormatNumber(int verseNumber) {
+			return "{/num \"" + verseNumber + "\"}";
+		}
+
+		@Override
+		public String onFormatText(String verseText) {
+			return verseText;
+		}
+
+		@Override
+		public String onFormatSpecial(String special) {
+			return "";
+		}
+
+		@Override
+		public String onFormatNewVerse() {
+			return "";
+		}
+
+		@Override
+		public String onPostFormat() {
+			String tags = "";
+			for(String s : passage.getTags()) {
+				tags += "{/tag \"" + s + "\"}";
+			}
+
+			return tags;
 		}
 	}
 }
