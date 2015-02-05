@@ -598,10 +598,9 @@ public class VerseDB {
         if (c != null && c.getCount() > 0) c.moveToFirst();
         else return -1;
 
-
-        int color = c.getInt(c.getColumnIndex(KEY_TAGS_ID));
+        int id = c.getInt(c.getColumnIndex(KEY_TAGS_ID));
         c.close();
-        return color;
+        return id;
     }
 
     public int getTagColor(String tag) {
@@ -612,7 +611,7 @@ public class VerseDB {
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) c.moveToFirst();
-        else return context.getResources().getColor(R.color.all_verses);
+        else return context.getResources().getColor(R.color.primary);
 
         int color = Color.parseColor(c.getString(c.getColumnIndex(KEY_TAGS_COLOR)));
         c.close();
@@ -625,11 +624,11 @@ public class VerseDB {
             String selectQuery =
                     "SELECT *" +
                     " FROM " + TABLE_TAGS +
-                    " WHERE " + KEY_TAGS_ID + " = " + id;;
+                    " WHERE " + KEY_TAGS_ID + " = " + id;
 
             Cursor c = db.rawQuery(selectQuery, null);
             if (c != null && c.getCount() > 0) c.moveToFirst();
-            else return context.getResources().getColor(R.color.all_verses);
+            else return context.getResources().getColor(R.color.primary);
 
             int color = Color.parseColor(c.getString(c.getColumnIndex(KEY_TAGS_COLOR)));
             c.close();
@@ -798,7 +797,7 @@ public class VerseDB {
 
             Cursor c = db.rawQuery(selectQuery, null);
             if (c != null && c.getCount() > 0) c.moveToFirst();
-            else return context.getResources().getColor(R.color.all_verses);
+            else return context.getResources().getColor(R.color.primary);
 
             return Color.parseColor(c.getString(c.getColumnIndex(KEY_STATE_COLOR)));
         }

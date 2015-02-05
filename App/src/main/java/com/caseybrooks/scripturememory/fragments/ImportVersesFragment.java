@@ -1,19 +1,18 @@
 package com.caseybrooks.scripturememory.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +30,7 @@ import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -62,6 +62,7 @@ public class ImportVersesFragment extends Fragment {
     Context context;
     ListView lv;
     FileAdapter adapter;
+	NavigationCallbacks mCallbacks;
 
     public static Fragment newInstance() {
         Fragment fragment = new ImportVersesFragment();
@@ -89,25 +90,30 @@ public class ImportVersesFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ActionBar ab = ((ActionBarActivity) context).getSupportActionBar();
-		int color = context.getResources().getColor(R.color.memorized);
-        ColorDrawable colorDrawable = new ColorDrawable(color);
-        ab.setBackgroundDrawable(colorDrawable);
-        ab.setTitle("Import");
-        ab.setHomeButtonEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
-        setHasOptionsMenu(true);
+		TypedValue typedValue = new TypedValue();
+		Resources.Theme theme = context.getTheme();
+		theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
 
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			float[] hsv = new float[3];
-			Color.colorToHSV(color, hsv);
-			hsv[2] *= 0.8f; // value component
-
-			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
-		}
+		mCallbacks.setToolBar("Import Verses", typedValue.data);
 
         new PopulateList().execute();
     }
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallbacks = (NavigationCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException("Activity must implement NavigationCallbacks.");
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mCallbacks = null;
+	}
 
     private class PopulateList extends AsyncTask<File, Void, Void> {
         AlertDialog dialog;

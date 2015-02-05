@@ -3,17 +3,13 @@ package com.caseybrooks.scripturememory.fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.text.Editable;
@@ -78,20 +74,7 @@ public class TopicalBibleFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ActionBar ab = ((ActionBarActivity) context).getSupportActionBar();
-		int color = context.getResources().getColor(R.color.open_bible_brown);
-        ColorDrawable colorDrawable = new ColorDrawable(color);
-        ab.setBackgroundDrawable(colorDrawable);
-        ab.setTitle("Topical Bible");
-
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			float[] hsv = new float[3];
-			Color.colorToHSV(color, hsv);
-			hsv[2] *= 0.8f; // value component
-
-			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
-		}
-
+		mCallbacks.setToolBar("Topical Bible", context.getResources().getColor(R.color.open_bible_brown));
 		MetaSettings.putDrawerSelection(context, 1, 0);
     }
 

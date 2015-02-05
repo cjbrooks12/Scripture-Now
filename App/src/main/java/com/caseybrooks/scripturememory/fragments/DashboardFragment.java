@@ -8,13 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -72,22 +68,11 @@ public class DashboardFragment extends Fragment {
 		    MainNotification.getInstance(context).create().show();
 		}
 
-        ActionBar ab = ((ActionBarActivity) context).getSupportActionBar();
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
-        int color = typedValue.data;
-        ColorDrawable colorDrawable = new ColorDrawable(color);
-        ab.setBackgroundDrawable(colorDrawable);
-        ab.setTitle("Dashboard");
+		TypedValue typedValue = new TypedValue();
+		Resources.Theme theme = context.getTheme();
+		theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
 
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			float[] hsv = new float[3];
-			Color.colorToHSV(color, hsv);
-			hsv[2] *= 0.8f; // value component
-
-			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
-		}
+		mCallbacks.setToolBar("Dashboard", typedValue.data);
 
         MetaSettings.putDrawerSelection(context, 0, 0);
         receiveImplicitIntent();

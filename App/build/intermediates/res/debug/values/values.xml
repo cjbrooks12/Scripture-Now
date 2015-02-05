@@ -71,19 +71,21 @@
     <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="pref_default_screen">
-        <item>Last Open</item>
-        <item>Dashboard</item>
-        <item>Topical Bible</item>
-        <item>Memorization State…</item>
-        <item>Tag…</item>
-    </string-array>
+		<item>Last Open</item>
+		<item>Active List</item>
+		<item>Dashboard</item>
+		<item>Topical Bible</item>
+		<item>Memorization State…</item>
+		<item>Tag…</item>
+	</string-array>
     <string-array name="pref_default_screen_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
+		<item>0</item>
+		<item>5</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
     <string-array name="pref_themes">
         <item>Light</item>
         <item>Dark</item>
@@ -1450,6 +1452,7 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@drawable/toolbar_shadow</item>
+		<item name="android:windowTranslucentStatus">true</item>
 
         <!-- Colors -->
         <item name="color_background_selected">@color/background_selected_dark</item>
@@ -1498,6 +1501,7 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@drawable/toolbar_shadow</item>
+		<item name="android:windowTranslucentStatus">true</item>
 
         <!-- Colors -->
         <item name="color_background_selected">@color/background_selected_light</item>

@@ -1,21 +1,17 @@
 package com.caseybrooks.scripturememory.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -24,6 +20,7 @@ import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTD;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDNotification;
@@ -36,6 +33,7 @@ public class SettingsFragment extends PreferenceFragment {
 	Context context;
 
     ListPreference prefDefaultScreenChild;
+	NavigationCallbacks mCallbacks;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +83,26 @@ public class SettingsFragment extends PreferenceFragment {
 
         ListPreference prefDefaultScreenGroup = (ListPreference) findPreference("PREF_DEFAULT_SCREEN_GROUP");
 		String[] screens = getResources().getStringArray(R.array.pref_default_screen);
-        prefDefaultScreenGroup.setSummary(screens[defaultScreen.first]);
+		switch(defaultScreen.first) {
+		case 0:
+			prefDefaultScreenGroup.setSummary(screens[0]);
+			break;
+		case 1:
+			prefDefaultScreenGroup.setSummary(screens[2]);
+			break;
+		case 2:
+			prefDefaultScreenGroup.setSummary(screens[3]);
+			break;
+		case 3:
+			prefDefaultScreenGroup.setSummary(screens[4]);
+			break;
+		case 4:
+			prefDefaultScreenGroup.setSummary(screens[5]);
+			break;
+		case 5:
+			prefDefaultScreenGroup.setSummary(screens[1]);
+			break;
+		}
         prefDefaultScreenGroup.setOnPreferenceChangeListener(defaultScreenChange);
 
         prefDefaultScreenChild = (ListPreference) findPreference("PREF_DEFAULT_SCREEN_CHILD");
@@ -130,25 +147,30 @@ public class SettingsFragment extends PreferenceFragment {
     public void onResume() {
         super.onResume();
 
-        ActionBar ab = ((ActionBarActivity) context).getSupportActionBar();
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = context.getTheme();
         theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
-        int color = typedValue.data;
-        ColorDrawable colorDrawable = new ColorDrawable(color);
-        ab.setBackgroundDrawable(colorDrawable);
-        ab.setTitle("Settings");
 
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			float[] hsv = new float[3];
-			Color.colorToHSV(color, hsv);
-			hsv[2] *= 0.8f; // value component
-
-			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
-		}
+		mCallbacks.setToolBar("Settings", typedValue.data);
 
         MetaSettings.putDrawerSelection(context, 4, 0);
     }
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallbacks = (NavigationCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException("Activity must implement NavigationCallbacks.");
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mCallbacks = null;
+	}
 
     //Backup and Restore Preference Listeners
 //------------------------------------------------------------------------------
@@ -326,13 +348,32 @@ public class SettingsFragment extends PreferenceFragment {
 	OnPreferenceChangeListener defaultScreenChange = new OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
-			ListPreference lp = (ListPreference) preference;
 			String[] screens = getResources().getStringArray(R.array.pref_default_screen);
 			int selection = Integer.parseInt(newValue.toString());
-			lp.setSummary(screens[selection]);
+
+			switch(selection) {
+			case 0:
+				preference.setSummary(screens[0]);
+				break;
+			case 1:
+				preference.setSummary(screens[2]);
+				break;
+			case 2:
+				preference.setSummary(screens[3]);
+				break;
+			case 3:
+				preference.setSummary(screens[4]);
+				break;
+			case 4:
+				preference.setSummary(screens[5]);
+				break;
+			case 5:
+				preference.setSummary(screens[1]);
+				break;
+			}
+
 
             VerseDB db = new VerseDB(context).open();
-
 
             if(selection == 3) {
                 prefDefaultScreenChild.setEnabled(true);

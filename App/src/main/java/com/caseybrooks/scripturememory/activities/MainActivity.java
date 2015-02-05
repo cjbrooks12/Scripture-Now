@@ -4,17 +4,22 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
@@ -59,6 +64,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 //------------------------------------------------------------------------------
     Toolbar tb;
     Context context;
+	View statusBar;
 
 //Lifecycle and Initialization
 //------------------------------------------------------------------------------
@@ -70,6 +76,8 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		statusBar = findViewById(R.id.statusBar);
 
         // Set up the drawer.
         tb = (Toolbar) findViewById(R.id.activity_toolbar);
@@ -386,7 +394,33 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                 .commit();
     }
 
-    @Override
+	@Override
+	public void setToolBar(String name, int color) {
+		ActionBar ab = getSupportActionBar();
+		ColorDrawable colorDrawable = new ColorDrawable(color);
+		ab.setBackgroundDrawable(colorDrawable);
+		ab.setTitle(name);
+
+		float[] hsv = new float[3];
+		Color.colorToHSV(color, hsv);
+		hsv[2] *= 0.7f; // value component
+
+		if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+			statusBar.setVisibility(View.VISIBLE);
+			statusBar.setBackgroundColor(Color.HSVToColor(hsv));
+
+			int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+			if (resourceId > 0) {
+				int height = getResources().getDimensionPixelSize(resourceId);
+				statusBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
+			}
+		}
+		else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+		}
+	}
+
+	@Override
     public void toVerseDetail(int id) {
 
     }

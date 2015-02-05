@@ -4,19 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.PopupMenu;
@@ -79,7 +75,6 @@ public class VerseListFragment extends ListFragment {
 //Data members
 //------------------------------------------------------------------------------
 	Context context;
-    ActionBar ab;
     ActionMode mActionMode;
     NavigationCallbacks mCallbacks;
 
@@ -112,9 +107,6 @@ public class VerseListFragment extends ListFragment {
 	public void onResume() {
 		super.onResume();
 
-		ab = ((ActionBarActivity) context).getSupportActionBar();
-		ab.setHomeButtonEnabled(true);
-		ab.setDisplayHomeAsUpEnabled(true);
         setHasOptionsMenu(true);
 
         String title;
@@ -123,7 +115,7 @@ public class VerseListFragment extends ListFragment {
         VerseDB db = new VerseDB(context).open();
         if(listType == TAGS) {
             title = db.getTagName(listId);
-            color = db.getTagColor(db.getTagName(listId));
+            color = db.getTagColor(listId);
             MetaSettings.putDrawerSelection(context, 3, listId);
         }
         else {
@@ -133,19 +125,7 @@ public class VerseListFragment extends ListFragment {
         }
         db.close();
 
-        ((ActionBarActivity) context).getSupportActionBar().setTitle(title);
-
-
-        ColorDrawable colorDrawable = new ColorDrawable(color);
-        ab.setBackgroundDrawable(colorDrawable);
-
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			float[] hsv = new float[3];
-			Color.colorToHSV(color, hsv);
-			hsv[2] *= 0.8f; // value component
-
-			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
-		}
+        mCallbacks.setToolBar(title, color);
 
 		populateBibleVerses();
 	}

@@ -1,5 +1,6 @@
 package com.caseybrooks.scripturememory.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,13 +9,10 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -43,6 +41,7 @@ import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.FlowLayout;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.nowcards.main.Main;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 import com.larswerkman.holocolorpicker.ColorPicker;
@@ -68,6 +67,8 @@ public class EditVerseFragment extends Fragment {
     TextView seekbarText;
     SeekBar seekbar;
 	ProgressBar progress;
+
+	NavigationCallbacks mCallbacks;
 
 	Pair<Integer, Integer> displayedList;
 
@@ -96,26 +97,28 @@ public class EditVerseFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ActionBar ab = ((ActionBarActivity) context).getSupportActionBar();
-        ab.setHomeButtonEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
+		TypedValue typedValue = new TypedValue();
+		Resources.Theme theme = context.getTheme();
+		theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
 
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
-        int color = typedValue.data;
-        ColorDrawable colorDrawable = new ColorDrawable(color);
-        ab.setBackgroundDrawable(colorDrawable);
-        ab.setTitle("Edit");
-
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			float[] hsv = new float[3];
-			Color.colorToHSV(color, hsv);
-			hsv[2] *= 0.8f; // value component
-
-			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
-		}
+		mCallbacks.setToolBar("Edit Verse", typedValue.data);
     }
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallbacks = (NavigationCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException("Activity must implement NavigationCallbacks.");
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mCallbacks = null;
+	}
 
     private void initialize() {
 		long id = getArguments().getInt("KEY_ID", 1);

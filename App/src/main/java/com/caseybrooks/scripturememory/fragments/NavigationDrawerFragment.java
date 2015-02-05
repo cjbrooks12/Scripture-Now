@@ -30,6 +30,7 @@ import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
+import com.caseybrooks.scripturememory.nowcards.main.Main;
 import com.nirhart.parallaxscroll.views.ParallaxExpandableListView;
 
 import java.util.ArrayList;
@@ -65,39 +66,40 @@ public class NavigationDrawerFragment extends Fragment {
             mFromSavedInstanceState = true;
         }
 
-        // Select either the default item (0, 0) or the last selected item.
+		Pair<Integer, Integer> pair;
+		switch(MetaSettings.getDefaultScreen(getActivity()).first) {
+		case 0:
+			pair = MetaSettings.getDrawerSelection(parentActivity);
+			break;
+		case 1:
+			pair = new Pair<>(0, 0);
+			break;
+		case 2:
+			pair = new Pair<>(1, 0);
+			break;
+		case 3:
+			pair = new Pair<>(2, MetaSettings.getDefaultScreen(getActivity()).second);
+			break;
+		case 4:
+			pair = new Pair<>(3, MetaSettings.getDefaultScreen(getActivity()).second);
+			break;
+		case 5:
+			if(Main.getWorkingList(getActivity()).first == -1) {
+				pair = new Pair<>(0, 0);
+			}
+			if(Main.getWorkingList(getActivity()).first == VerseListFragment.STATE) {
+				pair = new Pair<>(2, Main.getWorkingList(getActivity()).second);
+			}
+			else {
+				pair = new Pair<>(3, Main.getWorkingList(getActivity()).second);
+			}
+			break;
+		default:
+			pair = new Pair<>(0, 0);
+			break;
+		}
 
-        NavListItem item = new NavListItem();
-
-        switch(MetaSettings.getDefaultScreen(getActivity()).first) {
-            case 0:
-                Pair<Integer, Integer> lastSelected = MetaSettings.getDrawerSelection(parentActivity);
-                item.groupPosition = lastSelected.first;
-                item.id = lastSelected.second;
-                break;
-            case 1:
-                item.groupPosition = 0;
-                item.id = 0;
-                break;
-            case 2:
-                item.groupPosition = 1;
-                item.id = 0;
-                break;
-            case 3:
-                item.groupPosition = 2;
-                item.id = MetaSettings.getDefaultScreen(getActivity()).second;
-                break;
-            case 4:
-                item.groupPosition = 3;
-                item.id = MetaSettings.getDefaultScreen(getActivity()).second;
-                break;
-            default:
-                item.groupPosition = 0;
-                item.id = 0;
-                break;
-        }
-
-        selectItem(item);
+		selectItem(pair);
     }
 
     @Override
@@ -133,7 +135,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.addParallaxedHeaderView(header);
 
         List<String> listDataHeader = new ArrayList<String>();
-        HashMap<String, List<Integer>> listDataChild = new HashMap<String, List<Integer>>();
+        HashMap<String, List<NavListItem>> listDataChild = new HashMap<String, List<NavListItem>>();
 
         //set the headers for top-level navigation
         listDataHeader.add("Dashboard");
@@ -144,66 +146,32 @@ public class NavigationDrawerFragment extends Fragment {
         listDataHeader.add("Help & Feedback");
 
         // set dashboard subitems (none)
-        VerseDB db = new VerseDB(parentActivity).open();
-        listDataChild.put(listDataHeader.get(0), new ArrayList<Integer>());
-
-        // set Discover subitems (Topical Bible and Import Verses)
-        listDataChild.put(listDataHeader.get(1), new ArrayList<Integer>());
-
-        // set Memorization State subitems (each state, plus all current and all verses
-        List<Integer> states = new ArrayList<Integer>();
-        states.add(VerseDB.ALL_VERSES);
-        states.add(VerseDB.CURRENT);
-        states.add(VerseDB.MEMORIZED);
-        states.add(VerseDB.CURRENT_ALL);
-        states.add(VerseDB.CURRENT_MOST);
-        states.add(VerseDB.CURRENT_SOME);
-        states.add(VerseDB.CURRENT_NONE);
-        listDataChild.put(listDataHeader.get(2), states);
-
-        // set Tags subitems (each tag, plus untagged)
-        int[] tagIds = db.getAllTagIds();
-        List<Integer> tags = new ArrayList<Integer>();
-        if(tagIds != null && tagIds.length > 0) {
-            for (int id : tagIds) {
-                tags.add(id);
-            }
-        }
-        tags.add(VerseDB.UNTAGGED);
-
-        listDataChild.put(listDataHeader.get(3), tags);
-
-        // set Settings subitems (none)
-        listDataChild.put(listDataHeader.get(4), new ArrayList<Integer>());
-
-        //set Help subitems (none)
-        listDataChild.put(listDataHeader.get(5), new ArrayList<Integer>());
-
-        db.close();
+        listDataChild.put(listDataHeader.get(0), new ArrayList<NavListItem>());
+        listDataChild.put(listDataHeader.get(1), new ArrayList<NavListItem>());
+		listDataChild.put(listDataHeader.get(2), new ArrayList<NavListItem>());
+		listDataChild.put(listDataHeader.get(3), new ArrayList<NavListItem>());
+		listDataChild.put(listDataHeader.get(4), new ArrayList<NavListItem>());
+		listDataChild.put(listDataHeader.get(5), new ArrayList<NavListItem>());
 
         listAdapter = new ExpandableListAdapter(parentActivity, listDataHeader, listDataChild);
-
-        // setting list adapter
         mDrawerListView.setAdapter(listAdapter);
+		listAdapter.notifyDataSetChanged();
+
         mDrawerListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                selectItem((NavListItem)parent.getExpandableListAdapter().getChild(groupPosition, childPosition));
+				selectItem(new Pair<>(groupPosition, (int)id));
 
-                return false;
+                return true;
             }
         });
 
         mDrawerListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if(groupPosition == 0 || groupPosition == 1 || groupPosition == 4 || groupPosition == 5) {
-                    NavListItem item = new NavListItem();
-                    item.name = (String)parent.getExpandableListAdapter().getGroup(groupPosition);
-                    item.groupPosition = groupPosition;
-                    item.childPosition = 0;
-                    selectItem(item);
+                if(groupPosition != 2 && groupPosition != 3) {
+                    selectItem(new Pair<>(groupPosition, 0));
                     return true;
                 }
 
@@ -212,12 +180,12 @@ public class NavigationDrawerFragment extends Fragment {
         });
     }
 
-    private void selectItem(NavListItem item) {
+    private void selectItem(Pair<Integer, Integer> item) {
         if (mCallbacks != null) {
-            MetaSettings.putDrawerSelection(parentActivity, item.groupPosition, item.id);
+            MetaSettings.putDrawerSelection(parentActivity, item.first, item.second);
             if(listAdapter != null) listAdapter.notifyDataSetChanged();
 
-            switch(item.groupPosition) {
+            switch(item.first) {
                 case 0:
                     mCallbacks.toDashboard();
                     break;
@@ -225,10 +193,10 @@ public class NavigationDrawerFragment extends Fragment {
                     mCallbacks.toTopicalBible();
                     break;
                 case 2:
-                    mCallbacks.toVerseList(VerseListFragment.STATE, item.id);
+                    mCallbacks.toVerseList(VerseListFragment.STATE, item.second);
                     break;
                 case 3:
-                    mCallbacks.toVerseList(VerseListFragment.TAGS, item.id);
+                    mCallbacks.toVerseList(VerseListFragment.TAGS, item.second);
                     break;
                 case 4:
                     mCallbacks.toSettings();
@@ -250,12 +218,12 @@ public class NavigationDrawerFragment extends Fragment {
         private Context context;
         private List<String> headerItems; // header titles
         // child data in format of header title, child title
-        private HashMap<String, List<Integer>> childItems;
+        private HashMap<String, List<NavListItem>> childItems;
 
         public ExpandableListAdapter(
                 Context context,
                 List<String> headerItems,
-                HashMap<String, List<Integer>> childItems) {
+                HashMap<String, List<NavListItem>> childItems) {
 
             this.context = context;
             this.headerItems = headerItems;
@@ -264,55 +232,70 @@ public class NavigationDrawerFragment extends Fragment {
 
         @Override
         public void notifyDataSetChanged() {
-            VerseDB db = new VerseDB(context).open();
-            int[] tagIds = db.getAllTagIds();
-            List<Integer> tags = new ArrayList<Integer>();
-            if(tagIds != null && tagIds.length > 0) {
-                for (int id : tagIds) {
-                    tags.add(id);
-                }
-            }
-            tags.add(VerseDB.UNTAGGED);
-            childItems.remove(headerItems.get(3));
-            childItems.put(headerItems.get(3), tags);
-            db.close();
+			VerseDB db = new VerseDB(context).open();
 
+			//update all the state information
+			int[] allStateIds = new int[] {
+					VerseDB.ALL_VERSES,
+					VerseDB.CURRENT,
+					VerseDB.MEMORIZED,
+					VerseDB.CURRENT_ALL,
+					VerseDB.CURRENT_MOST,
+					VerseDB.CURRENT_SOME,
+					VerseDB.CURRENT_NONE };
+
+			List<NavListItem> states = new ArrayList<NavListItem>();
+			if(allStateIds.length > 0) {
+				for (int id : allStateIds) {
+					NavListItem item = new NavListItem();
+					item.id = id;
+					item.groupPosition = 3;
+					item.name = db.getStateName(item.id);
+					item.color = db.getStateColor(item.id);
+					item.count = db.getStateCount(item.id);
+
+					states.add(item);
+				}
+			}
+			childItems.remove(headerItems.get(2));
+			childItems.put(headerItems.get(2), states);
+
+
+			//update all the tag information
+			int[] tagIds = db.getAllTagIds();
+			int[] allTagIds;
+			if(tagIds != null && tagIds.length > 0) {
+				allTagIds = new int[tagIds.length + 1];
+				System.arraycopy(tagIds, 0, allTagIds, 0, tagIds.length);
+			}
+			else {
+				allTagIds = new int[1];
+			}
+			allTagIds[allTagIds.length - 1] = VerseDB.UNTAGGED;
+
+			List<NavListItem> tags = new ArrayList<NavListItem>();
+			if(allTagIds.length > 0) {
+				for (int id : allTagIds) {
+					NavListItem item = new NavListItem();
+					item.id = id;
+					item.groupPosition = 3;
+					item.name = db.getTagName(item.id);
+					item.color = db.getTagColor(item.id);
+					item.count = db.getTagCount(item.id);
+
+					tags.add(item);
+				}
+			}
+			childItems.remove(headerItems.get(3));
+			childItems.put(headerItems.get(3), tags);
+
+            db.close();
             super.notifyDataSetChanged();
         }
 
         @Override
         public NavListItem getChild(int groupPosition, int childPosition) {
-            int id = childItems.get(headerItems.get(groupPosition))
-                    .get(childPosition);
-
-            NavListItem item = new NavListItem();
-            item.id = id;
-            item.groupPosition = groupPosition;
-            item.childPosition = childPosition;
-            VerseDB db = new VerseDB(parentActivity).open();
-            if(groupPosition == 0) {
-                item.name = headerItems.get(groupPosition);
-            }
-            else if(groupPosition == 1) {
-                item.name = headerItems.get(groupPosition);
-            }
-            else if(groupPosition == 2) {
-                item.name = db.getStateName(item.id);
-                item.color = db.getStateColor(item.id);
-                item.count = db.getStateCount(item.id);
-            }
-            else if(groupPosition == 3) {
-                item.name = db.getTagName(item.id);
-                item.color = db.getTagColor(item.id);
-                item.count = db.getTagCount(item.id);
-            }
-            else if(groupPosition == 4) {
-                item.name = headerItems.get(groupPosition);
-            }
-
-            db.close();
-
-            return item;
+            return childItems.get(headerItems.get(groupPosition)).get(childPosition);
         }
 
         @Override
@@ -331,6 +314,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
 
             NavListItem item = getChild(groupPosition, childPosition);
+			item.childPosition = childPosition;
 
             TextView childText = (TextView) convertView.findViewById(R.id.subitemText);
             childText.setText(item.name);

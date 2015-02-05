@@ -1,18 +1,15 @@
 package com.caseybrooks.scripturememory.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +18,13 @@ import android.widget.Toast;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
+import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
 
 public class HelpFragment extends PreferenceFragment {
 
     public static class ViewTopicFragment extends Fragment {
+		NavigationCallbacks mCallbacks;
 
         public static Fragment newInstance(int resId) {
             Fragment fragment = new ViewTopicFragment();
@@ -40,27 +39,45 @@ public class HelpFragment extends PreferenceFragment {
             int resId = getArguments().getInt("RES_ID", R.layout.help_overview);
             View view = inflater.inflate(resId, container, false);
 
-            ActionBar ab = ((ActionBarActivity) getActivity()).getSupportActionBar();
-            ColorDrawable colorDrawable = new ColorDrawable(getActivity().getResources().getColor(R.color.memorized));
-            ab.setBackgroundDrawable(colorDrawable);
-            ab.setHomeButtonEnabled(true);
-            ab.setDisplayHomeAsUpEnabled(true);
+			String title = "";
 
-            if (resId == R.layout.help_overview) ab.setTitle("Overview");
-            else if (resId == R.layout.help_adding_verses) ab.setTitle("Adding Verses");
-            else if (resId == R.layout.help_memorization_state) ab.setTitle("Memorization State");
-            else if (resId == R.layout.help_tags) ab.setTitle("Tags");
-            else if (resId == R.layout.help_changelog) ab.setTitle("Changelog");
-            else if (resId == R.layout.help_licenses) ab.setTitle("Licenses");
+            if (resId == R.layout.help_overview) title = "Overview";
+            else if (resId == R.layout.help_adding_verses) title = "Adding Verses";
+            else if (resId == R.layout.help_memorization_state)  title = "Memorization State";
+            else if (resId == R.layout.help_tags) title = "Tags";
+            else if (resId == R.layout.help_changelog) title = "Changelog";
+            else if (resId == R.layout.help_licenses) title = "Licenses";
 
+			TypedValue typedValue = new TypedValue();
+			Resources.Theme theme = getActivity().getTheme();
+			theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
+
+			mCallbacks.setToolBar(title, typedValue.data);
 
             return view;
         }
+
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			try {
+				mCallbacks = (NavigationCallbacks) activity;
+			} catch (ClassCastException e) {
+				throw new ClassCastException("Activity must implement NavigationCallbacks.");
+			}
+		}
+
+		@Override
+		public void onDetach() {
+			super.onDetach();
+			mCallbacks = null;
+		}
     }
 
     Context context;
+	NavigationCallbacks mCallbacks;
 
-    @Override
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -79,25 +96,30 @@ public class HelpFragment extends PreferenceFragment {
     public void onResume() {
         super.onResume();
 
-        ActionBar ab = ((ActionBarActivity) context).getSupportActionBar();
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
-        int color = typedValue.data;
-        ColorDrawable colorDrawable = new ColorDrawable(color);
-        ab.setBackgroundDrawable(colorDrawable);
-        ab.setTitle("Help");
+		TypedValue typedValue = new TypedValue();
+		Resources.Theme theme = context.getTheme();
+		theme.resolveAttribute(R.attr.color_toolbar, typedValue, true);
 
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			float[] hsv = new float[3];
-			Color.colorToHSV(color, hsv);
-			hsv[2] *= 0.8f; // value component
-
-			getActivity().getWindow().setStatusBarColor(Color.HSVToColor(hsv));
-		}
+		mCallbacks.setToolBar("Help", typedValue.data);
 
         MetaSettings.putDrawerSelection(context, 5, 0);
     }
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallbacks = (NavigationCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException("Activity must implement NavigationCallbacks.");
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mCallbacks = null;
+	}
 
     //Rate App (go to Play Store) listener
 //------------------------------------------------------------------------------

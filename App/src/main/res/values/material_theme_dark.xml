@@ -8,6 +8,7 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@drawable/toolbar_shadow</item>
+		<item name="android:windowTranslucentStatus">true</item>
 
         <!-- Colors -->
         <item name="color_background_selected">@color/background_selected_dark</item>
