@@ -324,11 +324,6 @@ public class BibleVerseAdapter extends BaseAdapter {
             db.close();
         }
 
-		public void multiSelect(boolean isChecked) {
-			passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, !isChecked);
-			multiSelect();
-		}
-
 		public void multiSelect() {
             if(!passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
 

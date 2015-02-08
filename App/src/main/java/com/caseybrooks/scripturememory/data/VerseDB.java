@@ -348,8 +348,8 @@ public class VerseDB {
     public int getVerseId(Reference reference) {
         String selectQuery =
                 "SELECT *" +
-                        " FROM " + TABLE_VERSES +
-                        " WHERE " + KEY_VERSES_REFERENCE + " LIKE '" + reference.toString() + "'";
+				" FROM " + TABLE_VERSES +
+				" WHERE " + KEY_VERSES_REFERENCE + " LIKE '" + reference.toString() + "'";
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null && c.getCount() > 0) {
@@ -752,6 +752,38 @@ public class VerseDB {
         }
         c.close();
     }
+
+	private void cleanupVerses() {
+		String selectQuery =
+				"SELECT *" +
+						" FROM " + TABLE_VERSES +
+						" WHERE " + KEY_VERSES_STATE + " < 6";
+
+		Passage votd = getMostRecentVOTD();
+
+		Cursor c = db.rawQuery(selectQuery, null);
+		if (c != null && c.getCount() > 0) {
+			c.moveToFirst();
+
+			for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+				Passage passage = getVerse(c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
+
+				if(passage != null) {
+					if(votd != null) {
+						//we have a votd, and the currently checked passage is it, ignore
+						if(passage.getMetadata().getInt(DefaultMetaData.ID) ==
+								   votd.getMetadata().getInt(DefaultMetaData.ID))
+							continue;
+					}
+					//the currently checked passage is not one of the exposed states
+					//and is not the current votd, so delete it
+					if(passage.getMetadata().getInt(DefaultMetaData.STATE) > 5) {
+						deleteVerse(passage);
+					}
+				}
+			}
+		}
+	}
 
     public void deleteTag(int id) {
         //TODO: change to just iterate over a cursor and update the tag fields directly

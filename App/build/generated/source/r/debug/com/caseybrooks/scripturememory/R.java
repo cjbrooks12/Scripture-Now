@@ -1931,7 +1931,7 @@ containing a value of this type.
         public static final int active_list_sidebar=0x7f0c0048;
         public static final int active_list_text=0x7f0c004a;
         public static final int activity_chooser_view_content=0x7f0c0023;
-        public static final int activity_toolbar=0x7f0c0042;
+        public static final int activity_toolbar=0x7f0c0041;
         public static final int addVerse=0x7f0c0061;
         public static final int add_button=0x7f0c00c0;
         public static final int add_verse_button=0x7f0c00b6;
@@ -2020,7 +2020,7 @@ containing a value of this type.
         public static final int list_item=0x7f0c0027;
         public static final int list_open_bible_view=0x7f0c008f;
         public static final int ltr=0x7f0c0013;
-        public static final int mainFragmentContainer=0x7f0c0043;
+        public static final int mainFragmentContainer=0x7f0c0042;
         public static final int mainIcon=0x7f0c00ad;
         public static final int mainIconBackground=0x7f0c00ac;
         public static final int menu_dashboard_add=0x7f0c00ea;
@@ -2113,7 +2113,7 @@ containing a value of this type.
         public static final int showTitle=0x7f0c0011;
         public static final int split_action_bar=0x7f0c0007;
         public static final int stateSeekBar=0x7f0c0070;
-        public static final int statusBar=0x7f0c0041;
+        public static final int statusBar=0x7f0c0043;
         public static final int subitemCircle=0x7f0c0086;
         public static final int subitemCircleText=0x7f0c0087;
         public static final int subitemText=0x7f0c0088;

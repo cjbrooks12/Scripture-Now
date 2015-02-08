@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -116,7 +119,23 @@ public class NavigationDrawerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView = (ParallaxExpandableListView) view.findViewById(R.id.navListView);
 
-        populateList();
+		if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+			View statusBar = view.findViewById(R.id.statusBar);
+
+			int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+			if (resourceId > 0) {
+				int height = getResources().getDimensionPixelSize(resourceId);
+				statusBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
+			}
+
+			float[] hsv = new float[3];
+			Color.colorToHSV(getResources().getColor(R.color.forest_green_light), hsv);
+			hsv[2] *= 0.8f; // value component
+			statusBar.setBackgroundColor(Color.HSVToColor(hsv));
+		}
+
+
+		populateList();
 
         return view;
     }

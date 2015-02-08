@@ -221,22 +221,20 @@ public class VerseListFragment extends ListFragment {
 			protected void onPostExecute(Void aVoid) {
 				super.onPostExecute(aVoid);
 
-				ActionBarActivity mainActivity = (ActionBarActivity) getActivity();
-
 				VerseDB db = new VerseDB(context).open();
 				if(listType == TAGS) {
-					mainActivity.setTitle(db.getTagName(listId));
+					mCallbacks.setToolBar(db.getTagName(listId), db.getTagColor(listId));
 				}
 				else if(listType == STATE) {
 					if(listId != 0) {
-						mainActivity.setTitle(db.getStateName(listId));
+						mCallbacks.setToolBar(db.getStateName(listId), db.getStateColor(listId));
 					}
 					else {
-						mainActivity.setTitle("All");
+						mCallbacks.setToolBar("All", db.getTagColor(listId));
 					}
 				}
 				else {
-					mainActivity.setTitle("All");
+					mCallbacks.setToolBar("All", db.getTagColor(listId));
 				}
 				db.close();
 
@@ -267,9 +265,7 @@ public class VerseListFragment extends ListFragment {
 
 				Comparator comparator;
 
-				switch(MetaSettings.getSortBy(context))
-
-				{
+				switch(MetaSettings.getSortBy(context)) {
 				case 0:
 					comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED);
 					break;

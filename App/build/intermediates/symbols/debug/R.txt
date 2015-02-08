@@ -570,7 +570,7 @@ int id action_mode_close_button 0x7f0c0022
 int id active_list_sidebar 0x7f0c0048
 int id active_list_text 0x7f0c004a
 int id activity_chooser_view_content 0x7f0c0023
-int id activity_toolbar 0x7f0c0042
+int id activity_toolbar 0x7f0c0041
 int id addVerse 0x7f0c0061
 int id add_button 0x7f0c00c0
 int id add_verse_button 0x7f0c00b6
@@ -659,7 +659,7 @@ int id listMode 0x7f0c0009
 int id list_item 0x7f0c0027
 int id list_open_bible_view 0x7f0c008f
 int id ltr 0x7f0c0013
-int id mainFragmentContainer 0x7f0c0043
+int id mainFragmentContainer 0x7f0c0042
 int id mainIcon 0x7f0c00ad
 int id mainIconBackground 0x7f0c00ac
 int id menu_dashboard_add 0x7f0c00ea
@@ -752,7 +752,7 @@ int id showHome 0x7f0c0010
 int id showTitle 0x7f0c0011
 int id split_action_bar 0x7f0c0007
 int id stateSeekBar 0x7f0c0070
-int id statusBar 0x7f0c0041
+int id statusBar 0x7f0c0043
 int id subitemCircle 0x7f0c0086
 int id subitemCircleText 0x7f0c0087
 int id subitemText 0x7f0c0088

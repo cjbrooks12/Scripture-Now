@@ -4,11 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/color_background">
-	<View
-		android:id="@+id/statusBar"
-		android:visibility="gone"
-		android:layout_width="wrap_content"
-		android:layout_height="25dp" />
     <android.support.v7.widget.Toolbar
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
@@ -17,7 +12,6 @@
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary" />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

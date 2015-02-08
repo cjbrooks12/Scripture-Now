@@ -77,7 +77,16 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		statusBar = findViewById(R.id.statusBar);
+		//if on KitKat, manually manage the status bar color
+		if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+			statusBar = findViewById(R.id.statusBar);
+
+			int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+			if (resourceId > 0) {
+				int height = getResources().getDimensionPixelSize(resourceId);
+				statusBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
+			}
+		}
 
         // Set up the drawer.
         tb = (Toolbar) findViewById(R.id.activity_toolbar);
@@ -406,14 +415,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		hsv[2] *= 0.7f; // value component
 
 		if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			statusBar.setVisibility(View.VISIBLE);
 			statusBar.setBackgroundColor(Color.HSVToColor(hsv));
-
-			int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-			if (resourceId > 0) {
-				int height = getResources().getDimensionPixelSize(resourceId);
-				statusBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
-			}
 		}
 		else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().setStatusBarColor(Color.HSVToColor(hsv));
