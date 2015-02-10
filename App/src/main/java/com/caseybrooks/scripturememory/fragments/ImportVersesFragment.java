@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
@@ -314,13 +315,20 @@ public class ImportVersesFragment extends Fragment {
                                 }
                             } else if (lineType.equals("q:") && passage != null) {
                                 passage.setVersion(Version.parseVersion(line.substring(2).trim()));
-                            } else if (lineType.equals("t:") && passage != null) {
-                                passage.setTags(line.substring(2).trim().split(","));
-                            } else if (lineType.equals("p:")) {
-                                text = line.substring(2).trim();
                             } else {
-                                text += " " + line.trim();
-                            }
+								if(lineType.equals("t:") && passage != null) {
+									String[] tags = line.substring(2).trim().split(",");
+									for(String tag : tags) {
+										passage.addTag(new Tag(tag));
+									}
+								}
+								else if(lineType.equals("p:")) {
+									text = line.substring(2).trim();
+								}
+								else {
+									text += " " + line.trim();
+								}
+							}
                         }
                         if(isCancelled()) break;
 
@@ -349,9 +357,9 @@ public class ImportVersesFragment extends Fragment {
                             //TODO: write all tags to file
                             org.w3c.dom.Element t = doc.createElement("T");
                             passageElement.appendChild(t);
-                            for(String string : item.getTags()) {
+                            for(Tag tag: item.getTags()) {
                                 org.w3c.dom.Element tagItem = doc.createElement("item");
-                                tagItem.appendChild(doc.createTextNode(string));
+                                tagItem.appendChild(doc.createTextNode(tag.name));
                                 t.appendChild(tagItem);
                             }
 
@@ -491,7 +499,7 @@ public class ImportVersesFragment extends Fragment {
                         passage.setVersion(Version.parseVersion(element.select("Q").text()));
 
                         for(org.jsoup.nodes.Element tagElement : element.select("T").select("item")) {
-                            passage.addTag(tagElement.text());
+                            passage.addTag(new Tag(tagElement.text()));
                         }
 
                         passage.setText(element.select("P").text());

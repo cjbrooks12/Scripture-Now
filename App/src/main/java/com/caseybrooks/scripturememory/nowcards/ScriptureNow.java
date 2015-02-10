@@ -86,23 +86,23 @@ public class ScriptureNow {
 	 * no way to know which tags exist, all tags are weighted evenly, and selection
 	 * is fully random.
 	 * */
-	public static Passage getNextTagVerse(Context context) {
-		Random randomizer = new Random(Calendar.getInstance().getTimeInMillis());
-
-		//get a list of verses from the database
-		VerseDB db = new VerseDB(context);
-
-		db.open();
-		String[] tags = db.getAllTagNames();
-		int tagList = randomizer.nextInt(tags.length);
-
-		ArrayList<Passage> selectedPassages = db.getTaggedVerses((int)db.getTagID(tags[tagList]));
-		if(selectedPassages == null || selectedPassages.size() == 0) return null;
-		else {
-			int randomVerse = randomizer.nextInt(selectedPassages.size());
-			return selectedPassages.get(randomVerse);
-		}
-	}
+//	public static Passage getNextTagVerse(Context context) {
+//		Random randomizer = new Random(Calendar.getInstance().getTimeInMillis());
+//
+//		//get a list of verses from the database
+//		VerseDB db = new VerseDB(context);
+//
+//		db.open();
+//		String[] tags = db.getAllTagNames();
+//		int tagList = randomizer.nextInt(tags.length);
+//
+//		ArrayList<Passage> selectedPassages = db.getTaggedVerses((int)db.getTagID(tags[tagList]));
+//		if(selectedPassages == null || selectedPassages.size() == 0) return null;
+//		else {
+//			int randomVerse = randomizer.nextInt(selectedPassages.size());
+//			return selectedPassages.get(randomVerse);
+//		}
+//	}
 
 	public static Class getNextCard() {
 		return null;

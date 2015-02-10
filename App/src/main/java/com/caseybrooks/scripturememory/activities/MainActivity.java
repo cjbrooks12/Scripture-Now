@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
@@ -170,7 +171,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                                 passage.getMetadata().putInt(DefaultMetaData.STATE, 4);
                             else
                                 passage.getMetadata().putInt(DefaultMetaData.STATE, 1);
-                            passage.addTag("Previous Backup");
+                            passage.addTag(new Tag("Previous Backup"));
                             passages.add(passage);
                         }
                         catch (ParseException e) {
@@ -210,9 +211,9 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 
                         Element t = doc.createElement("T");
                         passageElement.appendChild(t);
-                        for(String string : passage.getTags()) {
+                        for(Tag tag : passage.getTags()) {
                             Element tagItem = doc.createElement("item");
-                            tagItem.appendChild(doc.createTextNode(string));
+                            tagItem.appendChild(doc.createTextNode(tag.name));
                             t.appendChild(tagItem);
                         }
 

@@ -90,16 +90,16 @@ public class Passage extends AbstractVerse {
 		//if the text is not marked up, try to extract as much verse information
 		//as we can. Get hashtags and verse numbers, and leave the rest alone
 		else {
-//			parse input string and extract any tags, denoted as standard hastags
+			//parse input string and extract any tags, denoted as standard hastags
 			Matcher m = hashtag.matcher(text);
 
 			while(m.find()) {
 				String match = m.group(1);
 				if(match.charAt(0) == '\"') {
-					addTag(match.substring(1, match.length() - 1));
+					addTag(new Tag(match.substring(1, match.length() - 1)));
 				}
 				else {
-					addTag(match);
+					addTag(new Tag(match));
 				}
 			}
 

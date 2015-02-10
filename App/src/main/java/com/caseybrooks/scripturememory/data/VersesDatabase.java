@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.nowcards.main.Main;
@@ -120,7 +121,7 @@ public class VersesDatabase {
                     state = VerseDB.CURRENT_NONE;
                 }
 
-                passage.addTag("Migrated");
+                passage.addTag(new Tag("Migrated"));
 
                 id = verseDB.insertVerse(passage);
             }

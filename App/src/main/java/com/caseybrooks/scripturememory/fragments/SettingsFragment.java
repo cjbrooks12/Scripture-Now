@@ -16,6 +16,7 @@ import android.util.Pair;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
@@ -27,6 +28,7 @@ import com.caseybrooks.scripturememory.nowcards.votd.VOTDNotification;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class SettingsFragment extends PreferenceFragment {
@@ -122,16 +124,18 @@ public class SettingsFragment extends PreferenceFragment {
         else if(defaultScreen.first == 4) {
             prefDefaultScreenChild.setEnabled(true);
             VerseDB db = new VerseDB(context).open();
-            prefDefaultScreenChild.setSummary(db.getTagName(defaultScreen.second));
+            prefDefaultScreenChild.setSummary(db.getTag(defaultScreen.second).name);
 
-            String[] tags = db.getAllTagNames();
+            ArrayList<Tag> tags = db.getAllTags();
 
-            String[] tagValues = new String[tags.length];
+            String[] tagValues = new String[tags.size()];
+			String[] tagNames = new String[tags.size()];
             for(int i = 0; i < tagValues.length; i++) {
-                tagValues[i] = Long.toString(db.getTagID(tags[i]));
-            }
+                tagValues[i] = Integer.toString(tags.get(i).id);
+				tagNames[i] = tags.get(i).name;
+			}
 
-            prefDefaultScreenChild.setEntries(tags);
+            prefDefaultScreenChild.setEntries(tagNames);
             prefDefaultScreenChild.setEntryValues(tagValues);
             db.close();
         }
@@ -309,7 +313,7 @@ public class SettingsFragment extends PreferenceFragment {
                 prefDefaultScreenChild.setSummary(db.getStateName(newId));
             }
             else if(MetaSettings.getDefaultScreen(context).first == 4) {
-                prefDefaultScreenChild.setSummary(db.getTagName(newId));
+                prefDefaultScreenChild.setSummary(db.getTag(newId).name);
             }
 
             db.close();
@@ -386,16 +390,18 @@ public class SettingsFragment extends PreferenceFragment {
             }
             else if(selection == 4) {
                 prefDefaultScreenChild.setEnabled(true);
-                prefDefaultScreenChild.setSummary(db.getTagName(MetaSettings.getDefaultScreen(context).second));
+                prefDefaultScreenChild.setSummary(db.getTag(MetaSettings.getDefaultScreen(context).second).name);
 
-                String[] tags = db.getAllTagNames();
+				ArrayList<Tag> tags = db.getAllTags();
 
-                String[] tagValues = new String[tags.length];
-                for(int i = 0; i < tagValues.length; i++) {
-                    tagValues[i] = db.getTagID(tags[i]) + "";
-                }
+				String[] tagValues = new String[tags.size()];
+				String[] tagNames = new String[tags.size()];
+				for(int i = 0; i < tagValues.length; i++) {
+					tagValues[i] = Integer.toString(tags.get(i).id);
+					tagNames[i] = tags.get(i).name;
+				}
 
-                prefDefaultScreenChild.setEntries(tags);
+                prefDefaultScreenChild.setEntries(tagNames);
                 prefDefaultScreenChild.setEntryValues(tagValues);
             }
             else {

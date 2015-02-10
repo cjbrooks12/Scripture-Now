@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -147,12 +148,14 @@ public class MainCard extends FrameLayout {
             }
             else if(activeList.first == VerseListFragment.TAGS) {
                 db.open();
+				Tag tag = db.getTag(activeList.second);
+				db.close();
+
                 activeListSidebar.setVisibility(View.VISIBLE);
-                activeListSidebar.setBackgroundColor(db.getTagColor(activeList.second));
+                activeListSidebar.setBackgroundColor(tag.color);
 
                 activeListText.setVisibility(View.VISIBLE);
-                activeListText.setText("In tag list: " + db.getTagName(activeList.second));
-                db.close();
+                activeListText.setText("In tag list: " + tag.name);
             }
             else {
                 activeListSidebar.setVisibility(View.GONE);

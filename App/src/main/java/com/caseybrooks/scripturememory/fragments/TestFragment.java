@@ -59,9 +59,9 @@ public class TestFragment extends Fragment {
 					try {
 						passage = new Passage("Galatians 2:19");
 						passage.setVersion(Version.ESV);
-						passage.addTag("Favorite verse");
-						passage.addTag("life");
-						passage.addTag("good news");
+//						passage.addTag("Favorite verse");
+//						passage.addTag("life");
+//						passage.addTag("good news");
 						passage.retrieve();
 
 						reference = passage.getReference().toString();

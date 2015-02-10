@@ -19,9 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.data.VerseDB;
 
 import java.util.ArrayList;
 
@@ -232,9 +232,7 @@ public class BibleVerseAdapter extends BaseAdapter {
 
                 @Override
                 public void onAnimationEnd(Animation arg0) {
-                    VerseDB db = new VerseDB(context).open();
-                    int selectedColor = db.getStateColor(passage.getMetadata().getInt(DefaultMetaData.STATE));
-                    db.close();
+                    int selectedColor = passage.getMetadata().getInt("STATE_COLOR");
 
                     circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
                     iconBackground.setImageDrawable(circle);
@@ -279,7 +277,6 @@ public class BibleVerseAdapter extends BaseAdapter {
             String passageBookCode = passage.getReference().book.getCode();
             iconText.setText(passageBookCode.replaceFirst("(\\d)", "$1 "));
 
-            VerseDB db = new VerseDB(context).open();
             if(passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
                 TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{R.attr.colorAccent});
                 int selectedColor = a.getColor(0, 0);
@@ -292,7 +289,7 @@ public class BibleVerseAdapter extends BaseAdapter {
                 cardview.setCardElevation(context.getResources().getDisplayMetrics().density * 4f);
             }
             else {
-                int selectedColor = db.getStateColor(passage.getMetadata().getInt(DefaultMetaData.STATE));
+                int selectedColor = passage.getMetadata().getInt("STATE_COLOR");
                 circle.setColorFilter(new PorterDuffColorFilter(selectedColor, PorterDuff.Mode.MULTIPLY));
                 iconBackground.setImageDrawable(circle);
 
@@ -308,11 +305,9 @@ public class BibleVerseAdapter extends BaseAdapter {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(size, size);
             layoutParams.setMargins(0, 0, margin, 0);
 
-            for(String tag : passage.getTags()) {
-                int tagColor = db.getTagColor(tag);
-
+            for(Tag tag : passage.getTags()) {
                 Drawable tag_circle = context.getResources().getDrawable(R.drawable.circle);
-                tag_circle.setColorFilter(new PorterDuffColorFilter(tagColor, PorterDuff.Mode.MULTIPLY));
+                tag_circle.setColorFilter(new PorterDuffColorFilter(tag.color, PorterDuff.Mode.MULTIPLY));
 
                 ImageView tagView = new ImageView(context);
                 tagView.setLayoutParams(layoutParams);
@@ -320,8 +315,6 @@ public class BibleVerseAdapter extends BaseAdapter {
                 tagView.setImageDrawable(tag_circle);
                 tagsLayout.addView(tagView);
             }
-
-            db.close();
         }
 
 		public void multiSelect() {

@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.search.OpenBibleInfo;
 import com.caseybrooks.scripturememory.R;
@@ -796,7 +797,7 @@ public class TopicalBibleFragment extends Fragment {
                 VerseDB db = new VerseDB(context).open();
                 for(Passage passage : verses) {
                     passage.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
-                    passage.addTag(passage.getMetadata().getString("SEARCH_TERM"));
+                    passage.addTag(new Tag(passage.getMetadata().getString("SEARCH_TERM")));
                     db.insertVerse(passage);
                 }
                 dialog.cancel();

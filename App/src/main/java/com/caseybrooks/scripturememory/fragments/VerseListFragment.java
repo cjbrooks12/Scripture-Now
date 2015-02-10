@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.data.Metadata;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
@@ -114,8 +115,9 @@ public class VerseListFragment extends ListFragment {
 
         VerseDB db = new VerseDB(context).open();
         if(listType == TAGS) {
-            title = db.getTagName(listId);
-            color = db.getTagColor(listId);
+			Tag tag = db.getTag(listId);
+            title = tag.name;
+            color = tag.color;
             MetaSettings.putDrawerSelection(context, 3, listId);
         }
         else {
@@ -223,18 +225,19 @@ public class VerseListFragment extends ListFragment {
 
 				VerseDB db = new VerseDB(context).open();
 				if(listType == TAGS) {
-					mCallbacks.setToolBar(db.getTagName(listId), db.getTagColor(listId));
+					Tag tag = db.getTag(listId);
+					mCallbacks.setToolBar(tag.name, tag.color);
 				}
 				else if(listType == STATE) {
 					if(listId != 0) {
 						mCallbacks.setToolBar(db.getStateName(listId), db.getStateColor(listId));
 					}
 					else {
-						mCallbacks.setToolBar("All", db.getTagColor(listId));
+						mCallbacks.setToolBar("All", getResources().getColor(R.color.all_verses));
 					}
 				}
 				else {
-					mCallbacks.setToolBar("All", db.getTagColor(listId));
+					mCallbacks.setToolBar("All", getResources().getColor(R.color.all_verses));
 				}
 				db.close();
 
@@ -606,9 +609,9 @@ public class VerseListFragment extends ListFragment {
 
                     org.w3c.dom.Element t = doc.createElement("T");
                     passageElement.appendChild(t);
-                    for (String string : passages.get(i).getTags()) {
+                    for (Tag tag : passages.get(i).getTags()) {
                         org.w3c.dom.Element tagItem = doc.createElement("item");
-                        tagItem.appendChild(doc.createTextNode(string));
+                        tagItem.appendChild(doc.createTextNode(tag.name));
                         t.appendChild(tagItem);
                     }
 
@@ -764,12 +767,15 @@ public class VerseListFragment extends ListFragment {
         final AutoCompleteTextView edit = (AutoCompleteTextView) view.findViewById(R.id.edit_text);
         VerseDB db = new VerseDB(context).open();
 
-        String[] tagSuggestions = db.getAllTagNames();
-        if(tagSuggestions.length > 0) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+		ArrayList<Tag> tags = db.getAllTags();
+        if(tags.size() > 0) {
+			ArrayList<String> tagSuggestions = new ArrayList<>();
+			for(Tag tag : tags) tagSuggestions.add(tag.name);
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
                     context,
                     android.R.layout.simple_list_item_1,
-                    tagSuggestions
+					tagSuggestions
             );
             edit.setAdapter(adapter);
         }
@@ -791,7 +797,7 @@ public class VerseListFragment extends ListFragment {
                 if(text.length() > 0) {
                     VerseDB db = new VerseDB(context).open();
                     for(Passage passage : items) {
-                        passage.addTag(text);
+                        passage.addTag(new Tag(text));
                         db.updateVerse(passage);
                     }
                     db.close();

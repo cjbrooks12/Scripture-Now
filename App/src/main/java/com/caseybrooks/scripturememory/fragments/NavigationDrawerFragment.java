@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -281,29 +282,19 @@ public class NavigationDrawerFragment extends Fragment {
 
 
 			//update all the tag information
-			int[] tagIds = db.getAllTagIds();
-			int[] allTagIds;
-			if(tagIds != null && tagIds.length > 0) {
-				allTagIds = new int[tagIds.length + 1];
-				System.arraycopy(tagIds, 0, allTagIds, 0, tagIds.length);
-			}
-			else {
-				allTagIds = new int[1];
-			}
-			allTagIds[allTagIds.length - 1] = VerseDB.UNTAGGED;
+			ArrayList<Tag> allTags = db.getAllTags();
+			allTags.add(db.getTag(VerseDB.UNTAGGED));
 
 			List<NavListItem> tags = new ArrayList<NavListItem>();
-			if(allTagIds.length > 0) {
-				for (int id : allTagIds) {
-					NavListItem item = new NavListItem();
-					item.id = id;
-					item.groupPosition = 3;
-					item.name = db.getTagName(item.id);
-					item.color = db.getTagColor(item.id);
-					item.count = db.getTagCount(item.id);
+			for (Tag tag: allTags) {
+				NavListItem item = new NavListItem();
+				item.id = tag.id;
+				item.groupPosition = 3;
+				item.name = tag.name;
+				item.color = tag.color;
+				item.count = tag.count;
 
-					tags.add(item);
-				}
+				tags.add(item);
 			}
 			childItems.remove(headerItems.get(3));
 			childItems.put(headerItems.get(3), tags);

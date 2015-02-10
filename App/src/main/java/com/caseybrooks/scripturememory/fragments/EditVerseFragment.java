@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
@@ -226,13 +227,12 @@ public class EditVerseFragment extends Fragment {
 
             tagChipsLayout = (FlowLayout) view.findViewById(R.id.tagChipLayout);
 
-            String[] tags = passage.getTags();
-            ArrayList<Integer> tagsList = new ArrayList<>();
-            for(String tag : tags) {
-                int tagId = (int)db.getTagID(tag);
-                tagsList.add(tagId);
+            Tag[] tags = passage.getTags();
+            ArrayList<Tag> tagsList = new ArrayList<>();
+            for(Tag tag : tags) {
+                tagsList.add(tag);
             }
-            tagsList.add(-10);
+            tagsList.add(new Tag("Add New Tag", -10, Color.parseColor("#000000"), 0));
             tagAdapter = new TagAdapter(context, tagsList);
             tagChipsLayout.setAdapter(tagAdapter);
 
@@ -240,11 +240,11 @@ public class EditVerseFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     final TagAdapter.ViewHolder vh = (TagAdapter.ViewHolder)v.getTag();
-                    if(vh.id == -10) {
+                    if(vh.tag.id == -10) {
                         addNewTag();
                     }
                     else {
-                        editTagName(vh.id);
+                        editTagName(vh.tag);
                     }
                 }
             });
@@ -254,8 +254,8 @@ public class EditVerseFragment extends Fragment {
                 public boolean onLongClick(View v) {
                     TagAdapter.ViewHolder vh = ((TagAdapter.ViewHolder) v.getTag());
 
-                    if(vh.id != -10) {
-                        removeTag(vh.id);
+                    if(vh.tag.id != -10) {
+                        removeTag(vh.tag);
                     }
                     return true;
                 }
@@ -269,10 +269,10 @@ public class EditVerseFragment extends Fragment {
 
     private class TagAdapter extends BaseAdapter implements ListAdapter {
         Context context;
-        ArrayList<Integer> tags;
+        ArrayList<Tag> tags;
 
         public class ViewHolder {
-            int id;
+			Tag tag;
             int position;
             TextView nameText;
             ImageView tagCircle;
@@ -285,7 +285,7 @@ public class EditVerseFragment extends Fragment {
             }
         }
 
-        public TagAdapter(Context context, ArrayList<Integer> tags) {
+        public TagAdapter(Context context, ArrayList<Tag> tags) {
             this.context = context;
             this.tags = tags;
         }
@@ -296,21 +296,13 @@ public class EditVerseFragment extends Fragment {
         }
 
         @Override
-        public String getItem(int position) {
-            if(position == tags.size() - 1) {
-                return "Add New Tag";
-            }
-            else {
-                VerseDB db = new VerseDB(context).open();
-                String tagName = db.getTagName(tags.get(position));
-                db.close();
-                return tagName;
-            }
+        public Tag getItem(int position) {
+            return tags.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return tags.get(position);
+            return tags.get(position).id;
         }
 
         @Override
@@ -327,38 +319,30 @@ public class EditVerseFragment extends Fragment {
             }
 
             //setup bookkeeping information
-            vh.nameText.setText(getItem(position));
-            vh.id = (int) getItemId(position);
+			Tag tag = getItem(position);
+			vh.tag = tag;
+            vh.nameText.setText(tag.name);
             vh.position = position;
+			Drawable circle = Util.Drawables.circle(tag.color);
+			vh.tagCircle.setBackgroundDrawable(circle);
 
-            int color;
             if(position == tags.size() - 1) {
-                color = Color.BLACK;
-                Drawable circle = Util.Drawables.circle(color);
-                vh.tagCircle.setBackgroundDrawable(circle);
                 vh.tagIcon.setImageResource(R.drawable.ic_action_add_dark);
-            }
-            else {
-                VerseDB db = new VerseDB(context).open();
-                color = db.getTagColor(getItem(position));
-                db.close();
-                Drawable circle = Util.Drawables.circle(color);
-                vh.tagCircle.setBackgroundDrawable(circle);
             }
 
             return view;
         }
 
-        public void addTag(int tagId) {
-            if(!tags.contains(tagId)) {
-                tags.add(0, tagId);
+        public void addTag(Tag tag) {
+            if(!tags.contains(tag)) {
+                tags.add(0, tag);
                 notifyDataSetChanged();
             }
         }
 
-        public void removeTag(int tagId) {
+        public void removeTag(Tag tagId) {
             if(tags.contains(tagId)) {
-                tags.remove(Integer.valueOf(tagId));
+                tags.remove(tagId);
                 notifyDataSetChanged();
             }
         }
@@ -366,7 +350,7 @@ public class EditVerseFragment extends Fragment {
 
 //Popups for tags
 //------------------------------------------------------------------------------
-    private void editTagName(final int tagId) {
+    private void editTagName(final Tag tag) {
         final View view = LayoutInflater.from(context).inflate(R.layout.popup_edit_tag, null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view);
@@ -376,15 +360,15 @@ public class EditVerseFragment extends Fragment {
         final EditText edit = (EditText) view.findViewById(R.id.edit_text);
 
 		VerseDB db = new VerseDB(context).open();
-        edit.setText(db.getTagName(tagId));
+        edit.setText(tag.name);
 
 		final ColorPicker picker = (ColorPicker) view.findViewById(R.id.color_picker);
 		SaturationBar saturationBar = (SaturationBar) view.findViewById(R.id.saturation_bar);
 		ValueBar valueBar = (ValueBar) view.findViewById(R.id.value_bar);
 		picker.addSaturationBar(saturationBar);
 		picker.addValueBar(valueBar);
-		picker.setOldCenterColor(db.getTagColor(tagId));
-		picker.setColor(db.getTagColor(tagId));
+		picker.setOldCenterColor(tag.color);
+		picker.setColor(tag.color);
 
 		db.close();
 
@@ -407,7 +391,7 @@ public class EditVerseFragment extends Fragment {
 
 					int pickerColor = picker.getColor();
 					String colorString = String.format("#%02X%02X%02X", Color.red(pickerColor), Color.green(pickerColor), Color.blue(pickerColor));
-                    db.updateTag(tagId, text, colorString);
+                    db.updateTag(tag.id, text, colorString);
                     db.close();
                     tagAdapter.notifyDataSetChanged();
                     dialog.dismiss();
@@ -417,7 +401,7 @@ public class EditVerseFragment extends Fragment {
         dialog.show();
     }
 
-    private void removeTag(final int tagId) {
+    private void removeTag(final Tag tag) {
         final View view = LayoutInflater.from(context).inflate(R.layout.popup_remove_tag, null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view);
@@ -436,10 +420,10 @@ public class EditVerseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 VerseDB db = new VerseDB(context).open();
-                passage.removeTag(db.getTagName(tagId));
+                passage.removeTag(tag);
                 db.updateVerse(passage);
                 db.close();
-                tagAdapter.removeTag(tagId);
+                tagAdapter.removeTag(tag);
                 tagAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
@@ -449,11 +433,11 @@ public class EditVerseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 VerseDB db = new VerseDB(context).open();
-                passage.removeTag(db.getTagName(tagId));
+                passage.removeTag(tag);
                 db.updateVerse(passage);
-                db.deleteTag(tagId);
+                db.deleteTag(tag);
                 db.close();
-                tagAdapter.removeTag(tagId);
+                tagAdapter.removeTag(tag);
                 tagAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
@@ -463,47 +447,97 @@ public class EditVerseFragment extends Fragment {
     }
 
     private void addNewTag() {
-        final View view = LayoutInflater.from(context).inflate(R.layout.popup_new_tag, null);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setView(view);
+//        final View view = LayoutInflater.from(context).inflate(R.layout.popup_new_tag, null);
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//        builder.setView(view);
+//
+//        final AlertDialog dialog = builder.create();
+//
+//        final AutoCompleteTextView edit = (AutoCompleteTextView) view.findViewById(R.id.edit_text);
+//        VerseDB db = new VerseDB(context).open();
+//
+//        ArrayList<Tag> tagSuggestions = db.getAllTags();
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+//                context,
+//                android.R.layout.simple_list_item_1,
+//                tagSuggestions
+//        );
+//        edit.setAdapter(adapter);
+//
+//        TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
+//        cancelButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        TextView addButton = (TextView) view.findViewById(R.id.add_button);
+//        addButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String text = edit.getText().toString().trim();
+//                if(text.length() > 0) {
+//                    VerseDB db = new VerseDB(context).open();
+//                    passage.addTag(new Tag(text));
+//                    db.updateVerse(passage);
+//					int id = (int)db.getTagID(text);
+//                    tagAdapter.addTag(new Tag(text, id, db.getTagColor(id), db.getTagCount(id)));
+//                    tagAdapter.notifyDataSetChanged();
+//                    dialog.dismiss();
+//                }
+//            }
+//        });
+//        dialog.show();
 
-        final AlertDialog dialog = builder.create();
+		final View view = LayoutInflater.from(context).inflate(R.layout.popup_new_tag, null);
+		final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setView(view);
 
-        final AutoCompleteTextView edit = (AutoCompleteTextView) view.findViewById(R.id.edit_text);
-        VerseDB db = new VerseDB(context).open();
+		final AlertDialog dialog = builder.create();
 
-        String[] tagSuggestions = db.getAllTagNames();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                context,
-                android.R.layout.simple_list_item_1,
-                tagSuggestions
-        );
-        edit.setAdapter(adapter);
+		final AutoCompleteTextView edit = (AutoCompleteTextView) view.findViewById(R.id.edit_text);
+		VerseDB db = new VerseDB(context).open();
 
-        TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+		ArrayList<Tag> tags = db.getAllTags();
+		if(tags.size() > 0) {
+			ArrayList<String> tagSuggestions = new ArrayList<>();
+			for(Tag tag : tags) tagSuggestions.add(tag.name);
 
-        TextView addButton = (TextView) view.findViewById(R.id.add_button);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text = edit.getText().toString().trim();
-                if(text.length() > 0) {
+			ArrayAdapter<String> adapter = new ArrayAdapter<>(
+					context,
+					android.R.layout.simple_list_item_1,
+					tagSuggestions
+			);
+			edit.setAdapter(adapter);
+		}
+		db.close();
+
+		TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
+		cancelButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		TextView addButton = (TextView) view.findViewById(R.id.add_button);
+		addButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String text = edit.getText().toString().trim();
+				if(text.length() > 0) {
                     VerseDB db = new VerseDB(context).open();
-                    passage.addTag(text);
+                    passage.addTag(new Tag(text));
                     db.updateVerse(passage);
-                    tagAdapter.addTag((int)db.getTagID(text));
+					Tag tag = db.getTag(text);
+                    tagAdapter.addTag(new Tag(text, tag.id, tag.color, tag.count));
                     tagAdapter.notifyDataSetChanged();
                     dialog.dismiss();
                 }
-            }
-        });
-        dialog.show();
+			}
+		});
+		dialog.show();
     }
 
 //ActionBar

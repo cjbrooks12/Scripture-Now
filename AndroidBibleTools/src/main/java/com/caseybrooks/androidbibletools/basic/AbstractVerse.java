@@ -17,14 +17,14 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
     protected final Reference reference;
     protected Formatter formatter;
     protected Metadata metadata;
-	protected TreeSet<String> tags;
+	protected TreeSet<Tag> tags;
 
 	public AbstractVerse(Reference reference) {
 		this.version = Version.KJV;
         this.reference = reference;
         this.formatter = new DefaultFormatter();
         this.metadata = new Metadata();
-		this.tags = new TreeSet<String>();
+		this.tags = new TreeSet<Tag>();
 	}
 
     public AbstractVerse(String reference) throws ParseException {
@@ -32,7 +32,7 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
         this.reference = new Reference(reference);
         this.formatter = new DefaultFormatter();
         this.metadata = new Metadata();
-        this.tags = new TreeSet<String>();
+        this.tags = new TreeSet<Tag>();
     }
 
 //Defined methods
@@ -51,30 +51,30 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
         return this;
     }
 
-    public AbstractVerse removeTag(String tag) {
+    public AbstractVerse removeTag(Tag tag) {
         if(tags.contains(tag)) tags.remove(tag);
 
         return this;
     }
 
-	public AbstractVerse setTags(String... tags) {
-		for (String item : tags) {
+	public AbstractVerse setTags(Tag... tags) {
+		for(Tag item : tags) {
 			this.tags.add(item);
 		}
 		return this;
 	}
 
-	public AbstractVerse addTag(String tag) {
+	public AbstractVerse addTag(Tag tag) {
 		this.tags.add(tag);
 		return this;
 	}
 
-	public boolean containsTag(String tag) {
+	public boolean containsTag(Tag tag) {
 		return this.tags.contains(tag);
 	}
 
-	public String[] getTags() {
-		String[] tags = new String[this.tags.size()];
+	public Tag[] getTags() {
+		Tag[] tags = new Tag[this.tags.size()];
 		this.tags.toArray(tags);
 		return tags;
 	}

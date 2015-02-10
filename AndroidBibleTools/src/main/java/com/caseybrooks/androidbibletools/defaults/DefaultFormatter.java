@@ -1,6 +1,7 @@
 package com.caseybrooks.androidbibletools.defaults;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.data.Formatter;
 import com.caseybrooks.androidbibletools.data.Reference;
 
@@ -165,8 +166,8 @@ public class DefaultFormatter implements Formatter {
 		@Override
 		public String onPostFormat() {
 			String tags = "";
-			for(String s : passage.getTags()) {
-				tags += "{/tag \"" + s + "\"}";
+			for(Tag s : passage.getTags()) {
+				tags += "{/tag \"" + s.name + "\"}";
 			}
 
 			return tags;

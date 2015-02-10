@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -14,8 +15,8 @@ import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.QuickNotification;
-import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 import com.caseybrooks.scripturememory.nowcards.main.Main;
+import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 import com.caseybrooks.scripturememory.nowcards.main.MainWidget;
 
 import org.jsoup.Jsoup;
@@ -105,7 +106,7 @@ public class VOTD {
 		if(currentVerse != null) {
 			VerseDB db = new VerseDB(context).open();
 			currentVerse.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
-			currentVerse.addTag("VOTD");
+			currentVerse.addTag(new Tag("VOTD"));
 			int id = db.getVerseId(currentVerse.getReference());
 			if(id == -1) {
 				id = db.insertVerse(currentVerse);
@@ -127,7 +128,7 @@ public class VOTD {
         int id = db.getVerseId(currentVerse.getReference());
         Main.putVerseId(context, id);
         Main.setActive(context, true);
-        Main.putWorkingList(context, VerseListFragment.TAGS, (int) db.getTagID("VOTD"));
+        Main.putWorkingList(context, VerseListFragment.TAGS, db.getTag("VOTD").id);
         db.close();
 
         updateAll();
@@ -212,7 +213,7 @@ public class VOTD {
                 if (currentVerse != null) {
                     currentVerse.setVersion(MetaSettings.getBibleVersion(context));
                     currentVerse.retrieve();
-                    currentVerse.addTag("VOTD");
+                    currentVerse.addTag(new Tag("VOTD"));
                     currentVerse.getMetadata().putInt(DefaultMetaData.STATE, votdState);
 
                     VerseDB db = new VerseDB(context).open();
