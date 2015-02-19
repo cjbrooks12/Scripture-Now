@@ -12,6 +12,7 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -225,8 +226,19 @@ public abstract class PreferenceFragment extends Fragment {
         return mList;
     }
 
+	Toolbar toolbar;
+
+	public void setToolbar(Toolbar toolbar) {
+		this.toolbar = toolbar;
+	}
+
     private void ensureList() {
         if (mList != null) {
+
+//			Toast.makeText(getActivity(), "Should be adding a button", Toast.LENGTH_SHORT).show();
+//			Button button = new Button(getActivity());
+//			button.setText("This is some really, really long string that I want to add to the button that will hopefully make it very, very large, such that the resulting Button on the screen will stretch across the whole screen and have multiple lines of text within in, ensuring that I can actually see something when it gets set as the header view");
+//			if(toolbar != null) mList.addHeaderView(toolbar, null, false);
             return;
         }
         View root = getView();
@@ -241,6 +253,13 @@ public abstract class PreferenceFragment extends Fragment {
         if (mList == null) {
             throw new RuntimeException("Your content must have a ListView whose id attribute is 'android.R.id.list'");
         }
-        mHandler.sendEmptyMessage(MSG_REQUEST_FOCUS);
+
+//		Toast.makeText(getActivity(), "Should be adding a button, but now with jazz", Toast.LENGTH_SHORT).show();
+//		Button button = new Button(getActivity());
+//		button.setText("This is some really, really long string that I want to add to the button that will hopefully make it very, very large, such that the resulting Button on the screen will stretch across the whole screen and have multiple lines of text within in, ensuring that I can actually see something when it gets set as the header view");
+//		mList.addHeaderView(button, null, false);
+//		if(toolbar != null) mList.addHeaderView(toolbar, null, false);
+
+		mHandler.sendEmptyMessage(MSG_REQUEST_FOCUS);
     }
 }

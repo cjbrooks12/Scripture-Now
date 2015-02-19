@@ -266,7 +266,9 @@ public class VerseDB {
                 String[] tagNumbers = commaSeparatedTags.split(",");
                 for (int i = 1; i < tagNumbers.length; i++) {
                     if (tagNumbers[i].length() >= 1) {
-						passage.addTag(getTag(Integer.parseInt(tagNumbers[i])));
+						Tag tag = getTag(Integer.parseInt(tagNumbers[i]));
+						if(tag != null) passage.addTag(tag);
+						else Log.i("GET TAG", "null tag with id [" + tagNumbers[i] + "]");
                     }
                 }
             }
@@ -398,7 +400,19 @@ public class VerseDB {
             ArrayList<Tag> tags = new ArrayList<>();
 
             for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-                tags.add(getTag(c.getInt(c.getColumnIndex(KEY_TAGS_ID))));
+				Tag tag = getTag(c.getInt(c.getColumnIndex(KEY_TAGS_ID)));
+				if(tag.name.equalsIgnoreCase("VOTD")) {
+					ArrayList<Passage> votdVerses = getTaggedVerses(tag.id);
+					for(Passage passage : votdVerses) {
+						if(passage.getMetadata().getInt(DefaultMetaData.STATE) != VOTD) {
+							tags.add(tag);
+							break;
+						}
+					}
+				}
+				else {
+					tags.add(tag);
+				}
 			}
 
             Collections.sort(tags);

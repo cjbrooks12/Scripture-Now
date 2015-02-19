@@ -24,7 +24,7 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
         this.reference = reference;
         this.formatter = new DefaultFormatter();
         this.metadata = new Metadata();
-		this.tags = new TreeSet<Tag>();
+		this.tags = new TreeSet<>();
 	}
 
     public AbstractVerse(String reference) throws ParseException {
@@ -32,7 +32,7 @@ public abstract class AbstractVerse implements Comparable<AbstractVerse> {
         this.reference = new Reference(reference);
         this.formatter = new DefaultFormatter();
         this.metadata = new Metadata();
-        this.tags = new TreeSet<Tag>();
+        this.tags = new TreeSet<>();
     }
 
 //Defined methods

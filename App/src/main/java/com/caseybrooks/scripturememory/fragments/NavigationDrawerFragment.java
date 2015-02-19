@@ -120,22 +120,6 @@ public class NavigationDrawerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView = (ParallaxExpandableListView) view.findViewById(R.id.navListView);
 
-		if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			View statusBar = view.findViewById(R.id.statusBar);
-
-			int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-			if (resourceId > 0) {
-				int height = getResources().getDimensionPixelSize(resourceId);
-				statusBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
-			}
-
-			float[] hsv = new float[3];
-			Color.colorToHSV(getResources().getColor(R.color.forest_green_light), hsv);
-			hsv[2] *= 0.8f; // value component
-			statusBar.setBackgroundColor(Color.HSVToColor(hsv));
-		}
-
-
 		populateList();
 
         return view;

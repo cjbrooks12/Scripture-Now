@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
@@ -33,16 +32,6 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
-		if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			statusBar = findViewById(R.id.statusBar);
-
-			int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-			if (resourceId > 0) {
-				int height = getResources().getDimensionPixelSize(resourceId);
-				statusBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
-			}
-		}
 
         // Set up the drawer.
         tb = (Toolbar) findViewById(R.id.activity_toolbar);
@@ -98,15 +87,12 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
 		ColorDrawable colorDrawable = new ColorDrawable(color);
 		ab.setBackgroundDrawable(colorDrawable);
 		ab.setTitle(name);
+		ab.setDisplayHomeAsUpEnabled(true);
 
-		float[] hsv = new float[3];
-		Color.colorToHSV(color, hsv);
-		hsv[2] *= 0.8f; // value component
-
-		if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			statusBar.setBackgroundColor(Color.HSVToColor(hsv));
-		}
-		else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			float[] hsv = new float[3];
+			Color.colorToHSV(color, hsv);
+			hsv[2] *= 0.8f; // value component
 			getWindow().setStatusBarColor(Color.HSVToColor(hsv));
 		}
 	}

@@ -19,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
@@ -77,17 +76,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		//if on KitKat, manually manage the status bar color
-		if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			statusBar = findViewById(R.id.statusBar);
-
-			int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-			if (resourceId > 0) {
-				int height = getResources().getDimensionPixelSize(resourceId);
-				statusBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
-			}
-		}
 
         // Set up the drawer.
         tb = (Toolbar) findViewById(R.id.activity_toolbar);
@@ -411,14 +399,10 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		ab.setBackgroundDrawable(colorDrawable);
 		ab.setTitle(name);
 
-		float[] hsv = new float[3];
-		Color.colorToHSV(color, hsv);
-		hsv[2] *= 0.7f; // value component
-
-		if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			statusBar.setBackgroundColor(Color.HSVToColor(hsv));
-		}
-		else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			float[] hsv = new float[3];
+			Color.colorToHSV(color, hsv);
+			hsv[2] *= 0.7f; // value component
 			getWindow().setStatusBarColor(Color.HSVToColor(hsv));
 		}
 	}
@@ -469,7 +453,8 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 
     @Override
     public void toSettings() {
-        Fragment fragment = new SettingsFragment();
+        SettingsFragment fragment = new SettingsFragment();
+		fragment.setToolbar(tb);
         setFragment(fragment);
     }
 

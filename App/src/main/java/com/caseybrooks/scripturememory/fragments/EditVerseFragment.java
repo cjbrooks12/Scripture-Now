@@ -346,7 +346,25 @@ public class EditVerseFragment extends Fragment {
                 notifyDataSetChanged();
             }
         }
-    }
+
+		@Override
+		public void notifyDataSetChanged() {
+			VerseDB db = new VerseDB(context).open();
+
+			for(Tag tag : tags) {
+				if(tag.id != -10) {
+					Tag updatedTag = db.getTag(tag.id);
+					tag.name = updatedTag.name;
+					tag.color = updatedTag.color;
+				}
+			}
+
+			db.close();
+
+			super.notifyDataSetChanged();
+
+		}
+	}
 
 //Popups for tags
 //------------------------------------------------------------------------------
