@@ -155,7 +155,7 @@ public class VOTD {
                             && today.get(Calendar.DAY_OF_YEAR) == current.get(Calendar.DAY_OF_YEAR));
 
             if(!isCurrent) {
-				if(currentVerse.getMetadata().getInt(DefaultMetaData.STATE) != VerseDB.VOTD) {
+				if(currentVerse.getMetadata().getInt(DefaultMetaData.STATE) == VerseDB.VOTD) {
 					db.open();
 					db.deleteVerse(currentVerse);
 					db.close();

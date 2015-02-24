@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
+import com.caseybrooks.androidbibletools.basic.Verse;
 import com.caseybrooks.androidbibletools.data.Metadata;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
@@ -43,6 +44,7 @@ import com.caseybrooks.scripturememory.nowcards.main.Main;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -173,46 +175,57 @@ public class VerseListFragment extends ListFragment {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
-                        case R.id.context_list_post:
-                            Main.putVerseId(context, vh.passage.getMetadata().getInt(DefaultMetaData.ID));
-                            Main.setActive(context, true);
-                            Main.putWorkingList(context, listType, listId);
-							MainNotification.getInstance(context).create().show();
-                            Toast.makeText(context, vh.passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
-                            return true;
-                        case R.id.context_list_add_tag:
-                            addTag(listOfOne);
-                            return true;
-                        case R.id.context_list_change_state:
-                            changeState(listOfOne);
-                            return true;
-                        case R.id.context_list_view_in_broswer:
-                            String url = vh.passage.getURL();
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setData(Uri.parse(url));
-                            Toast.makeText(context, "Opening browser...", Toast.LENGTH_SHORT).show();
-                            context.startActivity(i);
-                            return true;
-                        case R.id.context_list_share:
-                            String shareMessage = vh.passage.getReference() + " - " + vh.passage.getText();
-                            Intent intent = new Intent();
-                            intent.setType("text/plain");
-                            intent.setAction(Intent.ACTION_SEND);
-                            intent.putExtra(Intent.EXTRA_SUBJECT, vh.passage.getReference().toString());
-                            intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                            startActivity(Intent.createChooser(intent, "Share To..."));
-                            return true;
-                        case R.id.context_list_delete:
-                            delete(listOfOne);
-                            return true;
-                        default:
-                            return false;
+					case R.id.context_list_post:
+						Main.putVerseId(context, vh.passage.getMetadata().getInt(DefaultMetaData.ID));
+						Main.setActive(context, true);
+						Main.putWorkingList(context, listType, listId);
+						MainNotification.getInstance(context).create().show();
+						Toast.makeText(context, vh.passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
+						return true;
+					case R.id.context_list_add_tag:
+						addTag(listOfOne);
+						return true;
+					case R.id.context_list_change_state:
+						changeState(listOfOne);
+						return true;
+					case R.id.context_list_split_verses:
+						splitVerse(vh.passage);
+						return true;
+					case R.id.context_list_view_in_broswer:
+						String url = vh.passage.getURL();
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse(url));
+						Toast.makeText(context, "Opening browser...", Toast.LENGTH_SHORT).show();
+						context.startActivity(i);
+						return true;
+					case R.id.context_list_share:
+						String shareMessage = vh.passage.getReference() + " - " + vh.passage.getText();
+						Intent intent = new Intent();
+						intent.setType("text/plain");
+						intent.setAction(Intent.ACTION_SEND);
+						intent.putExtra(Intent.EXTRA_SUBJECT, vh.passage.getReference().toString());
+						intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+						startActivity(Intent.createChooser(intent, "Share To..."));
+						return true;
+					case R.id.context_list_delete:
+						delete(listOfOne);
+						return true;
+					default:
+						return false;
                     }
                 }
             });
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.context_list, popup.getMenu());
-            popup.show();
+
+			if(vh.passage.getVerses().length > 1) {
+				popup.getMenu().findItem(R.id.context_list_split_verses).setVisible(true);
+			}
+			else {
+				popup.getMenu().findItem(R.id.context_list_split_verses).setVisible(false);
+			}
+
+			popup.show();
         }
     };
 
@@ -815,4 +828,73 @@ public class VerseListFragment extends ListFragment {
         });
         dialog.show();
     }
+
+	private void splitVerse(Passage passage) {
+		VerseDB db = new VerseDB(context).open();
+		db.deleteVerse(passage);
+
+
+	}
+
+	private class SplitVerse extends AsyncTask<Void, Void, Void> {
+		Passage passage;
+		ArrayList<Passage> splitVerses;
+
+		public SplitVerse(Passage passage) {
+			this.passage = passage;
+			splitVerses = new ArrayList<>();
+		}
+
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
+
+			VerseDB db = new VerseDB(context).open();
+			db.deleteVerse(passage);
+
+			for(Passage splitVerse : splitVerses) {
+				db.insertVerse(splitVerse);
+			}
+
+			populateBibleVerses();
+		}
+
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				Verse[] verses = passage.getVerses();
+
+				for(Verse verse : verses) {
+					Passage newPassage = new Passage(verse.getReference());
+
+					newPassage.setVersion(passage.getVersion());
+					newPassage.setMetadata(passage.getMetadata());
+					for(Tag tag : passage.getTags()) {
+						newPassage.addTag(tag);
+					}
+					newPassage.addTag(new Tag(passage.getReference().toString()));
+
+					newPassage.retrieve();
+				}
+
+				return null;
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+				return null;
+			}
+		}
+	}
 }

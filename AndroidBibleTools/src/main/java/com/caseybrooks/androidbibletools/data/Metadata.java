@@ -2,6 +2,7 @@ package com.caseybrooks.androidbibletools.data;
 
 import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -167,4 +168,20 @@ public class Metadata {
         }
     }
 
+	public static class MultiComparator implements java.util.Comparator<AbstractVerse> {
+		ArrayList<Comparator> comparisonCriteria;
+
+		public MultiComparator(ArrayList<Comparator> comparisonCriteria) {
+			this.comparisonCriteria = comparisonCriteria;
+		}
+
+		@Override
+		public int compare(AbstractVerse lhs, AbstractVerse rhs) {
+			for (Comparator comparator : comparisonCriteria) {
+				int comparison = comparator.compare(lhs, rhs);
+				if (comparison != 0) return comparison;
+			}
+			return 0;
+		}
+	}
 }
