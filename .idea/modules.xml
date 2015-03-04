@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidBibleTools/AndroidBibleTools.iml" filepath="$PROJECT_DIR$/AndroidBibleTools/AndroidBibleTools.iml" />
       <module fileurl="file://$PROJECT_DIR$/App/App.iml" filepath="$PROJECT_DIR$/App/App.iml" />
       <module fileurl="file://$PROJECT_DIR$/scripturememory.iml" filepath="$PROJECT_DIR$/scripturememory.iml" />
     </modules>

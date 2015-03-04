@@ -436,6 +436,11 @@
     <string name="toggle_notification">Toggle Notification</string>
     <string name="verse">Verse</string>
     <string name="verse_of_the_day">Verse Of The Day</string>
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/0.1.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+		<!-- Customize your theme here. -->
+	</style>
     <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance">
