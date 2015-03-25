@@ -40,6 +40,7 @@ public class Util {
             return slideInLeft;
         }
 
+		//slide out right animation
         @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         public static Animator slideOutRight(Activity activity) {
             Display display = activity.getWindowManager().getDefaultDisplay();
