@@ -68,10 +68,20 @@ public class MainNotification {
 				PendingIntent dismissPI = PendingIntent.getBroadcast(context, 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
 				contentView.setOnClickPendingIntent(R.id.notification_main_dismiss, dismissPI);
 
+				//go to the previous verse
+				Intent previousVerse = new Intent(context, Main.PreviousVerseReceiver.class);
+				PendingIntent previousVersePI = PendingIntent.getBroadcast(context, 0, previousVerse, PendingIntent.FLAG_CANCEL_CURRENT);
+				contentView.setOnClickPendingIntent(R.id.notification_main_previous, previousVersePI);
+
 				//go to the next verse
 				Intent nextVerse = new Intent(context, Main.NextVerseReceiver.class);
 				PendingIntent nextVersePI = PendingIntent.getBroadcast(context, 0, nextVerse, PendingIntent.FLAG_CANCEL_CURRENT);
 				contentView.setOnClickPendingIntent(R.id.notification_main_next, nextVersePI);
+
+				//go to the next verse
+				Intent randomVerse = new Intent(context, Main.RandomVerseReceiver.class);
+				PendingIntent randomVersePI = PendingIntent.getBroadcast(context, 0, randomVerse, PendingIntent.FLAG_CANCEL_CURRENT);
+				contentView.setOnClickPendingIntent(R.id.notification_main_random, randomVersePI);
 
 				//toggle full and formatted text in notification
 				Intent showFull = new Intent(context, Main.TextFullReceiver.class);

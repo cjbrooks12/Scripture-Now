@@ -16,7 +16,9 @@ import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Random;
 
 public class Main {
 //SharedPreferences relevant to the main notification
@@ -174,6 +176,107 @@ public class Main {
         db.close();
     }
 
+	private void getPreviousVerse() {
+		Pair<Integer, Integer> workingList = getWorkingList(context);
+		if(workingList.first == -1) return;
+
+		int currentVerseId = getVerseId(context);
+		VerseDB db = new VerseDB(context);
+
+		//get the active list of verses
+		ArrayList<Passage> passages;
+		if(workingList.first == VerseListFragment.STATE) {
+			db.open();
+			passages = db.getStateVerses(workingList.second);
+			db.close();
+		}
+		else if(workingList.first == VerseListFragment.TAGS) {
+			db.open();
+			passages = db.getTaggedVerses(workingList.second);
+			db.close();
+		}
+		else return;
+
+		//sort the verses as chosen by the users
+		Metadata.Comparator comparator;
+		switch(MetaSettings.getSortBy(context)) {
+		case 0: comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED); break;
+		case 1: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE); break;
+		case 2: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL); break;
+		case 3: comparator = new Metadata.Comparator(DefaultMetaData.STATE); break;
+		default: comparator = new Metadata.Comparator(DefaultMetaData.ID); break;
+		}
+		Collections.sort(passages, comparator);
+
+		//search through list to find the currently active list, and set the next verse to be the active verse
+		for(int i = 0; i < passages.size(); i++) {
+			if(passages.get(i).getMetadata().getInt(DefaultMetaData.ID) == currentVerseId) {
+				if(i == 0) {
+					currentVerseId = passages.get(passages.size()-1).getMetadata().getInt(DefaultMetaData.ID);
+					break;
+				}
+				else {
+					currentVerseId = passages.get(i-1).getMetadata().getInt(DefaultMetaData.ID);
+					break;
+				}
+			}
+		}
+
+		putVerseId(context, currentVerseId);
+		db.open();
+		passage = db.getVerse(currentVerseId);
+		db.close();
+	}
+
+	private void getRandomVerse() {
+		Pair<Integer, Integer> workingList = getWorkingList(context);
+		if(workingList.first == -1) return;
+
+		int currentVerseId = getVerseId(context);
+		VerseDB db = new VerseDB(context);
+
+		//get the active list of verses
+		ArrayList<Passage> passages;
+		if(workingList.first == VerseListFragment.STATE) {
+			db.open();
+			passages = db.getStateVerses(workingList.second);
+			db.close();
+		}
+		else if(workingList.first == VerseListFragment.TAGS) {
+			db.open();
+			passages = db.getTaggedVerses(workingList.second);
+			db.close();
+		}
+		else return;
+
+		//sort the verses as chosen by the users
+		Metadata.Comparator comparator;
+		switch(MetaSettings.getSortBy(context)) {
+		case 0: comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED); break;
+		case 1: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE); break;
+		case 2: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL); break;
+		case 3: comparator = new Metadata.Comparator(DefaultMetaData.STATE); break;
+		default: comparator = new Metadata.Comparator(DefaultMetaData.ID); break;
+		}
+		Collections.sort(passages, comparator);
+
+		//search through list to find the currently active list, and set the next verse to be the active verse
+		if(passages.size() > 1) {
+			int randomVerseId = 0;
+			Random random = new Random(Calendar.getInstance().getTimeInMillis());
+			while(true) {
+				randomVerseId = passages.get(random.nextInt(passages.size())).getMetadata().getInt(DefaultMetaData.ID);
+				if(randomVerseId != currentVerseId) {
+					break;
+				}
+			}
+			putVerseId(context, randomVerseId);
+			db.open();
+			passage = db.getVerse(randomVerseId);
+			db.close();
+		}
+	}
+
     public void updateAll() {
         //update all the dashboard cards
         context.sendBroadcast(new Intent(DashboardFragment.REFRESH));
@@ -187,6 +290,15 @@ public class Main {
         }
     }
 
+	public static class PreviousVerseReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Main mv = new Main(context);
+			mv.getPreviousVerse();
+			mv.updateAll();
+		}
+	}
+
     public static class NextVerseReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -195,6 +307,15 @@ public class Main {
             mv.updateAll();
         }
     }
+
+	public static class RandomVerseReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Main mv = new Main(context);
+			mv.getRandomVerse();
+			mv.updateAll();
+		}
+	}
 
     public static class DismissVerseReceiver extends BroadcastReceiver {
         @Override

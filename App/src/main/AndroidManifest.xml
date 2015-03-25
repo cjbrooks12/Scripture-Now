@@ -23,10 +23,18 @@
             android:name=".nowcards.main.Main$DismissVerseReceiver"
             android:enabled="true"
             android:exported="false" />
+		<receiver
+			android:name=".nowcards.main.Main$PreviousVerseReceiver"
+			android:enabled="true"
+			android:exported="false" />
         <receiver
             android:name=".nowcards.main.Main$NextVerseReceiver"
             android:enabled="true"
             android:exported="false" />
+		<receiver
+			android:name=".nowcards.main.Main$RandomVerseReceiver"
+			android:enabled="true"
+			android:exported="false" />
 		<receiver
 			android:name=".nowcards.main.Main$TextFullReceiver"
 			android:enabled="true"

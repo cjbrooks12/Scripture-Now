@@ -22,7 +22,7 @@
 		android:id="@+id/notification_main_icon_layout"
 		android:layout_width="64dp"
 		android:layout_height="64dp"
-		android:background="#222222"
+		android:background="#101010"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true">
@@ -74,6 +74,27 @@
 		android:layout_below="@id/hline"
 		android:layout_alignParentRight="true"
 		android:layout_alignParentEnd="true">
+
+		<ImageView
+			android:id="@+id/notification_main_random"
+			android:background="@drawable/bg_transparent_hard_edge"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginLeft="8dp"
+			android:alpha="0.75"
+			android:src="@drawable/ic_action_shuffle_dark"/>
+
+		<ImageView
+			android:id="@+id/notification_main_previous"
+			android:background="@drawable/bg_transparent_hard_edge"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginLeft="8dp"
+			android:alpha="0.75"
+			android:src="@drawable/ic_action_arrow_left_dark"/>
+
 		<ImageView
 			android:id="@+id/notification_main_next"
 			android:background="@drawable/bg_transparent_hard_edge"

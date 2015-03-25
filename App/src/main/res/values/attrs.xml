@@ -19,7 +19,9 @@
     <attr name="ic_action_refresh" format="reference" />
     <attr name="ic_action_done" format="reference" />
     <attr name="ic_action_arrow_right" format="reference" />
-    <attr name="ic_action_clear" format="reference" />
+	<attr name="ic_action_arrow_left" format="reference" />
+	<attr name="ic_action_shuffle" format="reference" />
+	<attr name="ic_action_clear" format="reference" />
     <attr name="ic_action_share" format="reference" />
     <attr name="ic_action_delete" format="reference" />
     <attr name="ic_action_select_all" format="reference" />

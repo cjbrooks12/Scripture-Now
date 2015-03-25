@@ -26,7 +26,15 @@
             android:enabled="true"
             android:exported="false" />
         <receiver
+            android:name="com.caseybrooks.scripturememory.nowcards.main.Main$PreviousVerseReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
             android:name="com.caseybrooks.scripturememory.nowcards.main.Main$NextVerseReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name="com.caseybrooks.scripturememory.nowcards.main.Main$RandomVerseReceiver"
             android:enabled="true"
             android:exported="false" />
         <receiver

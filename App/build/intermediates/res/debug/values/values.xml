@@ -126,6 +126,7 @@
     <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/values/attrs.xml -->
     <eat-comment/>
     <attr format="reference" name="ic_action_add"/>
+    <attr format="reference" name="ic_action_arrow_left"/>
     <attr format="reference" name="ic_action_arrow_right"/>
     <attr format="reference" name="ic_action_clear"/>
     <attr format="reference" name="ic_action_cloud_download"/>
@@ -146,6 +147,7 @@
     <attr format="reference" name="ic_action_select_all"/>
     <attr format="reference" name="ic_action_settings"/>
     <attr format="reference" name="ic_action_share"/>
+    <attr format="reference" name="ic_action_shuffle"/>
     <attr format="reference" name="ic_action_sort"/>
     <attr format="reference" name="ic_action_tag"/>
     <attr format="reference" name="ic_action_text_format"/>
@@ -1477,6 +1479,8 @@
         <item name="ic_action_refresh">@drawable/ic_action_refresh_dark</item>
         <item name="ic_action_done">@drawable/ic_action_done_dark</item>
         <item name="ic_action_arrow_right">@drawable/ic_action_arrow_right_dark</item>
+		<item name="ic_action_arrow_left">@drawable/ic_action_arrow_left_dark</item>
+		<item name="ic_action_shuffle">@drawable/ic_action_shuffle_dark</item>
         <item name="ic_action_clear">@drawable/ic_action_clear_dark</item>
         <item name="ic_action_share">@drawable/ic_action_share_dark</item>
         <item name="ic_action_delete">@drawable/ic_action_delete_dark</item>
@@ -1525,7 +1529,9 @@
         <item name="ic_action_refresh">@drawable/ic_action_refresh_light</item>
         <item name="ic_action_done">@drawable/ic_action_done_light</item>
         <item name="ic_action_arrow_right">@drawable/ic_action_arrow_right_light</item>
-        <item name="ic_action_clear">@drawable/ic_action_clear_light</item>
+		<item name="ic_action_arrow_left">@drawable/ic_action_arrow_left_light</item>
+		<item name="ic_action_shuffle">@drawable/ic_action_shuffle_light</item>
+		<item name="ic_action_clear">@drawable/ic_action_clear_light</item>
         <item name="ic_action_share">@drawable/ic_action_share_light</item>
         <item name="ic_action_delete">@drawable/ic_action_delete_light</item>
         <item name="ic_action_select_all">@drawable/ic_action_select_all_light</item>
