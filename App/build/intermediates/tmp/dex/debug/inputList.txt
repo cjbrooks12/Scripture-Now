@@ -3,7 +3,7 @@ C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dex
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-1aa5cbf1f046e73d15996d5353af0d65ba07166e.jar
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-f44bc2c474af4f7a4f7786acf058622d4257f84a.jar
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-61d97a0d63392e75d0f5034801c435d4d2956951.jar
-C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-b38af21cd3d43c39dd9f9f9df4020272fce61866.jar
+C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-d886ec8e3ee9398ca7c2f85e6a880453d054aa33.jar
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-a452ff9af5f551e22e9d8d35cf2360f68bc9f8fc.jar
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\jsoup-1.7.2-02eba155ee547721bc187da4cbecf1d649a264de.jar
 C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-2b0314e70644bdbfc2d51744a05b0f06369f797e.jar

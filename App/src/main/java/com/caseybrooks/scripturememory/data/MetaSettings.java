@@ -4,7 +4,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Pair;
 
-import com.caseybrooks.androidbibletools.enumeration.Version;
+import com.caseybrooks.androidbibletools.data.Bible;
 
 public class MetaSettings {
     public static final String settings_file = "my_settings";
@@ -12,8 +12,9 @@ public class MetaSettings {
     //settings saved through app settings
     public static final String APP_THEME = "APP_THEME";
     public static final String BIBLE_VERSION = "PREF_SELECTED_VERSION";
+	public static final String BIBLE_VERSION_LANGUAGE = "PREF_SELECTED_VERSION_LANGUAGE";
 
-    //settings set throughout app
+	//settings set throughout app
     public static final String FIRST_TIME = "FIRST_TIME_V3.0";
     public static final String CURRENT_VERSION = "CURRENT_VERSION";
     public static final String PROMPT_ON_START_INT = "PROMPT_ON_START_INT";
@@ -35,16 +36,24 @@ public class MetaSettings {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(APP_THEME, "0");
     }
 
-    public static Version getBibleVersion(Context context) {
-        String version = PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION, "King James Version");
-        return Version.parseVersion(version);
+    public static Bible getBibleVersion(Context context) {
+        String version = PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION, null);
+        return new Bible(version);
     }
+
+	public static String getBibleLanguage(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION_LANGUAGE, "eng-us");
+	}
+
+	public static void putBibleVersion(Context context, String id) {
+		PreferenceManager.getDefaultSharedPreferences(context).edit().putString(DRAWER_SELECTED_GROUP, id).commit();
+	}
 
     public static Pair<Integer, Integer> getDefaultScreen(Context context) {
         int group = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(DEFAULT_SCREEN_GROUP, "-1"));
         int child = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(DEFAULT_SCREEN_CHILD, "-1"));
 
-        return new Pair<Integer, Integer>(group, child);
+        return new Pair<>(group, child);
     }
 
     public static void putDrawerSelection(Context context, int group, int child) {

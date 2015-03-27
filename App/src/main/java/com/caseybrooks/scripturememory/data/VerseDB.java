@@ -12,9 +12,9 @@ import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
+import com.caseybrooks.androidbibletools.data.Bible;
 import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
 
 import org.jsoup.Jsoup;
@@ -250,10 +250,9 @@ public class VerseDB {
         else return null;
 
         try {
-            Passage passage = new Passage(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
+            Passage passage = Passage.parsePassage(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)), new Bible(null));
             passage.getMetadata().putInt(DefaultMetaData.ID, c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
             passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
-            passage.setVersion(Version.parseVersion(c.getString(c.getColumnIndex(KEY_VERSES_VERSION))));
             passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
             passage.getMetadata().putLong(DefaultMetaData.TIME_MODIFIED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_MODIFIED)));
             passage.getMetadata().putInt(DefaultMetaData.STATE, c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
@@ -288,7 +287,7 @@ public class VerseDB {
         ContentValues values = new ContentValues();
         values.put(KEY_VERSES_REFERENCE, passage.getReference().toString());
         values.put(KEY_VERSES_VERSE, passage.getText());
-        values.put(KEY_VERSES_VERSION, passage.getVersion().getCode());
+        values.put(KEY_VERSES_VERSION, passage.getBible().getVersionId());
         values.put(KEY_VERSES_DATE_ADDED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
@@ -317,7 +316,7 @@ public class VerseDB {
         ContentValues values = new ContentValues();
         values.put(KEY_VERSES_REFERENCE, passage.getReference().toString());
         values.put(KEY_VERSES_VERSE, passage.getText());
-        values.put(KEY_VERSES_VERSION, passage.getVersion().getCode());
+        values.put(KEY_VERSES_VERSION, passage.getBible().getVersionId());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
 
@@ -831,7 +830,7 @@ public void exportToBackupFile(File file) {
 			passageElement.appendChild(r);
 
 			Element q = doc.createElement("Q");
-			q.appendChild(doc.createTextNode(passage.getVersion().getName()));
+			q.appendChild(doc.createTextNode(passage.getBible().getVersionId()));
 			passageElement.appendChild(q);
 
 			Element t = doc.createElement("T");
@@ -880,13 +879,12 @@ public void exportToBackupFile(File file) {
 
 			if(doc.select("verses").size() > 0) {
 				for(org.jsoup.nodes.Element element : doc.select("passage")) {
-					Passage passage = new Passage(element.select("R").text());
+					Passage passage = Passage.parsePassage(element.select("R").text(), new Bible(null));
 
 					passage.getMetadata().putInt(DefaultMetaData.STATE, Integer.parseInt(element.attr("state")));
 					passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, Long.parseLong(element.attr("time_created")));
 					passage.getMetadata().putLong(DefaultMetaData.TIME_MODIFIED, Long.parseLong(element.attr("time_modified")));
 
-					passage.setVersion(Version.parseVersion(element.select("Q").text()));
 					passage.setText(element.select("P").text());
 
 					for(org.jsoup.nodes.Element tagElement : element.select("T").select("item")) {

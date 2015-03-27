@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
+import com.caseybrooks.androidbibletools.io.Download;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -31,7 +32,7 @@ public class VerseInputCard extends FrameLayout {
 //Data Members
 //------------------------------------------------------------------------------
 	Context context;
-	
+
 	public EditText editReference, editVerse;
 	TextView addVerse;
 	ImageButton contextMenu, searchButton;
@@ -42,21 +43,21 @@ public class VerseInputCard extends FrameLayout {
 	public VerseInputCard(Context context) {
 		super(context);
 		this.context = context;
-		
+
 		LayoutInflater.from(context).inflate(R.layout.card_verse_input, this);
-	    
+
 		initialize();
 	}
-	
+
 	public VerseInputCard(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-		
+
 		LayoutInflater.from(context).inflate(R.layout.card_verse_input, this);
-        
+
         initialize();
 	}
-	
+
 	void initialize() {
 		editReference = (EditText) findViewById(R.id.editReference);
 		editReference.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -108,17 +109,17 @@ public class VerseInputCard extends FrameLayout {
         setVisibility(View.GONE);
 		((ViewGroup)getParent()).removeView(VerseInputCard.this);
 	}
-	
+
 //Public Getters and Setters
-//------------------------------------------------------------------------------	
+//------------------------------------------------------------------------------
 	public void setReference(String reference) {
 		editReference.setText(reference);
 	}
-	
+
 	public void setVerse(String verse) {
 		editVerse.setText(verse);
     }
-	
+
 //OnClickListeners
 //------------------------------------------------------------------------------
 	private class SearchVerseAsync extends AsyncTask<Void, Void, Passage> {
@@ -129,9 +130,12 @@ public class VerseInputCard extends FrameLayout {
 			try {
 				if(Util.isConnected(context)) {
                     try {
-                        Passage passage = new Passage(editReference.getText().toString());
-                        passage.setVersion(MetaSettings.getBibleVersion(context));
-                        passage.retrieve();
+                        Passage passage = Passage.parsePassage(editReference.getText().toString(), MetaSettings.getBibleVersion(context));
+                        passage.getVerseInfo(Download.bibleChapter(
+								getResources().getString(R.string.bibles_org),
+								passage.getReference()
+
+						));
                         return passage;
                     }
                     catch (ParseException e) {
@@ -166,16 +170,15 @@ public class VerseInputCard extends FrameLayout {
 			}
 		}
 	}
- 	
+
  	private OnClickListener addVerseClick = new OnClickListener() {
  		@Override
  		public void onClick(final View v) {
 			if(editReference.getText().toString().trim().length() > 0 &&
 					editVerse.getText().toString().trim().length() > 0) {
 				try {
-                    Passage newVerse = new Passage(editReference.getText().toString());
+                    Passage newVerse = Passage.parsePassage(editReference.getText().toString(), MetaSettings.getBibleVersion(context));
                     newVerse.setText(editVerse.getText().toString());
-                    newVerse.setVersion(MetaSettings.getBibleVersion(context));
                     newVerse.getMetadata().putInt(DefaultMetaData.STATE, 1);
                     newVerse.getMetadata().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
                     VerseDB db = new VerseDB(context);
@@ -215,4 +218,4 @@ public class VerseInputCard extends FrameLayout {
 //        editVerse.setOnClickListener(textboxClicked);
 //    }
 }
-	
+

@@ -26,6 +26,7 @@ public class MainNotification {
 		if(instance == null) {
 			instance = new MainNotification(context);
 		}
+
 		return instance;
 	}
 

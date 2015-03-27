@@ -39,6 +39,7 @@ import android.widget.Toast;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
+import com.caseybrooks.androidbibletools.io.Download;
 import com.caseybrooks.androidbibletools.search.OpenBibleInfo;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
@@ -591,7 +592,7 @@ public class TopicalBibleFragment extends Fragment {
 
             reference.setText(passage.getReference().toString());
             verseText.setText(passage.getText());
-            version.setText(passage.getVersion().getCode().toUpperCase());
+            version.setText(passage.getBible().getVersionId().toUpperCase());
             upcount.setText(passage.getMetadata().getInt("UPVOTES") + " helpful votes");
 
             iconText.setText(passage.getMetadata().getInt("UPVOTES") + "");
@@ -755,8 +756,11 @@ public class TopicalBibleFragment extends Fragment {
 
             for(Passage passage : params[0]) {
                 try {
-                    passage.setVersion(MetaSettings.getBibleVersion(context));
-                    passage.retrieve();
+                    passage.setBible(MetaSettings.getBibleVersion(context));
+                    passage.getVerseInfo(Download.bibleChapter(
+						getResources().getString(R.string.bibles_org),
+							passage.getReference()
+					));
 					publishProgress(passage);
                 }
                 catch(IOException ioe) {

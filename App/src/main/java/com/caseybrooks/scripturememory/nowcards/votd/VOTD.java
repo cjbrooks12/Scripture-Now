@@ -9,6 +9,8 @@ import android.preference.PreferenceManager;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
+import com.caseybrooks.androidbibletools.io.Download;
+import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -206,15 +208,17 @@ public class VOTD {
                 Elements reference = doc.select("meta[property=og:title]");
 
                 try {
-                    currentVerse = new Passage(reference.attr("content").substring(18));
+                    currentVerse = Passage.parsePassage(reference.attr("content").substring(18), MetaSettings.getBibleVersion(context));
                 }
                 catch(ParseException e) {
                     currentVerse = null;
                 }
 
                 if (currentVerse != null) {
-                    currentVerse.setVersion(MetaSettings.getBibleVersion(context));
-                    currentVerse.retrieve();
+                    currentVerse.getVerseInfo(Download.bibleChapter(
+							context.getResources().getString(R.string.bibles_org),
+							currentVerse.getReference()
+					));
                     currentVerse.addTag(new Tag("VOTD"));
                     currentVerse.getMetadata().putInt(DefaultMetaData.STATE, votdState);
 

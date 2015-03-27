@@ -184,7 +184,6 @@ public class MainCard extends FrameLayout {
 //------------------------------------------------------------------------------
     public void expandCard() {
 		Main mv = new Main(context);
-
 		if(mv.passage != null) {
 			expandedhline.setVisibility(View.VISIBLE);
 			expandedSection.setVisibility(View.VISIBLE);

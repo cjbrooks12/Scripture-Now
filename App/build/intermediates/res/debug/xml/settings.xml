@@ -13,9 +13,13 @@
 				android:dialogTitle="App Theme"
 				android:defaultValue="Theme_Light" />
 			<ListPreference
+				android:key="PREF_SELECTED_VERSION_LANGUAGE"
+				android:title="Language"
+				android:dialogTitle="Available Languages" />
+			<ListPreference
 				android:key="PREF_SELECTED_VERSION"
 				android:title="Bible Version"
-				android:dialogTitle="App Theme" />
+				android:dialogTitle="Available Versions" />
 			<ListPreference
 				android:key="PREF_DEFAULT_SCREEN_GROUP"
 				android:title="Default Screen"

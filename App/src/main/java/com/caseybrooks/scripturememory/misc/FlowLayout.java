@@ -104,6 +104,7 @@ public class FlowLayout extends ViewGroup {
         setMeasuredDimension(widthMode == MeasureSpec.EXACTLY ? MeasureSpec.getSize(widthMeasureSpec) : longestRowWidth
                         + getHorizontalPadding(), heightMode == MeasureSpec.EXACTLY ? MeasureSpec.getSize(heightMeasureSpec)
                         : totalRowHeight + getVerticalPadding());
+
         currentRows = Collections.unmodifiableList(rows);
     }
 

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -35,6 +34,7 @@ import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.basic.Verse;
 import com.caseybrooks.androidbibletools.data.Metadata;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
+import com.caseybrooks.androidbibletools.io.Download;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -192,11 +192,11 @@ public class VerseListFragment extends ListFragment {
 						splitVerse(vh.passage);
 						return true;
 					case R.id.context_list_view_in_broswer:
-						String url = vh.passage.getURL();
-						Intent i = new Intent(Intent.ACTION_VIEW);
-						i.setData(Uri.parse(url));
-						Toast.makeText(context, "Opening browser...", Toast.LENGTH_SHORT).show();
-						context.startActivity(i);
+//						String url = vh.passage.getURL();
+//						Intent i = new Intent(Intent.ACTION_VIEW);
+//						i.setData(Uri.parse(url));
+//						Toast.makeText(context, "Opening browser...", Toast.LENGTH_SHORT).show();
+//						context.startActivity(i);
 						return true;
 					case R.id.context_list_share:
 						String shareMessage = vh.passage.getReference() + " - " + vh.passage.getText();
@@ -295,11 +295,11 @@ public class VerseListFragment extends ListFragment {
 					comparator = new Metadata.Comparator(DefaultMetaData.STATE);
 					break;
 				default:
-					comparator = new Metadata.Comparator("ID");
+					comparator = new Metadata.Comparator(DefaultMetaData.STATE);
 					break;
 				}
 
-				Collections.sort(verses, comparator);
+				if(comparator != null) Collections.sort(verses, comparator);
 
 				bibleVerseAdapter = new BibleVerseAdapter(context, verses, getListView());
 				bibleVerseAdapter.setOnItemClickListener(itemClick);
@@ -617,7 +617,7 @@ public class VerseListFragment extends ListFragment {
                     passageElement.appendChild(r);
 
                     org.w3c.dom.Element q = doc.createElement("Q");
-                    q.appendChild(doc.createTextNode(passages.get(i).getVersion().getName()));
+                    q.appendChild(doc.createTextNode(passages.get(i).getBible().getVersionId()));
                     passageElement.appendChild(q);
 
                     org.w3c.dom.Element t = doc.createElement("T");
@@ -880,14 +880,17 @@ public class VerseListFragment extends ListFragment {
 				for(Verse verse : verses) {
 					Passage newPassage = new Passage(verse.getReference());
 
-					newPassage.setVersion(passage.getVersion());
+					newPassage.setBible(passage.getBible());
 					newPassage.setMetadata(passage.getMetadata());
 					for(Tag tag : passage.getTags()) {
 						newPassage.addTag(tag);
 					}
 					newPassage.addTag(new Tag(passage.getReference().toString()));
 
-					newPassage.retrieve();
+					newPassage.getVerseInfo(Download.bibleChapter(
+							getResources().getString(R.string.bibles_org),
+							newPassage.getReference()
+					));
 				}
 
 				return null;

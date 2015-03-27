@@ -22,7 +22,6 @@ public class PopupDialog extends AlertDialog {
     }
 
     public void setProgressIndeterminate(boolean indeterminate) {
-
     }
 
     public void startProgress() {

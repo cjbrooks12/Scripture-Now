@@ -60,7 +60,6 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
 
             else if (item == 5) fragment = HelpFragment.ViewTopicFragment.newInstance(R.layout.help_changelog);
             else if (item == 6) fragment = HelpFragment.ViewTopicFragment.newInstance(R.layout.help_licenses);
-
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();

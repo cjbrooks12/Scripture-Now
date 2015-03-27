@@ -55,6 +55,7 @@ public class NavigationDrawerFragment extends Fragment {
     private ActionBarActivity parentActivity;
 
     public NavigationDrawerFragment() {
+
     }
 
     @Override

@@ -12,10 +12,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.data.Bible;
 import com.caseybrooks.androidbibletools.data.Formatter;
 import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
-import com.caseybrooks.androidbibletools.enumeration.Version;
+import com.caseybrooks.androidbibletools.io.Download;
 import com.caseybrooks.scripturememory.R;
 
 public class TestFragment extends Fragment {
@@ -57,12 +58,11 @@ public class TestFragment extends Fragment {
 				@Override
 				protected Void doInBackground(Void... params) {
 					try {
-						passage = new Passage("Galatians 2:19");
-						passage.setVersion(Version.ESV);
-//						passage.addTag("Favorite verse");
-//						passage.addTag("life");
-//						passage.addTag("good news");
-						passage.retrieve();
+						passage = Passage.parsePassage("Galatians 2:19", new Bible(null));
+						passage.getVerseInfo(Download.bibleChapter(
+								getResources().getString(R.string.bibles_org),
+								passage.getReference()
+						));
 
 						reference = passage.getReference().toString();
 
@@ -72,8 +72,6 @@ public class TestFragment extends Fragment {
 						passage.setFormatter(verseFormatter);
 						html = Html.fromHtml(passage.getText());
 
-						passage.setFormatter(new DefaultFormatter.Markup(passage));
-						markup = passage.getText();
 
 						passage.setText(markup);
 						passage.setFormatter(verseFormatter);
@@ -116,7 +114,7 @@ public class TestFragment extends Fragment {
 		}
 
 		@Override
-		public String onFormatNumber(int verseNumber) {
+		public String onFormatVerseStart(int verseNumber) {
 			return "<small><sup><b>" + verseNumber + "</b></sup></small>";
 		}
 
@@ -131,7 +129,7 @@ public class TestFragment extends Fragment {
 		}
 
 		@Override
-		public String onFormatNewVerse() {
+		public String onFormatVerseEnd() {
 			return "<br>";
 		}
 

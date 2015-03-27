@@ -27,8 +27,8 @@ import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
+import com.caseybrooks.androidbibletools.data.Bible;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.androidbibletools.enumeration.Version;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
@@ -304,17 +304,17 @@ public class ImportVersesFragment extends Fragment {
 
                             if (lineType.equals("r:")) {
                                 if (passage == null) {
-                                    passage = new Passage(line.substring(2).trim());
+                                    passage = Passage.parsePassage(line.substring(2).trim(), new Bible(null));
                                 }
                                 else {
                                     if(text != null && text.length() > 0) {
                                         passage.setText(text);
                                         verses.add(passage);
                                     }
-                                    passage = new Passage(line.substring(2).trim());
+                                    passage = Passage.parsePassage(line.substring(2).trim(), new Bible(null));
                                 }
                             } else if (lineType.equals("q:") && passage != null) {
-                                passage.setVersion(Version.parseVersion(line.substring(2).trim()));
+                                passage.setBible(new Bible(null));
                             } else {
 								if(lineType.equals("t:") && passage != null) {
 									String[] tags = line.substring(2).trim().split(",");
@@ -351,7 +351,7 @@ public class ImportVersesFragment extends Fragment {
                             passageElement.appendChild(r);
 
                             org.w3c.dom.Element q = doc.createElement("Q");
-                            q.appendChild(doc.createTextNode(item.getVersion().getName()));
+                            q.appendChild(doc.createTextNode(item.getBible().getVersionId()));
                             passageElement.appendChild(q);
 
                             //TODO: write all tags to file
@@ -495,8 +495,7 @@ public class ImportVersesFragment extends Fragment {
                     for(Element element : doc.select("passage")) {
                         if(!running) return null;
 
-                        Passage passage = new Passage(element.select("R").text());
-                        passage.setVersion(Version.parseVersion(element.select("Q").text()));
+                        Passage passage = Passage.parsePassage(element.select("R").text(), new Bible(null));
 
                         for(org.jsoup.nodes.Element tagElement : element.select("T").select("item")) {
                             passage.addTag(new Tag(tagElement.text()));

@@ -31,6 +31,7 @@ public class Main {
 	public static int getVerseId(Context context) {
 		return context.getSharedPreferences(settings_file, 0).getInt(PREFIX + ID, -1);
 	}
+
 	public static void putVerseId(Context context, int value) {
 		context.getSharedPreferences(settings_file, 0).edit().putInt(PREFIX + ID, value).commit();
 	}

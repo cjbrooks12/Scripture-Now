@@ -39,6 +39,7 @@ public class HelpFragment extends PreferenceFragment {
             int resId = getArguments().getInt("RES_ID", R.layout.help_overview);
             View view = inflater.inflate(resId, container, false);
 
+
 			String title = "";
 
             if (resId == R.layout.help_overview) title = "Overview";

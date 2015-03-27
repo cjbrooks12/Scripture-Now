@@ -269,13 +269,21 @@ public class BibleVerseAdapter extends BaseAdapter {
 
         private void initialize(Passage passage) {
             this.passage = passage;
+			if(passage == null) {
+				reference.setText("NULL OBJECT");
+				return;
+			}
 
             reference.setText(passage.getReference().toString());
             verseText.setText(passage.getText());
-            version.setText(passage.getVersion().getCode().toUpperCase());
+            version.setText(passage.getBible().getVersionId().toUpperCase());
 
-            String passageBookCode = passage.getReference().book.getCode();
-            iconText.setText(passageBookCode.replaceFirst("(\\d)", "$1 "));
+            String passageBookCode = passage.getReference().book.getAbbr();
+			passageBookCode = passageBookCode.replaceFirst("(\\d)", "$1");
+			if(passageBookCode.length() > 3) {
+				passageBookCode = passageBookCode.substring(0, 3);
+			}
+            iconText.setText(passageBookCode);
 
             if(passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
                 TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{R.attr.colorAccent});

@@ -30,7 +30,6 @@ public class VOTDCard extends FrameLayout {
     public VOTDCard(Context context) {
         super(context);
         this.context = context;
-
         initialize();
     }
 

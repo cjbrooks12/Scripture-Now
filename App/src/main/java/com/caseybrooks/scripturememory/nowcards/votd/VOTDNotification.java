@@ -25,6 +25,7 @@ public class VOTDNotification {
         if(instance == null) {
             instance = new VOTDNotification(context);
         }
+
         return instance;
     }
 

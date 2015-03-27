@@ -84,9 +84,6 @@ public class MainWidget extends AppWidgetProvider {
     }
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-
-        int id = Main.getVerseId(context);
-
         Main mv = new Main(context);
         if (mv.passage != null) {
             mv.setPassageFormatted();

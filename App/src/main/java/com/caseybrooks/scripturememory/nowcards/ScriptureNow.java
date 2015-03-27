@@ -23,6 +23,7 @@ public class ScriptureNow {
 	public static float currentSomeShare = 0.75f;
 	public static float currentNoneShare = 1.0f;
 
+
 	/** Get a random verse based on the memorization state of the verses. States
 	 * are weighted to give verses more frequently in the Memorized (to make sure
 	 * the user knows the verse) and Current - None (to get them memorizing all

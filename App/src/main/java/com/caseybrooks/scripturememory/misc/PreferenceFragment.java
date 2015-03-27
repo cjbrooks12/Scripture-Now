@@ -52,6 +52,7 @@ public abstract class PreferenceFragment extends Fragment {
 
     private boolean mHavePrefs;
     private boolean mInitDone;
+
     private ListView mList;
     private PreferenceManager mPreferenceManager;
 

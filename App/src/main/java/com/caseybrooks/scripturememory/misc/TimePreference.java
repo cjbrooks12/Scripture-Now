@@ -43,7 +43,6 @@ public class TimePreference extends DialogPreference {
     protected View onCreateDialogView() {
         picker = new TimePicker(context);
 		picker.setIs24HourView(DateFormat.is24HourFormat(context));
-
         return picker;
     }
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.ListPreference;
@@ -14,28 +15,44 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.util.Pair;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.androidbibletools.enumeration.Version;
+import com.caseybrooks.androidbibletools.data.Bible;
+import com.caseybrooks.androidbibletools.io.Download;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
+import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTD;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDNotification;
 
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Cleaner;
+import org.jsoup.safety.Whitelist;
+
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 
 public class SettingsFragment extends PreferenceFragment {
 	Context context;
 
     ListPreference prefDefaultScreenChild;
 	NavigationCallbacks mCallbacks;
+
+	HashMap<String, String> availableLanguages;
+	HashMap<String, Bible> availableBibles;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +61,9 @@ public class SettingsFragment extends PreferenceFragment {
 		context = getActivity();
 
 		addPreferencesFromResource(R.xml.settings);
+
+		//Populate Version list with versions available in AndroidBibleTools
+		new AsycnBibleLanguages().execute();
 
 		findPreference("Backup").setOnPreferenceClickListener(backupClick);
 		findPreference("Restore").setOnPreferenceClickListener(restoreClick);
@@ -73,15 +93,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 		}
 
-		//Populate Version list with versions available in AndroidBibleTools
-		ListPreference selectVersion = (ListPreference) findPreference("PREF_SELECTED_VERSION");
-		selectVersion.setOnPreferenceChangeListener(versionChange);
-		selectVersion.setSummary(MetaSettings.getBibleVersion(context).getName());
-		selectVersion.setEntries(Version.getAllNames());
-		selectVersion.setEntryValues(Version.getAllNames());
-
         Pair<Integer, Integer> defaultScreen = MetaSettings.getDefaultScreen(context);
-
 
         ListPreference prefDefaultScreenGroup = (ListPreference) findPreference("PREF_DEFAULT_SCREEN_GROUP");
 		String[] screens = getResources().getStringArray(R.array.pref_default_screen);
@@ -337,13 +349,23 @@ public class SettingsFragment extends PreferenceFragment {
 		}
 	};
 
-	OnPreferenceChangeListener versionChange = new OnPreferenceChangeListener() {
+	OnPreferenceChangeListener languageChange = new OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 			ListPreference lp = (ListPreference) preference;
 			lp.setSummary(newValue.toString());
 
+			new AsycnBibleVersions(newValue.toString()).execute();
 
+			return true;
+		}
+	};
+
+	OnPreferenceChangeListener versionChange = new OnPreferenceChangeListener() {
+		@Override
+		public boolean onPreferenceChange(Preference preference, Object newValue) {
+			ListPreference lp = (ListPreference) preference;
+			lp.setSummary(newValue.toString());
 
 			return true;
 		}
@@ -375,7 +397,6 @@ public class SettingsFragment extends PreferenceFragment {
 				preference.setSummary(screens[1]);
 				break;
 			}
-
 
             VerseDB db = new VerseDB(context).open();
 
@@ -413,4 +434,180 @@ public class SettingsFragment extends PreferenceFragment {
 			return true;
 		}
 	};
+
+	public class AsycnBibleLanguages extends AsyncTask<Void, Void, Void> {
+		AlertDialog dialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			View view = LayoutInflater.from(context).inflate(R.layout.popup_progress, null);
+			final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setView(view);
+
+			TextView tv = (TextView) view.findViewById(R.id.title);
+			tv.setText("Retrieving Available Languages");
+
+			view.findViewById(R.id.cancel_button).setVisibility(View.GONE);
+
+			dialog = builder.create();
+			dialog.show();
+			dialog.setCancelable(false);
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				String languagesFile = "languages.xml";
+
+				Document languageDoc = Util.getChachedDocument(context, languagesFile);
+				if(languageDoc != null) {
+					availableLanguages = Bible.getAvailableLanguages(languageDoc);
+				}
+				else if(Util.isConnected(context)) {
+					languageDoc = Download.availableVersions(
+							context.getResources().getString(R.string.bibles_org),
+							null
+					);
+
+					Whitelist whitelist = new Whitelist();
+					whitelist.addTags("version", "lang_name", "lang");
+
+					Cleaner cleaner = new Cleaner(whitelist);
+					languageDoc = cleaner.clean(languageDoc);
+
+					Util.cacheDocument(context, languageDoc, languagesFile);
+					availableLanguages = Bible.getAvailableLanguages(languageDoc);
+				}
+				else {
+					HashMap<String, String> defaultEnglish = new HashMap<>();
+					defaultEnglish.put("English (US)", "eng-us");
+					availableLanguages = defaultEnglish;
+				}
+			}
+			catch(IOException ioe) {
+				ioe.printStackTrace();
+				return null;
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			dialog.dismiss();
+
+			ListPreference selectLanguage = (ListPreference) findPreference("PREF_SELECTED_VERSION_LANGUAGE");
+
+			LinkedHashSet<Map.Entry<String, String>> values = new LinkedHashSet<>();
+			values.addAll(availableLanguages.entrySet());
+
+			String[] entries = new String[values.size()];
+			String[] entryValues = new String[values.size()];
+
+			int i = 0;
+
+			for(Map.Entry<String, String> entry : values) {
+				entries[i] = entry.getKey();
+				entryValues[i] = entry.getValue();
+
+				i++;
+			}
+
+			selectLanguage.setEntries(entries);
+			selectLanguage.setEntryValues(entryValues);
+
+			selectLanguage.setOnPreferenceChangeListener(languageChange);
+			selectLanguage.setSummary(MetaSettings.getBibleLanguage(context));
+			new AsycnBibleVersions(MetaSettings.getBibleLanguage(context)).execute();
+		}
+	}
+
+	public class AsycnBibleVersions extends AsyncTask<Void, Void, Void> {
+		String langCode;
+		AlertDialog dialog;
+
+		public AsycnBibleVersions(String langCode) {
+			this.langCode = langCode;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			View view = LayoutInflater.from(context).inflate(R.layout.popup_progress, null);
+			final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setView(view);
+
+			TextView tv = (TextView) view.findViewById(R.id.title);
+			tv.setText("Retrieving Available Bibles");
+
+			view.findViewById(R.id.cancel_button).setVisibility(View.GONE);
+
+			dialog = builder.create();
+			dialog.show();
+			dialog.setCancelable(false);
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				String versionsFile = "versions";
+				if(langCode != null) versionsFile += ":" + langCode;
+				versionsFile += ".xml";
+
+				Document doc = Util.getChachedDocument(context, versionsFile);
+				if(doc != null) {
+					availableBibles = Bible.getAvailableVersions(doc);
+				}
+				else if(Util.isConnected(context)) {
+					doc = Download.availableVersions(
+							context.getResources().getString(R.string.bibles_org),
+							langCode
+					);
+					Util.cacheDocument(context, doc, versionsFile);
+					availableBibles = Bible.getAvailableVersions(doc);
+				}
+				else {
+					HashMap<String, Bible> defaultESV = new HashMap<>();
+					defaultESV.put("ESV", new Bible(null));
+					availableBibles = defaultESV;
+				}
+			}
+			catch(IOException ioe) {
+				ioe.printStackTrace();
+				return null;
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			dialog.dismiss();
+
+			ListPreference selectVersion = (ListPreference) findPreference("PREF_SELECTED_VERSION");
+
+			ArrayList<Bible> values = new ArrayList<>();
+			values.addAll(availableBibles.values());
+
+			String[] entries = new String[values.size()];
+			String[] entryValues = new String[values.size()];
+
+			for(int i = 0; i < values.size(); i++) {
+				Bible bible = values.get(i);
+				entries[i] = bible.name;
+				entryValues[i] = bible.getVersionId();
+			}
+
+			selectVersion.setEntries(entries);
+			selectVersion.setEntryValues(entryValues);
+
+			selectVersion.setOnPreferenceChangeListener(versionChange);
+			selectVersion.setSummary(MetaSettings.getBibleVersion(context).abbr);
+		}
+	}
 }

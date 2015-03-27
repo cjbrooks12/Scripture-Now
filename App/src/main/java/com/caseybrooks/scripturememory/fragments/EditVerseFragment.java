@@ -35,8 +35,9 @@ import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
+import com.caseybrooks.androidbibletools.data.Bible;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.androidbibletools.enumeration.Version;
+import com.caseybrooks.androidbibletools.io.Download;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -135,7 +136,7 @@ public class EditVerseFragment extends Fragment {
             editVer.setText(passage.getText());
 
 			version = (TextView) view.findViewById(R.id.version);
-			version.setText(passage.getVersion().getCode().toUpperCase());
+			version.setText(passage.getBible().getVersionId().toUpperCase());
 
             seekbarText = (TextView) view.findViewById(R.id.seekbar_text);
             switch (passage.getMetadata().getInt(DefaultMetaData.STATE)) {
@@ -599,7 +600,7 @@ public class EditVerseFragment extends Fragment {
 
 						if(aVoid) {
 							editVer.setText(passage.getText());
-							version.setText(passage.getVersion().getCode().toUpperCase());
+							version.setText(passage.getBible().getVersionId().toUpperCase());
 						}
 						else {
 							Toast.makeText(context, "Could not redownload verse at this time", Toast.LENGTH_SHORT).show();
@@ -609,15 +610,17 @@ public class EditVerseFragment extends Fragment {
 					@Override
 					protected Boolean doInBackground(Void... params) {
 						if(Util.isConnected(context)) {
-							Version version = passage.getVersion();
 							try {
-								passage.setVersion(MetaSettings.getBibleVersion(context));
-								passage.retrieve();
+								passage.setBible(MetaSettings.getBibleVersion(context));
+								passage.getVerseInfo(Download.bibleChapter(
+										getResources().getString(R.string.bibles_org),
+										passage.getReference()
+								));
 								return true;
 							}
 							catch(IOException ioe) {
 								ioe.printStackTrace();
-								passage.setVersion(version);
+								passage.setBible(new Bible(null));
 								return false;
 							}
 						}

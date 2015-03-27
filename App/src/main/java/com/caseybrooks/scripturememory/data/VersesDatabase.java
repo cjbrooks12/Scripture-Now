@@ -109,9 +109,8 @@ public class VersesDatabase {
 
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             try {
-                Passage passage = new Passage(c.getString(c.getColumnIndex(KEY_REFERENCE)));
+                Passage passage = Passage.parsePassage(c.getString(c.getColumnIndex(KEY_REFERENCE)), MetaSettings.getBibleVersion(context));
                 passage.setText(c.getString(c.getColumnIndex(KEY_VERSE)));
-                passage.setVersion(MetaSettings.getBibleVersion(context));
                 passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, Calendar.getInstance().getTimeInMillis());
                 if (c.getString(c.getColumnIndex(KEY_LIST)).equals("memorized")) {
                     passage.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.MEMORIZED);
@@ -276,14 +275,6 @@ public class VersesDatabase {
 	}
 
 	public void importFromCSV(File filename) throws SQLException, IOException {
-//		database.delete(DATABASE_TABLE, null, null);
-//
-//        VerseDB verseDB = new VerseDB(context);
-//        verseDB.clear();
-//        verseDB.open();
-//
-//        int id = 0;
-
 		BufferedReader buffer = new BufferedReader(new FileReader(filename));
 		String line = "";
 
@@ -291,7 +282,7 @@ public class VersesDatabase {
 		    String[] str = line.split("\t");
 
             try {
-                Passage passage = new Passage(str[1]);
+                Passage passage = Passage.parsePassage(str[1], MetaSettings.getBibleVersion(context));
                 passage.setText(str[2]);
                 if (str[3].equals("memorized"))
                     passage.getMetadata().putInt(DefaultMetaData.STATE, 4);

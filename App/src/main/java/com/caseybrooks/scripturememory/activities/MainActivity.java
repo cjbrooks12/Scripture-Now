@@ -153,7 +153,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                         String[] str = line.split("\t");
 
                         try {
-                            Passage passage = new Passage(str[1]);
+                            Passage passage = Passage.parsePassage(str[1], MetaSettings.getBibleVersion(context));
                             passage.setText(str[2]);
                             if (str[3].equals("memorized"))
                                 passage.getMetadata().putInt(DefaultMetaData.STATE, 4);
@@ -194,7 +194,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                         passageElement.appendChild(r);
 
                         Element q = doc.createElement("Q");
-                        q.appendChild(doc.createTextNode(passage.getVersion().getName()));
+                        q.appendChild(doc.createTextNode(passage.getBible().getVersionId()));
                         passageElement.appendChild(q);
 
                         Element t = doc.createElement("T");
@@ -231,6 +231,10 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
     public void onAppUpgrade() {
         try {
             int version = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+
+			if(version > 27) {
+				MetaSettings.putBibleVersion(context, "eng-ESV");
+			}
 
             //we have updated the app
             if(version > MetaSettings.getAppVersion(context)) {

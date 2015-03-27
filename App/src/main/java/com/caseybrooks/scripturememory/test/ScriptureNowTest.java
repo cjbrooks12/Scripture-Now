@@ -38,7 +38,6 @@ public class ScriptureNowTest extends InstrumentationTestCase {
 //		float error = 0.05f;
 //
 //		assertTrue((allVersesCount / testCount) < (ScriptureNow.allVersesShare - 0.0 + error));
-
 	}
 
 }

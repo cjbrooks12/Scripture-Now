@@ -13,5 +13,4 @@ public class References {
 	public References(Context context) {
 		this.context = context;
 	}
-
 }
