@@ -276,10 +276,11 @@ public class BibleVerseAdapter extends BaseAdapter {
 
             reference.setText(passage.getReference().toString());
             verseText.setText(passage.getText());
-            version.setText(passage.getBible().getVersionId().toUpperCase());
+            version.setText(passage.getBible().abbr);
 
             String passageBookCode = passage.getReference().book.getAbbr();
-			passageBookCode = passageBookCode.replaceFirst("(\\d)", "$1");
+			if(passageBookCode != null) passageBookCode = passageBookCode.replaceFirst("(\\d)", "$1");
+			else passageBookCode = passage.getReference().book.getName().substring(0, 3);
 			if(passageBookCode.length() > 3) {
 				passageBookCode = passageBookCode.substring(0, 3);
 			}

@@ -16,18 +16,18 @@
         <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-f44bc2c474af4f7a4f7786acf058622d4257f84a.jar" />
     </item>
     <item
+        jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.github.cjbrooks12\AndroidBibleTools\0.2.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="619adf09ed3788e787dec2a4a8f186fc0bba3b65">
+        <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-c683ed970710e44bac0fae2ef4af193da65bde29.jar" />
+    </item>
+    <item
         jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
         <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-a452ff9af5f551e22e9d8d35cf2360f68bc9f8fc.jar" />
-    </item>
-    <item
-        jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.github.cjbrooks12\AndroidBibleTools\0.2.1\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b8cdf993708e034219727c129581330941d09523">
-        <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-d886ec8e3ee9398ca7c2f85e6a880453d054aa33.jar" />
     </item>
     <item
         jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"

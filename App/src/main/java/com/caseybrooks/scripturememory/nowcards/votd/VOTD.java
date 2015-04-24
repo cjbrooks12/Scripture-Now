@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
+import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.io.Download;
 import com.caseybrooks.scripturememory.R;
@@ -26,7 +27,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Calendar;
 
 public class VOTD {
@@ -207,14 +207,13 @@ public class VOTD {
 
                 Elements reference = doc.select("meta[property=og:title]");
 
-                try {
-                    currentVerse = Passage.parsePassage(reference.attr("content").substring(18), MetaSettings.getBibleVersion(context));
-                }
-                catch(ParseException e) {
-                    currentVerse = null;
-                }
+				Reference.Builder builder = new Reference.Builder()
+						.setBible(MetaSettings.getBibleVersion(context))
+						.parseReference(reference.attr("content").substring(18));
 
-                if (currentVerse != null) {
+				currentVerse = new Passage(builder.create());
+
+                if (currentVerse.getReference().book.getId() != null) {
                     currentVerse.getVerseInfo(Download.bibleChapter(
 							context.getResources().getString(R.string.bibles_org),
 							currentVerse.getReference()

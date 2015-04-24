@@ -37,7 +37,7 @@ public class MainCard extends FrameLayout {
     RelativeLayout expandedSection;
     View expandedhline;
 
-    RadioButton normal, dashes, letters, letteredDashes, randomWords;
+    RadioButton dashes, letters, letteredDashes, randomWords;
     SeekBar randomnessLevelSlider;
 
     View activeListSidebar;
@@ -72,8 +72,6 @@ public class MainCard extends FrameLayout {
         activeListSidebar = findViewById(R.id.active_list_sidebar);
         activeListText = (TextView) findViewById(R.id.active_list_text);
 
-        normal = (RadioButton) findViewById(R.id.radioNormal);
-        normal.setOnClickListener(radioButtonClick);
         dashes = (RadioButton) findViewById(R.id.radioDashes);
         dashes.setOnClickListener(radioButtonClick);
         letters = (RadioButton) findViewById(R.id.radioLetters);
@@ -113,16 +111,15 @@ public class MainCard extends FrameLayout {
         if(mv.passage != null) {
             //set the radio buttons and text based on user selection and whether the card is expanded
             switch (Main.getDisplayMode(context)) {
-                case 0: ((RadioButton) findViewById(R.id.radioNormal)).setChecked(true); break;
-                case 1: ((RadioButton) findViewById(R.id.radioDashes)).setChecked(true); break;
-                case 2: ((RadioButton) findViewById(R.id.radioLetters)).setChecked(true); break;
-                case 3: ((RadioButton) findViewById(R.id.radioLetteredDashes)).setChecked(true); break;
-                case 4:
+                case 0: ((RadioButton) findViewById(R.id.radioDashes)).setChecked(true); break;
+                case 1: ((RadioButton) findViewById(R.id.radioLetters)).setChecked(true); break;
+                case 2: ((RadioButton) findViewById(R.id.radioLetteredDashes)).setChecked(true); break;
+                case 3:
                     ((RadioButton) findViewById(R.id.radioRandomWords)).setChecked(true);
                     randomnessLevelSlider.setVisibility(View.VISIBLE);
                     randomnessLevelSlider.setProgress(((int) (Main.getRandomness(context).first * 1000)));
                     break;
-                default: ((RadioButton) findViewById(R.id.radioNormal)).setChecked(true); break;
+                default: ((RadioButton) findViewById(R.id.radioDashes)).setChecked(true); break;
             }
 
             if (isExpanded) {
@@ -211,7 +208,7 @@ public class MainCard extends FrameLayout {
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.context_notification_card, popup.getMenu());
 
-                if(Main.getDisplayMode(context) == 4) {
+                if(Main.getDisplayMode(context) == 3) {
                     popup.getMenu().findItem(R.id.context_notification_card_scramble_random).setVisible(true);
                     popup.getMenu().findItem(R.id.context_notification_card_reset_random).setVisible(true);
                 }
@@ -292,24 +289,20 @@ public class MainCard extends FrameLayout {
             int verseDisplayMode = 0;
 
             switch(v.getId()) {
-                case R.id.radioNormal:
+                case R.id.radioDashes:
                     verseDisplayMode = 0;
                     randomnessLevelSlider.setVisibility(View.GONE);
                     break;
-                case R.id.radioDashes:
+                case R.id.radioLetters:
                     verseDisplayMode = 1;
                     randomnessLevelSlider.setVisibility(View.GONE);
                     break;
-                case R.id.radioLetters:
+                case R.id.radioLetteredDashes:
                     verseDisplayMode = 2;
                     randomnessLevelSlider.setVisibility(View.GONE);
                     break;
-                case R.id.radioLetteredDashes:
-                    verseDisplayMode = 3;
-                    randomnessLevelSlider.setVisibility(View.GONE);
-                    break;
                 case R.id.radioRandomWords:
-                    verseDisplayMode = 4;
+                    verseDisplayMode = 3;
                     randomnessLevelSlider.setVisibility(View.VISIBLE);
                     break;
             }

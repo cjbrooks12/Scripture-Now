@@ -21,12 +21,8 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
-import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.VersesDatabase;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
@@ -37,25 +33,14 @@ import com.caseybrooks.scripturememory.fragments.VerseListFragment;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.nowcards.main.Main;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.lang.reflect.Field;
-import java.text.ParseException;
 import java.util.ArrayList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
@@ -120,111 +105,14 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		}
 	}
 
+	//do not support the old backups or old database any longer. If users haven't
+	//upgraded by now, then they must not care enough about their verses, and their
+	//complaints are not important to the developement of the app.
 	private void onFirstTime() {
 		boolean firstTime = MetaSettings.getFirstTime(context);
 		//If this is the first time opening the app
 		if(firstTime) {
-            try {
-                //move all verses from the old database to the new one
-                VersesDatabase database = new VersesDatabase(context).open();
-                database.migrate();
-                database.close();
-
-                // initial verse packs are in /res/raw/, but we need them on the sdcard. We must copy
-                // all files from raw to the sdcard the first time we open the app
-                String state = Environment.getExternalStorageState();
-                if (Environment.MEDIA_MOUNTED.equals(state)) {
-                    String path = Environment.getExternalStorageDirectory().getPath() + "/scripturememory";
-
-                    File folder = new File(path);
-
-                    if(!folder.exists()) {
-                        folder.mkdirs();
-                    }
-
-                    //migrate the old backup format to the new one so that old backups are not lost
-                    File oldBackup = new File(path, "backup.csv");
-                    ArrayList<Passage> passages = new ArrayList<Passage>();
-
-                    BufferedReader buffer = new BufferedReader(new FileReader(oldBackup));
-                    String line = "";
-
-                    while ((line = buffer.readLine()) != null) {
-                        String[] str = line.split("\t");
-
-                        try {
-                            Passage passage = Passage.parsePassage(str[1], MetaSettings.getBibleVersion(context));
-                            passage.setText(str[2]);
-                            if (str[3].equals("memorized"))
-                                passage.getMetadata().putInt(DefaultMetaData.STATE, 4);
-                            else
-                                passage.getMetadata().putInt(DefaultMetaData.STATE, 1);
-                            passage.addTag(new Tag("Previous Backup"));
-                            passages.add(passage);
-                        }
-                        catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    buffer.close();
-
-                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder builder = factory.newDocumentBuilder();
-
-                    Document doc = builder.newDocument();
-                    Element root = doc.createElement("backup");
-                    doc.appendChild(root);
-
-                    Element tags = doc.createElement("tags");
-                    root.appendChild(tags);
-
-                    Element verses = doc.createElement("verses");
-                    root.appendChild(verses);
-
-                    for(Passage passage : passages) {
-                        Element passageElement = doc.createElement("passage");
-                        verses.appendChild(passageElement);
-
-                        passageElement.setAttribute("state", Integer.toString(passage.getMetadata().getInt(DefaultMetaData.STATE)));
-                        passageElement.setAttribute("time_created", Long.toString(passage.getMetadata().getLong(DefaultMetaData.TIME_CREATED)));
-                        passageElement.setAttribute("time_modified", Long.toString(passage.getMetadata().getLong(DefaultMetaData.TIME_MODIFIED)));
-
-                        Element r = doc.createElement("R");
-                        r.appendChild(doc.createTextNode(passage.getReference().toString()));
-                        passageElement.appendChild(r);
-
-                        Element q = doc.createElement("Q");
-                        q.appendChild(doc.createTextNode(passage.getBible().getVersionId()));
-                        passageElement.appendChild(q);
-
-                        Element t = doc.createElement("T");
-                        passageElement.appendChild(t);
-                        for(Tag tag : passage.getTags()) {
-                            Element tagItem = doc.createElement("item");
-                            tagItem.appendChild(doc.createTextNode(tag.name));
-                            t.appendChild(tagItem);
-                        }
-
-                        Element p = doc.createElement("P");
-                        p.appendChild(doc.createTextNode(passage.getText()));
-                        passageElement.appendChild(p);
-                    }
-
-                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                    Transformer transformer = transformerFactory.newTransformer();
-                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                    DOMSource source = new DOMSource(doc);
-                    StreamResult result = new StreamResult(new File(path, "backup.xml"));
-                    transformer.transform(source, result);
-                }
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            finally {
-                //we have finished our first time setup, do not run this code again
-                MetaSettings.putFirstTime(context, false);
-            }
+			MetaSettings.putFirstTime(context, false);
 		}
 	}
 
@@ -239,6 +127,8 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
             //we have updated the app
             if(version > MetaSettings.getAppVersion(context)) {
                 MetaSettings.putAppVersion(context, version);
+
+				Main.putDisplayMode(context, Main.getDisplayMode(context) - 1);
 
                 String state = Environment.getExternalStorageState();
                 if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -263,9 +153,8 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                                 //after we know both have been made correctly, add to lists
                                 domSource.add(source);
                                 outputStream.add(file);
-                            } catch (IllegalArgumentException e) {
-
-                            } catch (IllegalAccessException e) {
+                            }
+							catch (IllegalArgumentException| IllegalAccessException e) {
 
                             }
                         }
@@ -280,14 +169,8 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
                 }
             }
         }
-        catch(PackageManager.NameNotFoundException nnfe) {
-            nnfe.printStackTrace();
-        }
-        catch (TransformerConfigurationException tce) {
-            tce.printStackTrace();
-        }
-        catch (TransformerException te) {
-            te.printStackTrace();
+        catch(PackageManager.NameNotFoundException | TransformerException e) {
+            e.printStackTrace();
         }
     }
 
@@ -368,8 +251,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 
 //ActionBar
 //------------------------------------------------------------------------------
-	//Forces three dot overflow on devices with hardware menu button.
-	//Some might consider this a hack...
+	//Forces three dot overflow on devices with hardware menu button by reflection
 	private void getOverflowMenu() {
         try {
             ViewConfiguration config = ViewConfiguration.get(this);

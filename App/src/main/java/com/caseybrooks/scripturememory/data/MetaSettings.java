@@ -36,9 +36,29 @@ public class MetaSettings {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(APP_THEME, "0");
     }
 
+	//attempt to return a Bible with the version information parsed and inserted
+	//into the object. If we don't have version info cached and we can't download
+	//it now, just return the object without chapter info
     public static Bible getBibleVersion(Context context) {
         String version = PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION, null);
-        return new Bible(version);
+        Bible bible = new Bible(version);
+
+//		Document doc = Util.getChachedDocument(context, "selectedVersion.xml");
+//		if(doc == null && Util.isConnected(context)) {
+//			try {
+//				doc = Download.versionInfo(context.getString(R.string.bibles_org), version);
+//				Util.cacheDocument(context, doc, "selectedVersion.xml");
+//			}
+//			catch(IOException ioe) {
+//				ioe.printStackTrace();
+//			}
+//		}
+//
+//		if(doc != null) {
+//			bible.getVersionInfo(doc);
+//		}
+
+		return bible;
     }
 
 	public static String getBibleLanguage(Context context) {

@@ -38,5 +38,5 @@ dependencies {
     compile 'com.larswerkman:HoloColorPicker:1.4'
     compile 'org.jsoup:jsoup:1.7.2'
 
-    compile 'com.github.cjbrooks12:AndroidBibleTools:0.2.1@aar'
+    compile 'com.github.cjbrooks12:AndroidBibleTools:0.2.3@aar'
 }

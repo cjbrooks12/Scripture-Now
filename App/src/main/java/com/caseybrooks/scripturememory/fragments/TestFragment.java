@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.data.Bible;
 import com.caseybrooks.androidbibletools.data.Formatter;
 import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
@@ -58,7 +57,9 @@ public class TestFragment extends Fragment {
 				@Override
 				protected Void doInBackground(Void... params) {
 					try {
-						passage = Passage.parsePassage("Galatians 2:19", new Bible(null));
+						Reference.Builder builder = new Reference.Builder()
+								.parseReference("Galatians 2:19");
+						passage = new Passage(builder.create());
 						passage.getVerseInfo(Download.bibleChapter(
 								getResources().getString(R.string.bibles_org),
 								passage.getReference()

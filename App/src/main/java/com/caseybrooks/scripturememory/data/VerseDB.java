@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.androidbibletools.data.Bible;
 import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
@@ -23,7 +22,6 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -33,7 +31,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -186,9 +183,9 @@ public class VerseDB {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             // on upgrade drop older tables (worry about saving data if/when I upgrade this one)
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_VERSES);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATE);
+//            db.execSQL("DROP TABLE IF EXISTS " + TABLE_VERSES);
+//            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS);
+//            db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATE);
 			Toast.makeText(context, "onUpgrade()", Toast.LENGTH_SHORT).show();
 
             // create new tables
@@ -249,37 +246,34 @@ public class VerseDB {
         if (c != null && c.getCount() > 0) c.moveToFirst();
         else return null;
 
-        try {
-            Passage passage = Passage.parsePassage(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)), new Bible(null));
-            passage.getMetadata().putInt(DefaultMetaData.ID, c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
-            passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
-            passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
-            passage.getMetadata().putLong(DefaultMetaData.TIME_MODIFIED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_MODIFIED)));
-            passage.getMetadata().putInt(DefaultMetaData.STATE, c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
-			passage.getMetadata().putInt("STATE_COLOR", getStateColor(c.getInt(c.getColumnIndex(KEY_VERSES_STATE))));
-			passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, false);
+		Reference.Builder builder = new Reference.Builder()
+				.setBible(c.getString(c.getColumnIndex(KEY_VERSES_VERSION)), null)
+				.parseReference(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
 
-            String commaSeparatedTags = c.getString(c.getColumnIndex(KEY_VERSES_TAGS));
+		Passage passage = new Passage(builder.create());
+		passage.getMetadata().putInt(DefaultMetaData.ID, c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
+		passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
+		passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));
+		passage.getMetadata().putLong(DefaultMetaData.TIME_MODIFIED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_MODIFIED)));
+		passage.getMetadata().putInt(DefaultMetaData.STATE, c.getInt(c.getColumnIndex(KEY_VERSES_STATE)));
+		passage.getMetadata().putInt("STATE_COLOR", getStateColor(c.getInt(c.getColumnIndex(KEY_VERSES_STATE))));
+		passage.getMetadata().putBoolean(DefaultMetaData.IS_CHECKED, false);
 
-            if (commaSeparatedTags.length() > 1) {
-                String[] tagNumbers = commaSeparatedTags.split(",");
-                for (int i = 1; i < tagNumbers.length; i++) {
-                    if (tagNumbers[i].length() >= 1) {
-						Tag tag = getTag(Integer.parseInt(tagNumbers[i]));
-						if(tag != null) passage.addTag(tag);
-						else Log.i("GET TAG", "null tag with id [" + tagNumbers[i] + "]");
-                    }
-                }
-            }
+		String commaSeparatedTags = c.getString(c.getColumnIndex(KEY_VERSES_TAGS));
 
-            c.close();
-            return passage;
-        }
-        catch(ParseException e) {
-            c.close();
-            e.printStackTrace();
-            return null;
-        }
+		if (commaSeparatedTags.length() > 1) {
+			String[] tagNumbers = commaSeparatedTags.split(",");
+			for (int i = 1; i < tagNumbers.length; i++) {
+				if (tagNumbers[i].length() >= 1) {
+					Tag tag = getTag(Integer.parseInt(tagNumbers[i]));
+					if(tag != null) passage.addTag(tag);
+					else Log.i("GET TAG", "null tag with id [" + tagNumbers[i] + "]");
+				}
+			}
+		}
+
+		c.close();
+		return passage;
     }
 
     public int insertVerse(Passage passage) {
@@ -853,14 +847,8 @@ public void exportToBackupFile(File file) {
 		StreamResult result = new StreamResult(file);
 		transformer.transform(source, result);
 	}
-	catch (ParserConfigurationException pce) {
-		pce.printStackTrace();
-	}
-	catch (TransformerConfigurationException tce) {
-		tce.printStackTrace();
-	}
-	catch (TransformerException te) {
-		te.printStackTrace();
+	catch (ParserConfigurationException | TransformerException e) {
+		e.printStackTrace();
 	}
 }
 
@@ -879,7 +867,11 @@ public void exportToBackupFile(File file) {
 
 			if(doc.select("verses").size() > 0) {
 				for(org.jsoup.nodes.Element element : doc.select("passage")) {
-					Passage passage = Passage.parsePassage(element.select("R").text(), new Bible(null));
+
+					Reference.Builder builder = new Reference.Builder()
+							.parseReference(element.select("R").text());
+
+					Passage passage = new Passage(builder.create());
 
 					passage.getMetadata().putInt(DefaultMetaData.STATE, Integer.parseInt(element.attr("state")));
 					passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, Long.parseLong(element.attr("time_created")));
@@ -897,9 +889,6 @@ public void exportToBackupFile(File file) {
 		}
 		catch (IOException ioe) {
 			ioe.printStackTrace();
-		}
-		catch(ParseException pe) {
-			pe.printStackTrace();
 		}
 	}
 }

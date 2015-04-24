@@ -9,7 +9,6 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.data.Metadata;
 import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
@@ -61,7 +60,7 @@ public class Main {
 	//how to view the main notification
 	public static final String DISPLAY_MODE = "DISPLAY_MODE";
 	public static int getDisplayMode(Context context) {
-		return context.getSharedPreferences(settings_file, 0).getInt(PREFIX + DISPLAY_MODE, R.id.radioNormal);
+		return context.getSharedPreferences(settings_file, 0).getInt(PREFIX + DISPLAY_MODE, 0);
 	}
 	public static void putDisplayMode(Context context, int value) {
 		context.getSharedPreferences(settings_file, 0).edit().putInt(PREFIX + DISPLAY_MODE, value).commit();
@@ -80,7 +79,7 @@ public class Main {
 	private static final String RANDOMNESS_LEVEL = "RANDOMNESS_LEVEL";
 	private static final String RANDOMNESS_OFFSET = "RANDOMNESS_OFFSET";
 	public static Pair<Float, Integer> getRandomness(Context context) {
-		return new Pair<Float, Integer>(
+		return new Pair<>(
 				context.getSharedPreferences(settings_file, 0).getFloat(PREFIX + RANDOMNESS_LEVEL, 0.5f),
 				context.getSharedPreferences(settings_file, 0).getInt(PREFIX + RANDOMNESS_OFFSET, 0));
 	}
@@ -112,11 +111,10 @@ public class Main {
     public void setPassageFormatted() {
 		if(passage != null) {
 			switch (getDisplayMode(context)) {
-				case 0: passage.setFormatter(new DefaultFormatter.Normal()); break;
-				case 1: passage.setFormatter(new DefaultFormatter.Dashes()); break;
-				case 2: passage.setFormatter(new DefaultFormatter.FirstLetters()); break;
-				case 3: passage.setFormatter(new DefaultFormatter.DashedLetter()); break;
-				case 4: passage.setFormatter(
+				case 0: passage.setFormatter(new DefaultFormatter.Dashes()); break;
+				case 1: passage.setFormatter(new DefaultFormatter.FirstLetters()); break;
+				case 2: passage.setFormatter(new DefaultFormatter.DashedLetter()); break;
+				case 3: passage.setFormatter(
 						new DefaultFormatter.RandomWords(
 								getRandomness(context).first,
 								getRandomness(context).second)); break;

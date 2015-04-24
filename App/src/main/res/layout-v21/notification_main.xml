@@ -3,8 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/widget_main_layout"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:background="@drawable/bg_transparent_hard_edge" >
+	android:layout_height="wrap_content" >
 
 	<ImageView
 		android:id="@+id/notification_main_dismiss"
@@ -27,23 +26,21 @@
 		android:layout_alignParentStart="true">
 		<ImageView
 			android:id="@+id/notification_main_icon_circle"
-			android:layout_width="48dp"
-			android:layout_height="48dp"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
 			android:layout_centerInParent="true"
 			android:src="@drawable/circle_color"/>
 		<ImageView
 			android:id="@+id/notification_main_icon"
-			android:layout_width="32dp"
-			android:layout_height="32dp"
+			android:layout_width="18dp"
+			android:layout_height="18dp"
 			android:layout_centerInParent="true"
 			android:src="@drawable/ic_cross"/>
 	</RelativeLayout>
 
 	<TextView
 		android:id="@+id/notification_main_reference"
-		android:paddingLeft="8dp"
-		android:paddingTop="4dp"
-		android:paddingBottom="4dp"
+		android:paddingTop="8dp"
 		android:paddingRight="4dp"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -53,8 +50,6 @@
 
 	<TextView
 		android:id="@+id/notification_main_verse"
-		android:paddingLeft="8dp"
-		android:paddingTop="4dp"
 		android:paddingBottom="8dp"
 		android:paddingRight="8dp"
 		android:layout_width="wrap_content"
@@ -119,52 +114,7 @@
 			android:alpha="0.45"
 			android:src="@drawable/ic_action_text_format_light"/>
 
-
 	</LinearLayout>
-	<!--<RelativeLayout-->
-		<!--android:id="@+id/hline"-->
-		<!--android:layout_width="match_parent"-->
-		<!--android:layout_toRightOf="@id/notification_main_icon_layout"-->
-		<!--android:layout_height="1dp"-->
-		<!--android:background="@color/text_dark"-->
-		<!--android:layout_below="@id/notification_main_verse"/>-->
 
-	<!--<ImageView-->
-		<!--android:id="@+id/notification_main_next"-->
-		<!--android:layout_below="@id/hline"-->
-		<!--android:layout_alignParentRight="true"-->
-		<!--android:background="@drawable/bg_transparent_hard_edge"-->
-		<!--android:layout_width="48dp"-->
-		<!--android:layout_height="48dp"-->
-		<!--android:layout_marginRight="8dp"-->
-		<!--android:layout_marginLeft="8dp"-->
-		<!--android:alpha="0.45"-->
-		<!--android:src="@drawable/ic_action_arrow_right_light"/>-->
-
-	<!--<RelativeLayout-->
-		<!--android:id="@+id/vline1"-->
-		<!--android:layout_width="1dp"-->
-		<!--android:layout_height="wrap_content"-->
-		<!--android:layout_marginTop="8dp"-->
-		<!--android:layout_marginBottom="8dp"-->
-		<!--android:layout_toLeftOf="@id/notification_main_next"-->
-		<!--android:layout_toStartOf="@id/notification_main_next"-->
-		<!--android:layout_alignTop="@id/notification_main_next"-->
-		<!--android:layout_alignBottom="@id/notification_main_next"-->
-		<!--android:background="@color/text_dark"-->
-		<!--android:layout_below="@id/notification_main_verse"/>-->
-
-	<!--<ImageView-->
-		<!--android:id="@+id/notification_main_show_full"-->
-		<!--android:layout_below="@id/hline"-->
-		<!--android:layout_toLeftOf="@+id/vline1"-->
-		<!--android:layout_toStartOf="@+id/vline1"-->
-		<!--android:background="@drawable/bg_transparent_hard_edge"-->
-		<!--android:layout_width="48dp"-->
-		<!--android:layout_height="48dp"-->
-		<!--android:layout_marginRight="8dp"-->
-		<!--android:layout_marginLeft="8dp"-->
-		<!--android:alpha="0.45"-->
-		<!--android:src="@drawable/ic_action_text_format_light"/>-->
 
 </RelativeLayout>

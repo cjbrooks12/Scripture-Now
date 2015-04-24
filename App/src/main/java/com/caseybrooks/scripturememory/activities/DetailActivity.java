@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
@@ -22,7 +21,6 @@ import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 public class DetailActivity extends ActionBarActivity implements NavigationCallbacks {
     Context context;
     Toolbar tb;
-	View statusBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

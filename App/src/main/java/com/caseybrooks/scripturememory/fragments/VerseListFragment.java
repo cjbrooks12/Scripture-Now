@@ -66,6 +66,8 @@ public class VerseListFragment extends ListFragment {
     public static final int TAGS = 0;
     public static final int STATE = 1;
 
+	private PopulateBibleVerses loaderThread;
+
     public static Fragment newInstance(int type, int id) {
         Fragment fragment = new VerseListFragment();
         Bundle data = new Bundle();
@@ -131,12 +133,14 @@ public class VerseListFragment extends ListFragment {
 
         mCallbacks.setToolBar(title, color);
 
-		populateBibleVerses();
+		loaderThread = new PopulateBibleVerses();
+		loaderThread.execute();
 	}
 
 	@Override
 	public void onPause() {
         if(mActionMode != null) mActionMode.finish();
+		if(loaderThread != null) loaderThread.cancel(true);
         super.onPause();
     }
 
@@ -229,87 +233,93 @@ public class VerseListFragment extends ListFragment {
         }
     };
 
-	private void populateBibleVerses() {
-		new AsyncTask<Void, Void, Void>() {
+	private class PopulateBibleVerses extends AsyncTask<Void, Void, Void> {
 
-			@Override
-			protected void onPostExecute(Void aVoid) {
-				super.onPostExecute(aVoid);
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
 
-				VerseDB db = new VerseDB(context).open();
-				if(listType == TAGS) {
-					Tag tag = db.getTag(listId);
-					mCallbacks.setToolBar(tag.name, tag.color);
-				}
-				else if(listType == STATE) {
-					if(listId != 0) {
-						mCallbacks.setToolBar(db.getStateName(listId), db.getStateColor(listId));
-					}
-					else {
-						mCallbacks.setToolBar("All", getResources().getColor(R.color.all_verses));
-					}
+			VerseDB db = new VerseDB(context).open();
+			if(listType == TAGS) {
+				Tag tag = db.getTag(listId);
+				mCallbacks.setToolBar(tag.name, tag.color);
+			}
+			else if(listType == STATE) {
+				if(listId != 0) {
+					mCallbacks.setToolBar(db.getStateName(listId), db.getStateColor(listId));
 				}
 				else {
 					mCallbacks.setToolBar("All", getResources().getColor(R.color.all_verses));
 				}
-				db.close();
-
-				setListAdapter(bibleVerseAdapter);
 			}
+			else {
+				mCallbacks.setToolBar("All", getResources().getColor(R.color.all_verses));
+			}
+			db.close();
 
-			@Override
-			protected Void doInBackground(Void... params) {
-				ArrayList<Passage> verses;
+			setListAdapter(bibleVerseAdapter);
+		}
 
-				VerseDB db = new VerseDB(context).open();
-				if(listType == TAGS) {
-					verses = db.getTaggedVerses(listId);
-				}
-				else if(listType == STATE) {
-					if(listId != 0) {
-						verses = db.getStateVerses(listId);
-					}
-					else {
-						verses = db.getAllCurrentVerses();
-					}
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			ArrayList<Passage> verses;
+
+			VerseDB db = new VerseDB(context).open();
+			if(listType == TAGS) {
+				verses = db.getTaggedVerses(listId);
+			}
+			else if(listType == STATE) {
+				if(listId != 0) {
+					verses = db.getStateVerses(listId);
 				}
 				else {
 					verses = db.getAllCurrentVerses();
 				}
-
-				db.close();
-
-				Comparator comparator;
-
-				switch(MetaSettings.getSortBy(context)) {
-				case 0:
-					comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED);
-					break;
-				case 1:
-					comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE);
-					break;
-				case 2:
-					comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL);
-					break;
-				case 3:
-					comparator = new Metadata.Comparator(DefaultMetaData.STATE);
-					break;
-				default:
-					comparator = new Metadata.Comparator(DefaultMetaData.STATE);
-					break;
-				}
-
-				if(comparator != null) Collections.sort(verses, comparator);
-
-				bibleVerseAdapter = new BibleVerseAdapter(context, verses, getListView());
-				bibleVerseAdapter.setOnItemClickListener(itemClick);
-				bibleVerseAdapter.setOnItemMultiselectListener(iconClick);
-				bibleVerseAdapter.setOnItemOverflowClickListener(overflowClick);
-
-				return null;
+			}
+			else {
+				verses = db.getAllCurrentVerses();
 			}
 
-		}.execute();
+			db.close();
+
+			if(isCancelled()) return null;
+
+			Comparator comparator;
+
+			switch(MetaSettings.getSortBy(context)) {
+			case 0:
+				comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED);
+				break;
+			case 1:
+				comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE);
+				break;
+			case 2:
+				comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL);
+				break;
+			case 3:
+				comparator = new Metadata.Comparator(DefaultMetaData.STATE);
+				break;
+			default:
+				comparator = new Metadata.Comparator(DefaultMetaData.STATE);
+				break;
+			}
+
+			if(comparator != null) Collections.sort(verses, comparator);
+
+			if(isCancelled()) return null;
+
+			bibleVerseAdapter = new BibleVerseAdapter(context, verses, getListView());
+			bibleVerseAdapter.setOnItemClickListener(itemClick);
+			bibleVerseAdapter.setOnItemMultiselectListener(iconClick);
+			bibleVerseAdapter.setOnItemOverflowClickListener(overflowClick);
+
+			return null;
+		}
 	}
 
 //Host Activity Interface
@@ -348,19 +358,31 @@ public class VerseListFragment extends ListFragment {
         switch (item.getItemId()) {
             case R.id.menu_list_sort_date:
                 MetaSettings.putSortBy(context, 0);
-                populateBibleVerses();
+                if(loaderThread == null) {
+					loaderThread = new PopulateBibleVerses();
+				}
+				loaderThread.execute();
                 return true;
             case R.id.menu_list_sort_canonical:
                 MetaSettings.putSortBy(context, 1);
-                populateBibleVerses();
+				if(loaderThread == null) {
+					loaderThread = new PopulateBibleVerses();
+				}
+				loaderThread.execute();
                 return true;
             case R.id.menu_list_sort_alphabetically:
                 MetaSettings.putSortBy(context, 2);
-                populateBibleVerses();
+				if(loaderThread == null) {
+					loaderThread = new PopulateBibleVerses();
+				}
+				loaderThread.execute();
                 return true;
             case R.id.menu_list_sort_mem_state:
                 MetaSettings.putSortBy(context, 3);
-                populateBibleVerses();
+				if(loaderThread == null) {
+					loaderThread = new PopulateBibleVerses();
+				}
+				loaderThread.execute();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -764,7 +786,10 @@ public class VerseListFragment extends ListFragment {
                 db.close();
                 if(mActionMode != null) mActionMode.finish();
                 dialog.dismiss();
-                populateBibleVerses();
+				if(loaderThread == null) {
+					loaderThread = new PopulateBibleVerses();
+				}
+				loaderThread.execute();
             }
         });
         dialog.show();
@@ -864,7 +889,10 @@ public class VerseListFragment extends ListFragment {
 				db.insertVerse(splitVerse);
 			}
 
-			populateBibleVerses();
+			if(loaderThread == null) {
+				loaderThread = new PopulateBibleVerses();
+			}
+			loaderThread.execute();
 		}
 
 		@Override

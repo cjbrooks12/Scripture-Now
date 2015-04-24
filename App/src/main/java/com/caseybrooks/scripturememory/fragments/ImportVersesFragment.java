@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.data.Bible;
+import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -43,7 +44,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -52,7 +52,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -304,14 +303,20 @@ public class ImportVersesFragment extends Fragment {
 
                             if (lineType.equals("r:")) {
                                 if (passage == null) {
-                                    passage = Passage.parsePassage(line.substring(2).trim(), new Bible(null));
+									Reference.Builder builder = new Reference.Builder()
+											.parseReference(line.substring(2).trim());
+
+									passage = new Passage(builder.create());
                                 }
                                 else {
                                     if(text != null && text.length() > 0) {
                                         passage.setText(text);
                                         verses.add(passage);
                                     }
-                                    passage = Passage.parsePassage(line.substring(2).trim(), new Bible(null));
+									Reference.Builder builder = new Reference.Builder()
+											.parseReference(line.substring(2).trim());
+
+									passage = new Passage(builder.create());
                                 }
                             } else if (lineType.equals("q:") && passage != null) {
                                 passage.setBible(new Bible(null));
@@ -376,9 +381,6 @@ public class ImportVersesFragment extends Fragment {
                         StreamResult result = new StreamResult(new File(folderA, file.getName().replaceAll(".txt", ".xml")));
                         transformer.transform(source, result);
                     }
-                    catch (ParseException pe) {
-                        pe.printStackTrace();
-                    }
                     catch(FileNotFoundException fnfe) {
                         fnfe.printStackTrace();
                     }
@@ -388,11 +390,8 @@ public class ImportVersesFragment extends Fragment {
                     catch (ParserConfigurationException pce) {
                         pce.printStackTrace();
                     }
-                    catch (TransformerConfigurationException tce) {
+                    catch (TransformerException tce) {
                         tce.printStackTrace();
-                    }
-                    catch (TransformerException te) {
-                        te.printStackTrace();
                     }
                 }
             }
@@ -495,7 +494,10 @@ public class ImportVersesFragment extends Fragment {
                     for(Element element : doc.select("passage")) {
                         if(!running) return null;
 
-                        Passage passage = Passage.parsePassage(element.select("R").text(), new Bible(null));
+						Reference.Builder builder = new Reference.Builder()
+								.parseReference(element.select("R").text());
+
+                        Passage passage = new Passage(builder.create());
 
                         for(org.jsoup.nodes.Element tagElement : element.select("T").select("item")) {
                             passage.addTag(new Tag(tagElement.text()));

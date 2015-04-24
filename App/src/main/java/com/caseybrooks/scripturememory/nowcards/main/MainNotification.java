@@ -50,9 +50,20 @@ public class MainNotification {
 		PendingIntent resultPI = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		mb.setContentIntent(resultPI);
 
+		//if on lollipop, set the color of the notification icon circle
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			mb.setColor(context.getResources().getColor(R.color.primary));
+		}
+
 		Main mv = new Main(context);
 		if(mv.passage != null) {
+			//for small notifcation, always use full text
+			mv.setPassageNormal();
 
+			mb.setContentTitle(mv.passage.getReference().toString());
+			mb.setContentText(mv.passage.getText());
+
+			//if Jelly Bean or later, add additional expanded notification
 			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 				if(Main.isTextFull(context)) {
 					mv.setPassageNormal();
@@ -102,27 +113,6 @@ public class MainNotification {
 
 				notification = mb.build();
 			}
-
-
-			//goes to the next verse when the user hits "Next"
-//			Intent showFull = new Intent(context, MainVerse.TextFullReceiver.class);
-//			PendingIntent showFullPI = PendingIntent.getBroadcast(context, 0, showFull, PendingIntent.FLAG_CANCEL_CURRENT);
-//			mb.addAction(R.drawable.ic_action_text_format_dark, "Show all", showFullPI);
-//
-//			//Removes the notification when the user hits "Dismiss"
-//			Intent dismiss = new Intent(context, MainVerse.DismissVerseReceiver.class);
-//			PendingIntent dismissPI = PendingIntent.getBroadcast(context, 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
-//			mb.addAction(R.drawable.ic_action_clear_dark, "Dismiss", dismissPI);
-//
-//			//goes to the next verse when the user hits "Next"
-//			Intent next = new Intent(context, MainVerse.NextVerseReceiver.class);
-//			PendingIntent nextPI = PendingIntent.getBroadcast(context, 0, next, PendingIntent.FLAG_CANCEL_CURRENT);
-//			mb.addAction(R.drawable.ic_action_arrow_right_dark, "Next", nextPI);
-//
-//			//set the Reference and the text of the notification
-//			mb.setContentTitle(mv.passage.getReference().toString());
-//			mb.setContentText(mv.passage.getText());
-//			mb.setStyle(new NotificationCompat.BigTextStyle().bigText(mv.passage.getText()));
 		}
 		else {
 			//no verse is set, so don't add actions

@@ -42,13 +42,6 @@ public class Util {
 	 */
 	public static boolean cacheDocument(Context context, Document doc, String filename) {
 		try {
-			Calendar calendar = Calendar.getInstance();
-
-			String timestamp = String.format("%d4%d2%d2",
-					calendar.get(Calendar.YEAR),
-					calendar.get(Calendar.MONTH),
-					calendar.get(Calendar.DATE));
-
 			File cacheFile = new File(context.getCacheDir(), filename);
 
 			BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(

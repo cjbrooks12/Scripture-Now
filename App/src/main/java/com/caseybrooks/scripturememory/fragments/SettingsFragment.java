@@ -40,10 +40,10 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
 
 public class SettingsFragment extends PreferenceFragment {
 	Context context;
@@ -353,7 +353,7 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 			ListPreference lp = (ListPreference) preference;
-			lp.setSummary(newValue.toString());
+			lp.setSummary(availableLanguages.get(newValue.toString()));
 
 			new AsycnBibleVersions(newValue.toString()).execute();
 
@@ -363,9 +363,11 @@ public class SettingsFragment extends PreferenceFragment {
 
 	OnPreferenceChangeListener versionChange = new OnPreferenceChangeListener() {
 		@Override
-		public boolean onPreferenceChange(Preference preference, Object newValue) {
+		public boolean onPreferenceChange(Preference preference, final Object newValue) {
 			ListPreference lp = (ListPreference) preference;
-			lp.setSummary(newValue.toString());
+			lp.setSummary(availableBibles.get(newValue.toString()).abbr);
+
+			new DownloadVersionInfo().execute(newValue.toString());
 
 			return true;
 		}
@@ -501,17 +503,23 @@ public class SettingsFragment extends PreferenceFragment {
 
 			ListPreference selectLanguage = (ListPreference) findPreference("PREF_SELECTED_VERSION_LANGUAGE");
 
-			LinkedHashSet<Map.Entry<String, String>> values = new LinkedHashSet<>();
-			values.addAll(availableLanguages.entrySet());
-
-			String[] entries = new String[values.size()];
-			String[] entryValues = new String[values.size()];
+			LinkedHashSet<String> values = new LinkedHashSet<>();
+			values.addAll(availableLanguages.keySet());
 
 			int i = 0;
 
-			for(Map.Entry<String, String> entry : values) {
-				entries[i] = entry.getKey();
-				entryValues[i] = entry.getValue();
+			String[] entryValues = new String[values.size()];
+
+			for(String entry : values) {
+				entryValues[i] = entry;
+				i++;
+			}
+			Arrays.sort(entryValues);
+
+			i = 0;
+			String[] entries = new String[entryValues.length];
+			for(String key : entryValues) {
+				entries[i] = availableLanguages.get(key);
 
 				i++;
 			}
@@ -550,6 +558,8 @@ public class SettingsFragment extends PreferenceFragment {
 			dialog.show();
 			dialog.setCancelable(false);
 		}
+
+
 
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -608,6 +618,56 @@ public class SettingsFragment extends PreferenceFragment {
 
 			selectVersion.setOnPreferenceChangeListener(versionChange);
 			selectVersion.setSummary(MetaSettings.getBibleVersion(context).abbr);
+		}
+	}
+
+	private class DownloadVersionInfo extends AsyncTask<String, Void, Void> {
+
+		AlertDialog dialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			View view = LayoutInflater.from(context).inflate(R.layout.popup_progress, null);
+			final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setView(view);
+
+			TextView tv = (TextView) view.findViewById(R.id.title);
+			tv.setText("Downloading Version Info");
+
+			view.findViewById(R.id.cancel_button).setVisibility(View.GONE);
+
+			dialog = builder.create();
+			dialog.show();
+			dialog.setCancelable(false);
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
+			dialog.dismiss();
+
+		}
+
+		@Override
+		protected Void doInBackground(String... params) {
+			try {
+				if(Util.isConnected(context)) {
+					Document doc = Download.versionInfo(
+							getResources().getString(R.string.bibles_org),
+							params[0]);
+
+					if(doc != null) {
+						Util.cacheDocument(context, doc, "selectedVersion.xml");
+						Util.cacheDocument(context, doc, params[0]);
+					}
+				}
+			}
+			catch(IOException ioe) {
+				ioe.printStackTrace();
+			}
+			return null;
 		}
 	}
 }
