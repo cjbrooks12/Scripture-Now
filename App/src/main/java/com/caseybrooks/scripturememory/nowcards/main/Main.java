@@ -99,6 +99,14 @@ public class Main {
 
         VerseDB db = new VerseDB(context).open();
         passage = db.getVerse(getVerseId(context));
+
+//		if(isTextFull(context)) {
+//			setPassageFormatted();
+//		}
+//		else {
+//			setPassageNormal();
+//		}
+
         db.close();
     }
 
@@ -276,7 +284,7 @@ public class Main {
 		}
 	}
 
-    public void updateAll() {
+    public static void updateAll(Context context) {
         //update all the dashboard cards
         context.sendBroadcast(new Intent(DashboardFragment.REFRESH));
 
@@ -294,7 +302,7 @@ public class Main {
 		public void onReceive(Context context, Intent intent) {
 			Main mv = new Main(context);
 			mv.getPreviousVerse();
-			mv.updateAll();
+			updateAll(context);
 		}
 	}
 
@@ -303,7 +311,7 @@ public class Main {
         public void onReceive(Context context, Intent intent) {
             Main mv = new Main(context);
             mv.getNextVerse();
-            mv.updateAll();
+			updateAll(context);
         }
     }
 
@@ -312,7 +320,7 @@ public class Main {
 		public void onReceive(Context context, Intent intent) {
 			Main mv = new Main(context);
 			mv.getRandomVerse();
-			mv.updateAll();
+			updateAll(context);
 		}
 	}
 
@@ -327,8 +335,8 @@ public class Main {
 	public static class TextFullReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Main.setTextFull(context, !Main.isTextFull(context));
-			MainNotification.getInstance(context).create().show();
+			setTextFull(context, !Main.isTextFull(context));
+			updateAll(context);
 		}
 	}
 

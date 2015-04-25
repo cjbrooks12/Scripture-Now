@@ -6,17 +6,59 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent" >
 
-    <ImageButton
-        android:id="@+id/widget_votd_refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:paddingRight="8dp"
-        android:paddingLeft="4dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_action_refresh_dark"/>
+	<LinearLayout
+		android:id="@+id/widget_buttons_layout"
+		android:layout_width="wrap_content"
+		android:layout_height="32dp"
+		android:divider="@color/text_light"
+		android:showDividers="middle"
+		android:paddingTop="4dp"
+		android:paddingBottom="4dp"
+		android:paddingRight="8dp"
+		android:paddingLeft="4dp"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentRight="true">
+
+		<ImageView
+			android:id="@+id/widget_main_random"
+			android:background="@drawable/bg_transparent_hard_edge"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_marginRight="4dp"
+			android:layout_marginLeft="4dp"
+			android:alpha="0.75"
+			android:src="@drawable/ic_action_shuffle_dark"/>
+
+		<ImageView
+			android:id="@+id/widget_main_previous"
+			android:background="@drawable/bg_transparent_hard_edge"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_marginRight="4dp"
+			android:layout_marginLeft="4dp"
+			android:alpha="0.75"
+			android:src="@drawable/ic_action_arrow_left_dark"/>
+
+		<ImageView
+			android:id="@+id/widget_main_next"
+			android:background="@drawable/bg_transparent_hard_edge"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_marginRight="4dp"
+			android:layout_marginLeft="4dp"
+			android:alpha="0.75"
+			android:src="@drawable/ic_action_arrow_right_dark"/>
+
+		<ImageView
+			android:id="@+id/widget_main_show_full"
+			android:background="@drawable/bg_transparent_hard_edge"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_marginRight="4dp"
+			android:layout_marginLeft="4dp"
+			android:alpha="0.75"
+			android:src="@drawable/ic_action_text_format_dark"/>
+	</LinearLayout>
 
     <TextView
         android:id="@+id/widget_main_reference"
@@ -29,8 +71,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignBaseline="@id/widget_votd_refresh"
-        android:layout_toLeftOf="@id/widget_votd_refresh"
+        android:layout_alignBaseline="@id/widget_buttons_layout"
+        android:layout_toLeftOf="@id/widget_buttons_layout"
         android:fontFamily="sans-serif-light"
         android:text="@string/reference"
         android:textSize="@dimen/title_text_size" />

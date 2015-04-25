@@ -33,10 +33,9 @@ public class MainWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         //set pendingIntents on entire class of widgets
-        setNextButtonClick(context, appWidgetManager);
-        setWidgetClick(context, appWidgetManager);
+        setClickIntents(context, appWidgetManager);
 
-        // There may be multiple widgets active, so update all of them
+		// There may be multiple widgets active, so update all of them
         for (int i = 0; i < appWidgetIds.length; i++) {
             configureKeyguardWidget(context, appWidgetManager, appWidgetIds[i]);
             updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
@@ -45,48 +44,68 @@ public class MainWidget extends AppWidgetProvider {
 
     private void configureKeyguardWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            RemoteViews nextButton = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
+            RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
 
             Bundle myOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
             int category = myOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, -1);
             boolean isKeyguard = category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD;
 
             if (isKeyguard) {
-                nextButton.setViewVisibility(R.id.widget_votd_refresh, View.GONE);
-                appWidgetManager.updateAppWidget(appWidgetId, nextButton);
+				remoteView.setViewVisibility(R.id.widget_main_show_full, View.GONE);
+				remoteView.setViewVisibility(R.id.widget_main_next, View.GONE);
+				remoteView.setViewVisibility(R.id.widget_main_previous, View.GONE);
+				remoteView.setViewVisibility(R.id.widget_main_random, View.GONE);
+
+				appWidgetManager.updateAppWidget(appWidgetId, remoteView);
             }
         }
     }
 
-    private void setNextButtonClick(Context context, AppWidgetManager appWidgetManager) {
-        Intent nextIntent = new Intent(context, Main.NextVerseReceiver.class);
-        PendingIntent nextPI = PendingIntent.getBroadcast(context, 0, nextIntent, 0);
+    private void setClickIntents(Context context, AppWidgetManager appWidgetManager) {
+        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
 
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
-        remoteViews.setOnClickPendingIntent(R.id.widget_votd_refresh, nextPI);
+		//open the app when the widget is clicked
+		Intent resultIntent = new Intent(context, MainActivity.class);
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+		stackBuilder.addParentStack(MainActivity.class);
+		stackBuilder.addNextIntent(resultIntent);
+		PendingIntent resultPI = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+		contentView.setOnClickPendingIntent(R.id.widget_main_layout, resultPI);
+
+		//go to the previous verse
+		Intent previousVerse = new Intent(context, Main.PreviousVerseReceiver.class);
+		PendingIntent previousVersePI = PendingIntent.getBroadcast(context, 0, previousVerse, PendingIntent.FLAG_CANCEL_CURRENT);
+		contentView.setOnClickPendingIntent(R.id.widget_main_previous, previousVersePI);
+
+		//go to the next verse
+		Intent nextVerse = new Intent(context, Main.NextVerseReceiver.class);
+		PendingIntent nextVersePI = PendingIntent.getBroadcast(context, 0, nextVerse, PendingIntent.FLAG_CANCEL_CURRENT);
+		contentView.setOnClickPendingIntent(R.id.widget_main_next, nextVersePI);
+
+		//go to the next verse
+		Intent randomVerse = new Intent(context, Main.RandomVerseReceiver.class);
+		PendingIntent randomVersePI = PendingIntent.getBroadcast(context, 0, randomVerse, PendingIntent.FLAG_CANCEL_CURRENT);
+		contentView.setOnClickPendingIntent(R.id.widget_main_random, randomVersePI);
+
+		//toggle full and formatted text in notification
+		Intent showFull = new Intent(context, Main.TextFullReceiver.class);
+		PendingIntent showFullPI = PendingIntent.getBroadcast(context, 0, showFull, PendingIntent.FLAG_CANCEL_CURRENT);
+		contentView.setOnClickPendingIntent(R.id.widget_main_show_full, showFullPI);
 
         ComponentName watchWidget = new ComponentName(context, MainWidget.class);
-        appWidgetManager.updateAppWidget(watchWidget, remoteViews);
-    }
-
-    private void setWidgetClick(Context context, AppWidgetManager appWidgetManager) {
-        Intent resultIntent = new Intent(context, MainActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(MainActivity.class);
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPI = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
-        remoteViews.setOnClickPendingIntent(R.id.widget_main_layout, resultPI);
-
-        ComponentName watchWidget = new ComponentName(context, MainWidget.class);
-        appWidgetManager.updateAppWidget(watchWidget, remoteViews);
+        appWidgetManager.updateAppWidget(watchWidget, contentView);
     }
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         Main mv = new Main(context);
         if (mv.passage != null) {
-            mv.setPassageFormatted();
+
+			if(Main.isTextFull(context)) {
+				mv.setPassageNormal();
+			}
+			else{
+				mv.setPassageFormatted();
+			}
 
             // Construct the RemoteViews object
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);

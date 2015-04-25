@@ -16,10 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.Util;
-import com.caseybrooks.scripturememory.data.VerseDB;
 
 public class VOTDCard extends FrameLayout {
     private TextView ref, ver;
@@ -94,11 +92,11 @@ public class VOTDCard extends FrameLayout {
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.overflow_votd_card, popup.getMenu());
 
-                if(votd.currentVerse.getMetadata().getInt(DefaultMetaData.STATE) == VerseDB.VOTD) {
-                    popup.getMenu().findItem(R.id.overflow_votd_card_save).setVisible(true);
+                if(votd.isSaved()) {
+                    popup.getMenu().findItem(R.id.overflow_votd_card_save).setVisible(false);
                 }
                 else {
-                    popup.getMenu().findItem(R.id.overflow_votd_card_save).setVisible(false);
+                    popup.getMenu().findItem(R.id.overflow_votd_card_save).setVisible(true);
                 }
 
                 popup.show();
@@ -111,7 +109,7 @@ public class VOTDCard extends FrameLayout {
         public void onClick(final View v) {
             final VOTD votd = new VOTD(context);
 
-            if(votd.currentVerse != null && votd.currentVerse.getMetadata().getInt(DefaultMetaData.STATE) == VerseDB.VOTD) {
+            if(votd.currentVerse != null && !votd.isSaved()) {
                 final View view = LayoutInflater.from(context).inflate(R.layout.popup_add_verse, null);
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setView(view);

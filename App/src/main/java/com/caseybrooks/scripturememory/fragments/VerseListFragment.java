@@ -41,7 +41,6 @@ import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.nowcards.main.Main;
-import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 
 import java.io.File;
 import java.io.IOException;
@@ -181,9 +180,9 @@ public class VerseListFragment extends ListFragment {
                     switch (menuItem.getItemId()) {
 					case R.id.context_list_post:
 						Main.putVerseId(context, vh.passage.getMetadata().getInt(DefaultMetaData.ID));
-						Main.setActive(context, true);
 						Main.putWorkingList(context, listType, listId);
-						MainNotification.getInstance(context).create().show();
+						Main.setActive(context, true);
+						Main.updateAll(context);
 						Toast.makeText(context, vh.passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
 						return true;
 					case R.id.context_list_add_tag:

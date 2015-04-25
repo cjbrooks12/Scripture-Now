@@ -27,17 +27,18 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 public class VOTD {
 //Shared preferences related to the Verse of the Day
 	public static final String settings_file = "my_settings";
+	public static final String cache_file = "votd_cache.xml";
 
 	private static final String PREFIX = "VOTD_";
 	private static final String ENABLED = "ENABLED";
 	private static final String SOUND = "SOUND";
 	private static final String ACTIVE = "ACTIVE";
 	private static final String TIME = "TIME";
+	private static final String REFERENCE = "REFERENCE";
 
 	public static boolean isEnabled(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREFIX + ENABLED, false);
@@ -63,6 +64,14 @@ public class VOTD {
 		PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(PREFIX + TIME, value).commit();
 	}
 
+	public static String getVOTDReference(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getString(PREFIX + REFERENCE, "");
+	}
+
+	public static void setVOTDReference(Context context, String value) {
+		PreferenceManager.getDefaultSharedPreferences(context).edit().putString(PREFIX + REFERENCE, value).commit();
+	}
+
 //Data Members
 //------------------------------------------------------------------------------
     Context context;
@@ -74,13 +83,8 @@ public class VOTD {
     public VOTD(Context context) {
         this.context = context;
 
-        //try to get today's verse from databse
+        //try to get today's verse from cached file, or else download a new one
         getCurrentVerse();
-
-        //if verse has not been downloaded or wasn't today's verse, it will be null. attempt to redownload it
-        if(currentVerse == null && Util.isConnected(context)) {
-            new DownloadCurrentVerse().execute();
-        }
     }
 
 //VOTD lifecycle and verse management
@@ -104,20 +108,24 @@ public class VOTD {
 		}
     }
 
+	public boolean isSaved() {
+		VerseDB db = new VerseDB(context).open();
+		if(db.getVerse(db.getVerseId(currentVerse.getReference())) == null) {
+			db.close();
+			return false;
+		}
+		else {
+			db.close();
+			return true;
+		}
+	}
+
     public boolean saveVerse() {
 		if(currentVerse != null) {
 			VerseDB db = new VerseDB(context).open();
 			currentVerse.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
 			currentVerse.addTag(new Tag("VOTD"));
-			int id = db.getVerseId(currentVerse.getReference());
-			if(id == -1) {
-				id = db.insertVerse(currentVerse);
-				currentVerse.getMetadata().putInt(DefaultMetaData.ID, id);
-			}
-			else {
-				currentVerse.getMetadata().putInt(DefaultMetaData.ID, id);
-				db.updateVerse(currentVerse);
-			}
+			db.insertVerse(currentVerse);
 			db.close();
 			return true;
 		}
@@ -138,33 +146,18 @@ public class VOTD {
 
     public void getCurrentVerse() {
         //get all verses that are either tagged or in the state of VOTD
-        VerseDB db = new VerseDB(context).open();
-        currentVerse = db.getMostRecentVOTD();
-        db.close();
+        Document doc = Util.getChachedDocument(context, cache_file);
 
-        //no VOTD exist in database at this time
-        if(currentVerse != null) {
-            //check the timestamp of the most recent verse against the current time.
-            //if the current verse is on the same day as today, then it is current.
-            //if the current verse is not today, it needs to get updated
-            Calendar today = Calendar.getInstance();
-            Calendar current = Calendar.getInstance();
-            current.setTimeInMillis(currentVerse.getMetadata().getLong(DefaultMetaData.TIME_CREATED));
-
-            boolean isCurrent =
-                    (today.get(Calendar.ERA) == current.get(Calendar.ERA)
-                            && today.get(Calendar.YEAR) == current.get(Calendar.YEAR)
-                            && today.get(Calendar.DAY_OF_YEAR) == current.get(Calendar.DAY_OF_YEAR));
-
-            if(!isCurrent) {
-				if(currentVerse.getMetadata().getInt(DefaultMetaData.STATE) == VerseDB.VOTD) {
-					db.open();
-					db.deleteVerse(currentVerse);
-					db.close();
-				}
-                currentVerse = null;
-            }
-        }
+		if(doc != null) {
+			currentVerse = new Passage(new Reference.Builder().parseReference(
+					getVOTDReference(context)).create());
+			currentVerse.getVerseInfo(doc);
+		}
+		else {
+			if(Util.isConnected(context)) {
+				new DownloadCurrentVerse().execute();
+			}
+		}
     }
 
     public void downloadCurrentVerseAsync() {
@@ -214,24 +207,19 @@ public class VOTD {
 				currentVerse = new Passage(builder.create());
 
                 if (currentVerse.getReference().book.getId() != null) {
-                    currentVerse.getVerseInfo(Download.bibleChapter(
+					Document verseDoc = Download.bibleChapter(
 							context.getResources().getString(R.string.bibles_org),
-							currentVerse.getReference()
-					));
-                    currentVerse.addTag(new Tag("VOTD"));
-                    currentVerse.getMetadata().putInt(DefaultMetaData.STATE, votdState);
+							currentVerse.getReference());
 
-                    VerseDB db = new VerseDB(context).open();
-                    int id = db.getVerseId(currentVerse.getReference());
-                    if (id == -1) {
-                        id = db.insertVerse(currentVerse);
-                        currentVerse.getMetadata().putInt(DefaultMetaData.ID, id);
-                    } else {
-                        currentVerse.getMetadata().putInt(DefaultMetaData.ID, id);
-                        db.updateVerse(currentVerse);
-                    }
-                    db.close();
-                }
+					if(verseDoc != null) {
+						Util.cacheDocument(context, verseDoc, cache_file);
+						setVOTDReference(context, currentVerse.getReference().toString());
+
+						currentVerse.getVerseInfo(verseDoc);
+						currentVerse.addTag(new Tag("VOTD"));
+						currentVerse.getMetadata().putInt(DefaultMetaData.STATE, votdState);
+					}
+				}
 
                 return null;
             } catch (IOException ioe) {
