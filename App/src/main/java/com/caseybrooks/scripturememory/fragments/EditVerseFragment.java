@@ -35,9 +35,8 @@ import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.androidbibletools.data.Bible;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.androidbibletools.io.Download;
+import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -136,7 +135,7 @@ public class EditVerseFragment extends Fragment {
             editVer.setText(passage.getText());
 
 			version = (TextView) view.findViewById(R.id.version);
-			version.setText(passage.getBible().getVersionId().toUpperCase());
+			version.setText(passage.getBible().getAbbr().toUpperCase());
 
             seekbarText = (TextView) view.findViewById(R.id.seekbar_text);
             switch (passage.getMetadata().getInt(DefaultMetaData.STATE)) {
@@ -584,6 +583,7 @@ public class EditVerseFragment extends Fragment {
 		case R.id.menu_edit_redownload:
 			if(passage != null) {
 				new AsyncTask<Void, Void, Boolean>() {
+					ABSPassage absPassage;
 
 					@Override
 					protected void onPreExecute() {
@@ -591,6 +591,10 @@ public class EditVerseFragment extends Fragment {
 						progress.setVisibility(View.VISIBLE);
 						progress.setIndeterminate(true);
 						progress.setProgress(0);
+						absPassage = new ABSPassage(
+							getResources().getString(R.string.bibles_org),
+								passage.getReference()
+						);
 					}
 
 					@Override
@@ -599,8 +603,8 @@ public class EditVerseFragment extends Fragment {
 						progress.setVisibility(View.GONE);
 
 						if(aVoid) {
-							editVer.setText(passage.getText());
-							version.setText(passage.getBible().getVersionId().toUpperCase());
+							editVer.setText(absPassage.getText());
+							version.setText(absPassage.getBible().getAbbr().toUpperCase());
 						}
 						else {
 							Toast.makeText(context, "Could not redownload verse at this time", Toast.LENGTH_SHORT).show();
@@ -611,16 +615,14 @@ public class EditVerseFragment extends Fragment {
 					protected Boolean doInBackground(Void... params) {
 						if(Util.isConnected(context)) {
 							try {
-								passage.setBible(MetaSettings.getBibleVersion(context));
-								passage.getVerseInfo(Download.bibleChapter(
-										getResources().getString(R.string.bibles_org),
-										passage.getReference()
-								));
+								absPassage.setBible(MetaSettings.getBibleVersion(context));
+
+								absPassage.parseDocument(absPassage.getDocument());
 								return true;
 							}
 							catch(IOException ioe) {
 								ioe.printStackTrace();
-								passage.setBible(new Bible(null));
+								absPassage = null;
 								return false;
 							}
 						}

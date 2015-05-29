@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
-import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.androidbibletools.io.Download;
+import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
+import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
+import com.caseybrooks.androidbibletools.providers.votd.VerseOfTheDay;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -22,9 +24,7 @@ import com.caseybrooks.scripturememory.nowcards.main.Main;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 import com.caseybrooks.scripturememory.nowcards.main.MainWidget;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
@@ -75,7 +75,7 @@ public class VOTD {
 //Data Members
 //------------------------------------------------------------------------------
     Context context;
-    public Passage currentVerse;
+    public ABSPassage currentVerse;
 
 //Constructors and Initialization
 //------------------------------------------------------------------------------
@@ -145,24 +145,34 @@ public class VOTD {
     }
 
     public void getCurrentVerse() {
-        //get all verses that are either tagged or in the state of VOTD
-        Document doc = Util.getChachedDocument(context, cache_file);
+		//get all verses that are either tagged or in the state of VOTD
+		Document doc = Util.getChachedDocument(context, cache_file);
 
 		if(doc != null) {
-			currentVerse = new Passage(new Reference.Builder().parseReference(
-					getVOTDReference(context)).create());
-			currentVerse.getVerseInfo(doc);
+			currentVerse = new ABSPassage(
+					context.getResources().getString(R.string.bibles_org),
+					new Reference.Builder()
+							.parseReference(getVOTDReference(context))
+							.create());
+			currentVerse.parseDocument(doc);
+			Log.e("GET CURRENT VERSE", "DOC NOT NULL " +
+					currentVerse.getReference().toString() +
+					currentVerse.getText());
+
+//			updateAll();
 		}
 		else {
 			if(Util.isConnected(context)) {
+				Log.e("GET CURRENT VERSE", "DOC NULL, DOC NOT CACHED. DOWNLOADING NOW");
+
 				new DownloadCurrentVerse().execute();
 			}
 		}
-    }
+	}
 
-    public void downloadCurrentVerseAsync() {
-        new DownloadCurrentVerse().execute();
-    }
+	public void downloadCurrentVerseAsync() {
+		new DownloadCurrentVerse().execute();
+	}
 
     private class DownloadCurrentVerse extends AsyncTask<Void, Void, Void> {
         int votdState;
@@ -196,28 +206,35 @@ public class VOTD {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                Document doc = Jsoup.connect("http://verseoftheday.com").get();
+				VerseOfTheDay votd = new VerseOfTheDay();
+				votd.parseDocument(votd.getDocument());
 
-                Elements reference = doc.select("meta[property=og:title]");
+				ABSBible bible = MetaSettings.getBibleVersion(context);
+				if(bible.getId() == null || bible.getId().length() == 0) {
+					bible = new ABSBible("eng-ESV");
+				}
 
-				Reference.Builder builder = new Reference.Builder()
-						.setBible(MetaSettings.getBibleVersion(context))
-						.parseReference(reference.attr("content").substring(18));
+				ABSPassage downloadedVerse = new ABSPassage(
+						context.getResources().getString(R.string.bibles_org),
+						votd.getPassage().getReference()
+				);
 
-				currentVerse = new Passage(builder.create());
+				downloadedVerse.setId(
+						MetaSettings.getBibleVersion(context).getId()
+						+ ":" + votd.getPassage().getReference().book.getAbbreviation()
+						+ "." + votd.getPassage().getReference().chapter);
 
-                if (currentVerse.getReference().book.getId() != null) {
-					Document verseDoc = Download.bibleChapter(
-							context.getResources().getString(R.string.bibles_org),
-							currentVerse.getReference());
+                if (downloadedVerse.isAvailable()) {
+					Document verseDoc = downloadedVerse.getDocument();
 
 					if(verseDoc != null) {
 						Util.cacheDocument(context, verseDoc, cache_file);
 						setVOTDReference(context, currentVerse.getReference().toString());
 
-						currentVerse.getVerseInfo(verseDoc);
-						currentVerse.addTag(new Tag("VOTD"));
-						currentVerse.getMetadata().putInt(DefaultMetaData.STATE, votdState);
+						downloadedVerse.parseDocument(verseDoc);
+						downloadedVerse.addTag(new Tag("VOTD"));
+						downloadedVerse.getMetadata().putInt(DefaultMetaData.STATE, votdState);
+						currentVerse = downloadedVerse;
 					}
 				}
 

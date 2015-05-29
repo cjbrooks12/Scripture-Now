@@ -55,6 +55,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/notification_main_icon_layout"
+		android:maxHeight="216dp"
 		android:layout_below="@+id/notification_main_reference"
 		style="@style/NotificationText"
 		android:text="For God so loved the world that he gave his one and only son that whoever believes in him might not perish but have everlasting life."/>

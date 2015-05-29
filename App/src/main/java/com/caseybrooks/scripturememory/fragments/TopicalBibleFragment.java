@@ -39,8 +39,8 @@ import android.widget.Toast;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.androidbibletools.io.Download;
-import com.caseybrooks.androidbibletools.search.OpenBibleInfo;
+import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
+import com.caseybrooks.androidbibletools.providers.openbible.OpenBibleInfo;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -182,11 +182,11 @@ public class TopicalBibleFragment extends Fragment {
         });
 
         //setup adapter for parallax listview
-        adapter = new OpenBibleAdapter(context, new ArrayList<Passage>(), listView);
+        adapter = new OpenBibleAdapter(context, new ArrayList<ABSPassage>(), listView);
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ArrayList<Passage> singleItem = new ArrayList<Passage>();
+                ArrayList<ABSPassage> singleItem = new ArrayList<ABSPassage>();
                 singleItem.add(((ViewHolder)view.getTag()).passage);
                 save(singleItem);
             }
@@ -248,7 +248,7 @@ public class TopicalBibleFragment extends Fragment {
 
                 //select all verses in the list
                 case R.id.contextual_open_bible_select_all:
-                    ArrayList<Passage> items = adapter.getItems();
+                    ArrayList<ABSPassage> items = adapter.getItems();
 
                     int firstPosition = listView.getFirstVisiblePosition();
                     int lastPosition = firstPosition + listView.getChildCount() - 1;
@@ -280,7 +280,9 @@ public class TopicalBibleFragment extends Fragment {
 
                     return true;
 				case R.id.contextual_open_bible_redownload:
-					new RedownloadAsync().execute(adapter.getSelectedItems());
+					ABSPassage[] passagesArray = new ABSPassage[adapter.getSelectedItems().size()];
+					adapter.getSelectedItems().toArray(passagesArray);
+					new RedownloadAsync().execute(passagesArray);
 					return true;
                 case R.id.contextual_open_bible_save:
                     save(adapter.getSelectedItems());
@@ -296,7 +298,7 @@ public class TopicalBibleFragment extends Fragment {
             mActionMode = null;
 
             //deselect all items
-            ArrayList<Passage> selectedItems = adapter.getSelectedItems();
+            ArrayList<ABSPassage> selectedItems = adapter.getSelectedItems();
 
             int firstPosition = listView.getFirstVisiblePosition();
             int lastPosition = firstPosition + listView.getChildCount() - 1;
@@ -331,13 +333,13 @@ public class TopicalBibleFragment extends Fragment {
     public class OpenBibleAdapter extends BaseAdapter {
         Context context;
         ListView lv;
-        ArrayList<Passage> items;
+        ArrayList<ABSPassage> items;
 
         AdapterView.OnItemClickListener cardClick;
         AdapterView.OnItemClickListener overflowClick;
         AdapterView.OnItemClickListener iconClick;
 
-        public OpenBibleAdapter(Context context, ArrayList<Passage> items, ListView lv) {
+        public OpenBibleAdapter(Context context, ArrayList<ABSPassage> items, ListView lv) {
             this.context = context;
             this.items = items;
             this.lv = lv;
@@ -360,7 +362,7 @@ public class TopicalBibleFragment extends Fragment {
             return items.size();
         }
 
-        public ArrayList<Passage> getItems() {
+        public ArrayList<ABSPassage> getItems() {
             return items;
         }
 
@@ -374,11 +376,11 @@ public class TopicalBibleFragment extends Fragment {
             return count;
         }
 
-        public ArrayList<Passage> getSelectedItems() {
-            ArrayList<Passage> selectedItems = new ArrayList<Passage>();
+        public ArrayList<ABSPassage> getSelectedItems() {
+            ArrayList<ABSPassage> selectedItems = new ArrayList<>();
 
             for (int i = 0; i < items.size(); i++) {
-                Passage passage = items.get(i);
+                ABSPassage passage = items.get(i);
                 passage.getMetadata().putInt("LIST_POSITION", i + 1);
                 if (passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
                     selectedItems.add(passage);
@@ -407,15 +409,15 @@ public class TopicalBibleFragment extends Fragment {
             }
         }
 
-        public void add(Passage item) {
+        public void add(ABSPassage item) {
             this.items.add(item);
         }
 
-        public void add(Passage item, int index) {
+        public void add(ABSPassage item, int index) {
             this.items.add(index, item);
         }
 
-        public void addAll(ArrayList<Passage> items) {
+        public void addAll(ArrayList<ABSPassage> items) {
             this.items = items;
             for(int i = 0; i < this.items.size(); i++) {
                 this.items.get(i).getMetadata().putInt("LIST_POSITION", i + 1);
@@ -496,7 +498,7 @@ public class TopicalBibleFragment extends Fragment {
         final Animation b;
         final Drawable circle;
 
-        public Passage passage;
+        public ABSPassage passage;
 
         View view;
         TextView reference;
@@ -587,12 +589,12 @@ public class TopicalBibleFragment extends Fragment {
             return passage.getMetadata().getInt(DefaultMetaData.ID);
         }
 
-        private void initialize(Passage passage) {
+        private void initialize(ABSPassage passage) {
             this.passage = passage;
 
             reference.setText(passage.getReference().toString());
             verseText.setText(passage.getText());
-            version.setText(passage.getBible().getVersionId().toUpperCase());
+            version.setText(passage.getBible().getAbbr().toUpperCase());
             upcount.setText(passage.getMetadata().getInt("UPVOTES") + " helpful votes");
 
             iconText.setText(passage.getMetadata().getInt("UPVOTES") + "");
@@ -681,7 +683,7 @@ public class TopicalBibleFragment extends Fragment {
         }
     }
 
-    private class SearchVerseAsync extends AsyncTask<String, Passage, ArrayList<Passage>> {
+    private class SearchVerseAsync extends AsyncTask<String, ABSPassage, ArrayList<ABSPassage>> {
         String message;
         int count;
 
@@ -696,10 +698,20 @@ public class TopicalBibleFragment extends Fragment {
         }
 
         @Override
-        protected ArrayList<Passage> doInBackground(String... params) {
+        protected ArrayList<ABSPassage> doInBackground(String... params) {
             try {
                 if(Util.isConnected(context)) {
-                    return OpenBibleInfo.getVersesFromTopic(params[0]);
+					ArrayList<Passage> downloadedPassages = OpenBibleInfo.getVersesFromTopic(params[0]);
+					ArrayList<ABSPassage> absPassages = new ArrayList<>();
+
+					for(Passage passage : downloadedPassages) {
+						ABSPassage newPassage = new ABSPassage(
+								context.getResources().getString(R.string.bibles_org),
+								passage.getReference()
+						);
+						absPassages.add(newPassage);
+					}
+					return absPassages;
                 }
                 else {
                     message = "Cannot search, no internet connection";
@@ -713,7 +725,7 @@ public class TopicalBibleFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Passage> aVoid) {
+        protected void onPostExecute(ArrayList<ABSPassage> aVoid) {
             super.onPostExecute(aVoid);
 
             progress.setVisibility(View.GONE);
@@ -725,7 +737,7 @@ public class TopicalBibleFragment extends Fragment {
 //Perform actions of groups of verses selected from the list of retrieved verses
 //------------------------------------------------------------------------------
 
-    private class RedownloadAsync extends AsyncTask<ArrayList<Passage>, Passage, Void> {
+    private class RedownloadAsync extends AsyncTask<ABSPassage, ABSPassage, Void> {
 
 		@Override
 		protected void onPreExecute() {
@@ -743,7 +755,7 @@ public class TopicalBibleFragment extends Fragment {
 		}
 
         @Override
-        protected void onProgressUpdate(Passage... values) {
+        protected void onProgressUpdate(ABSPassage... values) {
             super.onProgressUpdate(values);
             adapter.notifyDataSetChanged();
 			progress.setIndeterminate(false);
@@ -751,16 +763,13 @@ public class TopicalBibleFragment extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(ArrayList<Passage>... params) {
-			progress.setMax(params[0].size());
+        protected Void doInBackground(ABSPassage... params) {
+			progress.setMax(params.length);
 
-            for(Passage passage : params[0]) {
+            for(ABSPassage passage : params) {
                 try {
                     passage.setBible(MetaSettings.getBibleVersion(context));
-                    passage.getVerseInfo(Download.bibleChapter(
-						getResources().getString(R.string.bibles_org),
-							passage.getReference()
-					));
+                    passage.parseDocument(passage.getDocument());
 					publishProgress(passage);
                 }
                 catch(IOException ioe) {
@@ -773,7 +782,7 @@ public class TopicalBibleFragment extends Fragment {
     }
 
     //TODO: get helpful feedback about which verses to add in the popup and a count of verses added in a toast
-    public void save(final ArrayList<Passage> verses) {
+    public void save(final ArrayList<ABSPassage> verses) {
         final View view = LayoutInflater.from(context).inflate(R.layout.popup_add_verse, null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view);

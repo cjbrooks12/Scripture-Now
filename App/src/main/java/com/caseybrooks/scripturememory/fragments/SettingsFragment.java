@@ -13,6 +13,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -20,9 +21,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.androidbibletools.data.Bible;
-import com.caseybrooks.androidbibletools.io.Download;
+import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -33,17 +34,15 @@ import com.caseybrooks.scripturememory.nowcards.votd.VOTD;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDNotification;
 
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Cleaner;
-import org.jsoup.safety.Whitelist;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 
 public class SettingsFragment extends PreferenceFragment {
 	Context context;
@@ -365,9 +364,37 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		public boolean onPreferenceChange(Preference preference, final Object newValue) {
 			ListPreference lp = (ListPreference) preference;
-			lp.setSummary(availableBibles.get(newValue.toString()).abbr);
 
-			new DownloadVersionInfo().execute(newValue.toString());
+			Log.i("VERSION CHANGE", newValue.toString() + " ");
+
+			ABSBible newlySelectedBible = null;
+
+			if(availableBibles.get(newValue.toString()) != null) {
+				newlySelectedBible = (ABSBible) availableBibles.get(newValue.toString());
+			}
+			else {
+				for(String key : availableBibles.keySet()) {
+					Bible bible = availableBibles.get(key);
+					if(bible != null) {
+						newlySelectedBible = (ABSBible) bible;
+						break;
+					}
+				}
+			}
+
+			if(newlySelectedBible == null) {
+				lp.setSummary("Not available");
+				lp.setEnabled(false);
+			}
+			else {
+				MetaSettings.putBibleVersion(context, newlySelectedBible.getId());
+				lp.setSummary(newlySelectedBible.getName());
+				lp.setEnabled(true);
+
+				new DownloadVersionInfo().execute(newlySelectedBible.getName());
+			}
+
+
 
 			return true;
 		}
@@ -465,24 +492,23 @@ public class SettingsFragment extends PreferenceFragment {
 
 				Document languageDoc = Util.getChachedDocument(context, languagesFile);
 				if(languageDoc != null) {
-					availableLanguages = Bible.getAvailableLanguages(languageDoc);
+					Log.i("ASYNC BIBLE LANGUAGES", "Parsing cached languages.xml file.");
+					availableLanguages = ABSBible.getAvailableLanguages(languageDoc);
 				}
 				else if(Util.isConnected(context)) {
-					languageDoc = Download.availableVersions(
+					Log.i("ASYNC BIBLE LANGUAGES", "No cached languages.xml file, downloading.");
+
+					languageDoc = ABSBible.availableVersionsDoc(
 							context.getResources().getString(R.string.bibles_org),
 							null
 					);
 
-					Whitelist whitelist = new Whitelist();
-					whitelist.addTags("version", "lang_name", "lang");
-
-					Cleaner cleaner = new Cleaner(whitelist);
-					languageDoc = cleaner.clean(languageDoc);
-
 					Util.cacheDocument(context, languageDoc, languagesFile);
-					availableLanguages = Bible.getAvailableLanguages(languageDoc);
+					availableLanguages = ABSBible.getAvailableLanguages(languageDoc);
 				}
 				else {
+					Log.i("ASYNC BIBLE LANGUAGES", "No cached languages.xml file and no internet, resorting to default language of eng-us");
+
 					HashMap<String, String> defaultEnglish = new HashMap<>();
 					defaultEnglish.put("English (US)", "eng-us");
 					availableLanguages = defaultEnglish;
@@ -499,43 +525,51 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			dialog.dismiss();
 
 			ListPreference selectLanguage = (ListPreference) findPreference("PREF_SELECTED_VERSION_LANGUAGE");
 
-			LinkedHashSet<String> values = new LinkedHashSet<>();
-			values.addAll(availableLanguages.keySet());
+			ArrayList<Pair<String, String>> languagePairs = new ArrayList<>();
 
-			int i = 0;
-
-			String[] entryValues = new String[values.size()];
-
-			for(String entry : values) {
-				entryValues[i] = entry;
-				i++;
+			//reserve English languages to put to the top of the list
+			for(String key : availableLanguages.keySet()) {
+				languagePairs.add(new Pair<>(key, availableLanguages.get(key)));
 			}
-			Arrays.sort(entryValues);
+			Comparator<Pair<String, String>> pairComparator = new Comparator<Pair<String, String>>() {
+				@Override
+				public int compare(Pair<String, String> lhs, Pair<String, String> rhs) {
+					int compareFirst = lhs.first.compareTo(rhs.first);
+					int compareSecond = lhs.second.compareTo(rhs.second);
 
-			i = 0;
-			String[] entries = new String[entryValues.length];
-			for(String key : entryValues) {
-				entries[i] = availableLanguages.get(key);
+					if(lhs.second.contains("English (")) return -2147483648;
+					if(rhs.second.contains("English (")) return 2147483647;
 
-				i++;
+					if(compareSecond == 0) {
+						return compareFirst;
+					}
+					else return compareSecond;
+				}
+			};
+			Collections.sort(languagePairs, pairComparator);
+
+			String[] entryValues = new String[languagePairs.size()]; //keys
+			String[] entries = new String[languagePairs.size()]; //values
+			for(int i = 0; i < languagePairs.size(); i++) {
+				entryValues[i] = languagePairs.get(i).first; //keys
+				entries[i] = languagePairs.get(i).second; //values
 			}
 
-			selectLanguage.setEntries(entries);
-			selectLanguage.setEntryValues(entryValues);
+			selectLanguage.setEntries(entries); //values (display to user)
+			selectLanguage.setEntryValues(entryValues); //keys
 
 			selectLanguage.setOnPreferenceChangeListener(languageChange);
-			selectLanguage.setSummary(MetaSettings.getBibleLanguage(context));
-			new AsycnBibleVersions(MetaSettings.getBibleLanguage(context)).execute();
+			languageChange.onPreferenceChange(selectLanguage, MetaSettings.getBibleLanguage(context));
+			dialog.dismiss();
 		}
 	}
 
 	public class AsycnBibleVersions extends AsyncTask<Void, Void, Void> {
-		String langCode;
 		AlertDialog dialog;
+		String langCode;
 
 		public AsycnBibleVersions(String langCode) {
 			this.langCode = langCode;
@@ -559,8 +593,6 @@ public class SettingsFragment extends PreferenceFragment {
 			dialog.setCancelable(false);
 		}
 
-
-
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
@@ -570,19 +602,19 @@ public class SettingsFragment extends PreferenceFragment {
 
 				Document doc = Util.getChachedDocument(context, versionsFile);
 				if(doc != null) {
-					availableBibles = Bible.getAvailableVersions(doc);
+					availableBibles = ABSBible.parseAvailableVersions(doc);
 				}
 				else if(Util.isConnected(context)) {
-					doc = Download.availableVersions(
+					doc = ABSBible.availableVersionsDoc(
 							context.getResources().getString(R.string.bibles_org),
 							langCode
 					);
 					Util.cacheDocument(context, doc, versionsFile);
-					availableBibles = Bible.getAvailableVersions(doc);
+					availableBibles = ABSBible.parseAvailableVersions(doc);
 				}
 				else {
 					HashMap<String, Bible> defaultESV = new HashMap<>();
-					defaultESV.put("ESV", new Bible(null));
+					defaultESV.put("ESV", new Bible());
 					availableBibles = defaultESV;
 				}
 			}
@@ -597,27 +629,46 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			dialog.dismiss();
 
 			ListPreference selectVersion = (ListPreference) findPreference("PREF_SELECTED_VERSION");
 
-			ArrayList<Bible> values = new ArrayList<>();
-			values.addAll(availableBibles.values());
+			ArrayList<Pair<String, Bible>> biblePairs = new ArrayList<>();
 
-			String[] entries = new String[values.size()];
-			String[] entryValues = new String[values.size()];
+			//reserve English languages to put to the top of the list
+			for(String key : availableBibles.keySet()) {
+				Log.i("ASYNC BIBLE VERSIONS", "AvailableBibles Keyset: [" + key + "]");
 
-			for(int i = 0; i < values.size(); i++) {
-				Bible bible = values.get(i);
-				entries[i] = bible.name;
-				entryValues[i] = bible.getVersionId();
+				biblePairs.add(new Pair<>(key, availableBibles.get(key)));
+			}
+			Comparator<Pair<String, Bible>> pairComparator = new Comparator<Pair<String, Bible>>() {
+				@Override
+				public int compare(Pair<String, Bible> lhs, Pair<String, Bible> rhs) {
+					int compareFirst = lhs.first.compareTo(rhs.first);
+					int compareSecond = lhs.second.getName().compareTo(rhs.second.getName());
+
+					if(compareSecond == 0) {
+						return compareFirst;
+					}
+					else return compareSecond;
+				}
+			};
+			Collections.sort(biblePairs, pairComparator);
+
+			String[] entryValues = new String[biblePairs.size()]; //keys
+			String[] entries = new String[biblePairs.size()]; //values
+			for(int i = 0; i < biblePairs.size(); i++) {
+				entryValues[i] = biblePairs.get(i).first; //keys
+				entries[i] = biblePairs.get(i).second.getName(); //values
+
+				Log.i("ASYNC BIBLE VERSIONS", "Key [" + entryValues[i] + "] - Value [" + entries[i] + "]");
 			}
 
-			selectVersion.setEntries(entries);
-			selectVersion.setEntryValues(entryValues);
+			selectVersion.setEntries(entries); //values (display to user)
+			selectVersion.setEntryValues(entryValues); //keys
 
 			selectVersion.setOnPreferenceChangeListener(versionChange);
-			selectVersion.setSummary(MetaSettings.getBibleVersion(context).abbr);
+			versionChange.onPreferenceChange(selectVersion, MetaSettings.getBibleVersion(context).getName());
+			dialog.dismiss();
 		}
 	}
 
@@ -647,20 +698,23 @@ public class SettingsFragment extends PreferenceFragment {
 		protected void onPostExecute(Void aVoid) {
 			super.onPostExecute(aVoid);
 			dialog.dismiss();
-
 		}
 
 		@Override
 		protected Void doInBackground(String... params) {
 			try {
 				if(Util.isConnected(context)) {
-					Document doc = Download.versionInfo(
-							getResources().getString(R.string.bibles_org),
-							params[0]);
+					ABSBible bible = (ABSBible) availableBibles.get(params[0]);
+					ABSBible downloadableBible = new ABSBible(
+						getResources().getString(R.string.bibles_org),
+							bible.getId()
+					);
+
+					Document doc = downloadableBible.getDocument();
 
 					if(doc != null) {
 						Util.cacheDocument(context, doc, "selectedVersion.xml");
-						Util.cacheDocument(context, doc, params[0]);
+						Util.cacheDocument(context, doc, downloadableBible.getId());
 					}
 				}
 			}

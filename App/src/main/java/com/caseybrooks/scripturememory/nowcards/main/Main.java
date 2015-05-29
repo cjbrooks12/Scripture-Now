@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Pair;
 
+import com.caseybrooks.androidbibletools.basic.Metadata;
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.data.Metadata;
 import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.data.MetaSettings;

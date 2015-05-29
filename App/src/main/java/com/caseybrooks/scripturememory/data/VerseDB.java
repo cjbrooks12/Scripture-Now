@@ -11,8 +11,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 
@@ -281,7 +281,7 @@ public class VerseDB {
         ContentValues values = new ContentValues();
         values.put(KEY_VERSES_REFERENCE, passage.getReference().toString());
         values.put(KEY_VERSES_VERSE, passage.getText());
-        values.put(KEY_VERSES_VERSION, passage.getBible().getVersionId());
+        values.put(KEY_VERSES_VERSION, passage.getBible().getAbbr());
         values.put(KEY_VERSES_DATE_ADDED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
@@ -310,7 +310,7 @@ public class VerseDB {
         ContentValues values = new ContentValues();
         values.put(KEY_VERSES_REFERENCE, passage.getReference().toString());
         values.put(KEY_VERSES_VERSE, passage.getText());
-        values.put(KEY_VERSES_VERSION, passage.getBible().getVersionId());
+        values.put(KEY_VERSES_VERSION, passage.getBible().getAbbr());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
 
@@ -824,7 +824,7 @@ public void exportToBackupFile(File file) {
 			passageElement.appendChild(r);
 
 			Element q = doc.createElement("Q");
-			q.appendChild(doc.createTextNode(passage.getBible().getVersionId()));
+			q.appendChild(doc.createTextNode(passage.getBible().getAbbr()));
 			passageElement.appendChild(q);
 
 			Element t = doc.createElement("T");

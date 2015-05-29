@@ -52,6 +52,7 @@
 		android:paddingTop="4dp"
 		android:paddingBottom="8dp"
 		android:paddingRight="8dp"
+		android:maxHeight="216dp"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/notification_main_icon_layout"

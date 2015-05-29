@@ -4,7 +4,8 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Pair;
 
-import com.caseybrooks.androidbibletools.data.Bible;
+import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
+import com.caseybrooks.scripturememory.R;
 
 public class MetaSettings {
     public static final String settings_file = "my_settings";
@@ -39,30 +40,13 @@ public class MetaSettings {
 	//attempt to return a Bible with the version information parsed and inserted
 	//into the object. If we don't have version info cached and we can't download
 	//it now, just return the object without chapter info
-    public static Bible getBibleVersion(Context context) {
-        String version = PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION, null);
-        Bible bible = new Bible(version);
-
-//		Document doc = Util.getChachedDocument(context, "selectedVersion.xml");
-//		if(doc == null && Util.isConnected(context)) {
-//			try {
-//				doc = Download.versionInfo(context.getString(R.string.bibles_org), version);
-//				Util.cacheDocument(context, doc, "selectedVersion.xml");
-//			}
-//			catch(IOException ioe) {
-//				ioe.printStackTrace();
-//			}
-//		}
-//
-//		if(doc != null) {
-//			bible.getVersionInfo(doc);
-//		}
-
-		return bible;
+    public static ABSBible getBibleVersion(Context context) {
+        String version = PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION, "English Standard Version");
+        return new ABSBible(context.getResources().getString(R.string.bibles_org), version);
     }
 
 	public static String getBibleLanguage(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION_LANGUAGE, "eng-us");
+		return PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION_LANGUAGE, "");
 	}
 
 	public static void putBibleVersion(Context context, String id) {

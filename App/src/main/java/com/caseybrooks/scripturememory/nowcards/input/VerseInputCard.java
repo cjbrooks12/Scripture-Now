@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.data.Bible;
-import com.caseybrooks.androidbibletools.data.Reference;
+import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.androidbibletools.io.Download;
+import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
+import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
@@ -33,8 +32,6 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,9 +39,7 @@ public class VerseInputCard extends FrameLayout {
 //Data Members
 //------------------------------------------------------------------------------
 	Context context;
-	Bible selectedVersion;
-	Bible defaultESV;
-	private final ReentrantLock lock = new ReentrantLock();
+	final ABSBible selectedVersion;
 
 	public EditText editReference, editVerse;
 	TextView addVerse;
@@ -60,6 +55,7 @@ public class VerseInputCard extends FrameLayout {
 
 		LayoutInflater.from(context).inflate(R.layout.card_verse_input, this);
 
+		selectedVersion = MetaSettings.getBibleVersion(context);
 		initialize();
 	}
 
@@ -69,13 +65,13 @@ public class VerseInputCard extends FrameLayout {
 
 		LayoutInflater.from(context).inflate(R.layout.card_verse_input, this);
 
-        initialize();
+		selectedVersion = MetaSettings.getBibleVersion(context);
+		initialize();
 	}
 
 	void initialize() {
 		progress = (ProgressBar) findViewById(R.id.progress);
 
-		selectedVersion = MetaSettings.getBibleVersion(context);
 
 		new AsyncTask<Void, Void, Void>() {
 			@Override
@@ -100,37 +96,29 @@ public class VerseInputCard extends FrameLayout {
 				//'defaultESV' object instead of 'selectedVersion' to check the book name
 				//against.
 
-				lock.lock(); //get exclusive access to 'selectedVersion'
-				try {
-					//try to get the information for selectedVersion, either from cache or download it
-					Document doc = Util.getChachedDocument(context, "selectedVersion.xml");
+				synchronized(selectedVersion) {
+					try {
+						//get exclusive access to 'selectedVersion'
+						//try to get the information for selectedVersion, either from cache or download it
+						Document doc = Util.getChachedDocument(context, "selectedVersion.xml");
 
-					if(doc == null && Util.isConnected(context)) {
-						doc = Download.versionInfo(
-								getResources().getString(R.string.bibles_org),
-								selectedVersion.getVersionId());
+						if(doc == null && selectedVersion.isAvailable() && Util.isConnected(context)) {
+							doc = selectedVersion.getDocument();
 
-						if(doc != null) {
 							Util.cacheDocument(context, doc, "selectedVersion.xml");
-							selectedVersion.getVersionInfo(doc);
+							selectedVersion.parseDocument(doc);
+						}
+						else {
+							selectedVersion.parseDocument(doc);
 						}
 					}
-					else {
-						selectedVersion.getVersionInfo(doc);
+					catch(IOException ioe) {
+						ioe.printStackTrace();
 					}
-				}
-				catch(IOException ioe) {
-					ioe.printStackTrace();
-				}
-				finally {
-					lock.unlock();
 				}
 				return null;
 			}
 		}.execute();
-
-
-		defaultESV = new Bible(null);
 
 		editReference = (EditText) findViewById(R.id.editReference);
 		editReference.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -196,7 +184,7 @@ public class VerseInputCard extends FrameLayout {
 //OnClickListeners
 //------------------------------------------------------------------------------
 	private class SearchVerseAsync extends AsyncTask<Void, Void, Void> {
-		Passage passage;
+		ABSPassage passage;
 		String toastMessage;
 		String errorMessage;
 
@@ -248,63 +236,45 @@ public class VerseInputCard extends FrameLayout {
 				//and the second fail, set the error message to that of the exception
 				//thrown by the first, indicating that it is the primary version to
 				//be used, and as such is the primary version to throw the exception
-				if(lock.tryLock(250, TimeUnit.MILLISECONDS)) {
-					Reference.Builder builder = new Reference.Builder()
-							.setBible(selectedVersion)
-							.parseReference(editReference.getText().toString());
-
-					passage = new Passage(builder.create());
-					Log.i("Input Verse", "Successfully parsed '" + editReference.getText().toString() + "' from Bible '" + selectedVersion.getVersionId() + "'");
+				synchronized(selectedVersion) {
+					passage = new ABSPassage(
+							getResources().getString(R.string.bibles_org),
+							new Reference.Builder()
+									.setBible(selectedVersion)
+									.parseReference(editReference.getText().toString())
+									.create()
+					);
 				}
 
-				//if we still haven't finished parsing the language document, just
-				//parse the input against 'defaultESV'
-				else {
-					Reference.Builder builder = new Reference.Builder()
-							.parseReference(editReference.getText().toString());
+				//if the verse was parsed such that it can be downloaded...
 
-					passage = new Passage(builder.create());
-					Log.i("Input Verse", "Successfully parsed '" + editReference.getText().toString() + "' from default ESV bible version");
-				}
+				if(passage.isAvailable()) {
+					String filename = passage.getId();
+					Document doc = Util.getChachedDocument(context, filename);
 
-				//assuming we have parsed a verse...
-				if(passage != null) {
+					//document wasn't cached, so try to get online and download it
+					if(doc == null && Util.isConnected(context)) {
+						doc = passage.getDocument();
+						Util.cacheDocument(context, doc, filename);
+					}
 
-					//if the verse was parsed such that it can be downloaded...
-					if(passage.getReference().book.getId() != null) {
-						String filename = passage.getReference().book.getId() + "." + passage.getReference().chapter;
-						Document doc = Util.getChachedDocument(context, filename);
-
-						//document wasn't cached, so try to get online and download it
-						if(doc == null && Util.isConnected(context)) {
-							doc = Download.bibleChapter(
-									getResources().getString(R.string.bibles_org),
-									passage.getReference());
-							Util.cacheDocument(context, doc, filename);
-						}
-
-						//assuming we have either gotten a document out of the cache
-						//or downloaded it, we can now parse the verse
-						if(doc != null) {
-							passage.getVerseInfo(doc);
-							errorMessage = null;
-							toastMessage = null;
-							return null;
-						}
-						else {
-							errorMessage = null;
-							toastMessage = "Could not download verse text right now. Check your internet connection and try again.";
-							return null;
-						}
+					//assuming we have either gotten a document out of the cache
+					//or downloaded it, we can now parse the verse
+					if(doc != null) {
+						passage.parseDocument(doc);
+						errorMessage = null;
+						toastMessage = null;
+						return null;
 					}
 					else {
-						errorMessage = "The verse cannot be downloaded. The reference may be formatted poorly, or" +
-								" it is not available for download in the current version.";
+						errorMessage = null;
+						toastMessage = "Could not download verse text right now. Check your internet connection and try again.";
 						return null;
 					}
 				}
 				else {
-					errorMessage = "There was an issue getting the verse from your reference. Make sure it is formatted correctly and try again.";
+					errorMessage = "The verse cannot be downloaded. The reference may be formatted poorly, or" +
+							" it is not available for download in the current version.";
 					return null;
 				}
 			}
@@ -318,12 +288,6 @@ public class VerseInputCard extends FrameLayout {
 				passage = null;
 				errorMessage = null;
 				toastMessage = "Something went wrong while downloading verse text. Check your internet connection and try again";
-				return null;
-			}
-			catch(InterruptedException ie) {
-				passage = null;
-				errorMessage = null;
-				toastMessage = "An unexpected error occurred. Please try again";
 				return null;
 			}
 		}

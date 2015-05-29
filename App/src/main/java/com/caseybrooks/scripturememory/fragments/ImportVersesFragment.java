@@ -25,10 +25,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.androidbibletools.data.Bible;
-import com.caseybrooks.androidbibletools.data.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -319,7 +319,7 @@ public class ImportVersesFragment extends Fragment {
 									passage = new Passage(builder.create());
                                 }
                             } else if (lineType.equals("q:") && passage != null) {
-                                passage.setBible(new Bible(null));
+                                passage.setBible(new Bible());
                             } else {
 								if(lineType.equals("t:") && passage != null) {
 									String[] tags = line.substring(2).trim().split(",");
@@ -356,7 +356,7 @@ public class ImportVersesFragment extends Fragment {
                             passageElement.appendChild(r);
 
                             org.w3c.dom.Element q = doc.createElement("Q");
-                            q.appendChild(doc.createTextNode(item.getBible().getVersionId()));
+                            q.appendChild(doc.createTextNode(item.getBible().getAbbr()));
                             passageElement.appendChild(q);
 
                             //TODO: write all tags to file

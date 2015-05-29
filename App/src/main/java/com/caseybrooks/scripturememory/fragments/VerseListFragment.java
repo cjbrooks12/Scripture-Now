@@ -29,12 +29,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.caseybrooks.androidbibletools.basic.Metadata;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.basic.Verse;
-import com.caseybrooks.androidbibletools.data.Metadata;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.androidbibletools.io.Download;
+import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -638,7 +638,7 @@ public class VerseListFragment extends ListFragment {
                     passageElement.appendChild(r);
 
                     org.w3c.dom.Element q = doc.createElement("Q");
-                    q.appendChild(doc.createTextNode(passages.get(i).getBible().getVersionId()));
+                    q.appendChild(doc.createTextNode(passages.get(i).getBible().getAbbr()));
                     passageElement.appendChild(q);
 
                     org.w3c.dom.Element t = doc.createElement("T");
@@ -905,7 +905,10 @@ public class VerseListFragment extends ListFragment {
 				Verse[] verses = passage.getVerses();
 
 				for(Verse verse : verses) {
-					Passage newPassage = new Passage(verse.getReference());
+					ABSPassage newPassage = new ABSPassage(
+							context.getResources().getString(R.string.bibles_org),
+							verse.getReference()
+					);
 
 					newPassage.setBible(passage.getBible());
 					newPassage.setMetadata(passage.getMetadata());
@@ -914,10 +917,7 @@ public class VerseListFragment extends ListFragment {
 					}
 					newPassage.addTag(new Tag(passage.getReference().toString()));
 
-					newPassage.getVerseInfo(Download.bibleChapter(
-							getResources().getString(R.string.bibles_org),
-							newPassage.getReference()
-					));
+					newPassage.parseDocument(newPassage.getDocument());
 				}
 
 				return null;
