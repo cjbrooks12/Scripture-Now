@@ -1,7 +1,10 @@
 package com.caseybrooks.scripturememory.nowcards.votd;
 
 import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -32,13 +35,11 @@ public class VOTDCard extends FrameLayout {
         ver = (TextView) findViewById(R.id.votdVerse);
         progress = (ProgressBar) findViewById(R.id.progress);
 
-//        overflowButton.setOnClickListener(overflowClick);
+        overflowButton.setOnClickListener(overflowClick);
 //        this.setOnClickListener(cardClick);
 
-//        setWorking(true);
+        setWorking(true);
 		votd = new VOTD(context);
-
-//		update();
     }
 
     public void removeFromParent() {
@@ -46,23 +47,23 @@ public class VOTDCard extends FrameLayout {
         ((ViewGroup)getParent()).removeView(VOTDCard.this);
     }
 
-//    private OnClickListener overflowClick = new OnClickListener() {
-//
-//        @Override
-//        public void onClick(View v) {
-//            if(votd.currentVerse != null) {
-//                PopupMenu popup = new PopupMenu(context, v);
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        switch (item.getItemId()) {
+    private OnClickListener overflowClick = new OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            if(votd.currentVerse != null) {
+                PopupMenu popup = new PopupMenu(context, v);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
 //                            case R.id.overflow_votd_card_remove:
 //                                removeFromParent();
 //                                return true;
-//                            case R.id.overflow_votd_card_redownload:
-//                                setWorking(true);
-//                                votd.downloadCurrentVerseAsync();
-//                                return true;
+                            case R.id.overflow_votd_card_redownload:
+                                setWorking(true);
+                                votd.redownload();
+                                return true;
 //                            case R.id.overflow_votd_card_save:
 //                                votd.saveVerse();
 //                                Toast.makeText(context, votd.currentVerse.getReference().toString() + " has been saved", Toast.LENGTH_SHORT).show();
@@ -76,14 +77,14 @@ public class VOTDCard extends FrameLayout {
 //                                context.startActivity(i);
 //                                Toast.makeText(context, "Opening browser...", Toast.LENGTH_SHORT).show();
 //                                return true;
-//                            default:
-//                                return false;
-//                        }
-//                    }
-//                });
-//                MenuInflater inflater = popup.getMenuInflater();
-//                inflater.inflate(R.menu.overflow_votd_card, popup.getMenu());
-//
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.overflow_votd_card, popup.getMenu());
+
 //                if(votd.isSaved()) {
 //                    popup.getMenu().findItem(R.id.overflow_votd_card_save).setVisible(false);
 //                }
@@ -91,10 +92,10 @@ public class VOTDCard extends FrameLayout {
 //                    popup.getMenu().findItem(R.id.overflow_votd_card_save).setVisible(true);
 //                }
 //
-//                popup.show();
-//            }
-//        }
-//    };
+                popup.show();
+            }
+        }
+    };
 //
 //    private OnClickListener cardClick = new OnClickListener() {
 //        @Override
@@ -136,35 +137,29 @@ public class VOTDCard extends FrameLayout {
 //        }
 //    };
 
-//    public void setWorking(boolean isWorking) {
-//        if(isWorking) {
-//            ref.setVisibility(View.GONE);
-//            ver.setVisibility(View.GONE);
-//            progress.setVisibility(View.VISIBLE);
-//        }
-//        else {
-//            ref.setVisibility(View.VISIBLE);
-//            ver.setVisibility(View.VISIBLE);
-//            progress.setVisibility(View.GONE);
-//        }
-//    }
+    public void setWorking(boolean isWorking) {
+        if(isWorking) {
+            ref.setVisibility(View.GONE);
+            ver.setVisibility(View.GONE);
+            progress.setVisibility(View.VISIBLE);
+        }
+        else {
+            ref.setVisibility(View.VISIBLE);
+            ver.setVisibility(View.VISIBLE);
+            progress.setVisibility(View.GONE);
+        }
+    }
 
     public void update() {
-//        if(votd.currentVerse != null) {
-//            setWorking(false);
-//            ref.setText(votd.currentVerse.getReference().toString());
-//            ver.setText(votd.currentVerse.getText());
-//        }
-//        else {
-////            if(Util.isConnected(context)) {
-////                setWorking(true);
-////                votd.downloadCurrentVerseAsync();
-////            }
-////            else {
-//                setWorking(false);
-//                ref.setText("Problem Retrieving Verse");
-//                ver.setText("Please check your internet connection and click to try again");
-////            }
-//        }
-    }
+		if(votd.currentVerse != null && votd.currentVerse.getReference() != null) {
+			ref.setText(votd.currentVerse.getReference().toString());
+			ver.setText(votd.currentVerse.getText());
+		}
+		else {
+			ref.setText("Problem Retrieving Verse");
+			ver.setText("Please check your internet connection and click to try again");
+		}
+
+		setWorking(false);
+	}
 }

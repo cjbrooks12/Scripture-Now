@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_reference"
                 android:layout_below="@id/textReference"
-                android:inputType="text"
+                android:inputType="text|textNoSuggestions"
                 android:imeOptions="actionSearch"
                 android:fontFamily="sans-serif-light"
                 android:ems="10"
@@ -120,7 +120,8 @@
                 android:hint="@string/enter_verse"
                 android:layout_below="@id/textVerse"
                 android:fontFamily="sans-serif-light"
-                android:ems="10" />
+				android:inputType="textMultiLine|textNoSuggestions"
+				android:ems="10" />
         </RelativeLayout>
 
         <View

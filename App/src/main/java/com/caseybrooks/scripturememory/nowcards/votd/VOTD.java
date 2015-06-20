@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
@@ -26,6 +27,7 @@ import com.caseybrooks.scripturememory.nowcards.main.MainWidget;
 
 import org.jsoup.nodes.Document;
 
+import java.io.File;
 import java.io.IOException;
 
 public class VOTD {
@@ -76,15 +78,17 @@ public class VOTD {
 //------------------------------------------------------------------------------
     Context context;
     public ABSPassage currentVerse;
+	ABSBible selectedVersion;
 
 //Constructors and Initialization
 //------------------------------------------------------------------------------
 
     public VOTD(Context context) {
         this.context = context;
+		selectedVersion = MetaSettings.getBibleVersion(context);
 
-        //try to get today's verse from cached file, or else download a new one
-        getCurrentVerse();
+		//try to get today's verse from cached file, or else download a new one
+		new GetBible().execute();
     }
 
 //VOTD lifecycle and verse management
@@ -144,106 +148,158 @@ public class VOTD {
         updateAll();
     }
 
-    public void getCurrentVerse() {
-		//get all verses that are either tagged or in the state of VOTD
-		Document doc = Util.getChachedDocument(context, cache_file);
+	public void redownload() {
+		File cacheFile = new File(context.getCacheDir(), cache_file);
+		cacheFile.delete();
 
-		if(doc != null) {
-			currentVerse = new ABSPassage(
-					context.getResources().getString(R.string.bibles_org),
-					new Reference.Builder()
-							.parseReference(getVOTDReference(context))
-							.create());
-			currentVerse.parseDocument(doc);
-			Log.e("GET CURRENT VERSE", "DOC NOT NULL " +
-					currentVerse.getReference().toString() +
-					currentVerse.getText());
+		setVOTDReference(context, "");
 
-//			updateAll();
+		new GetBible().execute();
+	}
+
+	private class GetBible extends AsyncTask<Void, Void, Void> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
 		}
-		else {
-			if(Util.isConnected(context)) {
-				Log.e("GET CURRENT VERSE", "DOC NULL, DOC NOT CACHED. DOWNLOADING NOW");
 
-				new DownloadCurrentVerse().execute();
+		@Override
+		protected Void doInBackground(Void... params) {
+			//We need to allow the user to enter a verse and check it as soon
+			//as possible. But it takes several seconds to parse the selectedVersion
+			//document, and the user may enter a verse before that is finished.
+			//In that case, we must be able to detect that this thread is still
+			//trying to initialize that information, and immediately use the
+			//'defaultESV' object instead of 'selectedVersion' to check the book name
+			//against.
+
+			try {
+				//try to get the information for selectedVersion, either from cache or download it
+				Document doc = Util.getChachedDocument(context, "selectedVersion.xml");
+
+				if(doc != null) {
+					selectedVersion.parseDocument(doc);
+					Log.i("VOTD: GET BIBLE", "Bible data was cached and successfully parsed");
+				}
+				else if(selectedVersion.isAvailable()) {
+					if(Util.isConnected(context)) {
+						doc = selectedVersion.getDocument();
+
+						Util.cacheDocument(context, doc, "selectedVersion.xml");
+						selectedVersion.parseDocument(doc);
+						Log.i("VOTD: GET BIBLE", "Bible data was not cached, but was successfully downloaded and parsed");
+					}
+					else {
+						selectedVersion = new ABSBible(
+								context.getResources().getString(R.string.bibles_org),
+								null
+						);
+						Log.i("VOTD: GET BIBLE", "Bible data was not cached and could not be downloaded, resorting to default ESV");
+					}
+				}
 			}
+			catch(IOException ioe) {
+				ioe.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
+			new GetVerse().execute();
 		}
 	}
 
-	public void downloadCurrentVerseAsync() {
-		new DownloadCurrentVerse().execute();
-	}
-
-    private class DownloadCurrentVerse extends AsyncTask<Void, Void, Void> {
-        int votdState;
+    private class GetVerse extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-            if(currentVerse != null) {
-                votdState = currentVerse.getMetadata().getInt(DefaultMetaData.STATE, VerseDB.VOTD);
-            }
-            else {
-                votdState = VerseDB.VOTD;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            updateAll();
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-
-            updateAll();
         }
 
         @Override
         protected Void doInBackground(Void... params) {
             try {
-				VerseOfTheDay votd = new VerseOfTheDay();
-				votd.parseDocument(votd.getDocument());
+				Document doc = Util.getChachedDocument(context, cache_file);
 
-				ABSBible bible = MetaSettings.getBibleVersion(context);
-				if(bible.getId() == null || bible.getId().length() == 0) {
-					bible = new ABSBible("eng-ESV");
-				}
-
-				ABSPassage downloadedVerse = new ABSPassage(
-						context.getResources().getString(R.string.bibles_org),
-						votd.getPassage().getReference()
-				);
-
-				downloadedVerse.setId(
-						MetaSettings.getBibleVersion(context).getId()
-						+ ":" + votd.getPassage().getReference().book.getAbbreviation()
-						+ "." + votd.getPassage().getReference().chapter);
-
-                if (downloadedVerse.isAvailable()) {
-					Document verseDoc = downloadedVerse.getDocument();
-
-					if(verseDoc != null) {
-						Util.cacheDocument(context, verseDoc, cache_file);
-						setVOTDReference(context, currentVerse.getReference().toString());
-
-						downloadedVerse.parseDocument(verseDoc);
-						downloadedVerse.addTag(new Tag("VOTD"));
-						downloadedVerse.getMetadata().putInt(DefaultMetaData.STATE, votdState);
-						currentVerse = downloadedVerse;
+				if(doc != null) {
+					currentVerse = new ABSPassage(
+							context.getResources().getString(R.string.bibles_org),
+							new Reference.Builder()
+								.setBible(selectedVersion)
+								.parseReference(getVOTDReference(context))
+								.create()
+					);
+					currentVerse.parseDocument(doc);
+					if(currentVerse.getText().length() > 0) {
+						Log.i("VOTD: GET VERSE", "Verse data was cached and successfully parsed");
 					}
+					else {
+						currentVerse.setText("Cached verse is from a different translation than your preferred version. Please redownload the verse.");
+					}
+					return null;
 				}
+				else {
+					if(Util.isConnected(context)) {
+						VerseOfTheDay votd = new VerseOfTheDay();
+						votd.parseDocument(votd.getDocument());
 
-                return null;
-            } catch (IOException ioe) {
+						Passage passage = votd.getPassage();
+
+
+						ABSPassage newVOTD = new ABSPassage(
+								context.getResources().getString(R.string.bibles_org),
+								new Reference.Builder()
+										.setBible(selectedVersion)
+										.parseReference(passage.getReference().toString())
+										.create()
+						);
+
+						if(newVOTD.isAvailable()) {
+							doc = newVOTD.getDocument();
+
+							Util.cacheDocument(context, doc, cache_file);
+							setVOTDReference(context, newVOTD.getReference().toString());
+
+							newVOTD.parseDocument(doc);
+							newVOTD.addTag(new Tag("VOTD"));
+//							newVOTD.getMetadata().putInt(DefaultMetaData.STATE, currentVerse.getMetadata().getInt(DefaultMetaData.STATE));
+							currentVerse = newVOTD;
+
+							Log.i("VOTD: GET VERSE", "Verse data was not cached, but was successfully downloaded and parsed");
+
+							return null;
+						}
+					}
+
+					currentVerse.setText("Error Getting Verse");
+					Log.i("VOTD: GET VERSE", "Verse data was not cached and could not be downloaded, resorting to default values");
+
+					return null;
+				}
+            }
+			catch (IOException ioe) {
                 ioe.printStackTrace();
-                return null;
+				currentVerse.setText("Error Getting Verse");
+
+				return null;
             }
         }
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
+
+			updateAll();
+		}
+
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+
+			updateAll();
+		}
     }
 
 //Broadcast Receivers

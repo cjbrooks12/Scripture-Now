@@ -87,7 +87,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="jsoup-1.7.2" level="project" />
-    <orderEntry type="library" exported="" name="AndroidBibleTools-v0.2.7" level="project" />
+    <orderEntry type="library" exported="" name="AndroidBibleTools-v0.2.8" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="HoloColorPicker-1.4" level="project" />

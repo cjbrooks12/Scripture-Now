@@ -57,10 +57,10 @@
         android:title="Backup and Restore">
 	    <Preference
 	        android:title="Backup"
-	        android:key="Backup" />
+	        android:key="BACKUP" />
 	    <Preference
 	        android:title="Restore"
-	        android:key="Restore" />
+	        android:key="RESTORE" />
         <Preference
             android:title="Import" >
             <intent android:action="android.intent.action.VIEW"

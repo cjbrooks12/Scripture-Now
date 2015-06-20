@@ -1,7 +1,9 @@
 package com.caseybrooks.scripturememory.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.Pair;
 
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
@@ -12,7 +14,9 @@ public class MetaSettings {
 
     //settings saved through app settings
     public static final String APP_THEME = "APP_THEME";
-    public static final String BIBLE_VERSION = "PREF_SELECTED_VERSION";
+	public static final String BIBLE_VERSION_ID = "PREF_SELECTED_VERSION_ID";
+	public static final String BIBLE_VERSION_NAME = "PREF_SELECTED_VERSION_NAME";
+	public static final String BIBLE_VERSION_ABBR = "PREF_SELECTED_VERSION_ABBR";
 	public static final String BIBLE_VERSION_LANGUAGE = "PREF_SELECTED_VERSION_LANGUAGE";
 
 	//settings set throughout app
@@ -41,16 +45,32 @@ public class MetaSettings {
 	//into the object. If we don't have version info cached and we can't download
 	//it now, just return the object without chapter info
     public static ABSBible getBibleVersion(Context context) {
-        String version = PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION, "English Standard Version");
-        return new ABSBible(context.getResources().getString(R.string.bibles_org), version);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String id = prefs.getString(BIBLE_VERSION_ID, "eng-ESV");
+		String name = prefs.getString(BIBLE_VERSION_NAME, "English Standard Version");
+		String abbr = prefs.getString(BIBLE_VERSION_ABBR, "ESV");
+
+		ABSBible bible = new ABSBible(context.getResources().getString(R.string.bibles_org), id);
+		bible.setName(name);
+		bible.setAbbr(abbr);
+
+		Log.i("RETRIEVE BIBLE", id + " " + abbr + " " + " " + name);
+		return bible;
     }
 
 	public static String getBibleLanguage(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context).getString(BIBLE_VERSION_LANGUAGE, "");
 	}
 
-	public static void putBibleVersion(Context context, String id) {
-		PreferenceManager.getDefaultSharedPreferences(context).edit().putString(DRAWER_SELECTED_GROUP, id).commit();
+	public static void putBibleLanguage(Context context, String language) {
+		PreferenceManager.getDefaultSharedPreferences(context).edit().putString(BIBLE_VERSION_LANGUAGE, language).commit();
+	}
+
+	public static void putBibleVersion(Context context, ABSBible bible) {
+		PreferenceManager.getDefaultSharedPreferences(context).edit()
+				.putString(BIBLE_VERSION_ID, bible.getId())
+				.putString(BIBLE_VERSION_NAME, bible.getName())
+				.putString(BIBLE_VERSION_ABBR, bible.getAbbr()).commit();
 	}
 
     public static Pair<Integer, Integer> getDefaultScreen(Context context) {

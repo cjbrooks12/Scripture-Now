@@ -72,7 +72,6 @@ public class VerseInputCard extends FrameLayout {
 	void initialize() {
 		progress = (ProgressBar) findViewById(R.id.progress);
 
-
 		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected void onPreExecute() {

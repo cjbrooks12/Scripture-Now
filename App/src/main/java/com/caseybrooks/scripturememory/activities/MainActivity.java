@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
+import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
@@ -121,7 +122,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
             int version = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
 
 			if(version > 27) {
-				MetaSettings.putBibleVersion(context, "eng-ESV");
+				MetaSettings.putBibleVersion(context, new ABSBible(null, null));
 			}
 
             //we have updated the app

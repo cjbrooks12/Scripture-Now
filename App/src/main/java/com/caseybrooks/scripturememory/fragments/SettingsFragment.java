@@ -62,16 +62,23 @@ public class SettingsFragment extends PreferenceFragment {
 		addPreferencesFromResource(R.xml.settings);
 
 		//Populate Version list with versions available in AndroidBibleTools
-		new AsycnBibleLanguages().execute();
+		setClicks();
+		setThemeSpinners();
+		setDefaultScreenSpinners();
+		setBibleVersionSpinners();
+	}
 
-		findPreference("Backup").setOnPreferenceClickListener(backupClick);
-		findPreference("Restore").setOnPreferenceClickListener(restoreClick);
-        findPreference("VOTD_ENABLED").setOnPreferenceChangeListener(VOTDCheckedChange);
+//Settings Setup Routine
+//------------------------------------------------------------------------------
+	private void setClicks() {
+		findPreference("BACKUP").setOnPreferenceClickListener(backupClick);
+		findPreference("RESTORE").setOnPreferenceClickListener(restoreClick);
+		findPreference("VOTD_ENABLED").setOnPreferenceChangeListener(VOTDCheckedChange);
 		findPreference("VOTD_TIME").setOnPreferenceChangeListener(VOTDTimeChange);
+	}
 
+	private void setThemeSpinners() {
 		ListPreference appTheme = (ListPreference) findPreference("APP_THEME");
-		appTheme.setOnPreferenceChangeListener(appThemeChange);
-
 		try {
 			Field[] themes = new Field[]{
 					R.style.class.getDeclaredField("Theme_Light"),
@@ -84,14 +91,20 @@ public class SettingsFragment extends PreferenceFragment {
 				themeValues[i] = themes[i].getName();
 			}
 
+
+			appTheme.setOnPreferenceChangeListener(appThemeChange);
+
 			appTheme.setSummary(MetaSettings.getAppTheme(context).substring(6));
 			appTheme.setEntries(themeNames);
 			appTheme.setEntryValues(themeValues);
 		}
 		catch(NoSuchFieldException nsfe) {
-
+			appTheme.setEnabled(false);
+			appTheme.setSummary("Themes disabled");
 		}
+	}
 
+	private void setDefaultScreenSpinners() {
         Pair<Integer, Integer> defaultScreen = MetaSettings.getDefaultScreen(context);
 
         ListPreference prefDefaultScreenGroup = (ListPreference) findPreference("PREF_DEFAULT_SCREEN_GROUP");
@@ -158,6 +171,12 @@ public class SettingsFragment extends PreferenceFragment {
         prefDefaultScreenChild.setOnPreferenceChangeListener(defaultScreenChildChange);
     }
 
+	private void setBibleVersionSpinners() {
+		new AsycnBibleLanguages().execute();
+	}
+
+//Fragment Lifecycle
+//------------------------------------------------------------------------------
     @Override
     public void onResume() {
         super.onResume();
@@ -187,7 +206,7 @@ public class SettingsFragment extends PreferenceFragment {
 		mCallbacks = null;
 	}
 
-    //Backup and Restore Preference Listeners
+//Backup and Restore Preference Listeners
 //------------------------------------------------------------------------------
 	OnPreferenceClickListener backupClick = new OnPreferenceClickListener() {
 		@Override
@@ -313,7 +332,73 @@ public class SettingsFragment extends PreferenceFragment {
 		}
 	};
 
-    OnPreferenceChangeListener defaultScreenChildChange = new OnPreferenceChangeListener() {
+//Default Screen and Theme changes
+//------------------------------------------------------------------------------
+	OnPreferenceChangeListener defaultScreenChange = new OnPreferenceChangeListener() {
+		@Override
+		public boolean onPreferenceChange(Preference preference, Object newValue) {
+			String[] screens = getResources().getStringArray(R.array.pref_default_screen);
+			int selection = Integer.parseInt(newValue.toString());
+
+			switch(selection) {
+			case 0:
+				preference.setSummary(screens[0]);
+				break;
+			case 1:
+				preference.setSummary(screens[2]);
+				break;
+			case 2:
+				preference.setSummary(screens[3]);
+				break;
+			case 3:
+				preference.setSummary(screens[4]);
+				break;
+			case 4:
+				preference.setSummary(screens[5]);
+				break;
+			case 5:
+				preference.setSummary(screens[1]);
+				break;
+			}
+
+			VerseDB db = new VerseDB(context).open();
+
+			if(selection == 3) {
+				prefDefaultScreenChild.setEnabled(true);
+				prefDefaultScreenChild.setSummary(db.getStateName(MetaSettings.getDefaultScreen(context).second));
+
+				String[] states = getResources().getStringArray(R.array.state_names);
+				String[] statesValues = getResources().getStringArray(R.array.state_ids);
+				prefDefaultScreenChild.setEntries(states);
+				prefDefaultScreenChild.setEntryValues(statesValues);
+			}
+			else if(selection == 4) {
+				prefDefaultScreenChild.setEnabled(true);
+				prefDefaultScreenChild.setSummary(db.getTag(MetaSettings.getDefaultScreen(context).second).name);
+
+				ArrayList<Tag> tags = db.getAllTags();
+
+				String[] tagValues = new String[tags.size()];
+				String[] tagNames = new String[tags.size()];
+				for(int i = 0; i < tagValues.length; i++) {
+					tagValues[i] = Integer.toString(tags.get(i).id);
+					tagNames[i] = tags.get(i).name;
+				}
+
+				prefDefaultScreenChild.setEntries(tagNames);
+				prefDefaultScreenChild.setEntryValues(tagValues);
+			}
+			else {
+				prefDefaultScreenChild.setEnabled(false);
+			}
+
+			db.close();
+
+			return true;
+		}
+	};
+
+	OnPreferenceChangeListener defaultScreenChildChange = new OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             int newId = Integer.parseInt((String) newValue);
@@ -348,11 +433,15 @@ public class SettingsFragment extends PreferenceFragment {
 		}
 	};
 
+//Bible Version Changes
+//------------------------------------------------------------------------------
 	OnPreferenceChangeListener languageChange = new OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
-			ListPreference lp = (ListPreference) preference;
-			lp.setSummary(availableLanguages.get(newValue.toString()));
+			String language = newValue.toString();
+
+			preference.setSummary(availableLanguages.get(language));
+			MetaSettings.putBibleLanguage(context, language);
 
 			new AsycnBibleVersions(newValue.toString()).execute();
 
@@ -363,10 +452,6 @@ public class SettingsFragment extends PreferenceFragment {
 	OnPreferenceChangeListener versionChange = new OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, final Object newValue) {
-			ListPreference lp = (ListPreference) preference;
-
-			Log.i("VERSION CHANGE", newValue.toString() + " ");
-
 			ABSBible newlySelectedBible = null;
 
 			if(availableBibles.get(newValue.toString()) != null) {
@@ -383,82 +468,17 @@ public class SettingsFragment extends PreferenceFragment {
 			}
 
 			if(newlySelectedBible == null) {
-				lp.setSummary("Not available");
-				lp.setEnabled(false);
+				preference.setSummary("Not available");
+				preference.setEnabled(false);
 			}
 			else {
-				MetaSettings.putBibleVersion(context, newlySelectedBible.getId());
-				lp.setSummary(newlySelectedBible.getName());
-				lp.setEnabled(true);
+				Log.i("NEW VERSION SELECTED", newlySelectedBible.getId());
+				MetaSettings.putBibleVersion(context, newlySelectedBible);
+				preference.setSummary(newlySelectedBible.getName());
+				preference.setEnabled(true);
 
-				new DownloadVersionInfo().execute(newlySelectedBible.getName());
+				new DownloadVersionInfo().execute(newlySelectedBible.getId());
 			}
-
-
-
-			return true;
-		}
-	};
-
-	OnPreferenceChangeListener defaultScreenChange = new OnPreferenceChangeListener() {
-		@Override
-		public boolean onPreferenceChange(Preference preference, Object newValue) {
-			String[] screens = getResources().getStringArray(R.array.pref_default_screen);
-			int selection = Integer.parseInt(newValue.toString());
-
-			switch(selection) {
-			case 0:
-				preference.setSummary(screens[0]);
-				break;
-			case 1:
-				preference.setSummary(screens[2]);
-				break;
-			case 2:
-				preference.setSummary(screens[3]);
-				break;
-			case 3:
-				preference.setSummary(screens[4]);
-				break;
-			case 4:
-				preference.setSummary(screens[5]);
-				break;
-			case 5:
-				preference.setSummary(screens[1]);
-				break;
-			}
-
-            VerseDB db = new VerseDB(context).open();
-
-            if(selection == 3) {
-                prefDefaultScreenChild.setEnabled(true);
-                prefDefaultScreenChild.setSummary(db.getStateName(MetaSettings.getDefaultScreen(context).second));
-
-                String[] states = getResources().getStringArray(R.array.state_names);
-                String[] statesValues = getResources().getStringArray(R.array.state_ids);
-                prefDefaultScreenChild.setEntries(states);
-                prefDefaultScreenChild.setEntryValues(statesValues);
-            }
-            else if(selection == 4) {
-                prefDefaultScreenChild.setEnabled(true);
-                prefDefaultScreenChild.setSummary(db.getTag(MetaSettings.getDefaultScreen(context).second).name);
-
-				ArrayList<Tag> tags = db.getAllTags();
-
-				String[] tagValues = new String[tags.size()];
-				String[] tagNames = new String[tags.size()];
-				for(int i = 0; i < tagValues.length; i++) {
-					tagValues[i] = Integer.toString(tags.get(i).id);
-					tagNames[i] = tags.get(i).name;
-				}
-
-                prefDefaultScreenChild.setEntries(tagNames);
-                prefDefaultScreenChild.setEntryValues(tagValues);
-            }
-            else {
-                prefDefaultScreenChild.setEnabled(false);
-            }
-
-            db.close();
 
 			return true;
 		}
@@ -560,6 +580,9 @@ public class SettingsFragment extends PreferenceFragment {
 
 			selectLanguage.setEntries(entries); //values (display to user)
 			selectLanguage.setEntryValues(entryValues); //keys
+
+//			int storedSelection = selectLanguage.findIndexOfValue(MetaSettings.getBibleLanguage(context));
+//			selectLanguage.setValueIndex(storedSelection);
 
 			selectLanguage.setOnPreferenceChangeListener(languageChange);
 			languageChange.onPreferenceChange(selectLanguage, MetaSettings.getBibleLanguage(context));
@@ -667,7 +690,7 @@ public class SettingsFragment extends PreferenceFragment {
 			selectVersion.setEntryValues(entryValues); //keys
 
 			selectVersion.setOnPreferenceChangeListener(versionChange);
-			versionChange.onPreferenceChange(selectVersion, MetaSettings.getBibleVersion(context).getName());
+			versionChange.onPreferenceChange(selectVersion, MetaSettings.getBibleVersion(context).getId());
 			dialog.dismiss();
 		}
 	}
