@@ -48,5 +48,6 @@
         <item name="ic_action_tag">@drawable/ic_action_tag_light</item>
         <item name="ic_action_help">@drawable/ic_action_help_light</item>
         <item name="ic_action_settings">@drawable/ic_action_settings_light</item>
-    </style>
+		<item name="ic_action_debug">@drawable/ic_action_debug_light</item>
+	</style>
 </resources>

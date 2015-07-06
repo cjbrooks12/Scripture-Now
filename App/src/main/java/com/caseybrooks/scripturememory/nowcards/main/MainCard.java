@@ -20,11 +20,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
+import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
-import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 public class MainCard extends FrameLayout {
 //Data Members
@@ -33,7 +32,7 @@ public class MainCard extends FrameLayout {
     NavigationCallbacks mCallbacks;
 
     TextView ref, ver;
-    ImageView contextMenu;
+    ImageView overflowButton;
     RelativeLayout expandedSection;
     View expandedhline;
 
@@ -44,9 +43,9 @@ public class MainCard extends FrameLayout {
     TextView activeListText;
     boolean isExpanded;
 
-    //Constructors and Initialization
+//LIfecycle and Initialization
 //------------------------------------------------------------------------------
-    public MainCard(Context context) {
+	public MainCard(Context context) {
         super(context);
         this.context = context;
 
@@ -65,9 +64,9 @@ public class MainCard extends FrameLayout {
 
         ref = (TextView) findViewById(R.id.notificationReference);
         ver = (TextView) findViewById(R.id.notificationVerse);
-        contextMenu = (ImageView) findViewById(R.id.overflowButton);
-        contextMenu.setOnClickListener(contextMenuClick);
-        this.setOnClickListener(expandCardClick);
+        overflowButton = (ImageView) findViewById(R.id.overflowButton);
+        overflowButton.setOnClickListener(overflowButtonClick);
+        this.setOnClickListener(cardClick);
 
         activeListSidebar = findViewById(R.id.active_list_sidebar);
         activeListText = (TextView) findViewById(R.id.active_list_text);
@@ -108,32 +107,32 @@ public class MainCard extends FrameLayout {
     public void update() {
         Main mv = new Main(context);
 
-        if(mv.passage != null) {
+        if(mv.getMainPassage() != null) {
             //set the radio buttons and text based on user selection and whether the card is expanded
-            switch (Main.getDisplayMode(context)) {
+            switch (MainSettings.getDisplayMode(context)) {
                 case 0: ((RadioButton) findViewById(R.id.radioDashes)).setChecked(true); break;
                 case 1: ((RadioButton) findViewById(R.id.radioLetters)).setChecked(true); break;
                 case 2: ((RadioButton) findViewById(R.id.radioLetteredDashes)).setChecked(true); break;
                 case 3:
                     ((RadioButton) findViewById(R.id.radioRandomWords)).setChecked(true);
                     randomnessLevelSlider.setVisibility(View.VISIBLE);
-                    randomnessLevelSlider.setProgress(((int) (Main.getRandomness(context).first * 1000)));
+                    randomnessLevelSlider.setProgress(((int) (MainSettings.getRandomness(context).first * 1000)));
                     break;
                 default: ((RadioButton) findViewById(R.id.radioDashes)).setChecked(true); break;
             }
 
-            if (isExpanded) {
-                mv.setPassageFormatted();
+			ref.setText(mv.getMainPassage().getReference().toString());
+
+			if (isExpanded) {
+				ver.setText(mv.getFormattedText());
             }
             else {
-                mv.setPassageNormal();
+				ver.setText(mv.getNormalText());
             }
-            ref.setText(mv.passage.getReference().toString());
-            ver.setText(mv.passage.getText());
 
             //set the active list
             VerseDB db = new VerseDB(context);
-            Pair<Integer, Integer> activeList = Main.getWorkingList(context);
+            Pair<Integer, Integer> activeList = MainSettings.getWorkingList(context);
             if(activeList.first == VerseListFragment.STATE) {
                 db.open();
                 activeListSidebar.setVisibility(View.VISIBLE);
@@ -171,17 +170,17 @@ public class MainCard extends FrameLayout {
         ((ViewGroup)getParent()).removeView(MainCard.this);
     }
 
-    //Public Getters and Setters
+//Public Getters and Setters
 //------------------------------------------------------------------------------
     public boolean isExpanded() {
         return isExpanded;
     }
 
-    //Expand card to show display options for notification
+//Expand card to show display options for notification
 //------------------------------------------------------------------------------
     public void expandCard() {
 		Main mv = new Main(context);
-		if(mv.passage != null) {
+		if(mv.getMainPassage() != null) {
 			expandedhline.setVisibility(View.VISIBLE);
 			expandedSection.setVisibility(View.VISIBLE);
 			isExpanded = true;
@@ -198,17 +197,17 @@ public class MainCard extends FrameLayout {
 
     //Click Listeners
 //------------------------------------------------------------------------------
-    private View.OnClickListener contextMenuClick = new View.OnClickListener() {
+    private View.OnClickListener overflowButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Main mv = new Main(context);
-            if(mv.passage != null) {
+            if(mv.getMainPassage() != null) {
                 PopupMenu popup = new PopupMenu(context, v);
                 popup.setOnMenuItemClickListener(menuItemClick);
                 MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.context_notification_card, popup.getMenu());
+                inflater.inflate(R.menu.overflow_notification_card, popup.getMenu());
 
-                if(Main.getDisplayMode(context) == 3) {
+                if(MainSettings.getDisplayMode(context) == 3) {
                     popup.getMenu().findItem(R.id.context_notification_card_scramble_random).setVisible(true);
                     popup.getMenu().findItem(R.id.context_notification_card_reset_random).setVisible(true);
                 }
@@ -222,7 +221,7 @@ public class MainCard extends FrameLayout {
         }
     };
 
-    private View.OnClickListener expandCardClick = new View.OnClickListener() {
+    private View.OnClickListener cardClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if(isExpanded()) {
@@ -240,40 +239,39 @@ public class MainCard extends FrameLayout {
         public boolean onMenuItemClick(MenuItem item) {
             Main mv = new Main(context);
 
-            if (mv.passage != null) {
+            if (mv.getMainPassage() != null) {
                 switch (item.getItemId()) {
                     case R.id.context_notification_card_edit:
                         try {
+							mv.getApplication().setActivePassage(mv.getMainPassage());
                             mCallbacks = (NavigationCallbacks) context;
-                            mCallbacks.toVerseEdit(mv.passage.getMetadata().getInt(DefaultMetaData.ID));
+                            mCallbacks.toVerseEdit();
                         } catch (ClassCastException e) {
                             e.printStackTrace();
                         }
                         return true;
                     case R.id.context_notification_card_toggle:
-                        if (Main.isActive(context)) {
+                        if (MainSettings.isActive(context)) {
                             MainNotification.getInstance(context).dismiss();
-							Main.setActive(context, false);
+							MainSettings.setActive(context, false);
                         }
                         else {
 							MainNotification.getInstance(context).create().show();
-							Main.setActive(context, true);
+							MainSettings.setActive(context, true);
                         }
                         return true;
                     case R.id.context_notification_card_scramble_random:
-						Main.putRandomness(context, -1, (int) System.currentTimeMillis());
+						MainSettings.putRandomness(context, -1, (int) System.currentTimeMillis());
 
                         update();
 						MainNotification.getInstance(context).create().show();
-						Main.setActive(context, true);
+						MainSettings.setActive(context, true);
                         return true;
                     case R.id.context_notification_card_reset_random:
-						Main.putRandomness(context, -1, 0);
-
-
+						MainSettings.putRandomness(context, -1, 0);
 						update();
 						MainNotification.getInstance(context).create().show();
-                        Main.setActive(context, true);
+						MainSettings.setActive(context, true);
                         return true;
                     default:
                         return false;
@@ -306,9 +304,9 @@ public class MainCard extends FrameLayout {
                     randomnessLevelSlider.setVisibility(View.VISIBLE);
                     break;
             }
-            Main.putDisplayMode(context, verseDisplayMode);
-			Main.setActive(context, true);
-			Main.setTextFull(context, false);
+			MainSettings.putDisplayMode(context, verseDisplayMode);
+			MainSettings.setActive(context, true);
+			MainSettings.setTextFull(context, false);
 
             update();
 
@@ -323,10 +321,9 @@ public class MainCard extends FrameLayout {
             if(Math.abs(progress - last) >= 10) {
                 last = progress;
 
-                Main.putRandomness(context, seekBar.getProgress() / 1000f, -1);
+				MainSettings.putRandomness(context, seekBar.getProgress() / 1000f, -1);
                 Main mv = new Main(context);
-                mv.setPassageFormatted();
-                ver.setText(mv.passage.getText());
+                ver.setText(mv.getFormattedText());
             }
         }
 
@@ -337,12 +334,11 @@ public class MainCard extends FrameLayout {
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-			Main.putRandomness(context, seekBar.getProgress() / 1000f, -1);
+			MainSettings.putRandomness(context, seekBar.getProgress() / 1000f, -1);
             Main mv = new Main(context);
-            mv.setPassageFormatted();
-            ver.setText(mv.passage.getText());
+            ver.setText(mv.getFormattedText());
 
-            if(Main.isActive(context)) {
+            if(MainSettings.isActive(context)) {
 				MainNotification.getInstance(context).create().show();
             }
         }

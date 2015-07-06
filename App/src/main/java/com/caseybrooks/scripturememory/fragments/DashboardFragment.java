@@ -21,14 +21,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
-import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.nowcards.input.VerseInputCard;
-import com.caseybrooks.scripturememory.nowcards.main.Main;
 import com.caseybrooks.scripturememory.nowcards.main.MainCard;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
+import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDCard;
 
 public class DashboardFragment extends Fragment {
@@ -65,7 +65,7 @@ public class DashboardFragment extends Fragment {
 		context.registerReceiver(receiver, new IntentFilter(REFRESH));
 
         notify_card.update();
-		if(Main.isActive(context)) {
+		if(MainSettings.isActive(context)) {
 		    MainNotification.getInstance(context).create().show();
 		}
 

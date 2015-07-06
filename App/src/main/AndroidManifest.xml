@@ -16,31 +16,32 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+		android:name="com.caseybrooks.scripturememory.activities.SNApplication"
         android:theme="@style/Theme.Light" >
 
         <!-- Receivers for Main Verse -->
         <receiver
-            android:name=".nowcards.main.Main$DismissVerseReceiver"
+            android:name=".nowcards.main.MainBroadcasts$DismissVerseReceiver"
             android:enabled="true"
             android:exported="false" />
 		<receiver
-			android:name=".nowcards.main.Main$PreviousVerseReceiver"
+			android:name=".nowcards.main.MainBroadcasts$PreviousVerseReceiver"
 			android:enabled="true"
 			android:exported="false" />
         <receiver
-            android:name=".nowcards.main.Main$NextVerseReceiver"
+            android:name=".nowcards.main.MainBroadcasts$NextVerseReceiver"
             android:enabled="true"
             android:exported="false" />
 		<receiver
-			android:name=".nowcards.main.Main$RandomVerseReceiver"
+			android:name=".nowcards.main.MainBroadcasts$RandomVerseReceiver"
 			android:enabled="true"
 			android:exported="false" />
 		<receiver
-			android:name=".nowcards.main.Main$TextFullReceiver"
+			android:name=".nowcards.main.MainBroadcasts$TextFullReceiver"
 			android:enabled="true"
 			android:exported="false" />
 		<receiver
-			android:name=".nowcards.main.Main$MainBootReceiver"
+			android:name=".nowcards.main.MainBroadcasts$MainBootReceiver"
 			android:enabled="true"
 			android:exported="false" >
 			<intent-filter>
@@ -60,19 +61,19 @@
 
         <!-- Receivers for Verse of the Day -->
         <receiver
-            android:name=".nowcards.votd.VOTD$VOTDAlarmReceiver"
+            android:name=".nowcards.votd.VOTDBroadcasts$VOTDAlarmReceiver"
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name=".nowcards.votd.VOTD$VOTDSaveVerseReceiver"
+            android:name=".nowcards.votd.VOTDBroadcasts$VOTDSaveVerseReceiver"
             android:enabled="true"
             android:exported="false" />
 		<receiver
-			android:name=".nowcards.votd.VOTD$VOTDNotificationDismissedReceiver"
+			android:name=".nowcards.votd.VOTDBroadcasts$VOTDNotificationDismissedReceiver"
 			android:enabled="true"
 			android:exported="false" />
 		<receiver
-			android:name=".nowcards.votd.VOTD$VOTDBootReceiver"
+			android:name=".nowcards.votd.VOTDBroadcasts$VOTDBootReceiver"
 			android:enabled="true"
 			android:exported="false" >
 			<intent-filter>

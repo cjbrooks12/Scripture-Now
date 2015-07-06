@@ -24,14 +24,14 @@ import android.widget.Toast;
 import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
+import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
-import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
-import com.caseybrooks.scripturememory.nowcards.votd.VOTD;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDNotification;
+import com.caseybrooks.scripturememory.nowcards.votd.VOTDSettings;
 
 import org.jsoup.nodes.Document;
 
@@ -65,7 +65,7 @@ public class SettingsFragment extends PreferenceFragment {
 		setClicks();
 		setThemeSpinners();
 		setDefaultScreenSpinners();
-		setBibleVersionSpinners();
+//		setBibleVersionSpinners();
 	}
 
 //Settings Setup Routine
@@ -301,13 +301,13 @@ public class SettingsFragment extends PreferenceFragment {
 				Calendar now = Calendar.getInstance();
 
 				Calendar calendar = Calendar.getInstance();
-				calendar.setTimeInMillis(VOTD.getNotificationTime(context));
+				calendar.setTimeInMillis(VOTDSettings.getNotificationTime(context));
 
 				//if the set time is in the past due to the time being set before
 				//today, then set the next time to fire the alarm to be tomorrow
 				if(calendar.getTimeInMillis() < now.getTimeInMillis()) {
 					calendar.set(Calendar.DATE, now.get(Calendar.DATE) + 1);
-					VOTD.setNotificationTime(context, calendar.getTimeInMillis());
+					VOTDSettings.setNotificationTime(context, calendar.getTimeInMillis());
 				}
 
 				VOTDNotification.getInstance(context).setAlarm();

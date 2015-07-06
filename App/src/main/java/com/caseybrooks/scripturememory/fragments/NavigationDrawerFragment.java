@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -24,17 +23,19 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Tag;
+import com.caseybrooks.common.debug.DebugSharedPreferencesFragment;
+import com.caseybrooks.common.features.NavListItem;
+import com.caseybrooks.common.features.NavigationCallbacks;
+import com.caseybrooks.scripturememory.BuildConfig;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
-import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
-import com.caseybrooks.scripturememory.nowcards.main.Main;
+import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
 import com.nirhart.parallaxscroll.views.ParallaxExpandableListView;
 
 import java.util.ArrayList;
@@ -89,14 +90,14 @@ public class NavigationDrawerFragment extends Fragment {
 			pair = new Pair<>(3, MetaSettings.getDefaultScreen(getActivity()).second);
 			break;
 		case 5:
-			if(Main.getWorkingList(getActivity()).first == -1) {
+			if(MainSettings.getWorkingList(getActivity()).first == -1) {
 				pair = new Pair<>(0, 0);
 			}
-			if(Main.getWorkingList(getActivity()).first == VerseListFragment.STATE) {
-				pair = new Pair<>(2, Main.getWorkingList(getActivity()).second);
+			if(MainSettings.getWorkingList(getActivity()).first == VerseListFragment.STATE) {
+				pair = new Pair<>(2, MainSettings.getWorkingList(getActivity()).second);
 			}
 			else {
-				pair = new Pair<>(3, Main.getWorkingList(getActivity()).second);
+				pair = new Pair<>(3, MainSettings.getWorkingList(getActivity()).second);
 			}
 			break;
 		default:
@@ -126,15 +127,6 @@ public class NavigationDrawerFragment extends Fragment {
         return view;
     }
 
-    public static class NavListItem {
-        public int groupPosition;
-        public int childPosition;
-        public String name;
-        public int id;
-        public int count;
-        public int color;
-    }
-
     private void populateList() {
         RelativeLayout header = (RelativeLayout) LayoutInflater.from(parentActivity).inflate(R.layout.parallax_drawer_header, null);
         mDrawerListView.addParallaxedHeaderView(header);
@@ -158,6 +150,11 @@ public class NavigationDrawerFragment extends Fragment {
 		listDataChild.put(listDataHeader.get(4), new ArrayList<NavListItem>());
 		listDataChild.put(listDataHeader.get(5), new ArrayList<NavListItem>());
 
+		if (BuildConfig.DEBUG) {
+			listDataHeader.add("Debug");
+			listDataChild.put(listDataHeader.get(6), new ArrayList<NavListItem>());
+		}
+
         listAdapter = new ExpandableListAdapter(parentActivity, listDataHeader, listDataChild);
         mDrawerListView.setAdapter(listAdapter);
 		listAdapter.notifyDataSetChanged();
@@ -175,7 +172,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if(groupPosition != 2 && groupPosition != 3) {
+                if(groupPosition != 2 && groupPosition != 3 && groupPosition != 6) {
                     selectItem(new Pair<>(groupPosition, 0));
                     return true;
                 }
@@ -208,6 +205,14 @@ public class NavigationDrawerFragment extends Fragment {
                     break;
                 case 5:
                     mCallbacks.toHelp();
+					break;
+				case 6:
+					if(item.second == 0)
+						mCallbacks.toDebugPreferences();
+					else if(item.second == 1)
+						mCallbacks.toDebugDatabase();
+					else
+						mCallbacks.toDebugCache();
                     break;
                 default:
             }
@@ -285,6 +290,42 @@ public class NavigationDrawerFragment extends Fragment {
 			childItems.put(headerItems.get(3), tags);
 
             db.close();
+
+			//put debug selections if in debug mode
+			if(BuildConfig.DEBUG) {
+				List<NavListItem> debugItems = new ArrayList<>();
+
+				NavListItem debugPrefsItem = new NavListItem();
+				debugPrefsItem.id = 0;
+				debugPrefsItem.groupPosition = 6;
+				debugPrefsItem.childPosition = 0;
+				debugPrefsItem.name = "All Preferences";
+				debugPrefsItem.color = Color.parseColor("#FFC107");
+				debugPrefsItem.count = DebugSharedPreferencesFragment.getPrefsCount(context);
+				debugItems.add(debugPrefsItem);
+
+				NavListItem debugDatabaseItem = new NavListItem();
+				debugDatabaseItem.id = 1;
+				debugDatabaseItem.groupPosition = 6;
+				debugDatabaseItem.childPosition = 1;
+				debugDatabaseItem.name = "Entire Database";
+				debugDatabaseItem.color = Color.parseColor("#4CAF50");
+				debugDatabaseItem.count = 0;
+				debugItems.add(debugDatabaseItem);
+
+				NavListItem debugCacheItem = new NavListItem();
+				debugCacheItem.id = 2;
+				debugCacheItem.groupPosition = 6;
+				debugCacheItem.childPosition = 2;
+				debugCacheItem.name = "Cache Contents";
+				debugCacheItem.color = Color.parseColor("#607D8B");
+				debugCacheItem.count = 0;
+				debugItems.add(debugCacheItem);
+
+				childItems.remove(headerItems.get(6));
+				childItems.put(headerItems.get(6), debugItems);
+			}
+
             super.notifyDataSetChanged();
         }
 
@@ -361,13 +402,15 @@ public class NavigationDrawerFragment extends Fragment {
 			}
 
 			TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{
-					  R.attr.ic_action_home,
-					  R.attr.ic_action_find_in_page,
-					  R.attr.ic_action_group_work,
-					  R.attr.ic_action_tag,
-					  R.attr.ic_action_settings,
-					  R.attr.ic_action_help
+					R.attr.ic_action_home,
+					R.attr.ic_action_find_in_page,
+					R.attr.ic_action_group_work,
+					R.attr.ic_action_tag,
+					R.attr.ic_action_settings,
+					R.attr.ic_action_help,
+					R.attr.ic_action_debug
 			});
+
 
 			Drawable headerDrawable = getResources().getDrawable(a.getResourceId(groupPosition, 0));
 			a.recycle();
@@ -375,10 +418,10 @@ public class NavigationDrawerFragment extends Fragment {
 
             int selectedGroup = MetaSettings.getDrawerSelection(context).first;
             TypedArray selectedColorAttrs = context.getTheme().obtainStyledAttributes(new int[]{
-						R.attr.colorAccent,
-						R.attr.color_text,
-						R.attr.color_background,
-						R.attr.color_background_selected });
+					R.attr.colorAccent,
+					R.attr.color_text,
+					R.attr.color_background,
+					R.attr.color_background_selected });
 
             int selectedColor = selectedColorAttrs.getColor(0, 0);
             int unselectedColor = selectedColorAttrs.getColor(1, 0);

@@ -35,12 +35,14 @@ import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.basic.Verse;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
+import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.activities.SNApplication;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
-import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
-import com.caseybrooks.scripturememory.nowcards.main.Main;
+import com.caseybrooks.scripturememory.nowcards.main.MainBroadcasts;
+import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
 
 import java.io.File;
 import java.io.IOException;
@@ -88,7 +90,11 @@ public class VerseListFragment extends ListFragment {
 
 //Lifecycle and Initialization
 //------------------------------------------------------------------------------
-    @Override
+    public SNApplication getApplication() {
+		return (SNApplication) getActivity().getApplication();
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
@@ -162,7 +168,11 @@ public class VerseListFragment extends ListFragment {
     AdapterView.OnItemClickListener itemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            mCallbacks.toVerseEdit((int)id);
+			VerseDB db = new VerseDB(context).open();
+			Passage passage = db.getVerse(id);
+			db.close();
+			getApplication().setActivePassage(passage);
+            mCallbacks.toVerseEdit();
         }
     };
 
@@ -179,10 +189,10 @@ public class VerseListFragment extends ListFragment {
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
 					case R.id.context_list_post:
-						Main.putVerseId(context, vh.passage.getMetadata().getInt(DefaultMetaData.ID));
-						Main.putWorkingList(context, listType, listId);
-						Main.setActive(context, true);
-						Main.updateAll(context);
+						getApplication().setCurrentPassage(vh.passage);
+						MainSettings.putWorkingList(context, listType, listId);
+						MainSettings.setActive(context, true);
+						MainBroadcasts.updateAll(context);
 						Toast.makeText(context, vh.passage.getReference().toString() + " set as notification", Toast.LENGTH_SHORT).show();
 						return true;
 					case R.id.context_list_add_tag:
@@ -765,32 +775,32 @@ public class VerseListFragment extends ListFragment {
             }
         });
 
-        TextView saveStateButton = (TextView) view.findViewById(R.id.save_state_button);
-        saveStateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                VerseDB db = new VerseDB(context).open();
-                int progress = seekbar.getProgress() + 1;
-                for(Passage passage : items) {
-                    passage.getMetadata().putInt(DefaultMetaData.STATE, progress);
-                    db.updateVerse(passage);
-
-                    //if this verse is the current notification verse and the active list is its state, then
-                    //change the active list to be whatever state this verse becomes
-                    if(Main.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
-                            listType == VerseListFragment.STATE) {
-                        Main.putWorkingList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
-                    }
-                }
-                db.close();
-                if(mActionMode != null) mActionMode.finish();
-                dialog.dismiss();
-				if(loaderThread == null) {
-					loaderThread = new PopulateBibleVerses();
-				}
-				loaderThread.execute();
-            }
-        });
+//        TextView saveStateButton = (TextView) view.findViewById(R.id.save_state_button);
+//        saveStateButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                VerseDB db = new VerseDB(context).open();
+//                int progress = seekbar.getProgress() + 1;
+//                for(Passage passage : items) {
+//                    passage.getMetadata().putInt(DefaultMetaData.STATE, progress);
+//                    db.updateVerse(passage);
+//
+//                    //if this verse is the current notification verse and the active list is its state, then
+//                    //change the active list to be whatever state this verse becomes
+//                    if(Main.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
+//                            listType == VerseListFragment.STATE) {
+//                        Main.putWorkingList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
+//                    }
+//                }
+//                db.close();
+//                if(mActionMode != null) mActionMode.finish();
+//                dialog.dismiss();
+//				if(loaderThread == null) {
+//					loaderThread = new PopulateBibleVerses();
+//				}
+//				loaderThread.execute();
+//            }
+//        });
         dialog.show();
     }
 

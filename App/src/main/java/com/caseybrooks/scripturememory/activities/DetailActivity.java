@@ -11,12 +11,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.EditVerseFragment;
 import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
-import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 
 public class DetailActivity extends ActionBarActivity implements NavigationCallbacks {
     Context context;
@@ -38,12 +38,12 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
         Fragment fragment = ImportVersesFragment.newInstance();
 
         if(getIntent().getExtras() != null) {
-            int id = getIntent().getExtras().getInt("KEY_ID", 0);
-            int listType = getIntent().getExtras().getInt("KEY_LIST_TYPE", 0);
-            int listId = getIntent().getExtras().getInt("KEY_LIST_ID", 0);
+//            int id = getIntent().getExtras().getInt("KEY_ID", 0);
+//            int listType = getIntent().getExtras().getInt("KEY_LIST_TYPE", 0);
+//            int listId = getIntent().getExtras().getInt("KEY_LIST_ID", 0);
 
             if (getIntent().getExtras().getInt("FRAGMENT", -1) == 0) { //edit a verse
-                fragment = EditVerseFragment.newInstance(id, listType, listId);
+                fragment = EditVerseFragment.newInstance();
             }
         }
         else if (getIntent().getDataString() != null) { //help topic: overview
@@ -100,12 +100,12 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
     }
 
     @Override
-    public void toVerseDetail(int id) {
+    public void toVerseDetail() {
 
     }
 
     @Override
-    public void toVerseEdit(int id) {
+    public void toVerseEdit() {
 
     }
 
@@ -133,4 +133,19 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
     public void toHelp() {
 
     }
+
+	@Override
+	public void toDebugPreferences() {
+
+	}
+
+	@Override
+	public void toDebugDatabase() {
+
+	}
+
+	@Override
+	public void toDebugCache() {
+
+	}
 }

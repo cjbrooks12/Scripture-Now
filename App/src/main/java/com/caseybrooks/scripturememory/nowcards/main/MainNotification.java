@@ -56,60 +56,59 @@ public class MainNotification {
 		}
 
 		Main mv = new Main(context);
-		if(mv.passage != null) {
+		if(mv.getMainPassage() != null) {
 			//for small notifcation, always use full text
-			mv.setPassageNormal();
 
-			mb.setContentTitle(mv.passage.getReference().toString());
-			mb.setContentText(mv.passage.getText());
+			mb.setContentTitle(mv.getMainPassage().getReference().toString());
+			mb.setContentText(mv.getNormalText());
 
 			//if Jelly Bean or later, add additional expanded notification
 			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-				if(Main.isTextFull(context)) {
-					mv.setPassageNormal();
+				String text;
+				if(MainSettings.isTextFull(context)) {
+					text = mv.getNormalText();
 				}
 				else{
-					mv.setPassageFormatted();
+					text = mv.getFormattedText();
 				}
 
 				notification = mb.build();
 				RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_main);
 
 				//click to cancel
-				Intent dismiss = new Intent(context, Main.DismissVerseReceiver.class);
+				Intent dismiss = new Intent(context, MainBroadcasts.DismissVerseReceiver.class);
 				PendingIntent dismissPI = PendingIntent.getBroadcast(context, 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
 				contentView.setOnClickPendingIntent(R.id.notification_main_dismiss, dismissPI);
 
 				//go to the previous verse
-				Intent previousVerse = new Intent(context, Main.PreviousVerseReceiver.class);
+				Intent previousVerse = new Intent(context, MainBroadcasts.PreviousVerseReceiver.class);
 				PendingIntent previousVersePI = PendingIntent.getBroadcast(context, 0, previousVerse, PendingIntent.FLAG_CANCEL_CURRENT);
 				contentView.setOnClickPendingIntent(R.id.notification_main_previous, previousVersePI);
 
 				//go to the next verse
-				Intent nextVerse = new Intent(context, Main.NextVerseReceiver.class);
+				Intent nextVerse = new Intent(context, MainBroadcasts.NextVerseReceiver.class);
 				PendingIntent nextVersePI = PendingIntent.getBroadcast(context, 0, nextVerse, PendingIntent.FLAG_CANCEL_CURRENT);
 				contentView.setOnClickPendingIntent(R.id.notification_main_next, nextVersePI);
 
 				//go to the next verse
-				Intent randomVerse = new Intent(context, Main.RandomVerseReceiver.class);
+				Intent randomVerse = new Intent(context, MainBroadcasts.RandomVerseReceiver.class);
 				PendingIntent randomVersePI = PendingIntent.getBroadcast(context, 0, randomVerse, PendingIntent.FLAG_CANCEL_CURRENT);
 				contentView.setOnClickPendingIntent(R.id.notification_main_random, randomVersePI);
 
 				//toggle full and formatted text in notification
-				Intent showFull = new Intent(context, Main.TextFullReceiver.class);
+				Intent showFull = new Intent(context, MainBroadcasts.TextFullReceiver.class);
 				PendingIntent showFullPI = PendingIntent.getBroadcast(context, 0, showFull, PendingIntent.FLAG_CANCEL_CURRENT);
 				contentView.setOnClickPendingIntent(R.id.notification_main_show_full, showFullPI);
 
 				contentView.setImageViewResource(R.id.notification_main_icon, R.drawable.ic_cross);
-				contentView.setTextViewText(R.id.notification_main_reference, mv.passage.getReference().toString());
-				contentView.setTextViewText(R.id.notification_main_verse, mv.passage.getText());
+				contentView.setTextViewText(R.id.notification_main_reference, mv.getMainPassage().getReference().toString());
+				contentView.setTextViewText(R.id.notification_main_verse, text);
 
 				notification.bigContentView = contentView;
 			}
 			else {
-				mv.setPassageFormatted();
-				mb.setContentTitle(mv.passage.getReference().toString());
-				mb.setContentText(mv.passage.getText());
+				mb.setContentTitle(mv.getMainPassage().getReference().toString());
+				mb.setContentText(mv.getFormattedText());
 
 				notification = mb.build();
 			}
@@ -122,8 +121,6 @@ public class MainNotification {
 			mb.setContentText("Why don't you try adding some more verses, or start memorizing a different list?");
 			notification = mb.build();
 		}
-
-//		notification = mb.build();
 
 		return this;
     }

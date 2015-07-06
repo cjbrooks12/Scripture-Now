@@ -73,22 +73,22 @@ public class MainWidget extends AppWidgetProvider {
 		contentView.setOnClickPendingIntent(R.id.widget_main_layout, resultPI);
 
 		//go to the previous verse
-		Intent previousVerse = new Intent(context, Main.PreviousVerseReceiver.class);
+		Intent previousVerse = new Intent(context, MainBroadcasts.PreviousVerseReceiver.class);
 		PendingIntent previousVersePI = PendingIntent.getBroadcast(context, 0, previousVerse, PendingIntent.FLAG_CANCEL_CURRENT);
 		contentView.setOnClickPendingIntent(R.id.widget_main_previous, previousVersePI);
 
 		//go to the next verse
-		Intent nextVerse = new Intent(context, Main.NextVerseReceiver.class);
+		Intent nextVerse = new Intent(context, MainBroadcasts.NextVerseReceiver.class);
 		PendingIntent nextVersePI = PendingIntent.getBroadcast(context, 0, nextVerse, PendingIntent.FLAG_CANCEL_CURRENT);
 		contentView.setOnClickPendingIntent(R.id.widget_main_next, nextVersePI);
 
 		//go to the next verse
-		Intent randomVerse = new Intent(context, Main.RandomVerseReceiver.class);
+		Intent randomVerse = new Intent(context, MainBroadcasts.RandomVerseReceiver.class);
 		PendingIntent randomVersePI = PendingIntent.getBroadcast(context, 0, randomVerse, PendingIntent.FLAG_CANCEL_CURRENT);
 		contentView.setOnClickPendingIntent(R.id.widget_main_random, randomVersePI);
 
 		//toggle full and formatted text in notification
-		Intent showFull = new Intent(context, Main.TextFullReceiver.class);
+		Intent showFull = new Intent(context, MainBroadcasts.TextFullReceiver.class);
 		PendingIntent showFullPI = PendingIntent.getBroadcast(context, 0, showFull, PendingIntent.FLAG_CANCEL_CURRENT);
 		contentView.setOnClickPendingIntent(R.id.widget_main_show_full, showFullPI);
 
@@ -98,19 +98,20 @@ public class MainWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         Main mv = new Main(context);
-        if (mv.passage != null) {
+        if (mv.getMainPassage() != null) {
 
-			if(Main.isTextFull(context)) {
-				mv.setPassageNormal();
+			String text;
+			if(MainSettings.isTextFull(context)) {
+				text = mv.getNormalText();
 			}
 			else{
-				mv.setPassageFormatted();
+				text = mv.getFormattedText();
 			}
 
             // Construct the RemoteViews object
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main_verse);
-            views.setTextViewText(R.id.widget_main_reference, mv.passage.getReference().toString());
-            views.setTextViewText(R.id.widget_main_verse, mv.passage.getText());
+            views.setTextViewText(R.id.widget_main_reference, mv.getMainPassage().getReference().toString());
+            views.setTextViewText(R.id.widget_main_verse, text);
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);

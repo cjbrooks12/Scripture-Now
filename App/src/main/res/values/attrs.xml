@@ -39,6 +39,7 @@
     <attr name="ic_action_tag" format="reference" />
     <attr name="ic_action_settings" format="reference" />
     <attr name="ic_action_help" format="reference" />
+	<attr name="ic_action_debug" format="reference" />
 
 
 </resources>

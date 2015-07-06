@@ -41,11 +41,11 @@ import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.providers.openbible.OpenBibleInfo;
+import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
-import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 import java.io.IOException;
@@ -403,7 +403,7 @@ public class TopicalBibleFragment extends Fragment {
             return 0;
         }
 
-        public void removeItem(Passage item) {
+        public void removeItem(ABSPassage item) {
             if (items.contains(item)) {
                 items.remove(item);
             }
@@ -709,6 +709,10 @@ public class TopicalBibleFragment extends Fragment {
 								context.getResources().getString(R.string.bibles_org),
 								passage.getReference()
 						);
+						newPassage.setText(passage.getText());
+						newPassage.setMetadata(passage.getMetadata());
+						newPassage.setTags(passage.getTags());
+
 						absPassages.add(newPassage);
 					}
 					return absPassages;

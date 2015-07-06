@@ -22,6 +22,10 @@ import android.view.ViewConfiguration;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
+import com.caseybrooks.common.debug.DebugCacheFragment;
+import com.caseybrooks.common.debug.DebugDatabaseFragment;
+import com.caseybrooks.common.debug.DebugSharedPreferencesFragment;
+import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
@@ -31,8 +35,7 @@ import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.fragments.SettingsFragment;
 import com.caseybrooks.scripturememory.fragments.TopicalBibleFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
-import com.caseybrooks.scripturememory.misc.NavigationCallbacks;
-import com.caseybrooks.scripturememory.nowcards.main.Main;
+import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -50,7 +53,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 //------------------------------------------------------------------------------
     Toolbar tb;
     Context context;
-	View statusBar;
 
 //Lifecycle and Initialization
 //------------------------------------------------------------------------------
@@ -129,7 +131,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
             if(version > MetaSettings.getAppVersion(context)) {
                 MetaSettings.putAppVersion(context, version);
 
-				Main.putDisplayMode(context, Main.getDisplayMode(context) - 1);
+				MainSettings.putDisplayMode(context, MainSettings.getDisplayMode(context) - 1);
 
                 String state = Environment.getExternalStorageState();
                 if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -295,19 +297,18 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 	}
 
 	@Override
-    public void toVerseDetail(int id) {
+    public void toVerseDetail() {
 
     }
 
     @Override
-    public void toVerseEdit(int id) {
+    public void toVerseEdit() {
         Intent intent = new Intent(this, DetailActivity.class);
         Bundle extras = new Bundle();
-        extras.putInt("KEY_ID", id);
-        extras.putInt("KEY_LIST_TYPE", Main.getWorkingList(context).first);
-        extras.putInt("KEY_LIST_ID", Main.getWorkingList(context).second);
+//        extras.putInt("KEY_ID", id);
+//        extras.putInt("KEY_LIST_TYPE", Main.getWorkingList(context).first);
+//        extras.putInt("KEY_LIST_ID", Main.getWorkingList(context).second);
         extras.putInt("FRAGMENT", 0);
-
 
         intent.putExtras(extras);
         startActivity(intent);
@@ -350,4 +351,22 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
         Fragment fragment = new HelpFragment();
         setFragment(fragment);
     }
+
+	@Override
+	public void toDebugPreferences() {
+		Fragment fragment = DebugSharedPreferencesFragment.newInstance();
+		setFragment(fragment);
+	}
+
+	@Override
+	public void toDebugDatabase() {
+		Fragment fragment = DebugDatabaseFragment.newInstance();
+		setFragment(fragment);
+	}
+
+	@Override
+	public void toDebugCache() {
+		Fragment fragment = DebugCacheFragment.newInstance();
+		setFragment(fragment);
+	}
 }

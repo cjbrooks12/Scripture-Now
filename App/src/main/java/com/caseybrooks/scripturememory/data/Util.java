@@ -17,8 +17,6 @@ import android.os.Build;
 import android.view.Display;
 import android.view.animation.DecelerateInterpolator;
 
-import com.caseybrooks.scripturememory.nowcards.votd.VOTD;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -74,52 +72,19 @@ public class Util {
 			File cacheFile = new File(context.getCacheDir(), filename);
 
 			if(cachedTime != 0 && cacheFile.exists()) {
-				//if this file was a cached VOTD file, then delete if it is not
-				//today's verse, so that the VOTD is always up-to-date, but cached
-				//as a file, not inside the database
-				if(filename.equals(VOTD.cache_file)) {
-					Calendar cachedDate = Calendar.getInstance();
-					cachedDate.setTimeInMillis(cachedTime);
-
-					Calendar now = Calendar.getInstance();
-
-					//cached date is today only if the era, year, month, and day are
-					//all equal. If any one of those is not the same, thenw we must
-					//be on a different day than what is cached
-					if(
-							cachedDate.get(Calendar.ERA) != now.get(Calendar.ERA) ||
-									cachedDate.get(Calendar.YEAR) != now.get(Calendar.YEAR) ||
-									cachedDate.get(Calendar.MONTH) != now.get(Calendar.MONTH) ||
-									cachedDate.get(Calendar.DATE) != now.get(Calendar.DATE)
-							) {
-
-						boolean deletedCorrectly = cacheFile.delete();
-						if(deletedCorrectly) {
-							context.getSharedPreferences(cacheTimestampPrefsFile, 0)
-									.edit().remove(filename);
-						}
-						return null;
+				//if this file was cached more than 2 weeks ago, delete the file
+				//and remove the preference timestamp. Data is stale and should
+				//should not be used.
+				if(Calendar.getInstance().getTimeInMillis() - cachedTime >= 1209600000) {
+					boolean deletedCorrectly = cacheFile.delete();
+					if(deletedCorrectly) {
+						context.getSharedPreferences(cacheTimestampPrefsFile, 0)
+								.edit().remove(filename);
 					}
-					else {
-						return Jsoup.parse(cacheFile, "UTF-8");
-					}
+					return null;
 				}
 				else {
-
-					//if this file was cached more than 2 weeks ago, delete the file
-					//and remove the preference timestamp. Data is stale and should
-					//should not be used.
-					if(Calendar.getInstance().getTimeInMillis() - cachedTime >= 1209600000) {
-						boolean deletedCorrectly = cacheFile.delete();
-						if(deletedCorrectly) {
-							context.getSharedPreferences(cacheTimestampPrefsFile, 0)
-									.edit().remove(filename);
-						}
-						return null;
-					}
-					else {
-						return Jsoup.parse(cacheFile, "UTF-8");
-					}
+					return Jsoup.parse(cacheFile, "UTF-8");
 				}
 			}
 		}
