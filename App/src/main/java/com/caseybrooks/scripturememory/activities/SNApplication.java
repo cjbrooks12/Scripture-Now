@@ -2,11 +2,6 @@ package com.caseybrooks.scripturememory.activities;
 
 import android.app.Application;
 
-import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.scripturememory.data.VerseDB;
-import com.caseybrooks.scripturememory.nowcards.main.MainBroadcasts;
-import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
-
 //We will load the current Bible version at the start of the app because it
 //may take a while to parse the file, and we want this to be easily accessible
 //whenever we need it. We will also maintain the list of available languages
@@ -30,79 +25,46 @@ public class SNApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 
-//		int currentId = getSharedPreferences(settings_file, 0).getInt("MAIN_ID", -1);
-//		int activeId = getSharedPreferences(settings_file, 0).getInt("ACTIVE_ID", -1);
-
-//		VerseDB db = new VerseDB(this).open();
-//		currentPassage = (currentId > 0) ? db.getVerse(currentId) : null;
-//		activePassage = (activeId > 0) ? db.getVerse(activeId) : null;
-//		db.close();
-
 //		preloadAllData();
 	}
 
 //Important Verses
 //------------------------------------------------------------------------------
 
-	public void setCurrentPassage(Passage passage) {
 
-		//ensure that this verse is up-to-date with the database
-		VerseDB db = new VerseDB(this).open();
-		int id = db.getVerseId(passage.getReference());
-		if(id > 0) {
-			db.updateVerse(passage);
-		}
-		else {
-			id = db.insertVerse(passage);
-		}
-		db.close();
 
-		if(id > 0) {
-			//ensure the current verse has the true id of its row in the database
-			//save that id to the shared preferences.
-			MainSettings.setMainId(this, id);
-		}
-		else {
-			//on any discrepancy, set the passage to null and remove the id that is
-			//currently saved, so we know that we do not have a verse set
-			MainSettings.setMainId(this, -1);
-		}
-
-		MainBroadcasts.updateAll(this);
-	}
-
-	public Passage getActivePassage() {
-		Passage passage;
-		VerseDB db = new VerseDB(this).open();
-		passage = (MainSettings.getActiveId(this) > 0) ? db.getVerse(MainSettings.getActiveId(this)) : null;
-		db.close();
-		return passage;
-	}
-
-	public void setActivePassage(Passage passage) {
-
-		//ensure that this verse is up-to-date with the database
-		VerseDB db = new VerseDB(this).open();
-		int id = db.getVerseId(passage.getReference());
-		if(id > 0) {
-			db.updateVerse(passage);
-		}
-		else {
-			id = db.insertVerse(passage);
-		}
-		db.close();
-
-		if(id > 0) {
-			//ensure the current verse has the true id of its row in the database
-			//save that id to the shared preferences.
-			MainSettings.setActiveId(this, id);
-		}
-		else {
-			//on any discrepancy, set the passage to null and remove the id that is
-			//currently saved, so we know that we do not have a verse set
-			MainSettings.setActiveId(this, -1);
-		}
-	}
+//	public Passage getActivePassage() {
+//		Passage passage;
+//		VerseDB db = new VerseDB(this).open();
+//		passage = (MainSettings.getActiveId(this) > 0) ? db.getVerse(MainSettings.getActiveId(this)) : null;
+//		db.close();
+//		return passage;
+//	}
+//
+//	public void setActivePassage(Passage passage) {
+//
+//		//ensure that this verse is up-to-date with the database
+//		VerseDB db = new VerseDB(this).open();
+//		int id = db.getVerseId(passage.getReference());
+//		if(id > 0) {
+//			db.updateVerse(passage);
+//		}
+//		else {
+//			id = db.insertVerse(passage);
+//		}
+//		db.close();
+//
+//		if(id > 0) {
+//			//ensure the current verse has the true id of its row in the database
+//			//save that id to the shared preferences.
+//			MainSettings.setActiveId(this, id);
+//		}
+//		else {
+//			//on any discrepancy, set the passage to null and remove the id that is
+//			//currently saved, so we know that we do not have a verse set
+//			MainSettings.setActiveId(this, -1);
+//		}
+//	}
 //
 ////Preloading data that takes a while to parse, like the current Bible and the
 ////list of available bibles and languages. Everything is done asynchronously, so

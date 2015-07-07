@@ -479,6 +479,7 @@ public final class R {
 		public static final int listMode = 0x7f0c0009;
 		public static final int list_item = 0x7f0c002c;
 		public static final int media_actions = 0x7f0c00c3;
+		public static final int menu_debug_refresh = 0x7f0c0107;
 		public static final int middle = 0x7f0c0017;
 		public static final int multiply = 0x7f0c0020;
 		public static final int never = 0x7f0c001b;
@@ -573,6 +574,9 @@ public final class R {
 		public static final int select_dialog_multichoice_material = 0x7f03004b;
 		public static final int select_dialog_singlechoice_material = 0x7f03004c;
 		public static final int support_simple_spinner_dropdown_item = 0x7f03004d;
+	}
+	public static final class menu {
+		public static final int menu_debug = 0x7f100004;
 	}
 	public static final class string {
 		public static final int abc_action_bar_home_description = 0x7f0e0000;

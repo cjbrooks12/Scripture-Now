@@ -3,11 +3,6 @@ package com.caseybrooks.scripturememory.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -19,16 +14,11 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.activities.SNApplication;
-import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.data.tags.TagAdapter;
 import com.caseybrooks.scripturememory.misc.FlowLayout;
-
-import java.util.ArrayList;
 
 public class EditVerseFragment extends Fragment {
 //Data Members
@@ -113,136 +103,136 @@ public class EditVerseFragment extends Fragment {
 	}
 
     private void initialize() {
-        if(getApplication().getActivePassage() != null) {
-            editRef.setText(getApplication().getActivePassage().getReference().toString());
-            editVer.setText(getApplication().getActivePassage().getText());
-			version.setText(getApplication().getActivePassage().getBible().getAbbr().toUpperCase());
-
-            switch (getApplication().getActivePassage().getMetadata().getInt(DefaultMetaData.STATE)) {
-                case VerseDB.CURRENT_NONE:
-                    seekbarText.setText("Current - None");
-                    break;
-                case VerseDB.CURRENT_SOME:
-                    seekbarText.setText("Current - Some");
-                    break;
-                case VerseDB.CURRENT_MOST:
-                    seekbarText.setText("Current - Most");
-                    break;
-                case VerseDB.CURRENT_ALL:
-                    seekbarText.setText("Current - All");
-                    break;
-                case VerseDB.MEMORIZED:
-                    seekbarText.setText("Memorized");
-                    break;
-            }
-
-            seekbar.setProgress(getApplication().getActivePassage().getMetadata().getInt(DefaultMetaData.STATE) - 1);
-
-			ColorFilter filter = new PorterDuffColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_IN);
-			progress.getProgressDrawable().setColorFilter(filter);
-			progress.getIndeterminateDrawable().setColorFilter(filter);
-
-			VerseDB db = new VerseDB(context).open();
-
-			int color = db.getStateColor(seekbar.getProgress() + 1);
-            Drawable line = seekbar.getProgressDrawable();
-            line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-
-            Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
-            thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-            seekbar.setThumb(thumb);
-
-//            seekbar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
+//        if(getApplication().getActivePassage() != null) {
+//            editRef.setText(getApplication().getActivePassage().getReference().toString());
+//            editVer.setText(getApplication().getActivePassage().getText());
+//			version.setText(getApplication().getActivePassage().getBible().getAbbr().toUpperCase());
+//
+//            switch (getApplication().getActivePassage().getMetadata().getInt(DefaultMetaData.STATE)) {
+//                case VerseDB.CURRENT_NONE:
+//                    seekbarText.setText("Current - None");
+//                    break;
+//                case VerseDB.CURRENT_SOME:
+//                    seekbarText.setText("Current - Some");
+//                    break;
+//                case VerseDB.CURRENT_MOST:
+//                    seekbarText.setText("Current - Most");
+//                    break;
+//                case VerseDB.CURRENT_ALL:
+//                    seekbarText.setText("Current - All");
+//                    break;
+//                case VerseDB.MEMORIZED:
+//                    seekbarText.setText("Memorized");
+//                    break;
+//            }
+//
+//            seekbar.setProgress(getApplication().getActivePassage().getMetadata().getInt(DefaultMetaData.STATE) - 1);
+//
+//			ColorFilter filter = new PorterDuffColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_IN);
+//			progress.getProgressDrawable().setColorFilter(filter);
+//			progress.getIndeterminateDrawable().setColorFilter(filter);
+//
+//			VerseDB db = new VerseDB(context).open();
+//
+//			int color = db.getStateColor(seekbar.getProgress() + 1);
+//            Drawable line = seekbar.getProgressDrawable();
+//            line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+//
+//            Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
+//            thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+//            seekbar.setThumb(thumb);
+//
+////            seekbar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
+////                @Override
+////                public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+////                    VerseDB db = new VerseDB(context).open();
+////                    int color = db.getStateColor(progressValue + 1);
+////					getApplication().getActivePassage().getMetadata().putInt(DefaultMetaData.STATE, progressValue + 1);
+////                    db.updateVerse(getApplication().getActivePassage());
+////                    db.close();
+////
+////                    Drawable line = seekBar.getProgressDrawable();
+////                    line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+////
+////                    Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
+////                    thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+////                    seekbar.setThumb(thumb);
+////
+////                    switch (getApplication().getActivePassage().getMetadata().getInt(DefaultMetaData.STATE)) {
+////                        case VerseDB.CURRENT_NONE:
+////                            seekbarText.setText("Current - None");
+////                            break;
+////                        case VerseDB.CURRENT_SOME:
+////                            seekbarText.setText("Current - Some");
+////                            break;
+////                        case VerseDB.CURRENT_MOST:
+////                            seekbarText.setText("Current - Most");
+////                            break;
+////                        case VerseDB.CURRENT_ALL:
+////                            seekbarText.setText("Current - All");
+////                            break;
+////                        case VerseDB.MEMORIZED:
+////                            seekbarText.setText("Memorized");
+////                            break;
+////                    }
+////
+////                    //if this verse is the current notification verse and the active list is its state, then
+////                    //change the active list to be whatever state this verse becomes
+////                    if(Main.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
+////                            displayedList.first == VerseListFragment.STATE) {
+////                        Main.putWorkingList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
+////                    }
+////                }
+////
+////                @Override
+////                public void onStartTrackingTouch(SeekBar seekBar) {
+////
+////                }
+////
+////                @Override
+////                public void onStopTrackingTouch(SeekBar seekBar) {
+////                }
+////            });
+////
+////
+//            Tag[] tags = getApplication().getActivePassage().getTags();
+//            ArrayList<Tag> tagsList = new ArrayList<>();
+//            for(Tag tag : tags) {
+//                tagsList.add(tag);
+//            }
+//            tagsList.add(new Tag("Add New Tag", -10, Color.parseColor("#000000"), 0));
+//            tagAdapter = new TagAdapter(context, tagsList);
+//            tagChipsLayout.setAdapter(tagAdapter);
+//
+//            tagChipsLayout.setOnItemClickListener(new View.OnClickListener() {
 //                @Override
-//                public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
-//                    VerseDB db = new VerseDB(context).open();
-//                    int color = db.getStateColor(progressValue + 1);
-//					getApplication().getActivePassage().getMetadata().putInt(DefaultMetaData.STATE, progressValue + 1);
-//                    db.updateVerse(getApplication().getActivePassage());
-//                    db.close();
-//
-//                    Drawable line = seekBar.getProgressDrawable();
-//                    line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-//
-//                    Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
-//                    thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-//                    seekbar.setThumb(thumb);
-//
-//                    switch (getApplication().getActivePassage().getMetadata().getInt(DefaultMetaData.STATE)) {
-//                        case VerseDB.CURRENT_NONE:
-//                            seekbarText.setText("Current - None");
-//                            break;
-//                        case VerseDB.CURRENT_SOME:
-//                            seekbarText.setText("Current - Some");
-//                            break;
-//                        case VerseDB.CURRENT_MOST:
-//                            seekbarText.setText("Current - Most");
-//                            break;
-//                        case VerseDB.CURRENT_ALL:
-//                            seekbarText.setText("Current - All");
-//                            break;
-//                        case VerseDB.MEMORIZED:
-//                            seekbarText.setText("Memorized");
-//                            break;
+//                public void onClick(View v) {
+//                    final TagAdapter.ViewHolder vh = (TagAdapter.ViewHolder)v.getTag();
+//                    if(vh.tag.id == -10) {
+////                        addNewTag();
 //                    }
-//
-//                    //if this verse is the current notification verse and the active list is its state, then
-//                    //change the active list to be whatever state this verse becomes
-//                    if(Main.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
-//                            displayedList.first == VerseListFragment.STATE) {
-//                        Main.putWorkingList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
+//                    else {
+////                        editTagName(vh.tag);
 //                    }
-//                }
-//
-//                @Override
-//                public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//                }
-//
-//                @Override
-//                public void onStopTrackingTouch(SeekBar seekBar) {
 //                }
 //            });
 //
+//            tagChipsLayout.setOnItemLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    TagAdapter.ViewHolder vh = ((TagAdapter.ViewHolder) v.getTag());
 //
-            Tag[] tags = getApplication().getActivePassage().getTags();
-            ArrayList<Tag> tagsList = new ArrayList<>();
-            for(Tag tag : tags) {
-                tagsList.add(tag);
-            }
-            tagsList.add(new Tag("Add New Tag", -10, Color.parseColor("#000000"), 0));
-            tagAdapter = new TagAdapter(context, tagsList);
-            tagChipsLayout.setAdapter(tagAdapter);
-
-            tagChipsLayout.setOnItemClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final TagAdapter.ViewHolder vh = (TagAdapter.ViewHolder)v.getTag();
-                    if(vh.tag.id == -10) {
-//                        addNewTag();
-                    }
-                    else {
-//                        editTagName(vh.tag);
-                    }
-                }
-            });
-
-            tagChipsLayout.setOnItemLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    TagAdapter.ViewHolder vh = ((TagAdapter.ViewHolder) v.getTag());
-
-                    if(vh.tag.id != -10) {
-//                        removeTag(vh.tag);
-                    }
-                    return true;
-                }
-            });
-        }
+//                    if(vh.tag.id != -10) {
+////                        removeTag(vh.tag);
+//                    }
+//                    return true;
+//                }
+//            });
+//        }
+////
+////        db.close();
 //
-//        db.close();
-
-		setHasOptionsMenu(true);
+//		setHasOptionsMenu(true);
 	}
 
 

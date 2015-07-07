@@ -9,8 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -28,6 +30,7 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 	Context context;
 	SPAdapter adapter;
 	NavigationCallbacks mCallbacks;
+	EditText editText;
 
 	public static final String settings_file = "my_settings";
 
@@ -58,10 +61,9 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 
 		context = getActivity();
+		setHasOptionsMenu(true);
 
-		adapter = new SPAdapter(context, initialize());
-
-		final EditText editText = new EditText(context);
+		editText = new EditText(context);
 		editText.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -78,9 +80,9 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 
 			}
 		});
-
-		setListAdapter(adapter);
 		getListView().addHeaderView(editText);
+
+		initialize();
 	}
 
 	@Override
@@ -110,7 +112,7 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 		return settings.size() + prefs.size();
 	}
 
-	private ArrayList<ListItem> initialize() {
+	private void initialize() {
 		Map<String, ?> settings = PreferenceManager.getDefaultSharedPreferences(context).getAll();
 		Map<String, ?> prefs = context.getSharedPreferences(settings_file, 0).getAll();
 
@@ -121,8 +123,6 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 
 			item.file = "Settings";
 			item.key = key;
-
-			Log.e("KEY", key);
 
 			Object pref = settings.get(key);
 			if(pref instanceof Boolean) {
@@ -165,8 +165,6 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 			item.file = "Preferences";
 			item.key = key;
 
-			Log.e("KEY", key);
-
 			Object pref = prefs.get(key);
 			if(pref instanceof Boolean) {
 				item.type = "Boolean";
@@ -202,13 +200,15 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 			displayedItems.add(item);
 		}
 
-		return displayedItems;
+		adapter = new SPAdapter(context, displayedItems);
+		adapter.filterBy(editText.getText().toString());
+
+		setListAdapter(adapter);
 	}
 
 	private static class SPAdapter extends BaseAdapter {
 		ArrayList<ListItem> allData;
 		ArrayList<ListItem> filteredData;
-
 
 		Context context;
 		LayoutInflater layoutInflater;
@@ -277,7 +277,29 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 
 			return convertView;
 		}
+	}
 
+//Menu
+//------------------------------------------------------------------------------
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.menu_debug, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.menu_debug_refresh) {
+			initialize();
+			return true;
+		}
+		else {
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 //Host Activity Interface

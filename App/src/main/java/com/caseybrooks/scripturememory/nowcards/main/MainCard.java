@@ -60,7 +60,7 @@ public class MainCard extends FrameLayout {
     }
 
     void initialize() {
-        LayoutInflater.from(context).inflate(R.layout.card_notification_verse, this);
+        LayoutInflater.from(context).inflate(R.layout.card_main_verse, this);
 
         ref = (TextView) findViewById(R.id.notificationReference);
         ver = (TextView) findViewById(R.id.notificationVerse);
@@ -243,7 +243,7 @@ public class MainCard extends FrameLayout {
                 switch (item.getItemId()) {
                     case R.id.context_notification_card_edit:
                         try {
-							mv.getApplication().setActivePassage(mv.getMainPassage());
+//							mv.setMainPassage(mv.getMainPassage());
                             mCallbacks = (NavigationCallbacks) context;
                             mCallbacks.toVerseEdit();
                         } catch (ClassCastException e) {

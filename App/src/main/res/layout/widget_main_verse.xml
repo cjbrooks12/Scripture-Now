@@ -1,102 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widget_main_layout"
-    android:background="@drawable/bg_widget_dark"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent" >
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/widget_main_layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/bg_widget_dark"
+	android:orientation="vertical"
+	android:padding="0dp">
+
+	<!-- The header bar -->
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp">
+		<TextView
+			android:id="@+id/widget_main_reference"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="16dp"
+			android:layout_marginLeft="16dp"
+			android:layout_centerVertical="true"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentStart="true"
+			android:textColor="@android:color/white"
+			android:fontFamily="sans-serif-light"
+			android:text="@string/reference"
+			android:textSize="@dimen/title_text_size" />
+
+		<LinearLayout
+			android:layout_alignParentBottom="true"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginLeft="8dp"
+			android:orientation="vertical"
+			android:background="@android:color/white"/>
+	</RelativeLayout>
 
 	<LinearLayout
-		android:id="@+id/widget_buttons_layout"
 		android:layout_width="wrap_content"
-		android:layout_height="32dp"
-		android:divider="@color/text_light"
-		android:showDividers="middle"
-		android:paddingTop="4dp"
-		android:paddingBottom="4dp"
-		android:paddingRight="8dp"
-		android:paddingLeft="4dp"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentRight="true">
+		android:layout_height="40dp"
+		android:layout_marginLeft="8dp">
 
 		<ImageView
 			android:id="@+id/widget_main_random"
 			android:background="@drawable/bg_transparent_hard_edge"
-			android:layout_width="wrap_content"
+			android:layout_width="40dp"
 			android:layout_height="match_parent"
-			android:layout_marginRight="4dp"
-			android:layout_marginLeft="4dp"
 			android:alpha="0.75"
 			android:src="@drawable/ic_action_shuffle_dark"/>
 
 		<ImageView
 			android:id="@+id/widget_main_previous"
 			android:background="@drawable/bg_transparent_hard_edge"
-			android:layout_width="wrap_content"
+			android:layout_width="40dp"
 			android:layout_height="match_parent"
-			android:layout_marginRight="4dp"
-			android:layout_marginLeft="4dp"
 			android:alpha="0.75"
 			android:src="@drawable/ic_action_arrow_left_dark"/>
 
 		<ImageView
 			android:id="@+id/widget_main_next"
 			android:background="@drawable/bg_transparent_hard_edge"
-			android:layout_width="wrap_content"
+			android:layout_width="40dp"
 			android:layout_height="match_parent"
-			android:layout_marginRight="4dp"
-			android:layout_marginLeft="4dp"
 			android:alpha="0.75"
 			android:src="@drawable/ic_action_arrow_right_dark"/>
 
 		<ImageView
 			android:id="@+id/widget_main_show_full"
 			android:background="@drawable/bg_transparent_hard_edge"
-			android:layout_width="wrap_content"
+			android:layout_width="40dp"
 			android:layout_height="match_parent"
-			android:layout_marginRight="4dp"
-			android:layout_marginLeft="4dp"
 			android:alpha="0.75"
 			android:src="@drawable/ic_action_text_format_dark"/>
 	</LinearLayout>
 
-    <TextView
-        android:id="@+id/widget_main_reference"
-        android:background="@android:color/transparent"
-        android:textColor="@android:color/white"
-        android:paddingLeft="8dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:paddingRight="4dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignBaseline="@id/widget_buttons_layout"
-        android:layout_toLeftOf="@id/widget_buttons_layout"
-        android:fontFamily="sans-serif-light"
-        android:text="@string/reference"
-        android:textSize="@dimen/title_text_size" />
+	<!-- The verse text area -->
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/widget_main_header_bar"
-        android:layout_below="@id/widget_main_reference"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:orientation="vertical"
-        android:background="@android:color/white"/>
-
-    <TextView
-        android:id="@+id/widget_main_verse"
-        android:background="@android:color/transparent"
-        android:paddingLeft="8dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="8dp"
-        android:paddingRight="8dp"
-        android:textColor="@android:color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:fontFamily="sans-serif-light"
-        android:layout_below="@+id/widget_main_header_bar"
-        android:text="@string/verse" />
-</RelativeLayout>
+		<TextView
+			android:id="@+id/widget_main_verse"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentStart="true"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginBottom="16dp"
+			android:textColor="@android:color/white"
+			android:fontFamily="sans-serif-light" />
+	</RelativeLayout>
+</LinearLayout>

@@ -72,27 +72,12 @@ public class MainWidget extends AppWidgetProvider {
 		PendingIntent resultPI = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		contentView.setOnClickPendingIntent(R.id.widget_main_layout, resultPI);
 
-		//go to the previous verse
-		Intent previousVerse = new Intent(context, MainBroadcasts.PreviousVerseReceiver.class);
-		PendingIntent previousVersePI = PendingIntent.getBroadcast(context, 0, previousVerse, PendingIntent.FLAG_CANCEL_CURRENT);
-		contentView.setOnClickPendingIntent(R.id.widget_main_previous, previousVersePI);
+		contentView.setOnClickPendingIntent(R.id.widget_main_previous, MainBroadcasts.getPreviousVersePendingIntent(context));
+		contentView.setOnClickPendingIntent(R.id.widget_main_next, MainBroadcasts.getNextVersePendingIntent(context));
+		contentView.setOnClickPendingIntent(R.id.widget_main_random, MainBroadcasts.getRandomVersePendingIntent(context));
+		contentView.setOnClickPendingIntent(R.id.widget_main_show_full, MainBroadcasts.getTextFullPendingIntent(context));
 
-		//go to the next verse
-		Intent nextVerse = new Intent(context, MainBroadcasts.NextVerseReceiver.class);
-		PendingIntent nextVersePI = PendingIntent.getBroadcast(context, 0, nextVerse, PendingIntent.FLAG_CANCEL_CURRENT);
-		contentView.setOnClickPendingIntent(R.id.widget_main_next, nextVersePI);
-
-		//go to the next verse
-		Intent randomVerse = new Intent(context, MainBroadcasts.RandomVerseReceiver.class);
-		PendingIntent randomVersePI = PendingIntent.getBroadcast(context, 0, randomVerse, PendingIntent.FLAG_CANCEL_CURRENT);
-		contentView.setOnClickPendingIntent(R.id.widget_main_random, randomVersePI);
-
-		//toggle full and formatted text in notification
-		Intent showFull = new Intent(context, MainBroadcasts.TextFullReceiver.class);
-		PendingIntent showFullPI = PendingIntent.getBroadcast(context, 0, showFull, PendingIntent.FLAG_CANCEL_CURRENT);
-		contentView.setOnClickPendingIntent(R.id.widget_main_show_full, showFullPI);
-
-        ComponentName watchWidget = new ComponentName(context, MainWidget.class);
+		ComponentName watchWidget = new ComponentName(context, MainWidget.class);
         appWidgetManager.updateAppWidget(watchWidget, contentView);
     }
 

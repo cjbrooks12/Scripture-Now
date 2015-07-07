@@ -32,11 +32,10 @@ public class MainNotification {
 
 	private MainNotification(Context context) {
 		this.context = context;
-		manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		this.manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 	}
 
     public MainNotification create() {
-
 		NotificationCompat.Builder mb = new NotificationCompat.Builder(context);
 		mb.setOngoing(true);
 		mb.setSmallIcon(R.drawable.ic_cross);
@@ -58,7 +57,6 @@ public class MainNotification {
 		Main mv = new Main(context);
 		if(mv.getMainPassage() != null) {
 			//for small notifcation, always use full text
-
 			mb.setContentTitle(mv.getMainPassage().getReference().toString());
 			mb.setContentText(mv.getNormalText());
 
@@ -73,32 +71,13 @@ public class MainNotification {
 				}
 
 				notification = mb.build();
-				RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_main);
+				RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_main_verse);
 
-				//click to cancel
-				Intent dismiss = new Intent(context, MainBroadcasts.DismissVerseReceiver.class);
-				PendingIntent dismissPI = PendingIntent.getBroadcast(context, 0, dismiss, PendingIntent.FLAG_CANCEL_CURRENT);
-				contentView.setOnClickPendingIntent(R.id.notification_main_dismiss, dismissPI);
-
-				//go to the previous verse
-				Intent previousVerse = new Intent(context, MainBroadcasts.PreviousVerseReceiver.class);
-				PendingIntent previousVersePI = PendingIntent.getBroadcast(context, 0, previousVerse, PendingIntent.FLAG_CANCEL_CURRENT);
-				contentView.setOnClickPendingIntent(R.id.notification_main_previous, previousVersePI);
-
-				//go to the next verse
-				Intent nextVerse = new Intent(context, MainBroadcasts.NextVerseReceiver.class);
-				PendingIntent nextVersePI = PendingIntent.getBroadcast(context, 0, nextVerse, PendingIntent.FLAG_CANCEL_CURRENT);
-				contentView.setOnClickPendingIntent(R.id.notification_main_next, nextVersePI);
-
-				//go to the next verse
-				Intent randomVerse = new Intent(context, MainBroadcasts.RandomVerseReceiver.class);
-				PendingIntent randomVersePI = PendingIntent.getBroadcast(context, 0, randomVerse, PendingIntent.FLAG_CANCEL_CURRENT);
-				contentView.setOnClickPendingIntent(R.id.notification_main_random, randomVersePI);
-
-				//toggle full and formatted text in notification
-				Intent showFull = new Intent(context, MainBroadcasts.TextFullReceiver.class);
-				PendingIntent showFullPI = PendingIntent.getBroadcast(context, 0, showFull, PendingIntent.FLAG_CANCEL_CURRENT);
-				contentView.setOnClickPendingIntent(R.id.notification_main_show_full, showFullPI);
+				contentView.setOnClickPendingIntent(R.id.notification_main_previous, MainBroadcasts.getPreviousVersePendingIntent(context));
+				contentView.setOnClickPendingIntent(R.id.notification_main_next, MainBroadcasts.getNextVersePendingIntent(context));
+				contentView.setOnClickPendingIntent(R.id.notification_main_random, MainBroadcasts.getRandomVersePendingIntent(context));
+				contentView.setOnClickPendingIntent(R.id.notification_main_show_full, MainBroadcasts.getTextFullPendingIntent(context));
+				contentView.setOnClickPendingIntent(R.id.notification_main_dismiss, MainBroadcasts.getDismissVersePendingIntent(context));
 
 				contentView.setImageViewResource(R.id.notification_main_icon, R.drawable.ic_cross);
 				contentView.setTextViewText(R.id.notification_main_reference, mv.getMainPassage().getReference().toString());

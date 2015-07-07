@@ -8,7 +8,6 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.data.Formatter;
 import com.caseybrooks.androidbibletools.defaults.DefaultFormatter;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.scripturememory.activities.SNApplication;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
@@ -18,17 +17,33 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * Main is the verse that the user is currently displaying as a notification. This
+ * verse is global to the app, and any changes that may happen with the verse
+ * should be updated everywhere (including the Dashboard, widget, and notification).
+ *
+ * Take care to ensure that everything in the UI is being updated when the underlying
+ * data changes, so that everything remains synced across the app. Do this by trying
+ * to avoid making any changes to the verse outside of these classes: let these
+ * classes do all the hard work, and simply tell these classes what you want
+ * done.
+ *
+ * In addition, note that every time the Main class is loaded the verse is pulled
+ * from the database, not every time the verse is accessed, for performance reasons.
+ * This means that there is a possibility of data not being synced corrected if
+ * the database updates if you don't create a new instance of Main at the correct
+ * time. It is fine to have one instance for one method, for example, but don't
+ * keep a single instance of Main as a member of a class, because it's scope is
+ * too large and would make keeping it up to date difficult.
+ */
 public class Main {
 //Data Members
 //------------------------------------------------------------------------------
     private Context context;
 	private Passage mainPassage;
-	private Passage activePassage;
 
-	public SNApplication getApplication() {
-		return (SNApplication) context.getApplicationContext();
-	}
-
+//Constructors
+//------------------------------------------------------------------------------
     public Main(Context context) {
         this.context = context;
 
@@ -41,6 +56,14 @@ public class Main {
 		return mainPassage;
 	}
 
+	public void setMainPassage(Passage passage) {
+		MainSettings.setMainId(context, passage.getMetadata().getInt(DefaultMetaData.ID));
+
+		VerseDB db = new VerseDB(context).open();
+		mainPassage = db.getVerse(MainSettings.getMainId(context));
+		db.close();
+	}
+
 	public String getFormattedText() {
 		if(mainPassage != null) {
 			Formatter formatter;
@@ -51,7 +74,7 @@ public class Main {
 				case 3: formatter = new DefaultFormatter.RandomWords(
 						MainSettings.getRandomness(context).first,
 						MainSettings.getRandomness(context).second); break;
-				default: formatter = new DefaultFormatter.Normal(); break;
+				default: formatter = new DefaultFormatter.Dashes(); break;
 			}
 
 			mainPassage.setFormatter(formatter);
@@ -70,11 +93,11 @@ public class Main {
 		else return null;
 	}
 
-    public void getNextVerse() {
+    public static void getNextVerse(Context context) {
         Pair<Integer, Integer> workingList = MainSettings.getWorkingList(context);
         if(workingList.first == -1) return;
 
-        VerseDB db = new VerseDB(context);
+		VerseDB db = new VerseDB(context);
 
         //get the active list of verses
         ArrayList<Passage> passages;
@@ -102,23 +125,28 @@ public class Main {
         Collections.sort(passages, comparator);
 
         //search through list to find the currently active list, and set the next verse to be the active verse
-        for(int i = 0; i < passages.size(); i++) {
-            if(passages.get(i).getMetadata().getInt(DefaultMetaData.ID) == mainPassage.getMetadata().getInt(DefaultMetaData.ID)) {
+		final int currentId = MainSettings.getMainId(context);
+		int newId = passages.get(0).getMetadata().getInt(DefaultMetaData.ID);
+
+		for(int i = 0; i < passages.size(); i++) {
+			newId = passages.get(i).getMetadata().getInt(DefaultMetaData.ID);
+
+
+            if(newId == currentId) {
                 if(i == passages.size() - 1) {
-					mainPassage = passages.get(0);
+					newId = passages.get(0).getMetadata().getInt(DefaultMetaData.ID);
                     break;
                 }
                 else {
-					mainPassage = passages.get(i+1);
+					newId = passages.get(i+1).getMetadata().getInt(DefaultMetaData.ID);
                     break;
                 }
             }
         }
-
-        getApplication().setCurrentPassage(mainPassage);
+		MainSettings.setMainId(context, newId);
     }
 
-	public void getPreviousVerse() {
+	public static void getPreviousVerse(Context context) {
 		Pair<Integer, Integer> workingList = MainSettings.getWorkingList(context);
 		if(workingList.first == -1) return;
 
@@ -150,23 +178,26 @@ public class Main {
 		Collections.sort(passages, comparator);
 
 		//search through list to find the currently active list, and set the next verse to be the active verse
+		final int currentId = MainSettings.getMainId(context);
+		int newId = passages.get(0).getMetadata().getInt(DefaultMetaData.ID);
+
 		for(int i = 0; i < passages.size(); i++) {
-			if(passages.get(i).getMetadata().getInt(DefaultMetaData.ID) == mainPassage.getMetadata().getInt(DefaultMetaData.ID)) {
+			newId = passages.get(i).getMetadata().getInt(DefaultMetaData.ID);
+			if(newId == currentId) {
 				if(i == 0) {
-					mainPassage = passages.get(passages.size()-1);
+					newId = passages.get(passages.size()-1).getMetadata().getInt(DefaultMetaData.ID);
 					break;
 				}
 				else {
-					mainPassage = passages.get(i-1);
+					newId = passages.get(i-1).getMetadata().getInt(DefaultMetaData.ID);
 					break;
 				}
 			}
 		}
-
-		getApplication().setCurrentPassage(mainPassage);
+		MainSettings.setMainId(context, newId);
 	}
 
-	public void getRandomVerse() {
+	public static void getRandomVerse(Context context) {
 		Pair<Integer, Integer> workingList = MainSettings.getWorkingList(context);
 		if(workingList.first == -1) return;
 
@@ -197,17 +228,28 @@ public class Main {
 		}
 		Collections.sort(passages, comparator);
 
-		//search through list to find the currently active list, and set the next verse to be the active verse
-		if(passages.size() > 1) {
-			Passage randomVerse;
-			Random random = new Random(Calendar.getInstance().getTimeInMillis());
-			while(true) {
-				randomVerse = passages.get(random.nextInt(passages.size()));
-				if(randomVerse.getMetadata().getInt(DefaultMetaData.ID) != mainPassage.getMetadata().getInt(DefaultMetaData.ID)) {
+		Random random = new Random(Calendar.getInstance().getTimeInMillis());
+		final int currentId = MainSettings.getMainId(context);
+		int newId = passages.get(0).getMetadata().getInt(DefaultMetaData.ID);
+
+		//search through list to find the currently active list, and set a random verse to be the main verse
+		while(true) {
+			if(passages.size() > 1) {
+				int randomIndex = random.nextInt(passages.size());
+				newId = passages.get(randomIndex).getMetadata().getInt(DefaultMetaData.ID);
+				if(newId != currentId) {
 					break;
 				}
+				else {
+					passages.remove(randomIndex);
+					continue;
+				}
 			}
-			getApplication().setCurrentPassage(randomVerse);
+			else {
+				break;
+			}
 		}
+
+		MainSettings.setMainId(context, newId);
 	}
 }
