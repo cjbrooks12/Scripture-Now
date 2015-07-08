@@ -5,14 +5,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.caseybrooks.common.R;
 import com.caseybrooks.common.features.NavigationCallbacks;
+import com.caseybrooks.common.pickers.biblepicker.BiblePicker;
+import com.caseybrooks.common.pickers.biblepicker.BiblePickerDialog;
 
-public class DebugCacheFragment extends ListFragment {
+public class DebugCacheFragment extends Fragment {
 	Context context;
 	NavigationCallbacks mCallbacks;
 
@@ -31,12 +36,16 @@ public class DebugCacheFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 
 		context = getActivity();
+
+		setHasOptionsMenu(true);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = super.onCreateView(inflater, container, savedInstanceState);
+		super.onCreateView(inflater, container, savedInstanceState);
 		context = getActivity();
+
+		View view = new BiblePicker(context);
 
 		return view;
 	}
@@ -59,7 +68,30 @@ public class DebugCacheFragment extends ListFragment {
 			: 0;
 	}
 
-	//Host Activity Interface
+//Menu
+//------------------------------------------------------------------------------
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.menu_debug, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.menu_debug_refresh) {
+			BiblePickerDialog.create(context).show();
+			return true;
+		}
+		else {
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+//Host Activity Interface
 //------------------------------------------------------------------------------
 	@Override
 	public void onAttach(Activity activity) {

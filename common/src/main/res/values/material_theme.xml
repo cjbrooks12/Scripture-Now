@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- - - - - - - - - Theme Header Section - - - - - - - - -->
+    <style name="Theme.Light" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary_accent</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@drawable/toolbar_shadow</item>
+
+        <!-- Colors -->
+        <item name="color_background_selected">@color/background_selected_light</item>
+        <item name="color_background">@color/background_light</item>
+        <item name="color_toolbar">@color/primary</item>
+        <item name="color_card">@color/card_light</item>
+        <item name="color_text">@color/text_dark</item>
+        <item name="android:windowBackground">@color/background_light</item>
+
+        <item name="theme_name">Light</item>
+
+        <item name="ic_action_overflow">@drawable/ic_action_overflow_light</item>
+        <item name="ic_action_search">@drawable/ic_action_search_light</item>
+        <item name="ic_action_add">@drawable/ic_action_add_light</item>
+        <item name="ic_action_today">@drawable/ic_action_today_light</item>
+        <item name="ic_action_sort">@drawable/ic_action_sort_light</item>
+        <item name="ic_action_filter">@drawable/ic_action_filter_light</item>
+        <item name="ic_action_refresh">@drawable/ic_action_refresh_light</item>
+        <item name="ic_action_done">@drawable/ic_action_done_light</item>
+        <item name="ic_action_arrow_right">@drawable/ic_action_arrow_right_light</item>
+		<item name="ic_action_arrow_left">@drawable/ic_action_arrow_left_light</item>
+		<item name="ic_action_shuffle">@drawable/ic_action_shuffle_light</item>
+		<item name="ic_action_clear">@drawable/ic_action_clear_light</item>
+        <item name="ic_action_share">@drawable/ic_action_share_light</item>
+        <item name="ic_action_delete">@drawable/ic_action_delete_light</item>
+        <item name="ic_action_select_all">@drawable/ic_action_select_all_light</item>
+        <item name="ic_action_save">@drawable/ic_action_save_light</item>
+        <item name="ic_action_create">@drawable/ic_action_create_light</item>
+        <item name="ic_action_visibility">@drawable/ic_action_visibility_light</item>
+        <item name="ic_action_get_app">@drawable/ic_action_get_app_light</item>
+        <item name="ic_action_folder">@drawable/ic_action_folder_light</item>
+		<item name="ic_action_cloud_download">@drawable/ic_action_cloud_download_light</item>
+		<item name="ic_action_text_format">@drawable/ic_action_text_format_light</item>
+
+		<item name="ic_action_home">@drawable/ic_action_home_light</item>
+        <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>
+        <item name="ic_action_group_work">@drawable/ic_action_group_work_light</item>
+        <item name="ic_action_tag">@drawable/ic_action_tag_light</item>
+        <item name="ic_action_help">@drawable/ic_action_help_light</item>
+        <item name="ic_action_settings">@drawable/ic_action_settings_light</item>
+		<item name="ic_action_debug">@drawable/ic_action_debug_light</item>
+	</style>
+</resources>
