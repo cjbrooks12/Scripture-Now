@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.caseybrooks.androidbibletools.basic.Bible;
@@ -120,18 +119,12 @@ public class BiblePicker extends LinearLayout {
 			bibleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+					BiblePickerSettings.setSelectedBible(context, adapter.getItem(position));
 					selectedBible = BiblePickerSettings.getSelectedBible(context);
-
-					if(adapter.getItem(position).equals(selectedBible)) {
-						Toast.makeText(context, "Bibles are equal", Toast.LENGTH_SHORT).show();
-					}
-					 else {
-						Toast.makeText(context, "Bibles are not equal", Toast.LENGTH_SHORT).show();
-					}
-
-//					Bible item = adapter.getItem(position);
-//					BiblePickerSettings.setSelectedBible(context, item);
-//					adapter.notifyDataSetChanged();
+					adapter.resort();
+					adapter.notifyDataSetChanged();
+					bibleList.scrollTo(0, 0);
 				}
 			});
 
@@ -196,16 +189,23 @@ public class BiblePicker extends LinearLayout {
 					R.attr.color_background,
 					R.attr.color_background_selected,
 					R.attr.color_text,
-					R.attr.colorAccent
+					R.attr.colorAccent,
+					R.attr.colorPrimaryDark
 			});
 
 			colors = new int[] {
 					a.getColor(0, context.getResources().getColor(R.color.background_light)),
 					a.getColor(1, context.getResources().getColor(R.color.background_selected_light)),
 					a.getColor(2, context.getResources().getColor(R.color.text_dark)),
-					a.getColor(3, context.getResources().getColor(R.color.accent_material_light))
+					a.getColor(3, context.getResources().getColor(R.color.primary_accent)),
+					a.getColor(4, context.getResources().getColor(R.color.primary_dark))
 			};
 			a.recycle();
+		}
+
+		public void resort() {
+			Collections.sort(this.allData, bibleComparator);
+			filterBy(filter.getText().toString());
 		}
 
 		public void filterBy(String query) {
@@ -260,12 +260,12 @@ public class BiblePicker extends LinearLayout {
 			abbreviation.setText(item.getAbbreviation());
 
 			if(item.equals(selectedBible)) {
-//				convertView.setBackgroundColor(colors[1]);
 				name.setTextColor(colors[3]);
+				abbreviation.setTextColor(colors[2]);
 			}
 			else {
-//				convertView.setBackgroundColor(colors[0]);
 				name.setTextColor(colors[2]);
+				abbreviation.setTextColor(colors[4]);
 			}
 
 			return convertView;
