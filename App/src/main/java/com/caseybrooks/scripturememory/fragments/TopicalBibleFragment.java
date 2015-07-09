@@ -594,7 +594,7 @@ public class TopicalBibleFragment extends Fragment {
 
             reference.setText(passage.getReference().toString());
             verseText.setText(passage.getText());
-            version.setText(passage.getBible().getAbbr().toUpperCase());
+            version.setText(passage.getBible().getAbbreviation().toUpperCase());
             upcount.setText(passage.getMetadata().getInt("UPVOTES") + " helpful votes");
 
             iconText.setText(passage.getMetadata().getInt("UPVOTES") + "");

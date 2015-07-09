@@ -281,7 +281,7 @@ public class VerseDB {
         ContentValues values = new ContentValues();
         values.put(KEY_VERSES_REFERENCE, passage.getReference().toString());
         values.put(KEY_VERSES_VERSE, passage.getText());
-        values.put(KEY_VERSES_VERSION, passage.getBible().getAbbr());
+        values.put(KEY_VERSES_VERSION, passage.getBible().getAbbreviation());
         values.put(KEY_VERSES_DATE_ADDED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
@@ -310,7 +310,7 @@ public class VerseDB {
         ContentValues values = new ContentValues();
         values.put(KEY_VERSES_REFERENCE, passage.getReference().toString());
         values.put(KEY_VERSES_VERSE, passage.getText());
-        values.put(KEY_VERSES_VERSION, passage.getBible().getAbbr());
+        values.put(KEY_VERSES_VERSION, passage.getBible().getAbbreviation());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
 
@@ -824,7 +824,7 @@ public void exportToBackupFile(File file) {
 			passageElement.appendChild(r);
 
 			Element q = doc.createElement("Q");
-			q.appendChild(doc.createTextNode(passage.getBible().getAbbr()));
+			q.appendChild(doc.createTextNode(passage.getBible().getAbbreviation()));
 			passageElement.appendChild(q);
 
 			Element t = doc.createElement("T");

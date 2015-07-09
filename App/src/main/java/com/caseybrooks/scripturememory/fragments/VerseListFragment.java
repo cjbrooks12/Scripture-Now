@@ -647,7 +647,7 @@ public class VerseListFragment extends ListFragment {
                     passageElement.appendChild(r);
 
                     org.w3c.dom.Element q = doc.createElement("Q");
-                    q.appendChild(doc.createTextNode(passages.get(i).getBible().getAbbr()));
+                    q.appendChild(doc.createTextNode(passages.get(i).getBible().getAbbreviation()));
                     passageElement.appendChild(q);
 
                     org.w3c.dom.Element t = doc.createElement("T");

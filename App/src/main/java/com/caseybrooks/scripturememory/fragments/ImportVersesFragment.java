@@ -356,7 +356,7 @@ public class ImportVersesFragment extends Fragment {
                             passageElement.appendChild(r);
 
                             org.w3c.dom.Element q = doc.createElement("Q");
-                            q.appendChild(doc.createTextNode(item.getBible().getAbbr()));
+                            q.appendChild(doc.createTextNode(item.getBible().getAbbreviation()));
                             passageElement.appendChild(q);
 
                             //TODO: write all tags to file

@@ -19,8 +19,15 @@
         jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\scripturememory\common\unspecified\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="d69affb3c013d42f5df017af579be80c6b874353">
+        sha1="44b15d255e3e3ea290a1d2486fa4326fd6b72eda">
         <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-33b76d2a1f7a363453ffcae16b62e388d2a8be94.jar" />
+    </item>
+    <item
+        jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.github.cjbrooks12\AndroidBibleTools\v0.2.9\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="69a6a50767d83175cdc0d1ddbd46782df12ffdb4">
+        <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-8919537a88bf7466cd0c516ad56ae9e61103103f.jar" />
     </item>
     <item
         jar="C:\Users\Casey\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
@@ -63,13 +70,6 @@
         revision="21.1.2"
         sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
         <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-32f69fbe7c4d6beaa02237a34a50a0dff332d986.jar" />
-    </item>
-    <item
-        jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.github.cjbrooks12\AndroidBibleTools\v0.2.8\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="640db289a7e356cf9dbd4651c5652fd58493a3a2">
-        <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-86fa335bb677b2e203765e83a6f3282e8f9628ea.jar" />
     </item>
 
 </items>

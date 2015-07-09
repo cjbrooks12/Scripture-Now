@@ -40,5 +40,5 @@ dependencies {
 
     compile project(":common")
 
-    compile 'com.github.cjbrooks12:AndroidBibleTools:v0.2.8@aar'
+    compile 'com.github.cjbrooks12:AndroidBibleTools:v0.2.9@aar'
 }

@@ -52,7 +52,7 @@ public class MetaSettings {
 
 		ABSBible bible = new ABSBible(context.getResources().getString(R.string.bibles_org), id);
 		bible.setName(name);
-		bible.setAbbr(abbr);
+		bible.setAbbreviation(abbr);
 
 		Log.i("RETRIEVE BIBLE", id + " " + abbr + " " + " " + name);
 		return bible;
@@ -70,7 +70,7 @@ public class MetaSettings {
 		PreferenceManager.getDefaultSharedPreferences(context).edit()
 				.putString(BIBLE_VERSION_ID, bible.getId())
 				.putString(BIBLE_VERSION_NAME, bible.getName())
-				.putString(BIBLE_VERSION_ABBR, bible.getAbbr()).commit();
+				.putString(BIBLE_VERSION_ABBR, bible.getAbbreviation()).commit();
 	}
 
     public static Pair<Integer, Integer> getDefaultScreen(Context context) {
