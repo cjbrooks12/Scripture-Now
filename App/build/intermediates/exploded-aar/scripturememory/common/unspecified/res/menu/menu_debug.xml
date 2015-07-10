@@ -3,6 +3,11 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	<item
+		android:id="@+id/menu_debug_clear"
+		app:showAsAction="ifRoom"
+		android:icon="?attr/ic_action_delete"
+		android:title="Clear all"/>
+	<item
 		android:id="@+id/menu_debug_refresh"
 		app:showAsAction="ifRoom"
 		android:icon="?attr/ic_action_refresh"

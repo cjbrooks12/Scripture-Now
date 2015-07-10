@@ -24,7 +24,7 @@ import android.widget.ScrollView;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.Util;
+import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.nowcards.input.VerseInputCard;
 import com.caseybrooks.scripturememory.nowcards.main.MainCard;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;

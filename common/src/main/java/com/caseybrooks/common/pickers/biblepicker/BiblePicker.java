@@ -14,12 +14,16 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.ViewSwitcher;
+import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.common.R;
+import com.caseybrooks.common.features.Util;
+
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,17 +33,24 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class BiblePicker extends LinearLayout {
+//Data Members
+//------------------------------------------------------------------------------
 	Context context;
-	ViewSwitcher switcher;
-
-	ListView bibleList;
-	BibleListAdapter adapter;
+	Bible selectedBible;
+	OnBibleSelectedListener listener;
 
 	EditText filter;
 	TextView bibleCount;
+	BibleListAdapter adapter;
+	ListView bibleList;
 
-	Bible selectedBible;
+	TextView progressText;
+	ProgressBar progressBar;
 
+	int colorPrimary, colorAccent, textColor;
+
+//Constructors and Initialization
+//------------------------------------------------------------------------------
 	public BiblePicker(Context context) {
 		super(context);
 		this.context = context;
@@ -55,42 +66,50 @@ public class BiblePicker extends LinearLayout {
 	}
 
 	public void initialize() {
+		TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{
+				R.attr.color_text,
+				R.attr.colorAccent,
+				R.attr.colorPrimaryDark
+		});
+		textColor = a.getColor(0, context.getResources().getColor(R.color.text_dark));
+		colorAccent = a.getColor(1, context.getResources().getColor(R.color.primary_accent));
+		colorPrimary = a.getColor(2, context.getResources().getColor(R.color.primary_dark));
+		a.recycle();
+
 		LayoutInflater.from(context).inflate(R.layout.bible_picker, this);
 
-		switcher = (ViewSwitcher) findViewById(R.id.picker_content_switcher);
-
-		bibleList = (ListView) findViewById(R.id.bible_list);
+		filter = (EditText) findViewById(R.id.bible_list_filter);
+		filter.addTextChangedListener(filterTextChanged);
 
 		bibleCount = (TextView) findViewById(R.id.bible_list_count);
 
-		filter = (EditText) findViewById(R.id.bible_list_filter);
-		filter.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		bibleList = (ListView) findViewById(R.id.bible_list);
+		bibleList.setOnItemClickListener(itemClickListener);
 
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if(adapter != null)	adapter.filterBy(filter.getText().toString());
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-
-			}
-		});
+		progressText = (TextView) findViewById(R.id.progress_text);
+		progressBar = (ProgressBar) findViewById(R.id.progress);
 
 		new LoadBiblesThread().execute();
 	}
 
+//Data retreival and manipulation
+//------------------------------------------------------------------------------
 	private class LoadBiblesThread extends AsyncTask<Void, Void, Void> {
 		HashMap<String, Bible> bibles;
 
 		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			progressText.setText("Retreiving Bible list");
+			progressText.setVisibility(View.VISIBLE);
+			bibleList.setVisibility(View.GONE);
+			progressBar.setVisibility(View.VISIBLE);
+		}
+
+		@Override
 		protected Void doInBackground(Void... params) {
 			selectedBible = BiblePickerSettings.getSelectedBible(context);
-
 
 			try {
 				bibles = ABSBible.parseAvailableVersions(
@@ -116,20 +135,60 @@ public class BiblePicker extends LinearLayout {
 			adapter = new BibleListAdapter(context, bibles.values());
 			adapter.filterBy(filter.getText().toString());
 			bibleList.setAdapter(adapter);
-			bibleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			bibleList.setVisibility(View.VISIBLE);
+			progressBar.setVisibility(View.GONE);
+			progressText.setVisibility(View.GONE);
+		}
+	}
 
-					BiblePickerSettings.setSelectedBible(context, adapter.getItem(position));
-					selectedBible = BiblePickerSettings.getSelectedBible(context);
-					adapter.resort();
-					adapter.notifyDataSetChanged();
-					bibleList.scrollTo(0, 0);
+	private class LoadSelectedBibleInfoThread extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			progressText.setText("Caching selected Bible");
+			progressText.setVisibility(View.VISIBLE);
+			bibleList.setVisibility(View.GONE);
+			progressBar.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			if(selectedBible instanceof ABSBible) {
+				ABSBible bible = (ABSBible) selectedBible;
+
+				try {
+					Document doc = bible.getDocument();
+
+					if(doc != null) {
+						Util.cacheDocument(context, doc, "selectedBible.xml");
+					}
+					else {
+						publishProgress();
+					}
 				}
-			});
+				catch(IOException ioe) {
+					ioe.printStackTrace();
+					publishProgress();
+				}
+			}
 
-			switcher.getCurrentView().setVisibility(View.GONE);
-			switcher.showNext();
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(Void... values) {
+			super.onProgressUpdate(values);
+			Toast.makeText(context, "Could not cache bible, try again later", Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
+			progressText.setVisibility(View.GONE);
+			bibleList.setVisibility(View.VISIBLE);
+			progressBar.setVisibility(View.GONE);
 		}
 	}
 
@@ -139,7 +198,7 @@ public class BiblePicker extends LinearLayout {
 			public int compare(Bible lhs, Bible rhs) {
 				if(lhs.equals(selectedBible)) return Integer.MIN_VALUE;
 				else if(rhs.equals(selectedBible)) return Integer.MAX_VALUE;
-				else return lhs.getAbbreviation().compareTo(rhs.getAbbreviation());
+				else return lhs.getName().compareTo(rhs.getName());
 			}
 		};
 
@@ -148,7 +207,6 @@ public class BiblePicker extends LinearLayout {
 
 		Context context;
 		LayoutInflater layoutInflater;
-		int[] colors;
 
 		public BibleListAdapter(Context context, Collection<Bible> data) {
 			super();
@@ -184,23 +242,6 @@ public class BiblePicker extends LinearLayout {
 
 			bibleCount.setVisibility(View.VISIBLE);
 			bibleCount.setText(text);
-
-			TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{
-					R.attr.color_background,
-					R.attr.color_background_selected,
-					R.attr.color_text,
-					R.attr.colorAccent,
-					R.attr.colorPrimaryDark
-			});
-
-			colors = new int[] {
-					a.getColor(0, context.getResources().getColor(R.color.background_light)),
-					a.getColor(1, context.getResources().getColor(R.color.background_selected_light)),
-					a.getColor(2, context.getResources().getColor(R.color.text_dark)),
-					a.getColor(3, context.getResources().getColor(R.color.primary_accent)),
-					a.getColor(4, context.getResources().getColor(R.color.primary_dark))
-			};
-			a.recycle();
 		}
 
 		public void resort() {
@@ -260,15 +301,59 @@ public class BiblePicker extends LinearLayout {
 			abbreviation.setText(item.getAbbreviation());
 
 			if(item.equals(selectedBible)) {
-				name.setTextColor(colors[3]);
-				abbreviation.setTextColor(colors[2]);
+				name.setTextColor(colorAccent);
+				abbreviation.setTextColor(textColor);
 			}
 			else {
-				name.setTextColor(colors[2]);
-				abbreviation.setTextColor(colors[4]);
+				name.setTextColor(textColor);
+				abbreviation.setTextColor(colorPrimary);
 			}
 
 			return convertView;
 		}
+	}
+
+	TextWatcher filterTextChanged = new TextWatcher() {
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			if(adapter != null)	adapter.filterBy(filter.getText().toString());
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+
+		}
+	};
+
+	AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			Bible bible = adapter.getItem(position);
+			if(listener != null)
+				listener.onBibleSelected(bible);
+
+			BiblePickerSettings.setSelectedBible(context, bible);
+			selectedBible = BiblePickerSettings.getSelectedBible(context);
+			adapter.resort();
+			adapter.notifyDataSetChanged();
+
+			new LoadSelectedBibleInfoThread().execute();
+		}
+	};
+
+//Getters and Setters
+//------------------------------------------------------------------------------
+
+	public OnBibleSelectedListener getListener() {
+		return listener;
+	}
+
+	public void setListener(OnBibleSelectedListener listener) {
+		this.listener = listener;
 	}
 }

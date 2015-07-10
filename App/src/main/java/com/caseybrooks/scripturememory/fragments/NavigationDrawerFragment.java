@@ -27,13 +27,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Tag;
+import com.caseybrooks.common.debug.DebugCacheFragment;
 import com.caseybrooks.common.debug.DebugSharedPreferencesFragment;
 import com.caseybrooks.common.features.NavListItem;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.BuildConfig;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.Util;
+import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
 import com.nirhart.parallaxscroll.views.ParallaxExpandableListView;
@@ -319,7 +320,7 @@ public class NavigationDrawerFragment extends Fragment {
 				debugCacheItem.childPosition = 2;
 				debugCacheItem.name = "Cache Contents";
 				debugCacheItem.color = Color.parseColor("#607D8B");
-				debugCacheItem.count = 0;
+				debugCacheItem.count = DebugCacheFragment.getCacheCount(context);
 				debugItems.add(debugCacheItem);
 
 				childItems.remove(headerItems.get(6));
@@ -411,10 +412,8 @@ public class NavigationDrawerFragment extends Fragment {
 					R.attr.ic_action_debug
 			});
 
-
 			Drawable headerDrawable = getResources().getDrawable(a.getResourceId(groupPosition, 0));
 			a.recycle();
-
 
             int selectedGroup = MetaSettings.getDrawerSelection(context).first;
             TypedArray selectedColorAttrs = context.getTheme().obtainStyledAttributes(new int[]{

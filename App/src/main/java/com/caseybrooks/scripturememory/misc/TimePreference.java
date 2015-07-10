@@ -1,6 +1,7 @@
 package com.caseybrooks.scripturememory.misc;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.text.format.DateFormat;
@@ -13,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-//based on answer t o SO question: http://stackoverflow.com/questions/5533078/timepicker-in-preferencescreen
+//based on answer to SO question: http://stackoverflow.com/questions/5533078/timepicker-in-preferencescreen
 //modified to correctly set the initial value in the local timezone given millis UTC
 
 public class TimePreference extends DialogPreference {
@@ -27,7 +28,7 @@ public class TimePreference extends DialogPreference {
 
     public TimePreference(Context context, AttributeSet attrs) {
         //"hack" to ensure custom Preferences all look the same
-        this(context, attrs, context.getResources().getSystem().getIdentifier("dialogPreferenceStyle", "attr", "android"));
+        this(context, attrs, Resources.getSystem().getIdentifier("dialogPreferenceStyle", "attr", "android"));
     }
 
     public TimePreference(Context context, AttributeSet attrs, int defStyle) {

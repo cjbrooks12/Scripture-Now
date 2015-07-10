@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.data.Util;
+import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import java.util.ArrayList;

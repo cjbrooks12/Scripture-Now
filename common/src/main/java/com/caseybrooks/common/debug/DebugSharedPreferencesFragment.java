@@ -1,7 +1,10 @@
 package com.caseybrooks.common.debug;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -32,7 +35,8 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 	NavigationCallbacks mCallbacks;
 	EditText editText;
 
-	public static final String settings_file = "my_settings";
+	public SharedPreferences settings[];
+	public String settings_names[];
 
 	public static Fragment newInstance() {
 		Fragment fragment = new DebugSharedPreferencesFragment();
@@ -62,6 +66,16 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 
 		context = getActivity();
 		setHasOptionsMenu(true);
+
+		settings = new SharedPreferences[] {
+				PreferenceManager.getDefaultSharedPreferences(context),
+				context.getSharedPreferences("my_settings", 0)
+		};
+
+		settings_names = new String[] {
+				"Preferences",
+				"Settings"
+		};
 
 		editText = new EditText(context);
 		editText.addTextChangedListener(new TextWatcher() {
@@ -105,99 +119,93 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 		mCallbacks.setToolBar("All Preferences", Color.parseColor("#FFC107"));
 	}
 
-	public static int getPrefsCount(Context context) {
-		Map<String, ?> settings = PreferenceManager.getDefaultSharedPreferences(context).getAll();
-		Map<String, ?> prefs = context.getSharedPreferences(settings_file, 0).getAll();
+	public int getCount(Context context) {
+		int count = 0;
+		settings = new SharedPreferences[] {
+				PreferenceManager.getDefaultSharedPreferences(context),
+				context.getSharedPreferences("my_settings", 0)
+		};
 
-		return settings.size() + prefs.size();
+		for(int i = 0; i < settings.length; i++) {
+			count += settings[i].getAll().size();
+		}
+
+		return count;
+	}
+
+	public static int getPrefsCount(Context context) {
+		return ((DebugSharedPreferencesFragment)newInstance()).getCount(context);
+	}
+
+	private void clearAll() {
+		new AlertDialog.Builder(context)
+				.setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						for(SharedPreferences prefs : settings) {
+							prefs.edit().clear().commit();
+						}
+						initialize();
+					}
+				})
+				.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+					}
+				})
+				.setTitle("Clear All Preferences")
+				.setMessage("Are you sure you want to delete all user preferences? This cannot be undone.")
+				.create()
+				.show();
 	}
 
 	private void initialize() {
-		Map<String, ?> settings = PreferenceManager.getDefaultSharedPreferences(context).getAll();
-		Map<String, ?> prefs = context.getSharedPreferences(settings_file, 0).getAll();
-
 		ArrayList<ListItem> displayedItems = new ArrayList<>();
 
-		for (String key : settings.keySet()) {
-			ListItem item = new ListItem();
+		for(int i = 0; i < settings.length; i++) {
+			Map<String, ?> pairs = settings[i].getAll();
 
-			item.file = "Settings";
-			item.key = key;
+			for(String key : pairs.keySet()) {
+				ListItem item = new ListItem();
 
-			Object pref = settings.get(key);
-			if(pref instanceof Boolean) {
-				item.type = "Boolean";
-				item.value = ((Boolean)pref).toString();
-			}
-			else if(pref instanceof Float) {
-				item.type = "Float";
-				item.value = ((Float)pref).toString();
-			}
-			else if(pref instanceof Integer) {
-				item.type = "Integer";
-				item.value = ((Integer)pref).toString();
-			}
-			else if(pref instanceof Long) {
-				item.type = "Long";
-				item.value = ((Long)pref).toString();
-			}
-			else if(pref instanceof String) {
-				item.type = "String";
-				item.value = ((String)pref).toString();
-			}
-			else {
-				if(pref != null) {
-					item.type = pref.getClass().getSimpleName();
-					item.value = "(generic)" + pref.toString();
+				item.file = settings_names[i];
+				item.key = key;
+
+				Object pref = pairs.get(key);
+				if(pref instanceof Boolean) {
+					item.type = "Boolean";
+					item.value = ((Boolean) pref).toString();
+				}
+				else if(pref instanceof Float) {
+					item.type = "Float";
+					item.value = ((Float) pref).toString();
+				}
+				else if(pref instanceof Integer) {
+					item.type = "Integer";
+					item.value = ((Integer) pref).toString();
+				}
+				else if(pref instanceof Long) {
+					item.type = "Long";
+					item.value = ((Long) pref).toString();
+				}
+				else if(pref instanceof String) {
+					item.type = "String";
+					item.value = ((String) pref).toString();
 				}
 				else {
-					item.type = "null";
-					item.value = "null";
+					if(pref != null) {
+						item.type = pref.getClass().getSimpleName();
+						item.value = "(generic)" + pref.toString();
+					}
+					else {
+						item.type = "null";
+						item.value = "null";
+					}
 				}
-			}
 
-			displayedItems.add(item);
-		}
-
-		for (String key : prefs.keySet()) {
-			ListItem item = new ListItem();
-
-			item.file = "Preferences";
-			item.key = key;
-
-			Object pref = prefs.get(key);
-			if(pref instanceof Boolean) {
-				item.type = "Boolean";
-				item.value = ((Boolean)pref).toString();
+				displayedItems.add(item);
 			}
-			else if(pref instanceof Float) {
-				item.type = "Float";
-				item.value = ((Float)pref).toString();
-			}
-			else if(pref instanceof Integer) {
-				item.type = "Integer";
-				item.value = ((Integer)pref).toString();
-			}
-			else if(pref instanceof Long) {
-				item.type = "Long";
-				item.value = ((Long)pref).toString();
-			}
-			else if(pref instanceof String) {
-				item.type = "String";
-				item.value = ((String)pref).toString();
-			}
-			else {
-				if(pref != null) {
-					item.type = pref.getClass().getSimpleName();
-					item.value = "(generic)" + pref.toString();
-				}
-				else {
-					item.type = "null";
-					item.value = "null";
-				}
-			}
-
-			displayedItems.add(item);
 		}
 
 		adapter = new SPAdapter(context, displayedItems);
@@ -295,6 +303,10 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == R.id.menu_debug_refresh) {
 			initialize();
+			return true;
+		}
+		else if(item.getItemId() == R.id.menu_debug_clear) {
+			clearAll();
 			return true;
 		}
 		else {

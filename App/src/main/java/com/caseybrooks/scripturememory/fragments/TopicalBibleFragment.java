@@ -44,7 +44,7 @@ import com.caseybrooks.androidbibletools.providers.openbible.OpenBibleInfo;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.Util;
+import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
 

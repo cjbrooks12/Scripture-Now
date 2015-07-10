@@ -41,22 +41,33 @@
 		android:layout_height="1dp"
 		android:background="@color/text_dark"/>
 
-	<ViewSwitcher
+	<RelativeLayout
 		android:id="@+id/picker_content_switcher"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
+		<TextView
+			android:id="@+id/progress_text"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:textStyle="italic"
+			android:layout_alignParentTop="true"
+			android:layout_above="@+id/progress"
+			android:textSize="22sp"
+			android:text="Retreiving bible list"/>
+
 		<ProgressBar
 			android:id="@+id/progress"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="32dp"
 			style="?android:attr/progressBarStyleLarge"
-			android:layout_gravity="center" />
+			android:layout_centerInParent="true" />
 
 		<ListView
 			android:id="@+id/bible_list"
 			android:layout_width="match_parent"
-			android:fastScrollEnabled="true"
-			android:layout_height="wrap_content"/>
-	</ViewSwitcher>
+			android:layout_height="wrap_content"
+			android:fastScrollEnabled="true" />
+	</RelativeLayout>
 </LinearLayout><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/common/src/main/res/layout/bible_picker.xml -->

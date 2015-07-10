@@ -24,7 +24,7 @@ import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.scripturememory.data.Util;
+import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import org.jsoup.nodes.Document;
