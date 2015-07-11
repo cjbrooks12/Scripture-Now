@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,12 @@ import android.widget.Toast;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
+import com.caseybrooks.androidbibletools.pickers.biblepicker.BiblePickerSettings;
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
+import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import org.jsoup.nodes.Document;
@@ -39,7 +41,7 @@ public class VerseInputCard extends FrameLayout {
 //Data Members
 //------------------------------------------------------------------------------
 	Context context;
-	final ABSBible selectedVersion;
+	ABSBible selectedBible;
 
 	public EditText editReference, editVerse;
 	TextView addVerse;
@@ -55,7 +57,7 @@ public class VerseInputCard extends FrameLayout {
 
 		LayoutInflater.from(context).inflate(R.layout.card_verse_input, this);
 
-		selectedVersion = MetaSettings.getBibleVersion(context);
+		selectedBible = MetaSettings.getBibleVersion(context);
 		initialize();
 	}
 
@@ -65,61 +67,68 @@ public class VerseInputCard extends FrameLayout {
 
 		LayoutInflater.from(context).inflate(R.layout.card_verse_input, this);
 
-		selectedVersion = MetaSettings.getBibleVersion(context);
+		selectedBible = MetaSettings.getBibleVersion(context);
 		initialize();
 	}
 
 	void initialize() {
 		progress = (ProgressBar) findViewById(R.id.progress);
 
+		editReference = (EditText) findViewById(R.id.editReference);
+		editVerse = (EditText) findViewById(R.id.editVerse);
+
 		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
 				progress.setVisibility(View.VISIBLE);
+				editReference.setVisibility(View.GONE);
+				editVerse.setVisibility(View.GONE);
 			}
 
 			@Override
 			protected void onPostExecute(Void aVoid) {
 				super.onPostExecute(aVoid);
 				progress.setVisibility(View.INVISIBLE);
+				editReference.setVisibility(View.VISIBLE);
+				editVerse.setVisibility(View.VISIBLE);
 			}
 
 			@Override
 			protected Void doInBackground(Void... params) {
-				//We need to allow the user to enter a verse and check it as soon
-				//as possible. But it takes several seconds to parse the selectedVersion
-				//document, and the user may enter a verse before that is finished.
-				//In that case, we must be able to detect that this thread is still
-				//trying to initialize that information, and immediately use the
-				//'defaultESV' object instead of 'selectedVersion' to check the book name
-				//against.
+				try {
+					selectedBible = (ABSBible) BiblePickerSettings.getCachedBible(context);
 
-				synchronized(selectedVersion) {
-					try {
-						//get exclusive access to 'selectedVersion'
-						//try to get the information for selectedVersion, either from cache or download it
-						Document doc = Util.getChachedDocument(context, "selectedVersion.xml");
+					if(selectedBible == null) {
+						Log.i("init", "selectedBible is null");
+						ABSBible bible = (ABSBible) BiblePickerSettings.getSelectedBible(context);
 
-						if(doc == null && selectedVersion.isAvailable() && Util.isConnected(context)) {
-							doc = selectedVersion.getDocument();
+						Document doc = bible.getDocument();
 
-							Util.cacheDocument(context, doc, "selectedVersion.xml");
-							selectedVersion.parseDocument(doc);
+						if(doc != null) {
+							Log.i("init", "downloaded doc is not null, parsing");
+							Util.cacheDocument(context, doc, "selectedBible.xml");
+							bible.parseDocument(doc);
+
+							selectedBible = bible;
 						}
 						else {
-							selectedVersion.parseDocument(doc);
+							Log.i("init", "downloaded doc is null, resorting to selected bible");
+							selectedBible = bible;
 						}
 					}
-					catch(IOException ioe) {
-						ioe.printStackTrace();
+					else {
+						Log.i("init", "cached bible is not null, USE IT");
 					}
 				}
+				catch(IOException ioe) {
+					ioe.printStackTrace();
+				}
+
 				return null;
 			}
 		}.execute();
 
-		editReference = (EditText) findViewById(R.id.editReference);
 		editReference.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -151,7 +160,7 @@ public class VerseInputCard extends FrameLayout {
 
 			}
 		});
-		editVerse = (EditText) findViewById(R.id.editVerse);
+
 		searchButton = (ImageButton) findViewById(R.id.searchButton);
 		searchButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -235,24 +244,35 @@ public class VerseInputCard extends FrameLayout {
 				//and the second fail, set the error message to that of the exception
 				//thrown by the first, indicating that it is the primary version to
 				//be used, and as such is the primary version to throw the exception
-				synchronized(selectedVersion) {
-					passage = new ABSPassage(
-							getResources().getString(R.string.bibles_org),
-							new Reference.Builder()
-									.setBible(selectedVersion)
-									.parseReference(editReference.getText().toString())
-									.create()
-					);
-				}
+				Reference.Builder builder = new Reference.Builder();
+				builder.setBible(selectedBible);
+
+				Log.i("SearchVerseAsync", "Raw text: " + editReference.getText().toString());
+				builder.parseReference(editReference.getText().toString());
+				Reference ref = builder.create();
+
+				String verses = "";
+				for(int verse : ref.verses) verses += verse + ",";
+
+				Log.i("SearchVerseAsync", "Parsed text: " + ref.toString() +
+						" Ref.book='" + ref.book.getName() + "'" +
+						" Ref.chapter='" + ref.chapter + "'" +
+						" Ref.verses='" + verses + "'"
+				);
+
+				passage = new ABSPassage(
+					getResources().getString(R.string.bibles_org),
+					ref
+				);
+
 
 				//if the verse was parsed such that it can be downloaded...
-
 				if(passage.isAvailable()) {
 					String filename = passage.getId();
 					Document doc = Util.getChachedDocument(context, filename);
 
 					//document wasn't cached, so try to get online and download it
-					if(doc == null && Util.isConnected(context)) {
+					if(doc == null) {
 						doc = passage.getDocument();
 						Util.cacheDocument(context, doc, filename);
 					}

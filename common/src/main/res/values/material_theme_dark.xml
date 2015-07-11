@@ -15,6 +15,7 @@
         <item name="color_card">@color/card_dark</item>
         <item name="color_toolbar">@color/primary</item>
         <item name="color_text">@color/text_light</item>
+        <item name="android:textColor">@color/text_light</item>
         <item name="android:windowBackground">@color/background_dark</item>
 
         <item name="theme_name">Dark</item>

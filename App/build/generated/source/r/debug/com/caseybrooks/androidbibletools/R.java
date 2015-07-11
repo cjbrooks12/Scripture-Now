@@ -349,6 +349,7 @@ public final class R {
 		public static final int abc_textfield_search_activated_mtrl_alpha = 0x7f020038;
 		public static final int abc_textfield_search_default_mtrl_alpha = 0x7f020039;
 		public static final int abc_textfield_search_material = 0x7f02003a;
+		public static final int bg_oval_32 = 0x7f02003c;
 		public static final int ic_launcher = 0x7f020082;
 	}
 	public static final class id {
@@ -368,6 +369,12 @@ public final class R {
 		public static final int activity_chooser_view_content = 0x7f0c0028;
 		public static final int always = 0x7f0c0018;
 		public static final int beginning = 0x7f0c0015;
+		public static final int bible_abbreviation = 0x7f0c005d;
+		public static final int bible_language = 0x7f0c005c;
+		public static final int bible_list = 0x7f0c005a;
+		public static final int bible_list_count = 0x7f0c0055;
+		public static final int bible_list_filter = 0x7f0c0056;
+		public static final int bible_name = 0x7f0c005b;
 		public static final int checkbox = 0x7f0c003a;
 		public static final int collapseActionView = 0x7f0c0019;
 		public static final int decor_content_parent = 0x7f0c0040;
@@ -390,8 +397,11 @@ public final class R {
 		public static final int never = 0x7f0c001b;
 		public static final int none = 0x7f0c000e;
 		public static final int normal = 0x7f0c000a;
+		public static final int picker_content_switcher = 0x7f0c0057;
+		public static final int progress = 0x7f0c0059;
 		public static final int progress_circular = 0x7f0c0005;
 		public static final int progress_horizontal = 0x7f0c0006;
+		public static final int progress_text = 0x7f0c0058;
 		public static final int radio = 0x7f0c003c;
 		public static final int search_badge = 0x7f0c0046;
 		public static final int search_bar = 0x7f0c0045;
@@ -442,6 +452,8 @@ public final class R {
 		public static final int abc_search_dropdown_item_icons_2line = 0x7f030015;
 		public static final int abc_search_view = 0x7f030016;
 		public static final int abc_simple_dropdown_hint = 0x7f030018;
+		public static final int bible_picker = 0x7f03001b;
+		public static final int bible_picker_item = 0x7f03001c;
 		public static final int support_simple_spinner_dropdown_item = 0x7f030050;
 	}
 	public static final class string {
@@ -462,6 +474,7 @@ public final class R {
 		public static final int abc_shareactionprovider_share_with_application = 0x7f0e000f;
 		public static final int abc_toolbar_collapse_description = 0x7f0e0010;
 		public static final int app_name = 0x7f0e0013;
+		public static final int bibles_org_key = 0x7f0e0015;
 	}
 	public static final class style {
 		public static final int Base_TextAppearance_AppCompat = 0x7f0f000a;

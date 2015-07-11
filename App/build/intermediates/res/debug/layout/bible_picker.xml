@@ -39,7 +39,7 @@
 	<View
 		android:layout_width="match_parent"
 		android:layout_height="1dp"
-		android:background="@color/text_dark"/>
+		android:background="#91000000"/>
 
 	<RelativeLayout
 		android:id="@+id/picker_content_switcher"
@@ -70,4 +70,4 @@
 			android:layout_height="wrap_content"
 			android:fastScrollEnabled="true" />
 	</RelativeLayout>
-</LinearLayout><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/common/src/main/res/layout/bible_picker.xml --><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/scripturememory/common/unspecified/res/layout/bible_picker.xml -->
+</LinearLayout><!-- From: file:/build/app/src/main/res/layout/bible_picker.xml --><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.14/res/layout/bible_picker.xml -->

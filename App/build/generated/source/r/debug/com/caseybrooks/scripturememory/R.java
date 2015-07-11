@@ -45,14 +45,12 @@ public final class R {
     public static final class array {
         public static final int changelog_detail=0x7f080000;
         public static final int changelog_title=0x7f080001;
-        public static final int dummy_bible_abbrs=0x7f080002;
-        public static final int dummy_bible_names=0x7f080003;
-        public static final int pref_default_screen=0x7f080004;
-        public static final int pref_default_screen_values=0x7f080005;
-        public static final int pref_themes=0x7f080006;
-        public static final int pref_themes_values=0x7f080007;
-        public static final int state_ids=0x7f080008;
-        public static final int state_names=0x7f080009;
+        public static final int pref_default_screen=0x7f080002;
+        public static final int pref_default_screen_values=0x7f080003;
+        public static final int pref_themes=0x7f080004;
+        public static final int pref_themes_values=0x7f080005;
+        public static final int state_ids=0x7f080006;
+        public static final int state_names=0x7f080007;
     }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"

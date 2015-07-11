@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:shape="rectangle"
-	android:dither="true">
-		<corners android:radius="16dp" />
-		<solid android:color="#33000000" />
-</shape><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/common/src/main/res/drawable/bg_oval_32.xml -->

@@ -3,27 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <PreferenceCategory
         android:title="Preferences">
-		<!-- Change general to have its own screen when I start adding preferences for other Scripture Now cards -->
-		<!--<PreferenceScreen-->
-			<!--android:title="General" >-->
-			<ListPreference
-				android:key="APP_THEME"
-				android:title="App Theme"
-				android:summary="?attr/theme_name"
-				android:dialogTitle="App Theme"
-				android:defaultValue="Theme_Light" />
-			<com.caseybrooks.common.pickers.biblepicker.BiblePickerPreference />
-			<ListPreference
-				android:key="PREF_DEFAULT_SCREEN_GROUP"
-				android:title="Default Screen"
-				android:dialogTitle="Default Screen"
-				android:entries="@array/pref_default_screen"
-				android:entryValues="@array/pref_default_screen_values"
-				android:defaultValue="0" />
-			<ListPreference
-				android:key="PREF_DEFAULT_SCREEN_CHILD"
-				android:title="List"
-				android:dialogTitle="List" />
+        <ListPreference
+            android:key="APP_THEME"
+            android:title="App Theme"
+            android:summary="?attr/theme_name"
+            android:dialogTitle="App Theme"
+            android:defaultValue="Theme_Light" />
+        <com.caseybrooks.androidbibletools.pickers.biblepicker.BiblePickerPreference />
+        <ListPreference
+            android:key="PREF_DEFAULT_SCREEN_GROUP"
+            android:title="Default Screen"
+            android:dialogTitle="Default Screen"
+            android:entries="@array/pref_default_screen"
+            android:entryValues="@array/pref_default_screen_values"
+            android:defaultValue="0" />
+        <ListPreference
+            android:key="PREF_DEFAULT_SCREEN_CHILD"
+            android:title="List"
+            android:dialogTitle="List" />
 		<!--</PreferenceScreen>-->
         <PreferenceScreen
             android:title="Verse of the Day" >

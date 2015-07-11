@@ -4,17 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,15 +22,16 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.caseybrooks.common.R;
 import com.caseybrooks.common.features.NavigationCallbacks;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class DebugCacheFragment extends ListFragment {
 	Context context;
@@ -259,20 +257,49 @@ public class DebugCacheFragment extends ListFragment {
 		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(Intent.ACTION_VIEW);
-				Uri uri = Uri.parse(adapter.getItem(position - 1).file.getAbsolutePath());
-				intent.setDataAndType(uri, "text/plain");
 
-				PackageManager manager = context.getPackageManager();
-				List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
-				if(infos.size() > 0) {
-					//Then there is application can handle your intent
-					startActivity(intent);
+				File file = adapter.getItem(position - 1).file;
+
+				//Read text from file
+				StringBuilder text = new StringBuilder();
+				try {
+					BufferedReader br = new BufferedReader(new FileReader(file));
+					String line;
+
+					while ((line = br.readLine()) != null) {
+						text.append(line);
+						text.append('\n');
+					}
+					br.close();
 				}
-				else {
-					//No Application can handle your intent
-					Toast.makeText(context, "No installed applications can view file. Try downloading RootExplorer.", Toast.LENGTH_LONG).show();
+				catch (IOException e) {
+					//You'll need to add proper error handling here
 				}
+
+				TextView textView = new TextView(context);
+				textView.setMovementMethod(new ScrollingMovementMethod());
+				textView.setHorizontallyScrolling(true);
+				textView.setText(text);
+
+				new AlertDialog.Builder(context)
+						.setView(textView)
+						.create()
+						.show();
+
+//				Intent intent = new Intent(Intent.ACTION_VIEW);
+//				Uri uri = Uri.parse(adapter.getItem(position - 1).file.getAbsolutePath());
+//				intent.setDataAndType(uri, "text/plain");
+//
+//				PackageManager manager = context.getPackageManager();
+//				List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
+//				if(infos.size() > 0) {
+//					//Then there is application can handle your intent
+//					startActivity(intent);
+//				}
+//				else {
+//					//No Application can handle your intent
+//					Toast.makeText(context, "No installed applications can view file. Try downloading RootExplorer.", Toast.LENGTH_LONG).show();
+//				}
 			}
 		});
 

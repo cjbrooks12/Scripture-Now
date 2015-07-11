@@ -12,7 +12,7 @@
 				android:summary="?attr/theme_name"
 				android:dialogTitle="App Theme"
 				android:defaultValue="Theme_Light" />
-			<com.caseybrooks.common.pickers.biblepicker.BiblePickerPreference />
+			<com.caseybrooks.androidbibletools.pickers.biblepicker.BiblePickerPreference />
 			<ListPreference
 				android:key="PREF_DEFAULT_SCREEN_GROUP"
 				android:title="Default Screen"

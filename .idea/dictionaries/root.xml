@@ -1,3 +1,46 @@
-<component name="ProjectDictionaryState">
-  <dictionary name="root" />
-</component>
+<response>
+	<verses>
+		<verse id="eng-NASB:Gal.2.1">
+			<auditid>0</auditid>
+			<verse>1</verse>
+			<lastverse>1</lastverse>
+			<id>eng-NASB:Gal.2.1</id>
+			<osis_end>eng-NASB:Gal.2.1</osis_end>
+			<label/>
+			<reference>Galatians 2:1</reference>
+			<prev_osis_id>Gal.001.024,eng-NASB</prev_osis_id>
+			<next_osis_id>Gal.002.002,eng-NASB</next_osis_id>
+			<text>
+				<![CDATA[
+				<h3 class="s">The Council at Jerusalem</h3> <p class="p"><sup id="Gal.2.1" class="v">1</sup>Then after an interval of fourteen years I went up again to Jerusalem with Barnabas, taking Titus along also.</p>
+				]]>
+			</text>
+			<parent>
+				<chapter id="eng-NASB:Gal.2">
+					<path>/chapters/eng-NASB:Gal.2</path>
+					<name>Galatians 2</name>
+					<id>eng-NASB:Gal.2</id>
+				</chapter>
+			</parent>
+			<next>
+				<verse id="eng-NASB:Gal.2.2">
+					<path>/verses/eng-NASB:Gal.2.2</path>
+					<name>Galatians 2:2</name>
+					<id>eng-NASB:Gal.2.2</id>
+				</verse>
+			</next>
+			<previous>
+				<verse id="eng-NASB:Gal.1.24">
+					<path>/verses/eng-NASB:Gal.1.24</path>
+					<name>Galatians 1:24</name>
+					<id>eng-NASB:Gal.1.24</id>
+				</verse>
+			</previous>
+			<copyright>
+				<![CDATA[
+				New American Standard Bible, Copyright 1960,1962,1963,1968,1971,1972,1973,1975,1977,1995 by The Lockman Foundation. Used by permission.
+				]]>
+			</copyright>
+		</verse>
+	</verses>
+</response>

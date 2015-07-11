@@ -1,59 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/common/src/main/res/values/strings.xml -->
-    <eat-comment/>
-    <string-array name="dummy_bible_abbrs">
-		<item>NASB</item>
-		<item>ESV</item>
-		<item>NIV</item>
-		<item>YLT</item>
-		<item>NLT</item>
-		<item>LEB</item>
-		<item>NASB2</item>
-		<item>ESV2</item>
-		<item>NIV2</item>
-		<item>YLT2</item>
-		<item>NLT2</item>
-		<item>LEB2</item>
-		<item>NASB3</item>
-		<item>ESV3</item>
-		<item>NIV3</item>
-		<item>YLT3</item>
-		<item>NLT3</item>
-		<item>LEB3</item>
-		<item>NASB4</item>
-		<item>ESV4</item>
-		<item>NIV4</item>
-		<item>YLT4</item>
-		<item>NLT4</item>
-		<item>LEB4</item>
-	</string-array>
-    <string-array name="dummy_bible_names">
-		<item>New American Standard Bible</item>
-		<item>English Standard Version</item>
-		<item>New International Version</item>
-		<item>Young\'s Literal Translation</item>
-		<item>New living Translation</item>
-		<item>Lexham English Bible</item>
-		<item>New American Standard Bible2</item>
-		<item>English Standard Version2</item>
-		<item>New International Version2</item>
-		<item>Young\'s Literal Translation2</item>
-		<item>New living Translation2</item>
-		<item>Lexham English Bible2</item>
-		<item>New American Standard Bible3</item>
-		<item>English Standard Version3</item>
-		<item>New International Version3</item>
-		<item>Young\'s Literal Translation3</item>
-		<item>New living Translation3</item>
-		<item>Lexham English Bible3</item>
-		<item>New American Standard Bible4</item>
-		<item>English Standard Version4</item>
-		<item>New International Version4</item>
-		<item>Young\'s Literal Translation4</item>
-		<item>New living Translation4</item>
-		<item>Lexham English Bible4</item>
-	</string-array>
     <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/common/src/main/res/values/attrs.xml -->
     <eat-comment/>
     <attr format="color" name="color_background"/>
@@ -136,6 +82,7 @@
         <item name="color_card">@color/card_dark</item>
         <item name="color_toolbar">@color/primary</item>
         <item name="color_text">@color/text_light</item>
+        <item name="android:textColor">@color/text_light</item>
         <item name="android:windowBackground">@color/background_dark</item>
 
         <item name="theme_name">Dark</item>
@@ -187,6 +134,7 @@
         <item name="color_toolbar">@color/primary</item>
         <item name="color_card">@color/card_light</item>
         <item name="color_text">@color/text_dark</item>
+        <item name="android:textColor">@color/text_dark</item>
         <item name="android:windowBackground">@color/background_light</item>
 
         <item name="theme_name">Light</item>
