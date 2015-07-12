@@ -5,14 +5,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.caseybrooks.common.features.NavigationCallbacks;
+import com.caseybrooks.common.pickers.versepicker.VersePicker;
 
-public class DebugDatabaseFragment extends ListFragment {
+public class DebugDatabaseFragment extends Fragment {
 	Context context;
 	NavigationCallbacks mCallbacks;
 
@@ -35,8 +35,10 @@ public class DebugDatabaseFragment extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = super.onCreateView(inflater, container, savedInstanceState);
+		super.onCreateView(inflater, container, savedInstanceState);
 		context = getActivity();
+
+		View view = new VersePicker(context);
 
 		return view;
 	}
