@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.caseybrooks.common.features.NavigationCallbacks;
-import com.caseybrooks.common.pickers.versepicker.VersePicker;
 
 public class DebugDatabaseFragment extends Fragment {
 	Context context;
@@ -35,10 +34,10 @@ public class DebugDatabaseFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
+		View view = super.onCreateView(inflater, container, savedInstanceState);
 		context = getActivity();
 
-		View view = new VersePicker(context);
+//		View view = new VersePicker(context);
 
 		return view;
 	}

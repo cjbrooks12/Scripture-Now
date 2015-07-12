@@ -10,5 +10,10 @@
         app:showAsAction="ifRoom"
         android:icon="?attr/ic_action_today"
         android:title="Show Verse of the Day"/>
+    <item
+        android:id="@+id/menu_dashboard_show_versions"
+        app:showAsAction="ifRoom"
+        android:icon="?attr/ic_action_subject"
+        android:title="Select Bible"/>
 </menu>
 <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/menu/menu_dashboard.xml -->

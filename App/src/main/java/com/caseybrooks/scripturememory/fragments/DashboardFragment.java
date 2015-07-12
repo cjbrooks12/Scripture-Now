@@ -19,12 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
+import com.caseybrooks.androidbibletools.pickers.biblepicker.BiblePickerDialog;
 import com.caseybrooks.common.features.NavigationCallbacks;
+import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.nowcards.input.VerseInputCard;
 import com.caseybrooks.scripturememory.nowcards.main.MainCard;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
@@ -96,24 +96,6 @@ public class DashboardFragment extends Fragment {
 
 		input_card = new VerseInputCard(context);
         input_card.setVisibility(View.GONE);
-        View.OnFocusChangeListener inputTextboxListener = new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    final ScrollView sv = (ScrollView) dashboardLayout.getParent();
-                    final int y_pos;
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        y_pos = (int) input_card.getY();
-                    }
-                    else {
-                        y_pos = 0;
-                    }
-                    sv.smoothScrollTo(0, y_pos);
-                }
-            }
-        };
-        input_card.editReference.setOnFocusChangeListener(inputTextboxListener);
-        input_card.editVerse.setOnFocusChangeListener(inputTextboxListener);
 
 		votd_card = new VOTDCard(context);
         votd_card.setVisibility(View.VISIBLE);
@@ -184,6 +166,9 @@ public class DashboardFragment extends Fragment {
                 dashboardLayout.removeView(votd_card);
 			}
 	    	return true;
+		case R.id.menu_dashboard_show_versions:
+			BiblePickerDialog.create(context).show();
+			return true;
         default:
             return super.onOptionsItemSelected(item);
 	    }

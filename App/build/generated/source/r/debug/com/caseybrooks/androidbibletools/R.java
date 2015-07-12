@@ -454,7 +454,7 @@ public final class R {
 		public static final int abc_simple_dropdown_hint = 0x7f030018;
 		public static final int bible_picker = 0x7f03001b;
 		public static final int bible_picker_item = 0x7f03001c;
-		public static final int support_simple_spinner_dropdown_item = 0x7f030050;
+		public static final int support_simple_spinner_dropdown_item = 0x7f030051;
 	}
 	public static final class string {
 		public static final int abc_action_bar_home_description = 0x7f0e0000;
