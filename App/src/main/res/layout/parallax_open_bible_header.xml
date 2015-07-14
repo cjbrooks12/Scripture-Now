@@ -15,7 +15,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:textSize="24sp"
-        android:textColor="@color/text_dark"
+        android:textColor="@color/text_primary_dark"
         android:text="What does the Bible say about..."/>
     <AutoCompleteTextView
         android:layout_width="match_parent"
@@ -26,10 +26,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
-        android:textColor="@color/text_dark"
+        android:textColor="@color/text_primary_dark"
         style="@style/Base.Widget.AppCompat.EditText"
         android:hint="Search OpenBible.info"
-        android:textColorHint="@color/text_dark"
+        android:textColorHint="@color/text_primary_dark"
         android:completionThreshold="1"
         android:inputType="textCapWords"
         android:imeOptions="actionSearch" />

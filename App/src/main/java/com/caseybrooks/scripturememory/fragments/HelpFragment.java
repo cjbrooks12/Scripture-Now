@@ -103,7 +103,7 @@ public class HelpFragment extends PreferenceFragment {
 
 		mCallbacks.setToolBar("Help", typedValue.data);
 
-        MetaSettings.putDrawerSelection(context, 5, 0);
+        MetaSettings.putDrawerSelection(context, 6, 0);
     }
 
 	@Override

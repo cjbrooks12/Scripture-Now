@@ -77,7 +77,7 @@ public class TopicalBibleFragment extends Fragment {
         super.onResume();
 
 		mCallbacks.setToolBar("Topical Bible", context.getResources().getColor(R.color.open_bible_brown));
-		MetaSettings.putDrawerSelection(context, 1, 0);
+		MetaSettings.putDrawerSelection(context, 2, 0);
     }
 
     @Override

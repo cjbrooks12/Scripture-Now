@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<com.caseybrooks.androidbibletools.widget.ReferencePicker
+		android:id="@+id/reference_picker"
+		android:layout_width="match_parent"
+		android:layout_height="32dp"
+		android:layout_marginLeft="8dp"
+		android:layout_marginRight="8dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginBottom="16dp"
+		/>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		<com.caseybrooks.androidbibletools.widget.VerseView
+			android:id="@+id/verse_view"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:textStyle="normal"
+			android:fontFamily="serif"
+			android:textSize="18sp"/>
+	</ScrollView>
+
+</LinearLayout>

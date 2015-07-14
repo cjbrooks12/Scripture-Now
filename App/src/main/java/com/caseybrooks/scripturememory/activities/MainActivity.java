@@ -22,6 +22,7 @@ import android.view.ViewConfiguration;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
+import com.caseybrooks.common.debug.BibleReaderFragment;
 import com.caseybrooks.common.debug.DebugCacheFragment;
 import com.caseybrooks.common.debug.DebugDatabaseFragment;
 import com.caseybrooks.common.debug.DebugSharedPreferencesFragment;
@@ -369,4 +370,10 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		Fragment fragment = DebugCacheFragment.newInstance();
 		setFragment(fragment);
 	}
+
+    @Override
+    public void toBible() {
+        Fragment fragment = BibleReaderFragment.newInstance();
+        setFragment(fragment);
+    }
 }

@@ -70,7 +70,7 @@
 	<LinearLayout
 		android:layout_width="wrap_content"
 		android:layout_height="48dp"
-		android:divider="@color/text_dark"
+		android:divider="@color/text_primary_dark"
 		android:showDividers="middle"
 		android:layout_below="@id/hline"
 		android:layout_alignParentRight="true"

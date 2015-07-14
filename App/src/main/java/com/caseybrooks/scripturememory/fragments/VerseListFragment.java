@@ -127,12 +127,12 @@ public class VerseListFragment extends ListFragment {
 			Tag tag = db.getTag(listId);
             title = tag.name;
             color = tag.color;
-            MetaSettings.putDrawerSelection(context, 3, listId);
+            MetaSettings.putDrawerSelection(context, 4, listId);
         }
         else {
             title = db.getStateName(listId);
             color = db.getStateColor(listId);
-            MetaSettings.putDrawerSelection(context, 2, listId);
+            MetaSettings.putDrawerSelection(context, 3, listId);
         }
         db.close();
 

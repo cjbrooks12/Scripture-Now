@@ -15,8 +15,8 @@ ADDED from AndroidManifest.xml:2:1
 		ADDED from AndroidManifest.xml:2:11
 uses-permission#android.permission.INTERNET
 ADDED from AndroidManifest.xml:9:5
-MERGED from com.github.cjbrooks12:AndroidBibleTools:v0.2.15:11:5
-MERGED from com.github.cjbrooks12:AndroidBibleTools:v0.2.15:11:5
+MERGED from com.github.cjbrooks12:AndroidBibleTools:-SNAPSHOT:11:5
+MERGED from com.github.cjbrooks12:AndroidBibleTools:-SNAPSHOT:11:5
 	android:name
 		ADDED from AndroidManifest.xml:9:22
 uses-permission#android.permission.ACCESS_NETWORK_STATE
@@ -224,8 +224,8 @@ MERGED from com.larswerkman:HoloColorPicker:1.4:3:5
 MERGED from scripturememory:common:unspecified:5:5
 MERGED from com.android.support:appcompat-v7:22.2.0:20:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
-MERGED from com.github.cjbrooks12:AndroidBibleTools:v0.2.15:7:5
-MERGED from com.github.cjbrooks12:AndroidBibleTools:v0.2.15:7:5
+MERGED from com.github.cjbrooks12:AndroidBibleTools:-SNAPSHOT:7:5
+MERGED from com.github.cjbrooks12:AndroidBibleTools:-SNAPSHOT:7:5
 	android:targetSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0

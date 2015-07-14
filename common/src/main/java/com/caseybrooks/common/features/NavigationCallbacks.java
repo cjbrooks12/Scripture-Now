@@ -2,6 +2,7 @@ package com.caseybrooks.common.features;
 
 public interface NavigationCallbacks {
 	void setToolBar(String name, int color);
+
 	void toVerseList(int listType, int id);
 	void toVerseDetail();
 
@@ -15,4 +16,6 @@ public interface NavigationCallbacks {
 	void toDebugPreferences();
 	void toDebugDatabase();
 	void toDebugCache();
+
+	void toBible();
 }

@@ -148,4 +148,9 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
 	public void toDebugCache() {
 
 	}
+
+    @Override
+    public void toBible() {
+
+    }
 }

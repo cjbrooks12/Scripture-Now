@@ -118,6 +118,7 @@
     <attr format="color" name="color_background_selected"/>
     <attr format="color" name="color_card"/>
     <attr format="color" name="color_text"/>
+    <attr format="color" name="color_text_secondary"/>
     <attr format="color" name="color_toolbar"/>
     <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
@@ -128,6 +129,7 @@
     <attr format="reference" name="ic_action_add"/>
     <attr format="reference" name="ic_action_arrow_left"/>
     <attr format="reference" name="ic_action_arrow_right"/>
+    <attr format="reference" name="ic_action_book"/>
     <attr format="reference" name="ic_action_clear"/>
     <attr format="reference" name="ic_action_cloud_download"/>
     <attr format="reference" name="ic_action_create"/>
@@ -278,8 +280,10 @@
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
     <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/scripturememory/common/unspecified/res/values/values.xml -->
     <eat-comment/>
-    <color name="text_dark">#91000000</color>
-    <color name="text_light">#91FFFFFF</color>
+    <color name="text_primary_dark">#DE000000</color>
+    <color name="text_primary_light">#FFFFFFFF</color>
+    <color name="text_secondary_dark">#91000000</color>
+    <color name="text_secondary_light">#91FFFFFF</color>
     <declare-styleable name="ActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="none" value="0"/><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr name="title"/><attr format="string" name="subtitle"/><attr format="reference" name="titleTextStyle"/><attr format="reference" name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr format="reference" name="divider"/><attr format="reference" name="background"/><attr format="reference|color" name="backgroundStacked"/><attr format="reference|color" name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr name="homeAsUpIndicator"/><attr format="dimension" name="itemPadding"/><attr format="boolean" name="hideOnContentScroll"/><attr format="dimension" name="contentInsetStart"/><attr format="dimension" name="contentInsetEnd"/><attr format="dimension" name="contentInsetLeft"/><attr format="dimension" name="contentInsetRight"/><attr format="dimension" name="elevation"/><attr format="reference" name="popupTheme"/></declare-styleable>
     <declare-styleable name="ActionBarLayout"><attr name="android:layout_gravity"/></declare-styleable>
     <declare-styleable name="ActionMenuItemView"><attr name="android:minWidth"/></declare-styleable>
@@ -303,6 +307,7 @@
     <declare-styleable name="ParallaxScroll"><attr format="float" name="parallax_factor"/><attr format="float" name="alpha_factor"/><attr format="float" name="inner_parallax_factor"/><attr format="integer" name="parallax_views_num"/><attr format="boolean" name="circular_parallax"/></declare-styleable>
     <declare-styleable name="PopupWindow"><attr format="boolean" name="overlapAnchor"/><attr name="android:popupBackground"/></declare-styleable>
     <declare-styleable name="PopupWindowBackgroundState"><attr format="boolean" name="state_above_anchor"/></declare-styleable>
+    <declare-styleable name="ReferencePicker"><attr format="reference" name="backgroundDrawable"/><attr format="reference" name="clearButtonDrawable"/></declare-styleable>
     <declare-styleable name="SearchView"><attr format="reference" name="layout"/><attr format="boolean" name="iconifiedByDefault"/><attr name="android:maxWidth"/><attr format="string" name="queryHint"/><attr format="string" name="defaultQueryHint"/><attr name="android:imeOptions"/><attr name="android:inputType"/><attr format="reference" name="closeIcon"/><attr format="reference" name="goIcon"/><attr format="reference" name="searchIcon"/><attr format="reference" name="searchHintIcon"/><attr format="reference" name="voiceIcon"/><attr format="reference" name="commitIcon"/><attr format="reference" name="suggestionRowLayout"/><attr format="reference" name="queryBackground"/><attr format="reference" name="submitBackground"/><attr name="android:focusable"/></declare-styleable>
     <declare-styleable name="Spinner"><attr format="reference" name="prompt"/><attr format="enum" name="spinnerMode"><enum name="dialog" value="0"/><enum name="dropdown" value="1"/></attr><attr name="android:dropDownSelector"/><attr name="android:popupBackground"/><attr name="android:dropDownVerticalOffset"/><attr name="android:dropDownHorizontalOffset"/><attr name="android:dropDownWidth"/><attr format="reference" name="popupPromptView"/><attr name="android:gravity"/><attr format="boolean" name="disableChildrenWhenDisabled"/><attr name="android:background"/></declare-styleable>
     <declare-styleable name="SwitchCompat"><attr name="android:thumb"/><attr format="reference" name="track"/><attr name="android:textOn"/><attr name="android:textOff"/><attr format="dimension" name="thumbTextPadding"/><attr format="reference" name="switchTextAppearance"/><attr format="dimension" name="switchMinWidth"/><attr format="dimension" name="switchPadding"/><attr format="boolean" name="splitTrack"/><attr format="boolean" name="showText"/></declare-styleable>
@@ -1687,8 +1692,9 @@
         <item name="color_background">@color/background_dark</item>
         <item name="color_card">@color/card_dark</item>
         <item name="color_toolbar">@color/primary</item>
-        <item name="color_text">@color/text_light</item>
-        <item name="android:textColor">@color/text_light</item>
+        <item name="color_text">@color/text_primary_light</item>
+        <item name="color_text_secondary">@color/text_secondary_light</item>
+        <item name="android:textColor">@color/text_primary_light</item>
         <item name="android:windowBackground">@color/background_dark</item>
 
         <item name="theme_name">Dark</item>
@@ -1719,6 +1725,7 @@
         <item name="ic_action_subject">@drawable/ic_action_subject_dark</item>
 
 		<item name="ic_action_home">@drawable/ic_action_home_dark</item>
+        <item name="ic_action_book">@drawable/ic_action_book_dark</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_dark</item>
         <item name="ic_action_group_work">@drawable/ic_action_group_work_dark</item>
         <item name="ic_action_tag">@drawable/ic_action_tag_dark</item>
@@ -1739,8 +1746,9 @@
         <item name="color_background">@color/background_light</item>
         <item name="color_toolbar">@color/primary</item>
         <item name="color_card">@color/card_light</item>
-        <item name="color_text">@color/text_dark</item>
-        <item name="android:textColor">@color/text_dark</item>
+        <item name="color_text">@color/text_primary_dark</item>
+        <item name="color_text_secondary">@color/text_secondary_dark</item>
+        <item name="android:textColor">@color/text_primary_dark</item>
         <item name="android:windowBackground">@color/background_light</item>
 
         <item name="theme_name">Light</item>
@@ -1771,6 +1779,7 @@
         <item name="ic_action_subject">@drawable/ic_action_subject_light</item>
 
 		<item name="ic_action_home">@drawable/ic_action_home_light</item>
+        <item name="ic_action_book">@drawable/ic_action_book_light</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>
         <item name="ic_action_group_work">@drawable/ic_action_group_work_light</item>
         <item name="ic_action_tag">@drawable/ic_action_tag_light</item>

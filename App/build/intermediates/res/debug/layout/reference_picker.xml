@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="32dp"
-	android:background="@drawable/bg_oval_32" >
+	android:layout_height="wrap_content" >
 	<AutoCompleteTextView
 		android:id="@+id/edit_reference"
 		android:layout_width="match_parent"
@@ -21,7 +20,5 @@
 		android:layout_alignParentRight="true"
 		android:layout_marginRight="8dp"
 		android:layout_marginLeft="-4dp"
-		android:visibility="gone"
-		android:src="?attr/ic_action_clear"/>
-
-</RelativeLayout><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/common/src/main/res/layout/reference_picker.xml --><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/scripturememory/common/unspecified/res/layout/reference_picker.xml -->
+		android:visibility="gone" />
+</RelativeLayout><!-- From: file:/build/app/src/main/res/layout/reference_picker.xml --><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/-SNAPSHOT/res/layout/reference_picker.xml -->

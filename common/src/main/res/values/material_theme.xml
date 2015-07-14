@@ -14,8 +14,9 @@
         <item name="color_background">@color/background_light</item>
         <item name="color_toolbar">@color/primary</item>
         <item name="color_card">@color/card_light</item>
-        <item name="color_text">@color/text_dark</item>
-        <item name="android:textColor">@color/text_dark</item>
+        <item name="color_text">@color/text_primary_dark</item>
+        <item name="color_text_secondary">@color/text_secondary_dark</item>
+        <item name="android:textColor">@color/text_primary_dark</item>
         <item name="android:windowBackground">@color/background_light</item>
 
         <item name="theme_name">Light</item>
@@ -46,6 +47,7 @@
         <item name="ic_action_subject">@drawable/ic_action_subject_light</item>
 
 		<item name="ic_action_home">@drawable/ic_action_home_light</item>
+        <item name="ic_action_book">@drawable/ic_action_book_light</item>
         <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>
         <item name="ic_action_group_work">@drawable/ic_action_group_work_light</item>
         <item name="ic_action_tag">@drawable/ic_action_tag_light</item>

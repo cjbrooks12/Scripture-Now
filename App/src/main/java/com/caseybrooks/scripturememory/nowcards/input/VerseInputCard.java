@@ -16,8 +16,8 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
-import com.caseybrooks.common.pickers.referencepicker.ReferencePicker;
-import com.caseybrooks.common.pickers.versepicker.EditVerse;
+import com.caseybrooks.androidbibletools.widget.EditVerse;
+import com.caseybrooks.androidbibletools.widget.ReferencePicker;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
 

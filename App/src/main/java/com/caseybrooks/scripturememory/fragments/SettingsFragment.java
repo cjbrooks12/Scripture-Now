@@ -48,7 +48,6 @@ public class SettingsFragment extends PreferenceFragment {
 		setClicks();
 		setThemeSpinners();
 		setDefaultScreenSpinners();
-//		setBibleVersionSpinners();
 	}
 
 //Settings Setup Routine
@@ -166,7 +165,7 @@ public class SettingsFragment extends PreferenceFragment {
 
 		mCallbacks.setToolBar("Settings", typedValue.data);
 
-        MetaSettings.putDrawerSelection(context, 4, 0);
+        MetaSettings.putDrawerSelection(context, 5, 0);
     }
 
 	@Override

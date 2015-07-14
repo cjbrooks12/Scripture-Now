@@ -20,7 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.caseybrooks.androidbibletools.pickers.biblepicker.BiblePickerDialog;
+import com.caseybrooks.androidbibletools.widget.biblepicker.BiblePickerDialog;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.R;

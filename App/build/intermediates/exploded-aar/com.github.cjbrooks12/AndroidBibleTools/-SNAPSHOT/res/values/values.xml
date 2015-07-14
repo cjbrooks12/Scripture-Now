@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ReferencePicker"><attr format="reference" name="backgroundDrawable"/><attr format="reference" name="clearButtonDrawable"/></declare-styleable>
+    <!-- From: file:/build/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">AndroidBibleTools</string>
+    <string name="bibles_org_key"/>
+</resources>

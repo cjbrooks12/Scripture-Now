@@ -9,7 +9,7 @@
     android:paddingStart="32dp"
     android:orientation="horizontal"
     android:background="?attr/color_background">
-    
+
     <RelativeLayout
         android:layout_width="32dp"
         android:layout_height="32dp">
@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:textColor="?attr/color_text_secondary"
             android:textSize="14sp" />
     </RelativeLayout>
 
@@ -32,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textColor="?attr/color_text_secondary"
         android:fontFamily="sans-serif-light"
         android:paddingLeft="16dp"
         android:textSize="18sp" />

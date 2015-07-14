@@ -1,14 +1,14 @@
 <android.support.v7.widget.CardView
-    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    cardView:cardBackgroundColor="?attr/color_card"
+    app:cardBackgroundColor="?attr/color_card"
     android:layout_marginTop="8dp"
 	android:padding="8dp"
-	cardView:cardUseCompatPadding="true"
-    cardView:cardCornerRadius="4dp"
-	cardView:cardElevation="2dp">
+	app:cardUseCompatPadding="true"
+    app:cardCornerRadius="4dp"
+	app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,19 +64,22 @@
 			android:layout_marginRight="8dp"
 			android:background="@android:color/darker_gray" />
 
-        <com.caseybrooks.common.pickers.referencepicker.ReferencePicker
+        <com.caseybrooks.androidbibletools.widget.ReferencePicker
             android:id="@+id/reference_picker"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical"
+            app:backgroundDrawable="@drawable/bg_oval_32"
+            app:clearButtonDrawable="?attr/ic_action_clear"/>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.caseybrooks.common.pickers.versepicker.EditVerse
+            <com.caseybrooks.androidbibletools.widget.EditVerse
                 android:id="@+id/verse_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

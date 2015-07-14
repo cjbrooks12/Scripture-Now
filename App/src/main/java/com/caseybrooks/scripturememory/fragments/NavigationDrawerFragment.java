@@ -84,21 +84,24 @@ public class NavigationDrawerFragment extends Fragment {
 		case 2:
 			pair = new Pair<>(1, 0);
 			break;
-		case 3:
-			pair = new Pair<>(2, MetaSettings.getDefaultScreen(getActivity()).second);
-			break;
+        case 3:
+            pair = new Pair<>(2, 0);
+            break;
 		case 4:
 			pair = new Pair<>(3, MetaSettings.getDefaultScreen(getActivity()).second);
 			break;
 		case 5:
+			pair = new Pair<>(4, MetaSettings.getDefaultScreen(getActivity()).second);
+			break;
+		case 6:
 			if(MainSettings.getWorkingList(getActivity()).first == -1) {
 				pair = new Pair<>(0, 0);
 			}
 			if(MainSettings.getWorkingList(getActivity()).first == VerseListFragment.STATE) {
-				pair = new Pair<>(2, MainSettings.getWorkingList(getActivity()).second);
+				pair = new Pair<>(3, MainSettings.getWorkingList(getActivity()).second);
 			}
 			else {
-				pair = new Pair<>(3, MainSettings.getWorkingList(getActivity()).second);
+				pair = new Pair<>(4, MainSettings.getWorkingList(getActivity()).second);
 			}
 			break;
 		default:
@@ -137,6 +140,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         //set the headers for top-level navigation
         listDataHeader.add("Dashboard");
+        listDataHeader.add("Read");
         listDataHeader.add("Discover");
         listDataHeader.add("Memorization State");
         listDataHeader.add("Tags");
@@ -150,10 +154,11 @@ public class NavigationDrawerFragment extends Fragment {
 		listDataChild.put(listDataHeader.get(3), new ArrayList<NavListItem>());
 		listDataChild.put(listDataHeader.get(4), new ArrayList<NavListItem>());
 		listDataChild.put(listDataHeader.get(5), new ArrayList<NavListItem>());
+        listDataChild.put(listDataHeader.get(6), new ArrayList<NavListItem>());
 
 		if (BuildConfig.DEBUG) {
 			listDataHeader.add("Debug");
-			listDataChild.put(listDataHeader.get(6), new ArrayList<NavListItem>());
+			listDataChild.put(listDataHeader.get(7), new ArrayList<NavListItem>());
 		}
 
         listAdapter = new ExpandableListAdapter(parentActivity, listDataHeader, listDataChild);
@@ -173,12 +178,29 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if(groupPosition != 2 && groupPosition != 3 && groupPosition != 6) {
+                if(groupPosition == 0) {
                     selectItem(new Pair<>(groupPosition, 0));
                     return true;
                 }
-
-                return false;
+                else if(groupPosition == 1) {
+                    selectItem(new Pair<>(groupPosition, 0));
+                    return true;
+                }
+                else if(groupPosition == 2) {
+                    selectItem(new Pair<>(groupPosition, 0));
+                    return true;
+                }
+                else if(groupPosition == 5) {
+                    selectItem(new Pair<>(groupPosition, 0));
+                    return true;
+                }
+                else if(groupPosition == 6) {
+                    selectItem(new Pair<>(groupPosition, 0));
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         });
     }
@@ -193,27 +215,30 @@ public class NavigationDrawerFragment extends Fragment {
                     mCallbacks.toDashboard();
                     break;
                 case 1:
-                    mCallbacks.toTopicalBible();
+                    mCallbacks.toBible();
                     break;
                 case 2:
-                    mCallbacks.toVerseList(VerseListFragment.STATE, item.second);
+                    mCallbacks.toTopicalBible();
                     break;
                 case 3:
-                    mCallbacks.toVerseList(VerseListFragment.TAGS, item.second);
+                    mCallbacks.toVerseList(VerseListFragment.STATE, item.second);
                     break;
                 case 4:
-                    mCallbacks.toSettings();
+                    mCallbacks.toVerseList(VerseListFragment.TAGS, item.second);
                     break;
                 case 5:
+                    mCallbacks.toSettings();
+                    break;
+                case 6:
                     mCallbacks.toHelp();
 					break;
-				case 6:
+				case 7:
 					if(item.second == 0)
 						mCallbacks.toDebugPreferences();
 					else if(item.second == 1)
 						mCallbacks.toDebugDatabase();
-					else
-						mCallbacks.toDebugCache();
+                    else if(item.second == 2)
+                        mCallbacks.toDebugCache();
                     break;
                 default:
             }
@@ -268,8 +293,8 @@ public class NavigationDrawerFragment extends Fragment {
 					states.add(item);
 				}
 			}
-			childItems.remove(headerItems.get(2));
-			childItems.put(headerItems.get(2), states);
+			childItems.remove(headerItems.get(3));
+			childItems.put(headerItems.get(3), states);
 
 
 			//update all the tag information
@@ -280,25 +305,26 @@ public class NavigationDrawerFragment extends Fragment {
 			for (Tag tag: allTags) {
 				NavListItem item = new NavListItem();
 				item.id = tag.id;
-				item.groupPosition = 3;
+				item.groupPosition = 4;
 				item.name = tag.name;
 				item.color = tag.color;
 				item.count = tag.count;
 
 				tags.add(item);
 			}
-			childItems.remove(headerItems.get(3));
-			childItems.put(headerItems.get(3), tags);
+			childItems.remove(headerItems.get(4));
+			childItems.put(headerItems.get(4), tags);
 
             db.close();
 
 			//put debug selections if in debug mode
 			if(BuildConfig.DEBUG) {
+                //Items under the Debug Tab
 				List<NavListItem> debugItems = new ArrayList<>();
 
 				NavListItem debugPrefsItem = new NavListItem();
 				debugPrefsItem.id = 0;
-				debugPrefsItem.groupPosition = 6;
+				debugPrefsItem.groupPosition = 7;
 				debugPrefsItem.childPosition = 0;
 				debugPrefsItem.name = "All Preferences";
 				debugPrefsItem.color = Color.parseColor("#FFC107");
@@ -307,7 +333,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 				NavListItem debugDatabaseItem = new NavListItem();
 				debugDatabaseItem.id = 1;
-				debugDatabaseItem.groupPosition = 6;
+				debugDatabaseItem.groupPosition = 7;
 				debugDatabaseItem.childPosition = 1;
 				debugDatabaseItem.name = "Entire Database";
 				debugDatabaseItem.color = Color.parseColor("#4CAF50");
@@ -316,15 +342,15 @@ public class NavigationDrawerFragment extends Fragment {
 
 				NavListItem debugCacheItem = new NavListItem();
 				debugCacheItem.id = 2;
-				debugCacheItem.groupPosition = 6;
+				debugCacheItem.groupPosition = 7;
 				debugCacheItem.childPosition = 2;
 				debugCacheItem.name = "Cache Contents";
 				debugCacheItem.color = Color.parseColor("#607D8B");
 				debugCacheItem.count = DebugCacheFragment.getCacheCount(context);
 				debugItems.add(debugCacheItem);
 
-				childItems.remove(headerItems.get(6));
-				childItems.put(headerItems.get(6), debugItems);
+                childItems.remove(headerItems.get(7));
+                childItems.put(headerItems.get(7), debugItems);
 			}
 
             super.notifyDataSetChanged();
@@ -395,7 +421,7 @@ public class NavigationDrawerFragment extends Fragment {
             TextView headerText = (TextView) convertView.findViewById(R.id.navListHeader);
             ImageView headerImage = (ImageView) convertView.findViewById(R.id.header_image);
 
-			if(groupPosition == 3) {
+			if(groupPosition == 4) {
 				headerText.setText(headerTitle + " (" + Math.max(getChildrenCount(groupPosition)-1, 0) + ")");
 			}
 			else {
@@ -404,6 +430,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 			TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{
 					R.attr.ic_action_home,
+                    R.attr.ic_action_book,
 					R.attr.ic_action_find_in_page,
 					R.attr.ic_action_group_work,
 					R.attr.ic_action_tag,
@@ -418,7 +445,7 @@ public class NavigationDrawerFragment extends Fragment {
             int selectedGroup = MetaSettings.getDrawerSelection(context).first;
             TypedArray selectedColorAttrs = context.getTheme().obtainStyledAttributes(new int[]{
 					R.attr.colorAccent,
-					R.attr.color_text,
+					R.attr.color_text_secondary,
 					R.attr.color_background,
 					R.attr.color_background_selected });
 

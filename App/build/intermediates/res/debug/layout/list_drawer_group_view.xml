@@ -24,6 +24,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/header_image"
         android:layout_toEndOf="@id/header_image"
+        android:textColor="?attr/color_text_secondary"
         android:textStyle="bold"
         android:textSize="22sp" />
 </RelativeLayout><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/layout/list_drawer_group_view.xml -->
