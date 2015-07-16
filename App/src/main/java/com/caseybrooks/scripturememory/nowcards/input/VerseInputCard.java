@@ -18,6 +18,7 @@ import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.widget.EditVerse;
 import com.caseybrooks.androidbibletools.widget.ReferencePicker;
+import com.caseybrooks.androidbibletools.widget.ReferencePickerListener;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
@@ -63,6 +64,27 @@ public class VerseInputCard extends FrameLayout {
     	contextMenu.setOnClickListener(contextMenuClick);
 
 		referencePicker = (ReferencePicker) findViewById(R.id.reference_picker);
+		referencePicker.setListener(new ReferencePickerListener() {
+			@Override
+			public void onPreParse(String textToParse) {
+
+			}
+
+			@Override
+			public void onParseCompleted(Reference parsedReference, boolean wasSuccessful) {
+				if(wasSuccessful) {
+					final ABSPassage passage = new ABSPassage(
+							getResources().getString(R.string.bibles_org_key),
+							parsedReference
+					);
+
+					verseView.loadSelectedBible();
+					verseView.setVerse(passage);
+					verseView.tryCacheOrDownloadText();
+				}
+			}
+		});
+
 		verseView = (EditVerse) findViewById(R.id.verse_view);
 
 		editTags = (MultiAutoCompleteTextView) findViewById(R.id.edit_tags);
@@ -73,8 +95,6 @@ public class VerseInputCard extends FrameLayout {
 			tags.add(tag.name);
 		}
 		db.close();
-
-
 
 		ArrayAdapter<String> tagsAdapter = new ArrayAdapter<String>(
 				context,
@@ -96,17 +116,7 @@ public class VerseInputCard extends FrameLayout {
 		lookupText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(referencePicker.checkReference()) {
-					referencePicker.getSelectedBible();
-					Reference ref = referencePicker.getReference();
-					ABSPassage passage = new ABSPassage(
-							getResources().getString(R.string.bibles_org_key),
-							ref
-					);
-					verseView.getSelectedBible();
-					verseView.setVerse(passage);
-					verseView.tryCacheOrDownloadText();
-				}
+				referencePicker.checkReference();
 			}
 		});
 

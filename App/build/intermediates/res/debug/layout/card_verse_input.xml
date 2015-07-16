@@ -72,9 +72,12 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:singleLine="true"
+            android:hint="Reference"
             android:gravity="center_vertical"
-            app:backgroundDrawable="@drawable/bg_oval_32"
-            app:clearButtonDrawable="?attr/ic_action_clear"/>
+            android:background="@drawable/bg_oval_32"/>
 
         <ScrollView
             android:layout_width="match_parent"

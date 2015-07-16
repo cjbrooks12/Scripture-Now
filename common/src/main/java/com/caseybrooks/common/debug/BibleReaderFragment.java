@@ -5,18 +5,22 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.data.Formatter;
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.widget.ReferencePicker;
+import com.caseybrooks.androidbibletools.widget.ReferencePickerListener;
 import com.caseybrooks.androidbibletools.widget.VerseView;
 import com.caseybrooks.common.R;
 import com.caseybrooks.common.features.NavigationCallbacks;
@@ -51,9 +55,21 @@ public class BibleReaderFragment extends Fragment {
 		this.context = getActivity();
 		setHasOptionsMenu(true);
 
-
 		referencePicker = (ReferencePicker) view.findViewById(R.id.reference_picker);
+		referencePicker.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			  @Override
+			  public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				  if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+					  loadBible();
+					  return true;
+				  }
+				  return false;
+			  }
+		  });
+
 		verseView = (VerseView) view.findViewById(R.id.verse_view);
+		verseView.setDisplayingRawText(false);
+		verseView.setDisplayingAsHtml(true);
 
 		return view;
 	}
@@ -76,55 +92,58 @@ public class BibleReaderFragment extends Fragment {
 
 	public void loadBible() {
 		referencePicker.checkReference();
-		Reference ref = referencePicker.getReference();
-		String progress = ref.toString().replaceAll(":.*", "");
-		referencePicker.setText(progress);
+		referencePicker.setListener(new ReferencePickerListener() {
+			@Override
+			public void onPreParse(String textToParse) {
 
-		if(referencePicker.checkReference()) {
-			saveProgress(progress);
+			}
 
-			referencePicker.getSelectedBible();
-			ref = referencePicker.getReference();
-			final ABSPassage passage = new ABSPassage(
-					getResources().getString(R.string.bibles_org_key),
-					ref
-			);
-			passage.setFormatter(new Formatter() {
-				@Override
-				public String onPreFormat(Reference reference) {
-					return "";
+			@Override
+			public void onParseCompleted(Reference parsedReference, boolean wasSuccessful) {
+				if(wasSuccessful) {
+					saveProgress(parsedReference.toString());
+
+					final ABSPassage passage = new ABSPassage(
+							getResources().getString(R.string.bibles_org_key),
+							parsedReference
+					);
+					passage.setFormatter(new Formatter() {
+						@Override
+						public String onPreFormat(Reference reference) {
+							return "";
+						}
+
+						@Override
+						public String onFormatVerseStart(int i) {
+							return "<b><sup>" + i + "</sup></b>";
+						}
+
+						@Override
+						public String onFormatText(String s) {
+							return s;
+						}
+
+						@Override
+						public String onFormatSpecial(String s) {
+							return s;
+						}
+
+						@Override
+						public String onFormatVerseEnd() {
+							return "<br />";
+						}
+
+						@Override
+						public String onPostFormat() {
+							return "<br /><br /><small>" + ((ABSBible) passage.getBible()).getCopyright() + "</small>";
+						}
+					});
+					verseView.loadSelectedBible();
+					verseView.setVerse(passage);
+					verseView.tryCacheOrDownloadText();
 				}
-
-				@Override
-				public String onFormatVerseStart(int i) {
-					return "<b><sup>" + i + "</sup></b>";
-				}
-
-				@Override
-				public String onFormatText(String s) {
-					return s;
-				}
-
-				@Override
-				public String onFormatSpecial(String s) {
-					return s;
-				}
-
-				@Override
-				public String onFormatVerseEnd() {
-					return "</br>";
-				}
-
-				@Override
-				public String onPostFormat() {
-					return "</br></br><small>" + ((ABSBible) passage.getBible()).getCopyright() + "</small>";
-				}
-			});
-			verseView.getSelectedBible();
-			verseView.setVerse(passage);
-			verseView.tryCacheOrDownloadText();
-
-		}
+			}
+		});
 	}
 
 //Menu
