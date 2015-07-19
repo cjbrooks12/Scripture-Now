@@ -1,112 +1,194 @@
 package com.caseybrooks.scripturememory.nowcards.votd;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
-import com.caseybrooks.androidbibletools.basic.Passage;
-import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
+import com.caseybrooks.androidbibletools.basic.AbstractVerse;
+import com.caseybrooks.androidbibletools.basic.Bible;
+import com.caseybrooks.androidbibletools.basic.Book;
+import com.caseybrooks.androidbibletools.basic.Reference;
+import com.caseybrooks.androidbibletools.io.ABTUtility;
+import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.providers.votd.VerseOfTheDay;
-import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.androidbibletools.widget.IReferencePickerListener;
+import com.caseybrooks.androidbibletools.widget.IVerseViewListener;
+import com.caseybrooks.androidbibletools.widget.LoadState;
+import com.caseybrooks.androidbibletools.widget.ReferenceWorker;
+import com.caseybrooks.androidbibletools.widget.VerseWorker;
+import com.caseybrooks.androidbibletools.widget.WorkerThread;
+import com.caseybrooks.scripturememory.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Random;
 
-public class VOTD {
+public class VOTD implements IVerseViewListener {
+	WorkerThread workerThread;
+	VerseWorker verseWorker;
+	Context context;
 
-	public static Passage getPassage(Context context) {
-		if(VOTDSettings.getVOTDId(context) > 0) {
-			VerseDB db = new VerseDB(context).open();
-			Passage passage = db.getVerse(VOTDSettings.getVOTDId(context));
-			db.close();
-			return passage;
-		}
-		else {
-			return null;
-		}
+	Bible selectedBible;
+
+	IVerseViewListener listener;
+
+	public VOTD(Context context) {
+		this.context = context;
+
+		workerThread = new WorkerThread();
+		if(workerThread.getState() == Thread.State.NEW)
+			workerThread.start();
+
+		verseWorker = new VerseWorker(context);
+		verseWorker.setListener(this);
 	}
 
-	public static boolean isSaved(Context context) {
-		VerseDB db = new VerseDB(context).open();
-		Passage currentPassage = db.getVerse(VOTDSettings.getVOTDId(context));
-		db.close();
-		if((currentPassage != null) && (currentPassage.getMetadata().getInt(DefaultMetaData.STATE) != VerseDB.VOTD)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	public void loadTodaysVerse() {
+		verseWorker.loadSelectedBible();
 	}
 
-    public static void saveVerse(Context context) {
-		VerseDB db = new VerseDB(context).open();
-		Passage currentPassage = db.getVerse(VOTDSettings.getVOTDId(context));
+	@Override
+	public boolean onBibleLoaded(Bible bible, LoadState loadState) {
+		selectedBible = bible;
 
-		if(currentPassage != null) {
-			currentPassage.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.CURRENT_NONE);
-			db.updateVerse(currentPassage);
-			db.close();
-		}
-    }
+		workerThread.post(checkCacheRunnable);
 
-//    public void setAsNotification() {
-//        saveVerse();
-//        VerseDB db = new VerseDB(context).open();
-//        int id = db.getVerseId(currentVerse.getReference());
-//        Main.putVerseId(context, id);
-//        Main.setActive(context, true);
-//        Main.putWorkingList(context, VerseListFragment.TAGS, db.getTag("VOTD").id);
-//        db.close();
-//
-//        updateAll();
-//    }
+		return false;
+	}
 
-	public static class Redownload extends AsyncTask<Void, Void, Void> {
-		Context context;
+	@Override
+	public boolean onVerseLoaded(AbstractVerse abstractVerse, LoadState loadState) {
+		return (listener != null) ? listener.onVerseLoaded(abstractVerse, loadState) : false;
+	}
 
-		public Redownload(Context context) {
-			this.context = context;
-		}
+	public IVerseViewListener getListener() {
+		return listener;
+	}
 
+	public void setListener(IVerseViewListener listener) {
+		this.listener = listener;
+	}
+
+//Background tasks necessary to load the Verse of the Day
+//------------------------------------------------------------------------------
+	Runnable checkCacheRunnable = new Runnable() {
 		@Override
-		protected Void doInBackground(Void... params) {
+		public void run() {
+			String key = VOTDSettings.getKey(context);
+
+			//try to load the VOTD from the cache,
+			if(key != null) {
+				//see if the verse is from today. If it is not, force a deletion
+				//of the file in the cache
+				long lastUpdatedMillis = PreferenceManager.getDefaultSharedPreferences(context).getLong(key, 0L);
+				Calendar lastUpdated = Calendar.getInstance();
+				lastUpdated.setTimeInMillis(lastUpdatedMillis);
+
+				Calendar now = Calendar.getInstance();
+
+				if(now.get(Calendar.DATE) != lastUpdated.get(Calendar.DATE) ||
+						now.get(Calendar.MONTH) != lastUpdated.get(Calendar.MONTH) ||
+						now.get(Calendar.YEAR) != lastUpdated.get(Calendar.YEAR)) {
+
+					PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(key, 1L);
+					ABTUtility.getChachedDocument(context, key, ABTUtility.CacheTimeout.OneDay.millis);
+
+					workerThread.post(getReferenceRunnable);
+				}
+				else {
+					Reference ref = new Reference.Builder()
+							.setBible(selectedBible)
+							.parseReference(VOTDSettings.getReference(context))
+							.create();
+
+					verseWorker.setVerse(new ABSPassage(
+							context.getResources().getString(R.string.bibles_org_key),
+							ref
+					));
+					verseWorker.tryCacheOrDownloadText();
+				}
+
+				return;
+			}
+			else {
+				workerThread.post(getReferenceRunnable);
+			}
+		}
+	};
+
+	Runnable getReferenceRunnable = new Runnable() {
+		@Override
+		public void run() {
 			try {
-				VerseOfTheDay verseOfTheDay = new VerseOfTheDay();
+				VerseOfTheDay votd = new VerseOfTheDay();
+				votd.parseDocument(votd.getDocument());
 
-				//try to get today's VOTD
-				if(verseOfTheDay.isAvailable()) {
-					verseOfTheDay.parseDocument(verseOfTheDay.getDocument());
+				ReferenceWorker referenceWorker = new ReferenceWorker(context);
+				referenceWorker.setListener(new IReferencePickerListener() {
+					@Override
+					public boolean onBibleLoaded(Bible bible, LoadState loadState) {
+						return false;
+					}
 
-					//if we have successfully downloaded a new verse...
-					Passage newVOTD = verseOfTheDay.getPassage();
-					if(newVOTD != null) {
-						VerseDB db = new VerseDB(context).open();
-
-						//Delete the old VOTD (assuming it has not been saved)
-						Passage currentVOTD = db.getVerse(VOTDSettings.getVOTDId(context));
-						if((currentVOTD != null) && (currentVOTD.getMetadata().getInt(DefaultMetaData.STATE) == VerseDB.VOTD)) {
-							db.deleteVerse(currentVOTD);
-							VOTDSettings.setVOTDId(context, -1);
+					@Override
+					public boolean onReferenceParsed(Reference reference, boolean b) {
+						if(b) {
+							verseWorker.setVerse(new ABSPassage(
+									context.getResources().getString(R.string.bibles_org_key),
+									reference
+							));
+							VOTDSettings.setReference(context, reference.toString());
+							VOTDSettings.setKey(context, verseWorker.getVerse().getId());
+							verseWorker.tryCacheOrDownloadText();
+						}
+						else {
+							workerThread.post(getRandomVerseRunnable);
 						}
 
-						//Add the new verse to the database
-						newVOTD.getMetadata().putInt(DefaultMetaData.STATE, VerseDB.VOTD);
-
-						int id = db.insertVerse(newVOTD);
-						VOTDSettings.setVOTDId(context, id);
+						return false;
 					}
-				}
+				});
+				referenceWorker.loadSelectedBible();
+				referenceWorker.checkReference(votd.getPassage().getReference().toString());
 			}
 			catch(IOException ioe) {
 				ioe.printStackTrace();
 			}
-
-			return null;
 		}
+	};
 
+	Runnable getRandomVerseRunnable = new Runnable() {
 		@Override
-		protected void onPostExecute(Void aVoid) {
-			super.onPostExecute(aVoid);
+		public void run() {
+			ArrayList<Book> books = selectedBible.getBooks();
+			Calendar cal = Calendar.getInstance();
 
-			VOTDBroadcasts.updateAll(context);
+			int todaysRandomSeed = cal.get(Calendar.DATE) *
+					cal.get(Calendar.MONTH) *
+					cal.get(Calendar.YEAR);
+
+			Random random = new Random(todaysRandomSeed);
+
+			Book randomBook = selectedBible.getBooks().get(random.nextInt(selectedBible.getBooks().size()));
+			int randomChapter = random.nextInt(randomBook.numChapters() + 1);
+			int randomVerse = random.nextInt(randomBook.numVersesInChapter(randomChapter) + 1);
+
+			Reference reference = new Reference.Builder()
+					.setBible(selectedBible)
+					.setBook(randomBook)
+					.setChapter(randomChapter)
+					.setVerses(randomVerse)
+					.create();
+
+			verseWorker.setVerse(new ABSPassage(
+					context.getResources().getString(R.string.bibles_org_key),
+					reference
+			));
+
+			VOTDSettings.setReference(context, reference.toString());
+			VOTDSettings.setKey(context, verseWorker.getVerse().getId());
+
+			verseWorker.tryCacheOrDownloadText();
 		}
-	}
+	};
 }

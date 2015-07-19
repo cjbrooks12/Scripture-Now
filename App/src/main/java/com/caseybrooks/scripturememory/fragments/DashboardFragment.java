@@ -183,7 +183,6 @@ public class DashboardFragment extends Fragment {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			notify_card.update();
-            votd_card.update();
 		}
 	}
 

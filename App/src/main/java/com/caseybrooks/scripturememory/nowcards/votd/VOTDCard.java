@@ -1,6 +1,5 @@
 package com.caseybrooks.scripturememory.nowcards.votd;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
@@ -12,18 +11,24 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.caseybrooks.androidbibletools.basic.Passage;
+import com.caseybrooks.androidbibletools.basic.AbstractVerse;
+import com.caseybrooks.androidbibletools.basic.Bible;
+import com.caseybrooks.androidbibletools.widget.IVerseViewListener;
+import com.caseybrooks.androidbibletools.widget.LoadState;
+import com.caseybrooks.androidbibletools.widget.VerseView;
 import com.caseybrooks.scripturememory.R;
 
-public class VOTDCard extends FrameLayout {
-    private TextView ref, ver;
+public class VOTDCard extends FrameLayout implements IVerseViewListener {
+    private TextView ref;
+	private VerseView ver;
     private ProgressBar progress;
     ImageButton overflowButton;
     Context context;
 
-//LIfecycle and Initialization
+	VOTD votd;
+
+//Lifecycle and Initialization
 //------------------------------------------------------------------------------
     public VOTDCard(Context context) {
         super(context);
@@ -35,7 +40,7 @@ public class VOTDCard extends FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.card_votd, this);
 
 		ref = (TextView) findViewById(R.id.votdReference);
-		ver = (TextView) findViewById(R.id.votdVerse);
+		ver = (VerseView) findViewById(R.id.votdVerse);
 
         overflowButton = (ImageButton) findViewById(R.id.overflowButton);
 		overflowButton.setOnClickListener(overflowButtonClick);
@@ -43,21 +48,12 @@ public class VOTDCard extends FrameLayout {
 
         progress = (ProgressBar) findViewById(R.id.progress);
 
-		update();
-    }
+		setWorking(true);
 
-	public void update() {
-		setWorking(false);
-		Passage currentPassage = VOTD.getPassage(context);
-
-		if(currentPassage != null) {
-			ref.setText(currentPassage.getReference().toString());
-			ver.setText(currentPassage.getText());
-		}
-		else {
-			ref.setText("Trouble Displaying Verse");
-			ver.setText("Click here to try again");
-		}
+		votd = new VOTD(context);
+		votd.setListener(this);
+		ver.setListener(this);
+		votd.loadTodaysVerse();
 	}
 
 	public void removeFromParent() {
@@ -86,22 +82,13 @@ public class VOTDCard extends FrameLayout {
 
 			switch (item.getItemId()) {
 			case R.id.overflow_votd_card_redownload:
-				new VOTD.Redownload(context).execute();
 				setWorking(true);
+				votd.workerThread.post(votd.getReferenceRunnable);
 			default:
 				return false;
 			}
 		}
 	};
-
-
-
-
-
-
-
-
-
 
 
 //    private OnClickListener overflowClick = new OnClickListener() {
@@ -153,44 +140,44 @@ public class VOTDCard extends FrameLayout {
 //            }
 //        }
 //    };
-//
+
     private OnClickListener cardClick = new OnClickListener() {
         @Override
         public void onClick(final View v) {
-            if(VOTD.getPassage(context) != null && !VOTD.isSaved(context)) {
-                final View view = LayoutInflater.from(context).inflate(R.layout.popup_add_verse, null);
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setView(view);
-
-                final AlertDialog dialog = builder.create();
-                view.findViewById(R.id.scroll_area).setVisibility(View.GONE);
-
-                TextView verseList = (TextView) view.findViewById(R.id.description);
-                verseList.setText("Add " + VOTD.getPassage(context).getReference().toString() + " to your list?");
-
-                TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                TextView addVerseButton = (TextView) view.findViewById(R.id.add_verse_button);
-                addVerseButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        VOTD.saveVerse(context);
-                        Toast.makeText(context, VOTD.getPassage(context).getReference().toString() + " has been saved", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();
-            }
-            else {
-                new VOTD.Redownload(context).execute();
-				setWorking(true);
-            }
+//            if(VOTD.getPassage(context) != null && !VOTD.isSaved(context)) {
+//                final View view = LayoutInflater.from(context).inflate(R.layout.popup_add_verse, null);
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                builder.setView(view);
+//
+//                final AlertDialog dialog = builder.create();
+//                view.findViewById(R.id.scroll_area).setVisibility(View.GONE);
+//
+//                TextView verseList = (TextView) view.findViewById(R.id.description);
+//                verseList.setText("Add " + VOTD.getPassage(context).getReference().toString() + " to your list?");
+//
+//                TextView cancelButton = (TextView) view.findViewById(R.id.cancel_button);
+//                cancelButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                TextView addVerseButton = (TextView) view.findViewById(R.id.add_verse_button);
+//                addVerseButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        VOTD.saveVerse(context);
+//                        Toast.makeText(context, VOTD.getPassage(context).getReference().toString() + " has been saved", Toast.LENGTH_SHORT).show();
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                dialog.show();
+//            }
+//            else {
+//                new VOTD.Redownload(context).execute();
+//				setWorking(true);
+//            }
         }
     };
 
@@ -206,4 +193,36 @@ public class VOTDCard extends FrameLayout {
             progress.setVisibility(View.GONE);
         }
     }
+
+	@Override
+	public boolean onBibleLoaded(Bible bible, LoadState loadState) {
+		return false;
+	}
+
+	@Override
+	public boolean onVerseLoaded(final AbstractVerse abstractVerse, final LoadState loadState) {
+		ref.post(new Runnable() {
+			@Override
+			public void run() {
+				if(loadState == LoadState.Failed) {
+					ref.setText(abstractVerse.getReference().toString());
+
+					if(ver.getText().equals("Failed to download verse")){
+						setWorking(false);
+					}
+					else {
+						ver.setText("Failed to download verse");
+						votd.workerThread.post(votd.getRandomVerseRunnable);
+					}
+				}
+				else {
+					ref.setText(abstractVerse.getReference().toString());
+					ver.setText(abstractVerse.getText());
+					setWorking(false);
+				}
+			}
+		});
+
+		return true;
+	}
 }

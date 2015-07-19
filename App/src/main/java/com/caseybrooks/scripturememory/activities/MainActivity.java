@@ -22,14 +22,14 @@ import android.view.ViewConfiguration;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
-import com.caseybrooks.common.debug.BibleReaderFragment;
-import com.caseybrooks.common.debug.DebugCacheFragment;
-import com.caseybrooks.common.debug.DebugDatabaseFragment;
-import com.caseybrooks.common.debug.DebugSharedPreferencesFragment;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
+import com.caseybrooks.scripturememory.fragments.BibleReaderFragment;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
+import com.caseybrooks.scripturememory.fragments.DebugCacheFragment;
+import com.caseybrooks.scripturememory.fragments.DebugDatabaseFragment;
+import com.caseybrooks.scripturememory.fragments.DebugSharedPreferencesFragment;
 import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
 import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;

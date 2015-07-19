@@ -623,8 +623,10 @@ public final class R {
 		public static final int listMode = 0x7f0c0009;
 		public static final int list_item = 0x7f0c002c;
 		public static final int media_actions = 0x7f0c00cf;
-		public static final int menu_debug_clear = 0x7f0c0115;
-		public static final int menu_debug_refresh = 0x7f0c0116;
+		public static final int menu_bible_search = 0x7f0c0112;
+		public static final int menu_bible_show_dialog = 0x7f0c0113;
+		public static final int menu_debug_clear = 0x7f0c0117;
+		public static final int menu_debug_refresh = 0x7f0c0118;
 		public static final int middle = 0x7f0c0017;
 		public static final int multiply = 0x7f0c0020;
 		public static final int never = 0x7f0c001b;
@@ -730,7 +732,8 @@ public final class R {
 		public static final int support_simple_spinner_dropdown_item = 0x7f030051;
 	}
 	public static final class menu {
-		public static final int menu_debug = 0x7f100004;
+		public static final int menu_bible_reader = 0x7f100003;
+		public static final int menu_debug = 0x7f100005;
 	}
 	public static final class string {
 		public static final int abc_action_bar_home_description = 0x7f0e0000;

@@ -70,4 +70,4 @@
 			android:layout_height="wrap_content"
 			android:fastScrollEnabled="true" />
 	</RelativeLayout>
-</LinearLayout><!-- From: file:/build/app/src/main/res/layout/bible_picker.xml --><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/-SNAPSHOT/res/layout/bible_picker.xml -->
+</LinearLayout><!-- From: file:/build/app/src/main/res/layout/bible_picker.xml --><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.18/res/layout/bible_picker.xml -->

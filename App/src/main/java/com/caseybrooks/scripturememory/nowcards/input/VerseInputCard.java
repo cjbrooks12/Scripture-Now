@@ -12,19 +12,23 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
+import com.caseybrooks.androidbibletools.basic.AbstractVerse;
+import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.widget.EditVerse;
+import com.caseybrooks.androidbibletools.widget.IReferencePickerListener;
+import com.caseybrooks.androidbibletools.widget.IVerseViewListener;
+import com.caseybrooks.androidbibletools.widget.LoadState;
 import com.caseybrooks.androidbibletools.widget.ReferencePicker;
-import com.caseybrooks.androidbibletools.widget.ReferencePickerListener;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import java.util.ArrayList;
 
-public class VerseInputCard extends FrameLayout {
+public class VerseInputCard extends FrameLayout implements IReferencePickerListener {
 //Data Members
 //------------------------------------------------------------------------------
 	Context context;
@@ -39,6 +43,8 @@ public class VerseInputCard extends FrameLayout {
 	ImageView lookupText;
 	ImageView saveVerse;
 	ImageView showTags;
+
+	boolean downloadAfterChecking = false;
 
 //Constructors and Initialization
 //------------------------------------------------------------------------------
@@ -64,26 +70,8 @@ public class VerseInputCard extends FrameLayout {
     	contextMenu.setOnClickListener(contextMenuClick);
 
 		referencePicker = (ReferencePicker) findViewById(R.id.reference_picker);
-		referencePicker.setListener(new ReferencePickerListener() {
-			@Override
-			public void onPreParse(String textToParse) {
-
-			}
-
-			@Override
-			public void onParseCompleted(Reference parsedReference, boolean wasSuccessful) {
-				if(wasSuccessful) {
-					final ABSPassage passage = new ABSPassage(
-							getResources().getString(R.string.bibles_org_key),
-							parsedReference
-					);
-
-					verseView.loadSelectedBible();
-					verseView.setVerse(passage);
-					verseView.tryCacheOrDownloadText();
-				}
-			}
-		});
+		referencePicker.loadSelectedBible();
+		referencePicker.setListener(this);
 
 		verseView = (EditVerse) findViewById(R.id.verse_view);
 
@@ -108,6 +96,7 @@ public class VerseInputCard extends FrameLayout {
 		checkReference.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				downloadAfterChecking = false;
 				referencePicker.checkReference();
 			}
 		});
@@ -116,6 +105,7 @@ public class VerseInputCard extends FrameLayout {
 		lookupText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				downloadAfterChecking = true;
 				referencePicker.checkReference();
 			}
 		});
@@ -133,10 +123,19 @@ public class VerseInputCard extends FrameLayout {
 				else {
 					Passage passage = new Passage(ref);
 					passage.setText(verseView.getText().toString());
+
+					editTags.performValidation();
+					String[] tags = editTags.getText().toString().split(",");
+
+					for(String tag : tags) {
+						passage.addTag(new Tag(tag));
+					}
+
 					db.insertVerse(passage);
 					Toast.makeText(context, ref.toString() + " saved", Toast.LENGTH_SHORT).show();
 					referencePicker.setText("");
 					verseView.setText("");
+					editTags.setText("");
 				}
 
 				db.close();
@@ -178,5 +177,47 @@ public class VerseInputCard extends FrameLayout {
 			removeFromParent();
 		}
 	};
+
+	@Override
+	public boolean onBibleLoaded(Bible bible, LoadState loadState) {
+		return false;
+	}
+
+	@Override
+	public boolean onReferenceParsed(Reference reference, boolean b) {
+		if(b) {
+			final ABSPassage passage = new ABSPassage(
+					getResources().getString(R.string.bibles_org_key),
+					reference
+			);
+
+			if(downloadAfterChecking) {
+				verseView.loadSelectedBible();
+				verseView.setVerse(passage);
+				verseView.tryCacheOrDownloadText();
+				verseView.setListener(new IVerseViewListener() {
+					@Override
+					public boolean onBibleLoaded(Bible bible, LoadState loadState) {
+						return false;
+					}
+
+					@Override
+					public boolean onVerseLoaded(final AbstractVerse abstractVerse, LoadState loadState) {
+						verseView.post(new Runnable() {
+							@Override
+							public void run() {
+								verseView.setText(abstractVerse.getText());
+							}
+						});
+						return true;
+					}
+				});
+			}
+		}
+
+		downloadAfterChecking = false;
+
+		return false;
+	}
 }
 
