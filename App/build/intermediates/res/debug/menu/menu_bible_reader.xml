@@ -3,13 +3,9 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	<item
-		android:id="@+id/menu_bible_search"
-		app:showAsAction="ifRoom"
-		android:icon="?attr/ic_action_search"
-		android:title="Search"/>
-	<item
-		android:id="@+id/menu_bible_show_dialog"
-		app:showAsAction="ifRoom"
-		android:icon="?attr/ic_action_subject"
-		android:title="Show Bibles"/>
-</menu><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/common/src/main/res/menu/menu_bible_reader.xml --><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/scripturememory/common/unspecified/res/menu/menu_bible_reader.xml -->
+		android:id="@+id/bible_track_progress"
+		android:title="Track Progress"
+		android:checkable="true"
+		app:showAsAction="never"
+		/>
+</menu><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/menu/menu_bible_reader.xml -->

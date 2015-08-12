@@ -37,7 +37,7 @@ public class VOTDBroadcasts {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if(VOTDSettings.isEnabled(context)) {
-				VOTDNotification.getInstance(context).create().show();
+				VOTDNotification.getInstance(context).create();
 			}
 		}
 	}

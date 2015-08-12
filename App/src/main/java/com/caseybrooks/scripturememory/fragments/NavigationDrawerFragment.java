@@ -13,8 +13,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -29,10 +29,10 @@ import android.widget.TextView;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.common.features.NavListItem;
 import com.caseybrooks.common.features.NavigationCallbacks;
+import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.BuildConfig;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
 import com.nirhart.parallaxscroll.views.ParallaxExpandableListView;
@@ -52,7 +52,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-    private ActionBarActivity parentActivity;
+    private AppCompatActivity parentActivity;
 
     public NavigationDrawerFragment() {
 
@@ -181,8 +181,13 @@ public class NavigationDrawerFragment extends Fragment {
                     return true;
                 }
                 else if(groupPosition == 1) {
-                    selectItem(new Pair<>(groupPosition, 0));
-                    return true;
+                    if (BuildConfig.DEBUG) {
+                        return false;
+                    }
+                    else {
+                        selectItem(new Pair<>(groupPosition, -1));
+                        return true;
+                    }
                 }
                 else if(groupPosition == 2) {
                     selectItem(new Pair<>(groupPosition, 0));
@@ -213,7 +218,7 @@ public class NavigationDrawerFragment extends Fragment {
                     mCallbacks.toDashboard();
                     break;
                 case 1:
-                    mCallbacks.toBible();
+                    mCallbacks.toBible(item.second);
                     break;
                 case 2:
                     mCallbacks.toTopicalBible();
@@ -266,6 +271,40 @@ public class NavigationDrawerFragment extends Fragment {
 
         @Override
         public void notifyDataSetChanged() {
+            int[] allRibbonIds = new int[] { 0, 1, 2, 3 };
+
+            List<NavListItem> ribbons = new ArrayList<NavListItem>();
+            if(allRibbonIds.length > 0) {
+                for (int id : allRibbonIds) {
+                    NavListItem item = new NavListItem();
+                    item.id = id;
+                    item.groupPosition = 1;
+                    item.name = getResources().getStringArray(R.array.ribbon_names)[id];
+                    item.count = 0;
+
+                    switch(id) {
+                    case 0:
+                        item.color = getResources().getColor(R.color.ribbon_nt);
+                        break;
+                    case 1:
+                        item.color = getResources().getColor(R.color.ribbon_ot);
+                        break;
+                    case 2:
+                        item.color = getResources().getColor(R.color.ribbon_wis);
+                        break;
+                    case 3:
+                        item.color = getResources().getColor(R.color.ribbon_other);
+                        break;
+                    default:
+                        item.color = getResources().getColor(R.color.ribbon_nt);
+                    }
+
+                    ribbons.add(item);
+                }
+            }
+            childItems.remove(headerItems.get(1));
+            childItems.put(headerItems.get(1), ribbons);
+
 			VerseDB db = new VerseDB(context).open();
 
 			//update all the state information
@@ -293,7 +332,6 @@ public class NavigationDrawerFragment extends Fragment {
 			}
 			childItems.remove(headerItems.get(3));
 			childItems.put(headerItems.get(3), states);
-
 
 			//update all the tag information
 			ArrayList<Tag> allTags = db.getAllTags();
@@ -381,10 +419,20 @@ public class NavigationDrawerFragment extends Fragment {
             childText.setText(item.name);
 
             ImageView tagCircle = (ImageView) convertView.findViewById(R.id.subitemCircle);
-            tagCircle.setBackgroundDrawable(Util.Drawables.circle(item.color));
-
             TextView tagCircleCount = (TextView) convertView.findViewById(R.id.subitemCircleText);
-            tagCircleCount.setText(Integer.toString(item.count));
+
+            if(groupPosition == 1) {
+                Drawable ribbonIcon = getResources().getDrawable(R.drawable.ic_action_bookmark_light);
+                ribbonIcon.mutate();
+                ribbonIcon.setColorFilter(new PorterDuffColorFilter(item.color, PorterDuff.Mode.SRC_IN));
+                tagCircle.setBackgroundColor(Color.parseColor("#00000000"));
+                tagCircle.setImageDrawable(ribbonIcon);
+            }
+            else {
+                tagCircle.setBackgroundDrawable(Util.Drawables.circle(item.color));
+                tagCircleCount.setText(Integer.toString(item.count));
+            }
+
 
             return convertView;
         }
@@ -496,7 +544,7 @@ public class NavigationDrawerFragment extends Fragment {
      *
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    public void setUp(ActionBarActivity activity,
+    public void setUp(AppCompatActivity activity,
                     Toolbar tb,
                     final View parentContainer,
                     DrawerLayout drawerLayout) {
@@ -576,9 +624,9 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         try {
-            parentActivity = (ActionBarActivity) activity;
+            parentActivity = (AppCompatActivity) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException("Activity must be an instance of ActionBarActivity.");
+            throw new ClassCastException("Activity must be an instance of AppCompatActivity.");
         }
     }
 

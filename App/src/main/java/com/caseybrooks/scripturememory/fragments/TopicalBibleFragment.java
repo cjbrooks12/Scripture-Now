@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -57,8 +58,9 @@ public class TopicalBibleFragment extends Fragment {
     AutoCompleteTextView searchEditText;
     ArrayAdapter<String> suggestionsAdapter;
 
-    ParallaxListView listView;
+    ListView listView;
     OpenBibleAdapter adapter;
+    View headerView;
 
     ActionMode mActionMode;
     NavigationCallbacks mCallbacks;
@@ -77,6 +79,7 @@ public class TopicalBibleFragment extends Fragment {
         super.onResume();
 
 		mCallbacks.setToolBar("Topical Bible", context.getResources().getColor(R.color.open_bible_brown));
+        mCallbacks.expandToolbarWIthView(headerView);
 		MetaSettings.putDrawerSelection(context, 2, 0);
     }
 
@@ -84,6 +87,8 @@ public class TopicalBibleFragment extends Fragment {
     public void onPause() {
         super.onPause();
         if(mActionMode != null) mActionMode.finish();
+
+        mCallbacks.collapseExpandedToolbar();
     }
 
     @Override
@@ -99,14 +104,12 @@ public class TopicalBibleFragment extends Fragment {
         progress.getProgressDrawable().setColorFilter(filter);
         progress.getIndeterminateDrawable().setColorFilter(filter);
 
-        listView = (ParallaxListView) view.findViewById(R.id.parallax_listview);
+        listView = (ListView) view.findViewById(R.id.listview);
 
-        //setup header view for parallax list view
-        RelativeLayout header = (RelativeLayout) inflater.inflate(R.layout.parallax_open_bible_header, null);
-        listView.addParallaxedHeaderView(header);
+        headerView = inflater.inflate(R.layout.parallax_open_bible_header, null);
 
-        searchEditText = (AutoCompleteTextView) header.findViewById(R.id.discoverEditText);
-        searchButton = (ImageButton) header.findViewById(R.id.searchButton);
+        searchEditText = (AutoCompleteTextView) headerView.findViewById(R.id.discoverEditText);
+        searchButton = (ImageButton) headerView.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,7 +198,7 @@ public class TopicalBibleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(mActionMode == null) {
-                    mActionMode = ((ActionBarActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+                    mActionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
                     mActionMode.setTitle(adapter.getSelectedCount() + "");
                 }
                 else if(adapter.getSelectedCount() == 0) {
@@ -381,7 +384,7 @@ public class TopicalBibleFragment extends Fragment {
 
             for (int i = 0; i < items.size(); i++) {
                 ABSPassage passage = items.get(i);
-                passage.getMetadata().putInt("LIST_POSITION", i + 1);
+                passage.getMetadata().putInt("LIST_POSITION", i);
                 if (passage.getMetadata().getBoolean(DefaultMetaData.IS_CHECKED)) {
                     selectedItems.add(passage);
                 }
@@ -392,7 +395,7 @@ public class TopicalBibleFragment extends Fragment {
 
         @Override
         public Passage getItem(int position) {
-            Passage passage = items.get(position-1);
+            Passage passage = items.get(position);
             passage.getMetadata().putInt("LIST_POSITION", position);
             return passage;
         }
@@ -420,7 +423,7 @@ public class TopicalBibleFragment extends Fragment {
         public void addAll(ArrayList<ABSPassage> items) {
             this.items = items;
             for(int i = 0; i < this.items.size(); i++) {
-                this.items.get(i).getMetadata().putInt("LIST_POSITION", i + 1);
+                this.items.get(i).getMetadata().putInt("LIST_POSITION", i);
             }
 
             notifyDataSetChanged();

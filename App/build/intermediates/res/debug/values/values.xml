@@ -94,6 +94,18 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <string-array name="ribbon_keys">
+        <item>nt</item>
+        <item>ot</item>
+        <item>wis</item>
+        <item>other</item>
+    </string-array>
+    <string-array name="ribbon_names">
+        <item>New Testament</item>
+        <item>Old Testament</item>
+        <item>Wisdom Books</item>
+        <item>Other</item>
+    </string-array>
     <string-array name="state_ids">
         <item>-1</item>
         <item>-2</item>
@@ -268,6 +280,14 @@
     <color name="primary_text_default_material_light">#de000000</color>
     <color name="primary_text_disabled_material_dark">#4Dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/scripturememory/common/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <color name="ribbon_nt">#855585</color>
+    <color name="ribbon_ot">#2C524C</color>
+    <color name="ribbon_other">#BB0C00</color>
+    <color name="ribbon_wis">#C84E00</color>
+    <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="ripple_material_dark">#4dffffff</color>
     <color name="ripple_material_light">#1f000000</color>
     <color name="secondary_text_default_material_dark">#b3ffffff</color>

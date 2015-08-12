@@ -76,13 +76,4 @@ public class MainSettings {
 	public static void setMainId(Context context, int value) {
 		context.getSharedPreferences(settings_file, 0).edit().putInt(PREFIX + ID, value).commit();
 	}
-
-	public static int getCounter(Context context, String key) {
-		return context.getSharedPreferences(settings_file, 0).getInt(PREFIX + key, 0);
-	}
-
-	public static void incrementCounter(Context context, String key) {
-		int count = getCounter(context, key) + 1;
-		context.getSharedPreferences(settings_file, 0).edit().putInt(PREFIX + key, count).commit();
-	}
 }

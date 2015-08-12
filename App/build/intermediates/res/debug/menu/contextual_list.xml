@@ -4,27 +4,27 @@
     <item
         android:id="@+id/contextual_list_select_all"
         app:showAsAction="ifRoom"
-        android:icon="?attr/ic_action_select_all"
+        android:icon="@drawable/ic_action_select_all_dark"
         android:title="Select All" />
     <item
         android:id="@+id/contextual_list_add_tag"
         app:showAsAction="ifRoom"
-        android:icon="?attr/ic_action_tag"
+        android:icon="@drawable/ic_action_tag_dark"
         android:title="Add Tag" />
     <item
         android:id="@+id/contextual_list_change_state"
         app:showAsAction="ifRoom"
-        android:icon="?attr/ic_action_group_work"
+        android:icon="@drawable/ic_action_group_work_dark"
         android:title="Change State" />
     <item
         android:id="@+id/contextual_list_export"
         app:showAsAction="ifRoom"
-        android:icon="?attr/ic_action_get_app"
+        android:icon="@drawable/ic_action_get_app_dark"
         android:title="Export" />
     <item
         android:id="@+id/contextual_list_delete"
         app:showAsAction="ifRoom"
-        android:icon="?attr/ic_action_delete"
+        android:icon="@drawable/ic_action_delete_dark"
         android:title="Delete" />
 </menu>
 <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/menu/contextual_list.xml -->

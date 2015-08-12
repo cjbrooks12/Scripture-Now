@@ -65,6 +65,19 @@
         <item>1</item>
     </string-array>
 
+    <string-array name="ribbon_names">
+        <item>New Testament</item>
+        <item>Old Testament</item>
+        <item>Wisdom Books</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="ribbon_keys">
+        <item>nt</item>
+        <item>ot</item>
+        <item>wis</item>
+        <item>other</item>
+    </string-array>
+
     <!-- Credits and Open Source Licenses -->
     <string name="developer">Developed by Casey Brooks</string>
     <string name="title_activity_widget_configuration">WidgetConfiguration</string>

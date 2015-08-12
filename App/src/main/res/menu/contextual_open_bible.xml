@@ -4,16 +4,16 @@
     <item
         android:id="@+id/contextual_open_bible_select_all"
         app:showAsAction="ifRoom"
-        android:icon="?attr/ic_action_select_all"
+        android:icon="@drawable/ic_action_select_all_dark"
         android:title="Select All" />
 	<item
 		android:id="@+id/contextual_open_bible_redownload"
 		app:showAsAction="ifRoom"
-		android:icon="?attr/ic_action_refresh"
+		android:icon="@drawable/ic_action_refresh_dark"
 		android:title="Redownload" />
     <item
         android:id="@+id/contextual_open_bible_save"
         app:showAsAction="ifRoom"
-        android:icon="?attr/ic_action_save"
+        android:icon="@drawable/ic_action_save_dark"
         android:title="Save Verses" />
 </menu>

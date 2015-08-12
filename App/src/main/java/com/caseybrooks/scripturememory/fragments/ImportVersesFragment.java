@@ -614,7 +614,6 @@ public class ImportVersesFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater = ((ActionBarActivity) context).getMenuInflater();
         inflater.inflate(R.menu.menu_import, menu);
     }
 

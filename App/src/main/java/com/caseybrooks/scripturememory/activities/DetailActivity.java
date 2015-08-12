@@ -8,8 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
@@ -18,9 +19,9 @@ import com.caseybrooks.scripturememory.fragments.EditVerseFragment;
 import com.caseybrooks.scripturememory.fragments.HelpFragment;
 import com.caseybrooks.scripturememory.fragments.ImportVersesFragment;
 
-public class DetailActivity extends ActionBarActivity implements NavigationCallbacks {
+public class DetailActivity extends AppCompatActivity implements NavigationCallbacks {
     Context context;
-    Toolbar tb;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +33,8 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
         setContentView(R.layout.activity_detail);
 
         // Set up the drawer.
-        tb = (Toolbar) findViewById(R.id.activity_toolbar);
-        setSupportActionBar(tb);
+        toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
+        setSupportActionBar(toolbar);
 
         Fragment fragment = ImportVersesFragment.newInstance();
 
@@ -95,6 +96,21 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
 	}
 
     @Override
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    @Override
+    public void expandToolbarWIthView(View view) {
+
+    }
+
+    @Override
+    public void collapseExpandedToolbar() {
+
+    }
+
+    @Override
     public void toVerseList(int listType, int id) {
 
     }
@@ -150,7 +166,7 @@ public class DetailActivity extends ActionBarActivity implements NavigationCallb
 	}
 
     @Override
-    public void toBible() {
+    public void toBible(int id) {
 
     }
 }

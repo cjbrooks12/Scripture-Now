@@ -29,6 +29,7 @@ public class VOTD implements IVerseViewListener {
 	Context context;
 
 	Bible selectedBible;
+	AbstractVerse verse;
 
 	IVerseViewListener listener;
 
@@ -58,6 +59,7 @@ public class VOTD implements IVerseViewListener {
 
 	@Override
 	public boolean onVerseLoaded(AbstractVerse abstractVerse, LoadState loadState) {
+		verse = abstractVerse;
 		return (listener != null) ? listener.onVerseLoaded(abstractVerse, loadState) : false;
 	}
 
@@ -191,4 +193,16 @@ public class VOTD implements IVerseViewListener {
 			verseWorker.tryCacheOrDownloadText();
 		}
 	};
+
+//Things to do after the verse has been loaded
+//------------------------------------------------------------------------------
+	public void saveVerse() {
+		if(verse != null) {
+			
+		}
+	}
+
+	public void postAsNotification() {
+
+	}
 }

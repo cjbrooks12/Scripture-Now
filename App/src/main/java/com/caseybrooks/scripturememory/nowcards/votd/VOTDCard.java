@@ -52,7 +52,7 @@ public class VOTDCard extends FrameLayout implements IVerseViewListener {
 
 		votd = new VOTD(context);
 		votd.setListener(this);
-		ver.setListener(this);
+//		ver.setListener(this);
 		votd.loadTodaysVerse();
 	}
 
@@ -79,7 +79,6 @@ public class VOTDCard extends FrameLayout implements IVerseViewListener {
 
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-
 			switch (item.getItemId()) {
 			case R.id.overflow_votd_card_redownload:
 				setWorking(true);

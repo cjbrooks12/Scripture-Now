@@ -8,11 +8,12 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
@@ -37,12 +38,12 @@ import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.scripturememory.activities.SNApplication;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.misc.BibleVerseAdapter;
 import com.caseybrooks.scripturememory.nowcards.main.Main;
 import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
+import com.caseybrooks.scripturememory.nowcards.workingverse.WorkingVerse;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,10 +91,6 @@ public class VerseListFragment extends ListFragment {
 
 //Lifecycle and Initialization
 //------------------------------------------------------------------------------
-    public SNApplication getApplication() {
-		return (SNApplication) getActivity().getApplication();
-	}
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -154,7 +151,7 @@ public class VerseListFragment extends ListFragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if(mActionMode == null) {
-                mActionMode = ((ActionBarActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+                mActionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
             }
             if(bibleVerseAdapter.getSelectedCount() == 0) {
                 mActionMode.finish();
@@ -168,10 +165,8 @@ public class VerseListFragment extends ListFragment {
     AdapterView.OnItemClickListener itemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			VerseDB db = new VerseDB(context).open();
-			Passage passage = db.getVerse(id);
-			db.close();
-//			getApplication().setActivePassage(passage);
+            WorkingVerse.setWorkingVerseId(context, (int) id);
+
             mCallbacks.toVerseEdit();
         }
     };
@@ -203,13 +198,6 @@ public class VerseListFragment extends ListFragment {
 					case R.id.context_list_split_verses:
 						splitVerse(vh.passage);
 						return true;
-					case R.id.context_list_view_in_broswer:
-//						String url = vh.passage.getURL();
-//						Intent i = new Intent(Intent.ACTION_VIEW);
-//						i.setData(Uri.parse(url));
-//						Toast.makeText(context, "Opening browser...", Toast.LENGTH_SHORT).show();
-//						context.startActivity(i);
-						return true;
 					case R.id.context_list_share:
 						String shareMessage = vh.passage.getReference() + " - " + vh.passage.getText();
 						Intent intent = new Intent();
@@ -228,7 +216,7 @@ public class VerseListFragment extends ListFragment {
                 }
             });
             MenuInflater inflater = popup.getMenuInflater();
-            inflater.inflate(R.menu.context_list, popup.getMenu());
+            inflater.inflate(R.menu.overflow_list, popup.getMenu());
 
 			if(vh.passage.getVerses().length > 1) {
 				popup.getMenu().findItem(R.id.context_list_split_verses).setVisible(true);
@@ -317,7 +305,7 @@ public class VerseListFragment extends ListFragment {
 				break;
 			}
 
-			if(comparator != null) Collections.sort(verses, comparator);
+			Collections.sort(verses, comparator);
 
 			if(isCancelled()) return null;
 
@@ -357,7 +345,6 @@ public class VerseListFragment extends ListFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater = ((ActionBarActivity) context).getMenuInflater();
         inflater.inflate(R.menu.menu_list, menu);
     }
 
@@ -366,30 +353,22 @@ public class VerseListFragment extends ListFragment {
         switch (item.getItemId()) {
             case R.id.menu_list_sort_date:
                 MetaSettings.putSortBy(context, 0);
-                if(loaderThread == null) {
-					loaderThread = new PopulateBibleVerses();
-				}
+                loaderThread = new PopulateBibleVerses();
 				loaderThread.execute();
                 return true;
             case R.id.menu_list_sort_canonical:
                 MetaSettings.putSortBy(context, 1);
-				if(loaderThread == null) {
-					loaderThread = new PopulateBibleVerses();
-				}
+                loaderThread = new PopulateBibleVerses();
 				loaderThread.execute();
                 return true;
             case R.id.menu_list_sort_alphabetically:
                 MetaSettings.putSortBy(context, 2);
-				if(loaderThread == null) {
-					loaderThread = new PopulateBibleVerses();
-				}
+                loaderThread = new PopulateBibleVerses();
 				loaderThread.execute();
                 return true;
             case R.id.menu_list_sort_mem_state:
                 MetaSettings.putSortBy(context, 3);
-				if(loaderThread == null) {
-					loaderThread = new PopulateBibleVerses();
-				}
+                loaderThread = new PopulateBibleVerses();
 				loaderThread.execute();
                 return true;
             default:
@@ -733,7 +712,9 @@ public class VerseListFragment extends ListFragment {
                 Drawable line = seekBar.getProgressDrawable();
                 line.setColorFilter(color, PorterDuff.Mode.SRC_IN);
 
-                Drawable thumb = getResources().getDrawable(R.drawable.seekbar_thumb);
+                Drawable thumb = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) ?
+                        seekbar.getThumb() :
+                        context.getResources().getDrawable(R.drawable.seekbar_thumb);
                 thumb.setColorFilter(color, PorterDuff.Mode.SRC_IN);
                 seekbar.setThumb(thumb);
 
@@ -774,32 +755,32 @@ public class VerseListFragment extends ListFragment {
             }
         });
 
-//        TextView saveStateButton = (TextView) view.findViewById(R.id.save_state_button);
-//        saveStateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                VerseDB db = new VerseDB(context).open();
-//                int progress = seekbar.getProgress() + 1;
-//                for(Passage passage : items) {
-//                    passage.getMetadata().putInt(DefaultMetaData.STATE, progress);
-//                    db.updateVerse(passage);
-//
-//                    //if this verse is the current notification verse and the active list is its state, then
-//                    //change the active list to be whatever state this verse becomes
-//                    if(Main.getVerseId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
-//                            listType == VerseListFragment.STATE) {
-//                        Main.putWorkingList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
-//                    }
-//                }
-//                db.close();
-//                if(mActionMode != null) mActionMode.finish();
-//                dialog.dismiss();
-//				if(loaderThread == null) {
-//					loaderThread = new PopulateBibleVerses();
-//				}
-//				loaderThread.execute();
-//            }
-//        });
+        TextView saveStateButton = (TextView) view.findViewById(R.id.save_state_button);
+        saveStateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VerseDB db = new VerseDB(context).open();
+                int progress = seekbar.getProgress() + 1;
+                for(Passage passage : items) {
+                    passage.getMetadata().putInt(DefaultMetaData.STATE, progress);
+                    db.updateVerse(passage);
+
+                    //if this verse is the current notification verse and the active list is its state, then
+                    //change the active list to be whatever state this verse becomes
+                    if(MainSettings.getMainId(context) == passage.getMetadata().getInt(DefaultMetaData.ID) &&
+                            listType == VerseListFragment.STATE) {
+                        MainSettings.putWorkingList(context, VerseListFragment.STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
+                    }
+                }
+                db.close();
+                if(mActionMode != null) mActionMode.finish();
+                dialog.dismiss();
+				if(loaderThread == null) {
+					loaderThread = new PopulateBibleVerses();
+				}
+				loaderThread.execute();
+            }
+        });
         dialog.show();
     }
 

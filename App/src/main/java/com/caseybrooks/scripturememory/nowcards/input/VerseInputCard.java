@@ -125,10 +125,14 @@ public class VerseInputCard extends FrameLayout implements IReferencePickerListe
 					passage.setText(verseView.getText().toString());
 
 					editTags.performValidation();
-					String[] tags = editTags.getText().toString().split(",");
+					if(editTags.getText().length() > 0) {
+						String[] tags = editTags.getText().toString().split(",");
 
-					for(String tag : tags) {
-						passage.addTag(new Tag(tag));
+						for(String tag : tags) {
+							if(tag != null) {
+								passage.addTag(new Tag(tag));
+							}
+						}
 					}
 
 					db.insertVerse(passage);

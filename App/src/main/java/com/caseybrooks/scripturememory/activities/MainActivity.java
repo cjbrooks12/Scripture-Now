@@ -14,11 +14,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
@@ -49,10 +50,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-public class MainActivity extends ActionBarActivity implements NavigationCallbacks {
+public class MainActivity extends AppCompatActivity implements NavigationCallbacks {
 //Data members
 //------------------------------------------------------------------------------
-    Toolbar tb;
+    Toolbar toolbar;
+    FrameLayout expandedToolbar;
     Context context;
 
 //Lifecycle and Initialization
@@ -66,12 +68,14 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-        // Set up the drawer.
-        tb = (Toolbar) findViewById(R.id.activity_toolbar);
-        setSupportActionBar(tb);
+        // Set up the drawer
+        toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
+        expandedToolbar = (FrameLayout) findViewById(R.id.activity_toolbar_expanded);
+
+        setSupportActionBar(toolbar);
 
         NavigationDrawerFragment mNavigationDrawerFragment = new NavigationDrawerFragment();
-        mNavigationDrawerFragment.setUp(this, tb,  findViewById(R.id.navigation_drawer_container),
+        mNavigationDrawerFragment.setUp(this, toolbar,  findViewById(R.id.navigation_drawer_container),
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -276,7 +280,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
     public void setFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-//                .setCustomAnimations(R.anim.push_up_in, 0)
                 .replace(R.id.mainFragmentContainer, fragment)
                 .addToBackStack(null)
                 .commit();
@@ -289,7 +292,9 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		ab.setBackgroundDrawable(colorDrawable);
 		ab.setTitle(name);
 
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        expandedToolbar.setBackgroundDrawable(colorDrawable);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			float[] hsv = new float[3];
 			Color.colorToHSV(color, hsv);
 			hsv[2] *= 0.7f; // value component
@@ -297,7 +302,24 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 		}
 	}
 
-	@Override
+    @Override
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    @Override
+    public void expandToolbarWIthView(View view) {
+        expandedToolbar.setVisibility(View.VISIBLE);
+        expandedToolbar.addView(view);
+    }
+
+    @Override
+    public void collapseExpandedToolbar() {
+        expandedToolbar.setVisibility(View.GONE);
+        expandedToolbar.removeAllViews();
+    }
+
+    @Override
     public void toVerseDetail() {
 
     }
@@ -306,9 +328,6 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
     public void toVerseEdit() {
         Intent intent = new Intent(this, DetailActivity.class);
         Bundle extras = new Bundle();
-//        extras.putInt("KEY_ID", id);
-//        extras.putInt("KEY_LIST_TYPE", Main.getWorkingList(context).first);
-//        extras.putInt("KEY_LIST_ID", Main.getWorkingList(context).second);
         extras.putInt("FRAGMENT", 0);
 
         intent.putExtras(extras);
@@ -343,7 +362,7 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
     @Override
     public void toSettings() {
         SettingsFragment fragment = new SettingsFragment();
-		fragment.setToolbar(tb);
+		fragment.setToolbar(toolbar);
         setFragment(fragment);
     }
 
@@ -372,8 +391,8 @@ public class MainActivity extends ActionBarActivity implements NavigationCallbac
 	}
 
     @Override
-    public void toBible() {
-        Fragment fragment = BibleReaderFragment.newInstance();
+    public void toBible(int id) {
+        Fragment fragment = BibleReaderFragment.newInstance(id);
         setFragment(fragment);
     }
 }

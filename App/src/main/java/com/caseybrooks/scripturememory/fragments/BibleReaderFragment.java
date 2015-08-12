@@ -2,9 +2,9 @@ package com.caseybrooks.scripturememory.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,7 +26,6 @@ import com.caseybrooks.androidbibletools.widget.IVerseViewListener;
 import com.caseybrooks.androidbibletools.widget.LoadState;
 import com.caseybrooks.androidbibletools.widget.ReferencePicker;
 import com.caseybrooks.androidbibletools.widget.VerseView;
-import com.caseybrooks.androidbibletools.widget.biblepicker.BiblePickerDialog;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 
@@ -36,15 +35,21 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 
 	ReferencePicker referencePicker;
 	VerseView verseView;
+	Toolbar toolbar;
+	View headerView;
+	String title;
+	String key;
+	int id;
 
 	private static final String settings_file = "my_settings";
 	private static final String PREFIX = "BIBLE_";
 
 	private static final String PROGRESS = "PROGRESS";
 
-	public static Fragment newInstance() {
+	public static Fragment newInstance(int id) {
 		Fragment fragment = new BibleReaderFragment();
 		Bundle extras = new Bundle();
+		extras.putInt("EXTRA_ID", id);
 		fragment.setArguments(extras);
 		return fragment;
 	}
@@ -60,7 +65,16 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 		this.context = getActivity();
 		setHasOptionsMenu(true);
 
-		referencePicker = (ReferencePicker) view.findViewById(R.id.reference_picker);
+		Bundle args = getArguments();
+		id = args.getInt("EXTRA_ID", 0);
+		key = (id >= 0) ? getResources().getStringArray(R.array.ribbon_keys)[id] : "";
+		title = (id >= 0) ? getResources().getStringArray(R.array.ribbon_names)[id] : "Bible";
+
+		toolbar = mCallbacks.getToolbar();
+
+		headerView = inflater.inflate(R.layout.header_bible_reader, container, false);
+
+		referencePicker = (ReferencePicker) headerView.findViewById(R.id.reference_picker);
 		referencePicker.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -84,15 +98,35 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 	@Override
 	public void onPause() {
 		super.onPause();
+		mCallbacks.collapseExpandedToolbar();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 
-		mCallbacks.setToolBar("Bible", Color.parseColor("#855585"));
+		int color;
+		switch(id) {
+		case 0:
+			color = getResources().getColor(R.color.ribbon_nt);
+			break;
+		case 1:
+			color = getResources().getColor(R.color.ribbon_ot);
+			break;
+		case 2:
+			color = getResources().getColor(R.color.ribbon_wis);
+			break;
+		case 3:
+			color = getResources().getColor(R.color.ribbon_other);
+			break;
+		default:
+			color = getResources().getColor(R.color.ribbon_nt);
+		}
+
+		mCallbacks.setToolBar(title, color);
+		mCallbacks.expandToolbarWIthView(headerView);
 		context.getSharedPreferences(settings_file, 0).edit().putInt("DRAWER_SELECTED_GROUP", 1).commit();
-		context.getSharedPreferences(settings_file, 0).edit().putInt("DRAWER_SELECTED_CHILD", 0).commit();
+		context.getSharedPreferences(settings_file, 0).edit().putInt("DRAWER_SELECTED_CHILD", id).commit();
 
 		restoreProgress();
 	}
@@ -111,27 +145,17 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if(item.getItemId() == R.id.menu_bible_search) {
-			referencePicker.checkReference();
-			return true;
-		}
-		else if(item.getItemId() == R.id.menu_bible_show_dialog) {
-			BiblePickerDialog.create(context).show();
-			return true;
-		}
-		else {
-			return super.onOptionsItemSelected(item);
-		}
+		return super.onOptionsItemSelected(item);
 	}
 
 //Preferences
 //------------------------------------------------------------------------------
 	public void saveProgress(String progress) {
-		context.getSharedPreferences(settings_file, 0).edit().putString(PREFIX + PROGRESS, progress).commit();
+		context.getSharedPreferences(settings_file, 0).edit().putString(PREFIX + key +  PROGRESS, progress).commit();
 	}
 
 	public void restoreProgress() {
-		String progress = context.getSharedPreferences(settings_file, 0).getString(PREFIX + PROGRESS, "Matthew 1:1");
+		String progress = context.getSharedPreferences(settings_file, 0).getString(PREFIX + key + PROGRESS, "Matthew 1:1");
 
 		verseView.loadSelectedBible();
 		referencePicker.loadSelectedBible();

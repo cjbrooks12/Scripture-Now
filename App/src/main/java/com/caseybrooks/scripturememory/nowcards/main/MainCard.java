@@ -20,10 +20,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Tag;
+import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
+import com.caseybrooks.scripturememory.nowcards.workingverse.WorkingVerse;
 
 public class MainCard extends FrameLayout {
 //Data Members
@@ -243,7 +245,10 @@ public class MainCard extends FrameLayout {
                 switch (item.getItemId()) {
                     case R.id.context_notification_card_edit:
                         try {
-//							mv.setMainPassage(mv.getMainPassage());
+                            WorkingVerse.setWorkingVerseId(
+                                    context,
+                                    mv.getMainPassage().getMetadata().getInt(DefaultMetaData.ID)
+                            );
                             mCallbacks = (NavigationCallbacks) context;
                             mCallbacks.toVerseEdit();
                         } catch (ClassCastException e) {

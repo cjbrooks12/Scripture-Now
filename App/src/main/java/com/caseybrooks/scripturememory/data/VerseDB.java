@@ -585,7 +585,7 @@ public class VerseDB {
         tag_values.put(KEY_TAGS_TAG, tagName);
 
         if(hexColor == null || hexColor.length() == 0 || !hexColor.matches("#{1}[a-fA-F0-9]{6}")) {
-            Log.w("INSERTING TAG WITH NO COLOR", "");
+            Log.w("INSERTING TAG NO COLOR", "");
             int red = (int) (Math.random() * 255);
             int green = (int) (Math.random() * 255);
             int blue = (int) (Math.random() * 255);

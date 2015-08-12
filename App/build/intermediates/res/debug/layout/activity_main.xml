@@ -1,5 +1,6 @@
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
@@ -10,14 +11,18 @@
         android:orientation="vertical"
         android:background="?attr/color_background">
         <android.support.v7.widget.Toolbar
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:id="@+id/activity_toolbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary" />
-
+        <FrameLayout
+            android:id="@+id/activity_toolbar_expanded"
+            android:layout_height="72dp"
+            android:layout_width="match_parent"
+            android:background="?attr/colorPrimary"
+            android:visibility="gone" />
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

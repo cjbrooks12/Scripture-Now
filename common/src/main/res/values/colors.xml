@@ -16,6 +16,12 @@
     <color name="current_all">#937AED</color>
     <color name="memorized">#45B29D</color>
 
+    <!-- Bible ribbon colors -->
+    <color name="ribbon_nt">#855585</color>
+    <color name="ribbon_ot">#2C524C</color>
+    <color name="ribbon_wis">#C84E00</color>
+    <color name="ribbon_other">#BB0C00</color>
+
     <!-- Background colors -->
     <color name="background_light">#F0F0F0</color>
     <color name="card_light">#FFFFFF</color>

@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.caseybrooks.androidbibletools.widget.biblepicker.BiblePickerDialog;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.R;
@@ -166,9 +165,6 @@ public class DashboardFragment extends Fragment {
                 dashboardLayout.removeView(votd_card);
 			}
 	    	return true;
-		case R.id.menu_dashboard_show_versions:
-			BiblePickerDialog.create(context).show();
-			return true;
         default:
             return super.onOptionsItemSelected(item);
 	    }
