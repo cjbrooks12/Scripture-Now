@@ -93,13 +93,4 @@ public class MainBroadcasts {
 			context.sendBroadcast(new Intent(context, MainWidget.class));
 		}
 	}
-
-	public static class MainBootReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			if(MainSettings.isActive(context)) {
-				MainNotification.getInstance(context).create().show();
-			}
-		}
-	}
 }

@@ -77,14 +77,4 @@ public class VOTDBroadcasts {
 			VOTDSettings.setActive(context, false);
 		}
 	}
-
-	//reset the alarm to show daily notification when the device boots
-	public static class VOTDBootReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			if(VOTDSettings.isEnabled(context)) {
-				VOTDNotification.getInstance(context).setAlarm();
-			}
-		}
-	}
 }

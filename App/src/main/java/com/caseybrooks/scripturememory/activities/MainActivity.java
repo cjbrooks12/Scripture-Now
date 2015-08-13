@@ -37,6 +37,7 @@ import com.caseybrooks.scripturememory.fragments.NavigationDrawerFragment;
 import com.caseybrooks.scripturememory.fragments.SettingsFragment;
 import com.caseybrooks.scripturememory.fragments.TopicalBibleFragment;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;
+import com.caseybrooks.scripturememory.misc.CacheCleaner;
 import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
 
 import java.io.File;
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationCallbac
             //we have updated the app
             if(version > MetaSettings.getAppVersion(context)) {
                 MetaSettings.putAppVersion(context, version);
+                CacheCleaner.setAlarm(context);
 
 				MainSettings.putDisplayMode(context, MainSettings.getDisplayMode(context) - 1);
 

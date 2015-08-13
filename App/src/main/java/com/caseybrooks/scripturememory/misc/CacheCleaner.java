@@ -8,6 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.caseybrooks.androidbibletools.io.ABTUtility;
+import com.caseybrooks.androidbibletools.widget.biblepicker.BiblePickerSettings;
+import com.caseybrooks.scripturememory.nowcards.votd.VOTDSettings;
+
 import java.io.File;
 import java.util.Calendar;
 
@@ -18,13 +22,8 @@ import java.util.Calendar;
  * redownload the selected Bible every 5 days.
  */
 public class CacheCleaner {
-	Context context;
 
-	public CacheCleaner(Context context) {
-		this.context = context;
-	}
-
-	public void cleanCache() {
+	public static void cleanCache(Context context) {
 		new QuickNotification(context, "Clean Cache", "Cleaning cache").show();
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -40,8 +39,9 @@ public class CacheCleaner {
 			//check all other cached files to see if they are out of date, and remove them if so
 			else {
 				long cacheTime = prefs.getLong(file.getName(), millisNow);
+				long cacheTimeout = ABTUtility.CacheTimeout.TwoWeeks.millis;
 
-				if(millisNow - cacheTime >= 1000 * 60 * 30) {
+				if(millisNow - cacheTime >= cacheTimeout) {
 					boolean deletedCorrectly = file.delete();
 					if(deletedCorrectly) {
 						prefs.edit().remove(file.getName()).commit();
@@ -53,30 +53,24 @@ public class CacheCleaner {
 		//now that we have cleared the cache, see if we need to update the selectedBible.xml
 		File selectedBible = new File(cache, "selectedBible.xml");
 		if(selectedBible.exists()) {
-
-
-
-
-
+			BiblePickerSettings.redownloadBible(context);
 		}
 	}
 
 //Set an alarm for this cleaner to run everyday, starting when the device boots up
-	public void setAlarm() {
+	public static void setAlarm(Context context) {
 		//Create an alarm to go off at the user-selected time
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		Intent intent = new Intent(context, CacheCleanerAlarmReceiver.class);
 		PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR, 1);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
+		//we'll use the same time set for the VOTD, since it is more likely that
+		//the user will have chosen a time that they will have internet at that time
+		long time = VOTDSettings.getNotificationTime(context);
 
 		alarmManager.setRepeating(
 				AlarmManager.RTC,
-				calendar.getTimeInMillis(),
+				time,
 				1000 * 60 * 60 * 24,
 				alarmIntent);
 	}
@@ -84,8 +78,7 @@ public class CacheCleaner {
 	public static class CacheCleanerAlarmReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			CacheCleaner cleaner = new CacheCleaner(context);
-			cleaner.cleanCache();
+			CacheCleaner.cleanCache(context);
 		}
 	}
 }

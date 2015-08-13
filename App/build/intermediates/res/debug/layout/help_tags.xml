@@ -44,7 +44,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:text="When entering the text for a verse on the Input Verse card on the dashboard, any hashtags in the text will be removed and added as a tag. For example, #Jesus will add the tag &quot;Jesus&quot; to that verse, and the text &quot;#Jesus&quot; will be removed (so don't make the hashtag part of a sentence). Only the first word after a hashtag will become that tag, but you can wrap a phrase in quotations to add a phrase by hashtags, such as #&quot;Jesus Christ&quot;. Hashtags added to the text in the Edit screen will behave in the exact same way."/>
+            android:text="Due to changes in the structure of the Verses, adding tags by hashtag is no longer available.\nHowever, a new field has been added to the Input Verse card that allow you to add tags as a comma-separated list, and suggests tags from those you have already created."/>
 
         <TextView
             android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package com.caseybrooks.scripturememory.nowcards.votd;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import com.caseybrooks.androidbibletools.basic.Bible;
@@ -221,6 +222,7 @@ public class VOTD implements IVerseViewListener {
 	public int saveVerse() {
 		if(verse != null) {
 			verse.addTag(new Tag("VOTD"));
+			Log.i("VOTD.save", "verse.reference='" + verse.getReference().toString() + "' + verse.bible='" + verse.getBible().getAbbreviation() + "'");
 			VerseDB db = new VerseDB(context).open();
 			int id = db.getVerseId(verse.getReference());
 			if(id != -1) {

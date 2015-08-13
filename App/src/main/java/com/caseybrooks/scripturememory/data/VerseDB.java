@@ -10,6 +10,8 @@ import android.graphics.Color;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.caseybrooks.androidbibletools.basic.Bible;
+import com.caseybrooks.androidbibletools.basic.Book;
 import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.basic.Tag;
@@ -246,11 +248,22 @@ public class VerseDB {
         if (c != null && c.getCount() > 0) c.moveToFirst();
         else return null;
 
-		Reference.Builder builder = new Reference.Builder()
-				.setBible(c.getString(c.getColumnIndex(KEY_VERSES_VERSION)), null)
-				.parseReference(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
+        Reference.Builder builder = new Reference.Builder();
 
-		Passage passage = new Passage(builder.create());
+        Bible bible = new Bible();
+        bible.setAbbreviation(c.getString(c.getColumnIndex(KEY_VERSES_VERSION)));
+        bible.setName(c.getString(c.getColumnIndex(KEY_VERSES_VERSION)));
+        builder.setBible(bible);
+
+        String bookName = c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)).split("\\d")[0].trim();
+        Book newBook = new Book();
+        newBook.setName(bookName);
+
+        builder.parseReference(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
+        builder.setBook(newBook);
+
+        Passage passage = new Passage(builder.create());
+        passage.setBible(bible);
 		passage.getMetadata().putInt(DefaultMetaData.ID, c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
 		passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
 		passage.getMetadata().putLong(DefaultMetaData.TIME_CREATED, c.getLong(c.getColumnIndex(KEY_VERSES_DATE_ADDED)));

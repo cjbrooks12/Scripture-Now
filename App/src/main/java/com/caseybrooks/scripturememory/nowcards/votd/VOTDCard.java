@@ -88,6 +88,7 @@ public class VOTDCard extends FrameLayout implements IVerseViewListener {
 			case R.id.overflow_votd_card_redownload:
 				setWorking(true);
 				votd.workerThread.post(votd.getReferenceRunnable);
+				return true;
 			case R.id.overflow_votd_card_save:
 				votd.saveVerse();
 				Toast.makeText(context, votd.getVerse().getReference().toString() + " has been saved", Toast.LENGTH_SHORT).show();

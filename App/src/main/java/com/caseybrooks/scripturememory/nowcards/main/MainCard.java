@@ -148,12 +148,13 @@ public class MainCard extends FrameLayout {
                 db.open();
 				Tag tag = db.getTag(activeList.second);
 				db.close();
+                if(tag != null) {
+                    activeListSidebar.setVisibility(View.VISIBLE);
+                    activeListSidebar.setBackgroundColor(tag.color);
 
-                activeListSidebar.setVisibility(View.VISIBLE);
-                activeListSidebar.setBackgroundColor(tag.color);
-
-                activeListText.setVisibility(View.VISIBLE);
-                activeListText.setText("In tag list: " + tag.name);
+                    activeListText.setVisibility(View.VISIBLE);
+                    activeListText.setText("In tag list: " + tag.name);
+                }
             }
             else {
                 activeListSidebar.setVisibility(View.GONE);

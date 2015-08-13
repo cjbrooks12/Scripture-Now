@@ -122,6 +122,10 @@ public class VerseListFragment extends ListFragment {
         VerseDB db = new VerseDB(context).open();
         if(listType == TAGS) {
 			Tag tag = db.getTag(listId);
+            if(tag == null) {
+                mCallbacks.toDashboard();
+                return;
+            }
             title = tag.name;
             color = tag.color;
             MetaSettings.putDrawerSelection(context, 4, listId);

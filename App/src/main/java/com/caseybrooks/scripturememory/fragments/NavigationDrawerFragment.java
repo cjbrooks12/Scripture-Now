@@ -339,7 +339,7 @@ public class NavigationDrawerFragment extends Fragment {
 			ArrayList<Tag> allTags = db.getAllTags();
 			allTags.add(db.getTag(VerseDB.UNTAGGED));
 
-			List<NavListItem> tags = new ArrayList<NavListItem>();
+			List<NavListItem> tags = new ArrayList<>();
 			for (Tag tag: allTags) {
 				NavListItem item = new NavListItem();
 				item.id = tag.id;

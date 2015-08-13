@@ -21,7 +21,6 @@ import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
-import com.caseybrooks.scripturememory.misc.CacheCleaner;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDNotification;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDSettings;
@@ -58,14 +57,6 @@ public class SettingsFragment extends PreferenceFragment {
 		findPreference("RESTORE").setOnPreferenceClickListener(restoreClick);
 		findPreference("VOTD_ENABLED").setOnPreferenceChangeListener(VOTDCheckedChange);
 		findPreference("VOTD_TIME").setOnPreferenceChangeListener(VOTDTimeChange);
-		findPreference("CLEAN_CACHE").setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				Intent intent = new Intent(context, CacheCleaner.CacheCleanerAlarmReceiver.class);
-				context.sendBroadcast(intent);
-				return false;
-			}
-		});
 	}
 
 	private void setThemeSpinners() {
