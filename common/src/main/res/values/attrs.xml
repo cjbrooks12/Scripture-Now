@@ -35,6 +35,7 @@
     <attr name="ic_action_text_format" format="reference"/>
     <attr name="ic_action_spellcheck" format="reference"/>
     <attr name="ic_action_subject" format="reference"/>
+    <attr name="ic_action_checkbox" format="reference"/>
 
     <attr name="ic_action_home" format="reference"/>
     <attr name="ic_action_book" format="reference"/>
@@ -44,4 +45,7 @@
     <attr name="ic_action_settings" format="reference"/>
     <attr name="ic_action_help" format="reference"/>
     <attr name="ic_action_debug" format="reference"/>
+
+    <attr name="popup_theme" format="reference"/>
+
 </resources>

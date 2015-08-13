@@ -10,12 +10,6 @@
         android:id="@+id/context_list_change_state"
         android:title="Change State" />
 	<item
-		android:id="@+id/context_list_split_verses"
-		android:title="Split Verses" />
-    <item
-        android:id="@+id/context_list_view_in_broswer"
-        android:title="View in Browser" />
-	<item
         android:id="@+id/context_list_share"
         android:title="Share" />
     <item

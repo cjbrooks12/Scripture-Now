@@ -12,6 +12,7 @@
     <attr format="reference" name="ic_action_arrow_left"/>
     <attr format="reference" name="ic_action_arrow_right"/>
     <attr format="reference" name="ic_action_book"/>
+    <attr format="reference" name="ic_action_checkbox"/>
     <attr format="reference" name="ic_action_clear"/>
     <attr format="reference" name="ic_action_cloud_download"/>
     <attr format="reference" name="ic_action_create"/>
@@ -40,6 +41,7 @@
     <attr format="reference" name="ic_action_text_format"/>
     <attr format="reference" name="ic_action_today"/>
     <attr format="reference" name="ic_action_visibility"/>
+    <attr format="reference" name="popup_theme"/>
     <attr format="string" name="theme_name"/>
     <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/common/src/main/res/values/colors.xml -->
     <eat-comment/>
@@ -97,6 +99,7 @@
         <item name="android:windowBackground">@color/background_dark</item>
 
         <item name="theme_name">Dark</item>
+        <item name="popup_theme">@style/ThemeOverlay.AppCompat.Dark</item>
 
         <item name="ic_action_overflow">@drawable/ic_action_overflow_dark</item>
         <item name="ic_action_search">@drawable/ic_action_search_dark</item>
@@ -122,6 +125,7 @@
 		<item name="ic_action_text_format">@drawable/ic_action_text_format_dark</item>
         <item name="ic_action_spellcheck">@drawable/ic_action_spellcheck_dark</item>
         <item name="ic_action_subject">@drawable/ic_action_subject_dark</item>
+        <item name="ic_action_checkbox">@drawable/checkbox_menu_icon_dark</item>
 
 		<item name="ic_action_home">@drawable/ic_action_home_dark</item>
         <item name="ic_action_book">@drawable/ic_action_book_dark</item>
@@ -153,6 +157,7 @@
         <item name="android:windowBackground">@color/background_light</item>
 
         <item name="theme_name">Light</item>
+        <item name="popup_theme">@style/ThemeOverlay.AppCompat.Light</item>
 
         <item name="ic_action_overflow">@drawable/ic_action_overflow_light</item>
         <item name="ic_action_search">@drawable/ic_action_search_light</item>
@@ -178,6 +183,7 @@
 		<item name="ic_action_text_format">@drawable/ic_action_text_format_light</item>
         <item name="ic_action_spellcheck">@drawable/ic_action_spellcheck_light</item>
         <item name="ic_action_subject">@drawable/ic_action_subject_light</item>
+        <item name="ic_action_checkbox">@drawable/checkbox_menu_icon_light</item>
 
 		<item name="ic_action_home">@drawable/ic_action_home_light</item>
         <item name="ic_action_book">@drawable/ic_action_book_light</item>

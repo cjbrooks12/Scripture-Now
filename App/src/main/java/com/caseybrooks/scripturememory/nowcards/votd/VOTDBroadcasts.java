@@ -4,7 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.caseybrooks.androidbibletools.basic.AbstractVerse;
+import com.caseybrooks.androidbibletools.basic.Bible;
+import com.caseybrooks.androidbibletools.widget.IVerseViewListener;
+import com.caseybrooks.androidbibletools.widget.LoadState;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
+import com.caseybrooks.scripturememory.misc.QuickNotification;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
 import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
 import com.caseybrooks.scripturememory.nowcards.main.MainWidget;
@@ -44,13 +49,25 @@ public class VOTDBroadcasts {
 
 	public static class VOTDSaveVerseReceiver extends BroadcastReceiver {
 		@Override
-		public void onReceive(Context context, Intent intent) {
-//			VOTD votd = new VOTD(context);
-//			if(votd.currentVerse != null) {
-//				votd.saveVerse();
-//				VOTDNotification.getInstance(context).dismiss();
-//				new QuickNotification(context, "Verse of the Day", votd.currentVerse.getReference().toString() + " added to list").show();
-//			}
+		public void onReceive(final Context context, Intent intent) {
+			new QuickNotification(context, "Verse of the Day", "saving verse...").show();
+			VOTDNotification.getInstance(context).dismiss();
+
+			final VOTD votd = new VOTD(context);
+			votd.setListener(new IVerseViewListener() {
+				@Override
+				public boolean onBibleLoaded(Bible bible, LoadState loadState) {
+					return false;
+				}
+
+				@Override
+				public boolean onVerseLoaded(AbstractVerse abstractVerse, LoadState loadState) {
+					votd.saveVerse();
+					new QuickNotification(context, "Verse of the Day", abstractVerse.getReference().toString() + " saved").show();
+					return false;
+				}
+			});
+			votd.loadTodaysVerse();
 		}
 	}
 

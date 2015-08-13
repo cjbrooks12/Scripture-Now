@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -273,12 +274,13 @@ public class NavigationDrawerFragment extends Fragment {
         public void notifyDataSetChanged() {
             int[] allRibbonIds = new int[] { 0, 1, 2, 3 };
 
-            List<NavListItem> ribbons = new ArrayList<NavListItem>();
+            List<NavListItem> ribbons = new ArrayList<>();
             if(allRibbonIds.length > 0) {
                 for (int id : allRibbonIds) {
                     NavListItem item = new NavListItem();
                     item.id = id;
                     item.groupPosition = 1;
+                    item.childPosition = id;
                     item.name = getResources().getStringArray(R.array.ribbon_names)[id];
                     item.count = 0;
 
@@ -427,10 +429,12 @@ public class NavigationDrawerFragment extends Fragment {
                 ribbonIcon.setColorFilter(new PorterDuffColorFilter(item.color, PorterDuff.Mode.SRC_IN));
                 tagCircle.setBackgroundColor(Color.parseColor("#00000000"));
                 tagCircle.setImageDrawable(ribbonIcon);
+                tagCircleCount.setText("");
             }
             else {
                 tagCircle.setBackgroundDrawable(Util.Drawables.circle(item.color));
                 tagCircleCount.setText(Integer.toString(item.count));
+                tagCircle.setImageDrawable(new ColorDrawable(Color.parseColor("#00000000")));
             }
 
 

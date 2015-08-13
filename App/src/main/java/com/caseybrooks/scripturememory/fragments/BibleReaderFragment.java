@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.AbstractVerse;
@@ -34,6 +35,7 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 	NavigationCallbacks mCallbacks;
 
 	ReferencePicker referencePicker;
+	ImageView clearButton;
 	VerseView verseView;
 	Toolbar toolbar;
 	View headerView;
@@ -44,7 +46,8 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 	private static final String settings_file = "my_settings";
 	private static final String PREFIX = "BIBLE_";
 
-	private static final String PROGRESS = "PROGRESS";
+	private static final String PROGRESS = "_PROGRESS";
+	private static final String TRACK = "_TRACK";
 
 	public static Fragment newInstance(int id) {
 		Fragment fragment = new BibleReaderFragment();
@@ -74,11 +77,25 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 
 		headerView = inflater.inflate(R.layout.header_bible_reader, container, false);
 
+		clearButton = (ImageView) headerView.findViewById(R.id.button_clear);
+		clearButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				referencePicker.setText("");
+			}
+		});
+
 		referencePicker = (ReferencePicker) headerView.findViewById(R.id.reference_picker);
 		referencePicker.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+					String progress = referencePicker.getText().toString();
+					String[] pieces = progress.split(":");
+					if(pieces.length >= 1) {
+						progress = pieces[0];
+					}
+					referencePicker.setText(progress);
 					referencePicker.checkReference();
 					return true;
 				}
@@ -141,6 +158,7 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.menu_bible_reader, menu);
+
 	}
 
 	@Override
@@ -157,12 +175,19 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 	public void restoreProgress() {
 		String progress = context.getSharedPreferences(settings_file, 0).getString(PREFIX + key + PROGRESS, "Matthew 1:1");
 
+		String[] pieces = progress.split(":");
+		if(pieces.length >= 1) {
+			progress = pieces[0];
+		}
+
 		verseView.loadSelectedBible();
 		referencePicker.loadSelectedBible();
 		referencePicker.setText(progress);
 		referencePicker.checkReference();
 	}
 
+//Load Data
+//------------------------------------------------------------------------------
 	@Override
 	public boolean onBibleLoaded(Bible bible, LoadState state) {
 

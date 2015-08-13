@@ -129,8 +129,8 @@ public class VerseInputCard extends FrameLayout implements IReferencePickerListe
 						String[] tags = editTags.getText().toString().split(",");
 
 						for(String tag : tags) {
-							if(tag != null) {
-								passage.addTag(new Tag(tag));
+							if(tag != null && tag.trim().length() > 0) {
+								passage.addTag(new Tag(tag.trim()));
 							}
 						}
 					}
@@ -138,6 +138,7 @@ public class VerseInputCard extends FrameLayout implements IReferencePickerListe
 					db.insertVerse(passage);
 					Toast.makeText(context, ref.toString() + " saved", Toast.LENGTH_SHORT).show();
 					referencePicker.setText("");
+					referencePicker.setError(null);
 					verseView.setText("");
 					editTags.setText("");
 				}

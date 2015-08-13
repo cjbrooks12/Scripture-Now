@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/widget_main_layout"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content" >
+
+	<ImageView
+		android:id="@+id/notification_main_dismiss"
+		android:layout_width="32dp"
+		android:layout_height="32dp"
+		android:layout_margin="2dp"
+		android:background="@drawable/bg_transparent_hard_edge"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true"
+		android:src="@drawable/ic_action_clear_light"
+		android:alpha="0.45"/>
+
+	<RelativeLayout
+		android:id="@+id/notification_main_icon_layout"
+		android:layout_width="64dp"
+		android:layout_height="64dp"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true">
+		<ImageView
+			android:id="@+id/notification_main_icon_circle"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:layout_centerInParent="true"
+			android:src="@drawable/circle_color"/>
+		<ImageView
+			android:id="@+id/notification_main_icon"
+			android:layout_width="18dp"
+			android:layout_height="18dp"
+			android:layout_centerInParent="true"
+			android:src="@drawable/ic_cross"/>
+	</RelativeLayout>
+
+	<TextView
+		android:id="@+id/notification_main_reference"
+		android:paddingTop="8dp"
+		android:paddingRight="4dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/notification_main_icon_layout"
+		style="@style/NotificationTitle"
+		android:text="John 3:16"/>
+
+	<TextView
+		android:id="@+id/notification_main_verse"
+		android:paddingBottom="8dp"
+		android:paddingRight="8dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/notification_main_icon_layout"
+		android:maxHeight="216dp"
+		android:layout_below="@+id/notification_main_reference"
+		style="@style/NotificationText"
+		android:text="For God so loved the world that he gave his one and only son that whoever believes in him might not perish but have everlasting life."/>
+
+	<RelativeLayout
+		android:id="@+id/hline"
+		android:layout_width="match_parent"
+		android:layout_toEndOf="@id/notification_main_icon_layout"
+		android:layout_height="1dp"
+		android:background="@color/text_primary_dark"
+		android:layout_below="@id/notification_main_verse"/>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="48dp"
+		android:divider="@color/text_primary_dark"
+		android:showDividers="middle"
+		android:layout_below="@id/hline"
+		android:layout_alignParentEnd="true">
+		<ImageView
+			android:id="@+id/notification_main_random"
+			android:background="@drawable/bg_transparent_hard_edge"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginLeft="8dp"
+			android:alpha="0.45"
+			android:src="@drawable/ic_action_shuffle_light"/>
+
+		<ImageView
+			android:id="@+id/notification_main_previous"
+			android:background="@drawable/bg_transparent_hard_edge"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginLeft="8dp"
+			android:alpha="0.45"
+			android:src="@drawable/ic_action_arrow_left_light"/>
+
+		<ImageView
+			android:id="@+id/notification_main_next"
+			android:background="@drawable/bg_transparent_hard_edge"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginLeft="8dp"
+			android:alpha="0.45"
+			android:src="@drawable/ic_action_arrow_right_light"/>
+
+		<ImageView
+			android:id="@+id/notification_main_show_full"
+			android:background="@drawable/bg_transparent_hard_edge"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginLeft="8dp"
+			android:alpha="0.45"
+			android:src="@drawable/ic_action_text_format_light"/>
+
+	</LinearLayout>
+
+
+</RelativeLayout>
+<!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/layout-v21/notification_main_verse.xml -->

@@ -2,10 +2,5 @@
 <menu
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
-	<item
-		android:id="@+id/bible_track_progress"
-		android:title="Track Progress"
-		android:checkable="true"
-		app:showAsAction="never"
-		/>
+
 </menu>

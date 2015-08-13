@@ -192,12 +192,6 @@ public class VerseListFragment extends ListFragment {
 					case R.id.context_list_add_tag:
 						addTag(listOfOne);
 						return true;
-					case R.id.context_list_change_state:
-						changeState(listOfOne);
-						return true;
-					case R.id.context_list_split_verses:
-						splitVerse(vh.passage);
-						return true;
 					case R.id.context_list_share:
 						String shareMessage = vh.passage.getReference() + " - " + vh.passage.getText();
 						Intent intent = new Intent();
@@ -217,13 +211,6 @@ public class VerseListFragment extends ListFragment {
             });
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.overflow_list, popup.getMenu());
-
-			if(vh.passage.getVerses().length > 1) {
-				popup.getMenu().findItem(R.id.context_list_split_verses).setVisible(true);
-			}
-			else {
-				popup.getMenu().findItem(R.id.context_list_split_verses).setVisible(false);
-			}
 
 			popup.show();
         }

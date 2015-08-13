@@ -6,7 +6,9 @@ import android.preference.PreferenceManager;
 import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.basic.Book;
+import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Reference;
+import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.io.ABTUtility;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.providers.votd.VerseOfTheDay;
@@ -17,6 +19,9 @@ import com.caseybrooks.androidbibletools.widget.ReferenceWorker;
 import com.caseybrooks.androidbibletools.widget.VerseWorker;
 import com.caseybrooks.androidbibletools.widget.WorkerThread;
 import com.caseybrooks.scripturememory.R;
+import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
+import com.caseybrooks.scripturememory.nowcards.main.MainSettings;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,7 +76,11 @@ public class VOTD implements IVerseViewListener {
 		this.listener = listener;
 	}
 
-//Background tasks necessary to load the Verse of the Day
+	public AbstractVerse getVerse() {
+		return verse;
+	}
+
+	//Background tasks necessary to load the Verse of the Day
 //------------------------------------------------------------------------------
 	Runnable checkCacheRunnable = new Runnable() {
 		@Override
@@ -196,13 +205,47 @@ public class VOTD implements IVerseViewListener {
 
 //Things to do after the verse has been loaded
 //------------------------------------------------------------------------------
-	public void saveVerse() {
+	public boolean isVerseSaved() {
 		if(verse != null) {
-			
+			VerseDB db = new VerseDB(context).open();
+			int id = db.getVerseId(verse.getReference());
+			db.close();
+
+			return (id != -1);
+		}
+		else {
+			return false;
 		}
 	}
 
-	public void postAsNotification() {
+	public int saveVerse() {
+		if(verse != null) {
+			verse.addTag(new Tag("VOTD"));
+			VerseDB db = new VerseDB(context).open();
+			int id = db.getVerseId(verse.getReference());
+			if(id != -1) {
+				db.updateVerse((Passage) verse);
+				db.close();
+				return id;
+			}
+			else {
+				id = db.insertVerse((Passage) verse);
+				db.close();
+				return id;
+			}
+		}
+		else {
+			return -1;
+		}
+	}
 
+	public void setAsNotification() {
+		int id = saveVerse();
+		if(id != -1) {
+			MainSettings.setMainId(context, id);
+			MainSettings.setActive(context, true);
+			MainNotification.getInstance(context).create().show();
+			VOTDBroadcasts.updateAll(context);
+		}
 	}
 }
