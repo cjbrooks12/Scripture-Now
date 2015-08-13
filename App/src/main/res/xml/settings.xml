@@ -59,5 +59,9 @@
                 android:data="0">
             </intent>
         </Preference>
+
+        <Preference
+            android:title="Clean Cache"
+            android:key="CLEAN_CACHE" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -89,6 +89,10 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/votdwidget_info" />
         </receiver>
+        <receiver
+            android:name=".misc.CacheCleaner$CacheCleanerAlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
 
         <!-- Activities -->
         <activity

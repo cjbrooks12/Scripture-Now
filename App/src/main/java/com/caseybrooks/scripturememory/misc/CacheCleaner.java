@@ -5,11 +5,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-import com.caseybrooks.scripturememory.nowcards.votd.VOTDBroadcasts;
-import com.caseybrooks.scripturememory.nowcards.votd.VOTDNotification;
-import com.caseybrooks.scripturememory.nowcards.votd.VOTDSettings;
-
+import java.io.File;
 import java.util.Calendar;
 
 /**
@@ -26,14 +25,47 @@ public class CacheCleaner {
 	}
 
 	public void cleanCache() {
+		new QuickNotification(context, "Clean Cache", "Cleaning cache").show();
 
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		long millisNow = Calendar.getInstance().getTimeInMillis();
+
+		File cache = context.getCacheDir();
+		for(File file : cache.listFiles()) {
+			//ignore the selectedBible for now
+			if(file.getName().equals("selectedBible.xml")) {
+				continue;
+			}
+
+			//check all other cached files to see if they are out of date, and remove them if so
+			else {
+				long cacheTime = prefs.getLong(file.getName(), millisNow);
+
+				if(millisNow - cacheTime >= 1000 * 60 * 30) {
+					boolean deletedCorrectly = file.delete();
+					if(deletedCorrectly) {
+						prefs.edit().remove(file.getName()).commit();
+					}
+				}
+			}
+		}
+
+		//now that we have cleared the cache, see if we need to update the selectedBible.xml
+		File selectedBible = new File(cache, "selectedBible.xml");
+		if(selectedBible.exists()) {
+
+
+
+
+
+		}
 	}
 
 //Set an alarm for this cleaner to run everyday, starting when the device boots up
 	public void setAlarm() {
 		//Create an alarm to go off at the user-selected time
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		Intent intent = new Intent(context, VOTDBroadcasts.VOTDAlarmReceiver.class);
+		Intent intent = new Intent(context, CacheCleanerAlarmReceiver.class);
 		PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
 		Calendar calendar = Calendar.getInstance();
@@ -45,16 +77,15 @@ public class CacheCleaner {
 		alarmManager.setRepeating(
 				AlarmManager.RTC,
 				calendar.getTimeInMillis(),
-				1000*60*60*24,
+				1000 * 60 * 60 * 24,
 				alarmIntent);
 	}
 
 	public static class CacheCleanerAlarmReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if(VOTDSettings.isEnabled(context)) {
-				VOTDNotification.getInstance(context).create();
-			}
+			CacheCleaner cleaner = new CacheCleaner(context);
+			cleaner.cleanCache();
 		}
 	}
 }
