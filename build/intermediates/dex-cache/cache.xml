@@ -44,11 +44,11 @@
         <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-33b76d2a1f7a363453ffcae16b62e388d2a8be94.jar" />
     </item>
     <item
-        jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.github.cjbrooks12\AndroidBibleTools\v0.2.19\classes.jar"
+        jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.github.cjbrooks12\AndroidBibleTools\v0.2.20\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="9679a743001e3f784aa1a41c120b8147b73b611b">
-        <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-991c355015e04f7b984c695d734f81a872a32678.jar" />
+        sha1="83f4d3c8c674d5072c545062b950d98b65a9c223">
+        <dex dex="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-3a88881c301c2cef4b46674978a04ad786adbbae.jar" />
     </item>
     <item
         jar="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\exploded-aar\com.larswerkman\HoloColorPicker\1.4\classes.jar"

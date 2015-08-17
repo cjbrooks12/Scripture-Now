@@ -253,14 +253,9 @@ public class VerseDB {
         Bible bible = new Bible();
         bible.setAbbreviation(c.getString(c.getColumnIndex(KEY_VERSES_VERSION)));
         bible.setName(c.getString(c.getColumnIndex(KEY_VERSES_VERSION)));
+        bible.setBooks(new ArrayList<Book>());
         builder.setBible(bible);
-
-        String bookName = c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)).split("\\d")[0].trim();
-        Book newBook = new Book();
-        newBook.setName(bookName);
-
         builder.parseReference(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
-        builder.setBook(newBook);
 
         Passage passage = new Passage(builder.create());
         passage.setBible(bible);

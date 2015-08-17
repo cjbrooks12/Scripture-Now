@@ -280,7 +280,8 @@ public class BibleVerseAdapter extends BaseAdapter {
 
             String passageBookCode = passage.getReference().book.getAbbreviation();
 			if(passageBookCode != null) passageBookCode = passageBookCode.replaceFirst("(\\d)", "$1");
-			else passageBookCode = passage.getReference().book.getName().substring(0, 3);
+			else if(passage.getReference().book.getName().length() < 3) passageBookCode = passage.getReference().book.getName();
+            else passageBookCode = passage.getReference().book.getName().substring(0, 3);
 			if(passageBookCode.length() > 3) {
 				passageBookCode = passageBookCode.substring(0, 3);
 			}

@@ -19,8 +19,6 @@ import android.widget.TextView;
 import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.basic.Reference;
-import com.caseybrooks.androidbibletools.data.Formatter;
-import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.widget.IReferencePickerListener;
 import com.caseybrooks.androidbibletools.widget.IVerseViewListener;
@@ -208,38 +206,9 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 					getResources().getString(R.string.bibles_org_key),
 					parsedReference
 			);
-			passage.setFormatter(new Formatter() {
-				@Override
-				public String onPreFormat(Reference reference) {
-					return "";
-				}
-
-				@Override
-				public String onFormatVerseStart(int i) {
-					return "<b><sup>" + i + "</sup></b>";
-				}
-
-				@Override
-				public String onFormatText(String s) {
-					return s;
-				}
-
-				@Override
-				public String onFormatSpecial(String s) {
-					return s;
-				}
-
-				@Override
-				public String onFormatVerseEnd() {
-					return "<br/>";
-				}
-
-				@Override
-				public String onPostFormat() {
-					return "<br/><br/><small>" + ((ABSBible)passage.getBible()).getCopyright() + "</small>";
-				}
-			});
 			verseView.loadSelectedBible();
+			verseView.setDisplayingAsHtml(true);
+			verseView.setDisplayingRawText(true);
 			verseView.setVerse(passage);
 			verseView.tryCacheOrDownloadText();
 		}
