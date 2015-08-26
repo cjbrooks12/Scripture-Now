@@ -10,7 +10,8 @@
 		android:id="@+id/contextual_open_bible_redownload"
 		app:showAsAction="ifRoom"
 		android:icon="@drawable/ic_action_refresh_dark"
-		android:title="Redownload" />
+		android:title="Redownload"
+        android:visible="false"/>
     <item
         android:id="@+id/contextual_open_bible_save"
         app:showAsAction="ifRoom"

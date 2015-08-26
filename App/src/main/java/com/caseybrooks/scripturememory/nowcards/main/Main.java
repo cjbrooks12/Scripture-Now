@@ -117,7 +117,7 @@ public class Main {
         Metadata.Comparator comparator;
         switch(MetaSettings.getSortBy(context)) {
             case 0: comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED); break;
-            case 1: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE); break;
+            case 1: //comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE); break;
             case 2: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL); break;
             case 3: comparator = new Metadata.Comparator(DefaultMetaData.STATE); break;
             default: comparator = new Metadata.Comparator(DefaultMetaData.ID); break;
@@ -170,7 +170,7 @@ public class Main {
 		Metadata.Comparator comparator;
 		switch(MetaSettings.getSortBy(context)) {
 		case 0: comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED); break;
-		case 1: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE); break;
+		case 1: //comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE); break;
 		case 2: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL); break;
 		case 3: comparator = new Metadata.Comparator(DefaultMetaData.STATE); break;
 		default: comparator = new Metadata.Comparator(DefaultMetaData.ID); break;
@@ -221,7 +221,7 @@ public class Main {
 		Metadata.Comparator comparator;
 		switch(MetaSettings.getSortBy(context)) {
 		case 0: comparator = new Metadata.Comparator(DefaultMetaData.TIME_CREATED); break;
-		case 1: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE); break;
+//		case 1: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE); break;
 		case 2: comparator = new Metadata.Comparator(Metadata.Comparator.KEY_REFERENCE_ALPHABETICAL); break;
 		case 3: comparator = new Metadata.Comparator(DefaultMetaData.STATE); break;
 		default: comparator = new Metadata.Comparator(DefaultMetaData.ID); break;

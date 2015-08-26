@@ -55,6 +55,9 @@ public class CacheCleaner {
 		if(selectedBible.exists()) {
 			BiblePickerSettings.redownloadBible(context);
 		}
+
+		new QuickNotification(context, "Clean Cache", "Successfully cleaned cache").show();
+
 	}
 
 //Set an alarm for this cleaner to run everyday, starting when the device boots up

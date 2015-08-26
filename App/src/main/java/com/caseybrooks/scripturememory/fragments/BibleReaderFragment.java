@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,11 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.basic.Reference;
+import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.widget.IReferencePickerListener;
 import com.caseybrooks.androidbibletools.widget.IVerseViewListener;
@@ -35,8 +38,10 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 	ReferencePicker referencePicker;
 	ImageView clearButton;
 	VerseView verseView;
+	ProgressBar progress;
 	Toolbar toolbar;
 	View headerView;
+
 	String title;
 	String key;
 	int id;
@@ -106,6 +111,8 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 		verseView.setDisplayingRawText(false);
 		verseView.setDisplayingAsHtml(true);
 		verseView.setListener(this);
+
+		progress = (ProgressBar) view.findViewById(R.id.progress);
 
 		return view;
 	}
@@ -193,8 +200,18 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 	}
 
 	@Override
-	public boolean onVerseLoaded(AbstractVerse verse, LoadState state) {
-		return false;
+	public boolean onVerseLoaded(final AbstractVerse verse, LoadState state) {
+		verseView.post(new Runnable() {
+			@Override
+			public void run() {
+				progress.setVisibility(View.GONE);
+				verseView.setText(Html.fromHtml(
+						verse.getRawText() +
+						"<small>" + ((ABSBible) verse.getBible()).getCopyright() + "</small>")
+				);
+			}
+		});
+		return true;
 	}
 
 	@Override
@@ -206,6 +223,14 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 					getResources().getString(R.string.bibles_org_key),
 					parsedReference
 			);
+
+			progress.post(new Runnable() {
+				  @Override
+				  public void run() {
+					  progress.setVisibility(View.VISIBLE);
+				  }
+			});
+
 			verseView.loadSelectedBible();
 			verseView.setDisplayingAsHtml(true);
 			verseView.setDisplayingRawText(true);

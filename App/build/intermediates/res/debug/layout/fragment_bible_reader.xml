@@ -4,16 +4,28 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical">
-	<com.caseybrooks.androidbibletools.widget.VerseView
-		android:id="@+id/verse_view"
+	<FrameLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="16dp"
-		android:layout_marginRight="16dp"
-		android:textIsSelectable="true"
-		android:textStyle="normal"
-		android:fontFamily="serif"
-		android:textSize="18sp"/>
+		android:layout_height="wrap_content">
+		<com.caseybrooks.androidbibletools.widget.VerseView
+			android:id="@+id/verse_view"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:textIsSelectable="true"
+			android:textStyle="normal"
+			android:fontFamily="serif"
+			android:textSize="18sp" />
+		<ProgressBar
+			android:id="@+id/progress"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="-7dp"
+			android:indeterminate="true"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_gravity="top" />
+	</FrameLayout>
 </ScrollView>
 
 <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/layout/fragment_bible_reader.xml -->

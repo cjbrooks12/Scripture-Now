@@ -21,6 +21,7 @@ import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
+import com.caseybrooks.scripturememory.misc.CacheCleaner;
 import com.caseybrooks.scripturememory.misc.PreferenceFragment;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDNotification;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDSettings;
@@ -304,6 +305,8 @@ public class SettingsFragment extends PreferenceFragment {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
             VOTDNotification.getInstance(context).setAlarm();
+			CacheCleaner.setAlarm(context);
+
 			Toast.makeText(context, "Notification will show daily at " + preference.getSummary(), Toast.LENGTH_LONG).show();
 
 			return false;

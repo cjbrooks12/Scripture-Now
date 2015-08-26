@@ -347,11 +347,11 @@ public class VerseListFragment extends ListFragment {
                 loaderThread = new PopulateBibleVerses();
 				loaderThread.execute();
                 return true;
-            case R.id.menu_list_sort_canonical:
-                MetaSettings.putSortBy(context, 1);
-                loaderThread = new PopulateBibleVerses();
-				loaderThread.execute();
-                return true;
+//            case R.id.menu_list_sort_canonical:
+//                MetaSettings.putSortBy(context, 1);
+//                loaderThread = new PopulateBibleVerses();
+//				loaderThread.execute();
+//                return true;
             case R.id.menu_list_sort_alphabetically:
                 MetaSettings.putSortBy(context, 2);
                 loaderThread = new PopulateBibleVerses();

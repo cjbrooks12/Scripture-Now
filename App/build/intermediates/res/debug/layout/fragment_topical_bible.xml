@@ -16,7 +16,7 @@
        android:visibility="invisible"
        style="?android:attr/progressBarStyleHorizontal"
        android:indeterminate="false"
-       android:layout_marginTop="-2dp"
+       android:layout_marginTop="-7dp"
        android:max="10"/>
 </FrameLayout>
 <!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/src/main/res/layout/fragment_topical_bible.xml -->

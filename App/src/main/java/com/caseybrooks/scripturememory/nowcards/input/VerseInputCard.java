@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.AbstractVerse;
@@ -38,6 +39,7 @@ public class VerseInputCard extends FrameLayout implements IReferencePickerListe
 	ReferencePicker referencePicker;
 	EditVerse verseView;
 	MultiAutoCompleteTextView editTags;
+	ProgressBar progress;
 
 	ImageView checkReference;
 	ImageView lookupText;
@@ -68,6 +70,8 @@ public class VerseInputCard extends FrameLayout implements IReferencePickerListe
 
 		contextMenu = (ImageButton) findViewById(R.id.overflowButton);
     	contextMenu.setOnClickListener(contextMenuClick);
+
+		progress = (ProgressBar) findViewById(R.id.progress);
 
 		referencePicker = (ReferencePicker) findViewById(R.id.reference_picker);
 		referencePicker.loadSelectedBible();
@@ -197,6 +201,12 @@ public class VerseInputCard extends FrameLayout implements IReferencePickerListe
 			);
 
 			if(downloadAfterChecking) {
+				progress.post(new Runnable() {
+					@Override
+					public void run() {
+						progress.setVisibility(View.VISIBLE);
+					}
+				});
 				verseView.loadSelectedBible();
 				verseView.setVerse(passage);
 				verseView.tryCacheOrDownloadText();
@@ -212,6 +222,7 @@ public class VerseInputCard extends FrameLayout implements IReferencePickerListe
 							@Override
 							public void run() {
 								verseView.setText(abstractVerse.getText());
+								progress.setVisibility(View.GONE);
 							}
 						});
 						return true;
