@@ -7,55 +7,20 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59b7e797-6039-4000-a923-27bd6b921710" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\classes\debug\com\caseybrooks\scripturememory\nowcards\input\VerseInputCard$6$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-3a88881c301c2cef4b46674978a04ad786adbbae.jar" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\Casey\Documents\android\scripturememory\.idea\libraries\AndroidBibleTools_v0_2_20.xml" afterPath="$PROJECT_DIR$/.idea/libraries/AndroidBibleTools_v0_2_22.xml" />
+      <change type="DELETED" beforePath="C:\Users\Casey\Documents\android\scripturememory\App\build\intermediates\pre-dexed\debug\classes-2e4b820d387d691319a81a2940b8d9689d1cd225.jar" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\Casey\Documents\android\scripturememory\.idea\libraries\AndroidBibleTools_v0_2_22.xml" afterPath="$PROJECT_DIR$/.idea/libraries/AndroidBibleTools_v0_2_23.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/outputs/apk/App-debug-unaligned.apk" afterPath="$PROJECT_DIR$/App/build/outputs/apk/App-debug-unaligned.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/outputs/apk/App-debug.apk" afterPath="$PROJECT_DIR$/App/build/outputs/apk/App-debug.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/BibleReaderFragment$1.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/BibleReaderFragment$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/BibleReaderFragment$2.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/BibleReaderFragment$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/BibleReaderFragment.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/BibleReaderFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/misc/CacheCleaner$CacheCleanerAlarmReceiver.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/misc/CacheCleaner$CacheCleanerAlarmReceiver.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/misc/CacheCleaner.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/misc/CacheCleaner.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/main/Main.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/main/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/main/MainCard$1.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/main/MainCard$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/main/MainCard$3.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/main/MainCard$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$id.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$integer.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$integer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$layout.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$layout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$menu.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$menu.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$raw.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$raw.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$string.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$style.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$style.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$styleable.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$styleable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$xml.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R$xml.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/R.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$1$1.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$1$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$1$2.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$1$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$1.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$2$1.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$2$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$2$2.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$2$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$2.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$3.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$4.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$5.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$6.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$6.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$7.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment$7.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/SettingsFragment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/votd/VOTDCard$2.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/votd/VOTDCard$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$1.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$2.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$3.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$4.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$5.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$6.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard$6.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/VerseListFragment$3$1.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/VerseListFragment$3$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/VerseListFragment.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/VerseListFragment.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment$1.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment$2.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment$3.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment$ListItem.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment$ListItem.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment$SPAdapter.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment$SPAdapter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment.class" afterPath="$PROJECT_DIR$/App/build/intermediates/classes/debug/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/dex/debug/classes.dex" afterPath="$PROJECT_DIR$/App/build/intermediates/dex/debug/classes.dex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" />
@@ -65,14 +30,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/res/resources-debug.ap_" afterPath="$PROJECT_DIR$/App/build/intermediates/res/resources-debug.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/App.iml" afterPath="$PROJECT_DIR$/App/App.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/BibleReaderFragment.java" afterPath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/BibleReaderFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/misc/CacheCleaner.java" afterPath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/misc/CacheCleaner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/nowcards/main/Main.java" afterPath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/nowcards/main/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/generated/source/r/debug/com/caseybrooks/scripturememory/R.java" afterPath="$PROJECT_DIR$/App/build/generated/source/r/debug/com/caseybrooks/scripturememory/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/symbols/debug/R.txt" afterPath="$PROJECT_DIR$/App/build/intermediates/symbols/debug/R.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/SettingsFragment.java" afterPath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/SettingsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard.java" afterPath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/VerseListFragment.java" afterPath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/VerseListFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment.java" afterPath="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/res/debug/drawable/bg_oval_32.xml" afterPath="$PROJECT_DIR$/App/build/intermediates/res/debug/drawable/bg_oval_32.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/res/debug/layout/bible_picker.xml" afterPath="$PROJECT_DIR$/App/build/intermediates/res/debug/layout/bible_picker.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/res/debug/layout/bible_picker_item.xml" afterPath="$PROJECT_DIR$/App/build/intermediates/res/debug/layout/bible_picker_item.xml" />
@@ -80,17 +38,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/build.gradle" afterPath="$PROJECT_DIR$/common/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/common.iml" afterPath="$PROJECT_DIR$/common/common.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/res/debug/menu/contextual_open_bible.xml" afterPath="$PROJECT_DIR$/App/build/intermediates/res/debug/menu/contextual_open_bible.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/res/menu/contextual_open_bible.xml" afterPath="$PROJECT_DIR$/App/src/main/res/menu/contextual_open_bible.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/res/debug/layout/fragment_bible_reader.xml" afterPath="$PROJECT_DIR$/App/build/intermediates/res/debug/layout/fragment_bible_reader.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/res/layout/fragment_bible_reader.xml" afterPath="$PROJECT_DIR$/App/src/main/res/layout/fragment_bible_reader.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/res/debug/layout/fragment_topical_bible.xml" afterPath="$PROJECT_DIR$/App/build/intermediates/res/debug/layout/fragment_topical_bible.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/res/layout/fragment_topical_bible.xml" afterPath="$PROJECT_DIR$/App/src/main/res/layout/fragment_topical_bible.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/tmp/dex/debug/inputList.txt" afterPath="$PROJECT_DIR$/App/build/intermediates/tmp/dex/debug/inputList.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/outputs/apk/manifest-merger-debug-report.txt" afterPath="$PROJECT_DIR$/App/build/outputs/apk/manifest-merger-debug-report.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/res/debug/menu/menu_list.xml" afterPath="$PROJECT_DIR$/App/build/intermediates/res/debug/menu/menu_list.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/src/main/res/menu/menu_list.xml" afterPath="$PROJECT_DIR$/App/src/main/res/menu/menu_list.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/build/intermediates/incremental/mergeResources/debug/merger.xml" afterPath="$PROJECT_DIR$/App/build/intermediates/incremental/mergeResources/debug/merger.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -163,7 +113,48 @@
     <favorites_list name="scripturememory" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="SettingsFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/SettingsFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="307" column="17" selection-start-line="307" selection-start-column="17" selection-end-line="307" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-17.777779">
+              <caret line="42" column="60" selection-start-line="42" selection-start-column="60" selection-end-line="42" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/common/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="5.111111">
+              <caret line="23" column="60" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DebugSharedPreferencesFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="190" column="63" selection-start-line="190" selection-start-column="63" selection-end-line="190" selection-end-column="63" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -536,9 +527,9 @@
                 <option name="name" value="prepareComAndroidSupportSupportV42220Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.github.cjbrooks12:AndroidBibleTools:v0.2.22" />
+                <option name="description" value="Prepare com.github.cjbrooks12:AndroidBibleTools:v0.2.23" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareComGithubCjbrooks12AndroidBibleToolsV0222Library" />
+                <option name="name" value="prepareComGithubCjbrooks12AndroidBibleToolsV0223Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.github.nirhart:parallaxscroll:1.0" />
@@ -1054,9 +1045,9 @@
                 <option name="name" value="prepareComAndroidSupportSupportV42220Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.github.cjbrooks12:AndroidBibleTools:v0.2.22" />
+                <option name="description" value="Prepare com.github.cjbrooks12:AndroidBibleTools:v0.2.23" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/App" />
-                <option name="name" value="prepareComGithubCjbrooks12AndroidBibleToolsV0222Library" />
+                <option name="name" value="prepareComGithubCjbrooks12AndroidBibleToolsV0223Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.github.nirhart:parallaxscroll:1.0" />
@@ -1528,9 +1519,9 @@
                 <option name="name" value="prepareComAndroidSupportSupportV42220Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.github.cjbrooks12:AndroidBibleTools:v0.2.22" />
+                <option name="description" value="Prepare com.github.cjbrooks12:AndroidBibleTools:v0.2.23" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="prepareComGithubCjbrooks12AndroidBibleToolsV0222Library" />
+                <option name="name" value="prepareComGithubCjbrooks12AndroidBibleToolsV0223Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
@@ -1606,7 +1597,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="C:\Users\Casey\Documents\android\scripturememory" value="5752767669738" />
+        <entry key="C:\Users\Casey\Documents\android\scripturememory" value="5754979058441" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1766,7 +1757,7 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.nirhart/parallaxscroll/1.0/700e5ed79110b1387ef0116996a54112e93b2ead/parallaxscroll-1.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.larswerkman/HoloColorPicker/1.4/8ebe1b82a8ba997a759c2b08d82acfbc9bfc8fbb/HoloColorPicker-1.4.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.7.2/d7e275ba05aa380ca254f72d0c0ffebaedc3adcf/jsoup-1.7.2.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.cjbrooks12/AndroidBibleTools/v0.2.22/8fba2ff961c993a438095b2e8a2d7763b2534af3/AndroidBibleTools-v0.2.22.aar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.cjbrooks12/AndroidBibleTools/v0.2.23/ea173e443877d761dc64d62d0f275bc43fc12e72/AndroidBibleTools-v0.2.23.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar" />
                           </list>
                         </option>
@@ -1845,7 +1836,7 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/ow2/asm/asm-tree/4.0/asm-tree-4.0.jar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/22.2.0/appcompat-v7-22.2.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.7.2/d7e275ba05aa380ca254f72d0c0ffebaedc3adcf/jsoup-1.7.2.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.cjbrooks12/AndroidBibleTools/v0.2.22/8fba2ff961c993a438095b2e8a2d7763b2534af3/AndroidBibleTools-v0.2.22.aar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.cjbrooks12/AndroidBibleTools/v0.2.23/ea173e443877d761dc64d62d0f275bc43fc12e72/AndroidBibleTools-v0.2.23.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/22.2.0/support-v4-22.2.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar" />
                           </list>
@@ -1875,7 +1866,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/ImportVersesFragment.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/TopicalBibleFragment.java" />
         <option value="$PROJECT_DIR$/App/src/main/res/menu/contextual_list.xml" />
         <option value="$PROJECT_DIR$/App/src/main/res/menu/menu_edit_verse.xml" />
@@ -1917,8 +1907,6 @@
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/SettingsFragment.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/misc/CacheCleaner.java" />
         <option value="$PROJECT_DIR$/App/src/main/res/menu/contextual_open_bible.xml" />
-        <option value="$PROJECT_DIR$/common/build.gradle" />
-        <option value="$PROJECT_DIR$/App/build.gradle" />
         <option value="$PROJECT_DIR$/App/src/main/res/menu/menu_list.xml" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/VerseListFragment.java" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/nowcards/main/Main.java" />
@@ -1926,6 +1914,9 @@
         <option value="$PROJECT_DIR$/App/src/main/res/layout/fragment_bible_reader.xml" />
         <option value="$PROJECT_DIR$/App/src/main/res/layout/fragment_topical_bible.xml" />
         <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/nowcards/input/VerseInputCard.java" />
+        <option value="$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment.java" />
+        <option value="$PROJECT_DIR$/App/build.gradle" />
+        <option value="$PROJECT_DIR$/common/build.gradle" />
       </list>
     </option>
   </component>
@@ -1988,34 +1979,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="scripturememory" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="App" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripturememory" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="App" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2243,7 +2206,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2258,10 +2221,10 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.79591835" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.8452381" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.8452381" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962178" sideWeight="0.4931973" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962178" sideWeight="0.4931973" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -2299,28 +2262,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/nowcards/main/MainWidget.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5196428">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/src/main/res/menu/overflow_votd_card.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.425">
-          <caret line="14" column="45" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/nowcards/votd/VOTDNotification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="33" selection-start-line="63" selection-start-column="33" selection-end-line="63" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.18/classes.jar!/com/caseybrooks/androidbibletools/io/ABTUtility.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.95497185">
@@ -2453,6 +2394,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39464286">
           <caret line="341" column="51" selection-start-line="341" selection-start-column="51" selection-end-line="341" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2512,13 +2454,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0375">
           <caret line="58" column="81" selection-start-line="58" selection-start-column="81" selection-end-line="58" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/SettingsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45357144">
-          <caret line="307" column="17" selection-start-line="307" selection-start-column="17" selection-end-line="307" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2548,22 +2484,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.85714287">
-          <caret line="42" column="60" selection-start-line="42" selection-start-column="60" selection-end-line="42" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.575">
-          <caret line="23" column="60" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2707,13 +2627,13 @@
         <state vertical-scroll-proportion="0.7892857">
           <caret line="233" column="27" selection-start-line="233" selection-start-column="27" selection-end-line="233" selection-end-column="27" />
           <folding>
-            <element signature="e#3247#3727#0" expanded="true" />
-            <element signature="e#3726#3727#0" expanded="true" />
-            <element signature="e#6282#6530#0" expanded="true" />
-            <element signature="e#6529#6530#0" expanded="true" />
-            <element signature="e#6768#6817#0" expanded="true" />
-            <element signature="e#6864#6980#0" expanded="true" />
-            <element signature="e#6979#6980#0" expanded="true" />
+            <element signature="e#3247#3727#0" expanded="false" />
+            <element signature="e#3726#3727#0" expanded="false" />
+            <element signature="e#6282#6530#0" expanded="false" />
+            <element signature="e#6529#6530#0" expanded="false" />
+            <element signature="e#6768#6817#0" expanded="false" />
+            <element signature="e#6864#6980#0" expanded="false" />
+            <element signature="e#6979#6980#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2723,12 +2643,60 @@
         <state vertical-scroll-proportion="0.39464286">
           <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
           <folding>
-            <element signature="e#5779#5828#0" expanded="true" />
-            <element signature="e#5901#6014#0" expanded="true" />
-            <element signature="e#6013#6014#0" expanded="true" />
-            <element signature="e#6419#6591#0" expanded="true" />
-            <element signature="e#6590#6591#0" expanded="true" />
+            <element signature="e#5779#5828#0" expanded="false" />
+            <element signature="e#5901#6014#0" expanded="false" />
+            <element signature="e#6013#6014#0" expanded="false" />
+            <element signature="e#6419#6591#0" expanded="false" />
+            <element signature="e#6590#6591#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/SettingsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="307" column="17" selection-start-line="307" selection-start-column="17" selection-end-line="307" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/src/main/java/com/caseybrooks/scripturememory/fragments/DebugSharedPreferencesFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="190" column="63" selection-start-line="190" selection-start-column="63" selection-end-line="190" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.22/classes.jar!/com/caseybrooks/androidbibletools/providers/abs/ABSBible.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5833333">
+          <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-22/android/os/Handler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.777779">
+          <caret line="42" column="60" selection-start-line="42" selection-start-column="60" selection-end-line="42" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.111111">
+          <caret line="23" column="60" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>

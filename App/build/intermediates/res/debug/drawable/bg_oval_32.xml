@@ -5,4 +5,4 @@
 	android:dither="true">
 	<corners android:radius="16dp" />
 	<solid android:color="#33000000" />
-</shape><!-- From: file:/build/app/src/main/res/drawable/bg_oval_32.xml --><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.22/res/drawable/bg_oval_32.xml -->
+</shape><!-- From: file:/build/app/src/main/res/drawable/bg_oval_32.xml --><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.23/res/drawable/bg_oval_32.xml -->

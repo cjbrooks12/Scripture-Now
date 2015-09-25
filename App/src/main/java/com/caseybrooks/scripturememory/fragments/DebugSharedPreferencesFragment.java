@@ -26,6 +26,7 @@ import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Map;
 
@@ -187,7 +188,31 @@ public class DebugSharedPreferencesFragment extends ListFragment {
 				}
 				else if(pref instanceof Long) {
 					item.type = "Long";
-					item.value = ((Long) pref).toString();
+					item.value = ((Long) pref).toString() + " (";
+
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTimeInMillis(((Long) pref).longValue());
+
+					switch(calendar.get(Calendar.MONTH)) {
+					case 0: item.value += "January"; break;
+					case 1: item.value += "February"; break;
+					case 2: item.value += "March"; break;
+					case 3: item.value += "April"; break;
+					case 4: item.value += "May"; break;
+					case 5: item.value += "June"; break;
+					case 6: item.value += "July"; break;
+					case 7: item.value += "August"; break;
+					case 8: item.value += "September"; break;
+					case 9: item.value += "October"; break;
+					case 10: item.value += "November"; break;
+					case 11: item.value += "December"; break;
+					}
+
+					item.value += " " + calendar.get(Calendar.DATE) + ", " + calendar.get(Calendar.YEAR);
+
+					item.value += " " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
+					item.value += " )";
+
 				}
 				else if(pref instanceof String) {
 					item.type = "String";
