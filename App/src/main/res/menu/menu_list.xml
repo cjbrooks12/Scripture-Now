@@ -9,9 +9,9 @@
             <item
                 android:id="@+id/menu_list_sort_date"
                 android:title="Date Added" />
-            <!--<item-->
-                <!--android:id="@+id/menu_list_sort_canonical"-->
-                <!--android:title="Canonical Order"/>-->
+            <item
+                android:id="@+id/menu_list_sort_canonical"
+                android:title="Canonical Order"/>
             <item
                 android:id="@+id/menu_list_sort_alphabetically"
                 android:title="Alphabetical" />

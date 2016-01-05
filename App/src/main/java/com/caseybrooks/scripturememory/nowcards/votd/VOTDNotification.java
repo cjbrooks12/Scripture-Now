@@ -68,6 +68,11 @@ public class VOTDNotification implements IVerseViewListener {
         return this;
     }
 
+    public VOTDNotification createOffline() {
+        onVerseLoaded(null, LoadState.Failed);
+        return this;
+    }
+
     public void show() {
         manager.notify(2, notification);
 		VOTDSettings.setActive(context, true);

@@ -17,6 +17,7 @@ import android.util.TypedValue;
 import android.widget.Toast;
 
 import com.caseybrooks.androidbibletools.basic.Tag;
+import com.caseybrooks.androidbibletools.widget.biblepicker.BiblePickerDialog;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
@@ -56,6 +57,7 @@ public class SettingsFragment extends PreferenceFragment {
 	private void setClicks() {
 		findPreference("BACKUP").setOnPreferenceClickListener(backupClick);
 		findPreference("RESTORE").setOnPreferenceClickListener(restoreClick);
+		findPreference("PREF_BIBLE_PICKER").setOnPreferenceClickListener(biblePickerClick);
 		findPreference("VOTD_ENABLED").setOnPreferenceChangeListener(VOTDCheckedChange);
 		findPreference("VOTD_TIME").setOnPreferenceChangeListener(VOTDTimeChange);
 	}
@@ -268,6 +270,15 @@ public class SettingsFragment extends PreferenceFragment {
 				}
 			}
 			return false;
+		}
+	};
+
+	OnPreferenceClickListener biblePickerClick = new OnPreferenceClickListener() {
+		@Override
+		public boolean onPreferenceClick(Preference preference) {
+			BiblePickerDialog.create(context, getResources().getString(R.string.bibles_org), "KEYYYY").show();
+
+			return true;
 		}
 	};
 

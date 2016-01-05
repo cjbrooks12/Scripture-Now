@@ -103,7 +103,7 @@ public class VOTD implements IVerseViewListener {
 						now.get(Calendar.YEAR) != lastUpdated.get(Calendar.YEAR)) {
 
 					PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(key, 1L);
-					ABTUtility.getChachedDocument(context, key, ABTUtility.CacheTimeout.OneDay.millis);
+					ABTUtility.getCachedDocument(context, key, ABTUtility.CacheTimeout.OneDay.millis);
 
 					workerThread.post(getReferenceRunnable);
 				}

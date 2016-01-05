@@ -1,0 +1,287 @@
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:cardView="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+		<android.support.v7.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			cardView:cardBackgroundColor="?attr/color_card"
+			android:layout_marginTop="8dp"
+			cardView:cardCornerRadius="4dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical" >
+
+				<!-- The header bar -->
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="48dp"
+					android:layout_marginLeft="16dp"
+					android:layout_marginRight="16dp" >
+					<TextView
+						android:id="@+id/testTitle1"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_centerVertical="true"
+						android:fontFamily="sans-serif-light"
+						android:text="Plain Text"
+						android:textSize="@dimen/title_text_size" />
+				</RelativeLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:layout_marginLeft="8dp"
+					android:layout_marginRight="8dp"
+					android:background="@android:color/darker_gray" />
+
+				<!-- The verse text area -->
+				<RelativeLayout
+					android:id="@+id/notificationVerseLayout"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="16dp"
+					android:layout_marginRight="16dp"
+					android:layout_marginTop="4dp"
+					android:layout_marginBottom="8dp">
+
+					<TextView
+						android:id="@+id/testReference1"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_alignParentTop="true"
+						android:fontFamily="sans-serif-light"
+						android:textSize="@dimen/title_text_size" />
+
+					<TextView
+						android:id="@+id/testVerse1"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_below="@id/testReference1"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_marginTop="4dp"
+						android:fontFamily="sans-serif-light" />
+				</RelativeLayout>
+			</LinearLayout>
+		</android.support.v7.widget.CardView>
+		<android.support.v7.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			cardView:cardBackgroundColor="?attr/color_card"
+			android:layout_marginTop="8dp"
+			cardView:cardCornerRadius="4dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical" >
+
+				<!-- The header bar -->
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="48dp"
+					android:layout_marginLeft="16dp"
+					android:layout_marginRight="16dp" >
+					<TextView
+						android:id="@+id/testTitle2"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_centerVertical="true"
+						android:fontFamily="sans-serif-light"
+						android:text="Formatted as HTML"
+						android:textSize="@dimen/title_text_size" />
+				</RelativeLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:layout_marginLeft="8dp"
+					android:layout_marginRight="8dp"
+					android:background="@android:color/darker_gray" />
+
+				<!-- The verse text area -->
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="16dp"
+					android:layout_marginRight="16dp"
+					android:layout_marginTop="4dp"
+					android:layout_marginBottom="8dp">
+
+					<TextView
+						android:id="@+id/testReference2"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_alignParentTop="true"
+						android:fontFamily="sans-serif-light"
+						android:textSize="@dimen/title_text_size" />
+
+					<TextView
+						android:id="@+id/testVerse2"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_below="@id/testReference2"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_marginTop="4dp"
+						android:fontFamily="sans-serif-light" />
+				</RelativeLayout>
+			</LinearLayout>
+		</android.support.v7.widget.CardView>
+
+		<android.support.v7.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			cardView:cardBackgroundColor="?attr/color_card"
+			android:layout_marginTop="8dp"
+			cardView:cardCornerRadius="4dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical" >
+
+				<!-- The header bar -->
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="48dp"
+					android:layout_marginLeft="16dp"
+					android:layout_marginRight="16dp" >
+					<TextView
+						android:id="@+id/testTitle3"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_centerVertical="true"
+						android:fontFamily="sans-serif-light"
+						android:text="Formatted as markup"
+						android:textSize="@dimen/title_text_size" />
+				</RelativeLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:layout_marginLeft="8dp"
+					android:layout_marginRight="8dp"
+					android:background="@android:color/darker_gray" />
+
+				<!-- The verse text area -->
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="16dp"
+					android:layout_marginRight="16dp"
+					android:layout_marginTop="4dp"
+					android:layout_marginBottom="8dp">
+
+					<TextView
+						android:id="@+id/testReference3"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_alignParentTop="true"
+						android:fontFamily="sans-serif-light"
+						android:textSize="@dimen/title_text_size" />
+
+					<TextView
+						android:id="@+id/testVerse3"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_below="@id/testReference3"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_marginTop="4dp"
+						android:fontFamily="sans-serif-light" />
+				</RelativeLayout>
+			</LinearLayout>
+		</android.support.v7.widget.CardView>
+
+		<android.support.v7.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			cardView:cardBackgroundColor="?attr/color_card"
+			android:layout_marginTop="8dp"
+			cardView:cardCornerRadius="4dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical" >
+
+				<!-- The header bar -->
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="48dp"
+					android:layout_marginLeft="16dp"
+					android:layout_marginRight="16dp" >
+					<TextView
+						android:id="@+id/testTitle4"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_centerVertical="true"
+						android:fontFamily="sans-serif-light"
+						android:text="Parsed from Markup"
+						android:textSize="@dimen/title_text_size" />
+				</RelativeLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:layout_marginLeft="8dp"
+					android:layout_marginRight="8dp"
+					android:background="@android:color/darker_gray" />
+
+				<!-- The verse text area -->
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="16dp"
+					android:layout_marginRight="16dp"
+					android:layout_marginTop="4dp"
+					android:layout_marginBottom="8dp">
+
+					<TextView
+						android:id="@+id/testReference4"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_alignParentTop="true"
+						android:fontFamily="sans-serif-light"
+						android:textSize="@dimen/title_text_size" />
+
+					<TextView
+						android:id="@+id/testVerse4"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_below="@id/testReference4"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_marginTop="4dp"
+						android:fontFamily="sans-serif-light" />
+				</RelativeLayout>
+			</LinearLayout>
+		</android.support.v7.widget.CardView>
+	</LinearLayout>
+</ScrollView>
+<!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/fragment_test.xml -->

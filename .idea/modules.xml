@@ -3,9 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/App/App.iml" filepath="$PROJECT_DIR$/App/App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Scripture-Now.iml" filepath="$PROJECT_DIR$/Scripture-Now.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/scripturememory.iml" filepath="$PROJECT_DIR$/scripturememory.iml" />
     </modules>
   </component>
 </project>
-

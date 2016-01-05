@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.caseybrooks.androidbibletools.io.ABTUtility;
-import com.caseybrooks.androidbibletools.widget.biblepicker.BiblePickerSettings;
 import com.caseybrooks.scripturememory.nowcards.votd.VOTDSettings;
 
 import java.io.File;
@@ -24,8 +23,6 @@ import java.util.Calendar;
 public class CacheCleaner {
 
 	public static void cleanCache(Context context) {
-		new QuickNotification(context, "Clean Cache", "Cleaning cache").show();
-
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		long millisNow = Calendar.getInstance().getTimeInMillis();
 
@@ -51,12 +48,12 @@ public class CacheCleaner {
 		}
 
 		//now that we have cleared the cache, see if we need to update the selectedBible.xml
-		File selectedBible = new File(cache, "selectedBible.xml");
-		if(selectedBible.exists()) {
-			BiblePickerSettings.redownloadBible(context);
-		}
+//		File selectedBible = new File(cache, "selectedBible.xml");
+//		if(selectedBible.exists()) {
+//			BiblePickerSettings.redownloadBible(context);
+//		}
 
-		new QuickNotification(context, "Clean Cache", "Successfully cleaned cache").show();
+//		new QuickNotification(context, "Clean Cache", "Successfully cleaned cache").show();
 
 	}
 

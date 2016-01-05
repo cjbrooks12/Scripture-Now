@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/common/src/main/res/values/attrs.xml -->
+    <eat-comment/>
+    <attr format="color" name="color_background"/>
+    <attr format="color" name="color_background_selected"/>
+    <attr format="color" name="color_card"/>
+    <attr format="color" name="color_text"/>
+    <attr format="color" name="color_text_secondary"/>
+    <attr format="color" name="color_toolbar"/>
+    <attr format="reference" name="ic_action_add"/>
+    <attr format="reference" name="ic_action_arrow_left"/>
+    <attr format="reference" name="ic_action_arrow_right"/>
+    <attr format="reference" name="ic_action_book"/>
+    <attr format="reference" name="ic_action_checkbox"/>
+    <attr format="reference" name="ic_action_clear"/>
+    <attr format="reference" name="ic_action_cloud_download"/>
+    <attr format="reference" name="ic_action_create"/>
+    <attr format="reference" name="ic_action_debug"/>
+    <attr format="reference" name="ic_action_delete"/>
+    <attr format="reference" name="ic_action_done"/>
+    <attr format="reference" name="ic_action_filter"/>
+    <attr format="reference" name="ic_action_find_in_page"/>
+    <attr format="reference" name="ic_action_folder"/>
+    <attr format="reference" name="ic_action_get_app"/>
+    <attr format="reference" name="ic_action_group_work"/>
+    <attr format="reference" name="ic_action_help"/>
+    <attr format="reference" name="ic_action_home"/>
+    <attr format="reference" name="ic_action_overflow"/>
+    <attr format="reference" name="ic_action_refresh"/>
+    <attr format="reference" name="ic_action_save"/>
+    <attr format="reference" name="ic_action_search"/>
+    <attr format="reference" name="ic_action_select_all"/>
+    <attr format="reference" name="ic_action_settings"/>
+    <attr format="reference" name="ic_action_share"/>
+    <attr format="reference" name="ic_action_shuffle"/>
+    <attr format="reference" name="ic_action_sort"/>
+    <attr format="reference" name="ic_action_spellcheck"/>
+    <attr format="reference" name="ic_action_subject"/>
+    <attr format="reference" name="ic_action_tag"/>
+    <attr format="reference" name="ic_action_text_format"/>
+    <attr format="reference" name="ic_action_today"/>
+    <attr format="reference" name="ic_action_visibility"/>
+    <attr format="reference" name="popup_theme"/>
+    <attr format="string" name="theme_name"/>
+    <!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/common/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="all_current_verses">#559955</color>
+    <color name="all_verses">#555555</color>
+    <color name="background_dark">#404040</color>
+    <color name="background_light">#F0F0F0</color>
+    <color name="background_selected_dark">#606060</color>
+    <color name="background_selected_light">#c0c0c0</color>
+    <color name="background_selected_transparent">#20000000</color>
+    <color name="card_dark">#505050</color>
+    <color name="card_light">#FFFFFF</color>
+    <color name="current_all">#937AED</color>
+    <color name="current_most">#EFC94C</color>
+    <color name="current_none">#DF5A49</color>
+    <color name="current_some">#E27A3F</color>
+    <color name="forest_green">#508a4c</color>
+    <color name="forest_green_light">#B9D6B6</color>
+    <color name="memorized">#45B29D</color>
+    <color name="open_bible_brown">#7E7156</color>
+    <color name="open_bible_green">#C1E68D</color>
+    <color name="primary">#45B29D</color>
+    <color name="primary_accent">#D32F2F</color>
+    <color name="primary_dark">#378E7D</color>
+    <color name="ribbon_nt">#855585</color>
+    <color name="ribbon_ot">#2C524C</color>
+    <color name="ribbon_other">#BB0C00</color>
+    <color name="ribbon_wis">#C84E00</color>
+    <color name="text_primary_dark">#DE000000</color>
+    <color name="text_primary_light">#FFFFFFFF</color>
+    <color name="text_secondary_dark">#91000000</color>
+    <color name="text_secondary_light">#91FFFFFF</color>
+    <!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/common/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">Common</string>
+    <string name="bibles_org_key">mDaM8REZFo6itplNpcv1ls8J5PkwEz1wbhJ7p9po</string>
+    <!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/common/src/main/res/values/material_theme_dark.xml -->
+    <eat-comment/>
+    <style name="Theme.Dark" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary_accent</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@drawable/toolbar_shadow</item>
+
+        <!-- Colors -->
+        <item name="color_background_selected">@color/background_selected_dark</item>
+        <item name="color_background">@color/background_dark</item>
+        <item name="color_card">@color/card_dark</item>
+        <item name="color_toolbar">@color/primary</item>
+        <item name="color_text">@color/text_primary_light</item>
+        <item name="color_text_secondary">@color/text_secondary_light</item>
+        <item name="android:textColor">@color/text_primary_light</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+
+        <item name="theme_name">Dark</item>
+        <item name="popup_theme">@style/ThemeOverlay.AppCompat.Dark</item>
+
+        <item name="ic_action_overflow">@drawable/ic_action_overflow_dark</item>
+        <item name="ic_action_search">@drawable/ic_action_search_dark</item>
+        <item name="ic_action_add">@drawable/ic_action_add_dark</item>
+        <item name="ic_action_today">@drawable/ic_action_today_dark</item>
+        <item name="ic_action_sort">@drawable/ic_action_sort_dark</item>
+        <item name="ic_action_filter">@drawable/ic_action_filter_dark</item>
+        <item name="ic_action_refresh">@drawable/ic_action_refresh_dark</item>
+        <item name="ic_action_done">@drawable/ic_action_done_dark</item>
+        <item name="ic_action_arrow_right">@drawable/ic_action_arrow_right_dark</item>
+		<item name="ic_action_arrow_left">@drawable/ic_action_arrow_left_dark</item>
+		<item name="ic_action_shuffle">@drawable/ic_action_shuffle_dark</item>
+        <item name="ic_action_clear">@drawable/ic_action_clear_dark</item>
+        <item name="ic_action_share">@drawable/ic_action_share_dark</item>
+        <item name="ic_action_delete">@drawable/ic_action_delete_dark</item>
+        <item name="ic_action_select_all">@drawable/ic_action_select_all_dark</item>
+        <item name="ic_action_save">@drawable/ic_action_save_dark</item>
+        <item name="ic_action_create">@drawable/ic_action_create_dark</item>
+        <item name="ic_action_visibility">@drawable/ic_action_visibility_dark</item>
+        <item name="ic_action_get_app">@drawable/ic_action_get_app_dark</item>
+        <item name="ic_action_folder">@drawable/ic_action_folder_dark</item>
+		<item name="ic_action_cloud_download">@drawable/ic_action_cloud_download_dark</item>
+		<item name="ic_action_text_format">@drawable/ic_action_text_format_dark</item>
+        <item name="ic_action_spellcheck">@drawable/ic_action_spellcheck_dark</item>
+        <item name="ic_action_subject">@drawable/ic_action_subject_dark</item>
+        <item name="ic_action_checkbox">@drawable/checkbox_menu_icon_dark</item>
+
+		<item name="ic_action_home">@drawable/ic_action_home_dark</item>
+        <item name="ic_action_book">@drawable/ic_action_book_dark</item>
+        <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_dark</item>
+        <item name="ic_action_group_work">@drawable/ic_action_group_work_dark</item>
+        <item name="ic_action_tag">@drawable/ic_action_tag_dark</item>
+        <item name="ic_action_help">@drawable/ic_action_help_dark</item>
+        <item name="ic_action_settings">@drawable/ic_action_settings_dark</item>
+		<item name="ic_action_debug">@drawable/ic_action_debug_dark</item>
+    </style>
+    <!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/common/src/main/res/values/material_theme.xml -->
+    <eat-comment/>
+    <style name="Theme.Light" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary_accent</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@drawable/toolbar_shadow</item>
+
+        <!-- Colors -->
+        <item name="color_background_selected">@color/background_selected_light</item>
+        <item name="color_background">@color/background_light</item>
+        <item name="color_toolbar">@color/primary</item>
+        <item name="color_card">@color/card_light</item>
+        <item name="color_text">@color/text_primary_dark</item>
+        <item name="color_text_secondary">@color/text_secondary_dark</item>
+        <item name="android:textColor">@color/text_primary_dark</item>
+        <item name="android:windowBackground">@color/background_light</item>
+
+        <item name="theme_name">Light</item>
+        <item name="popup_theme">@style/ThemeOverlay.AppCompat.Light</item>
+
+        <item name="ic_action_overflow">@drawable/ic_action_overflow_light</item>
+        <item name="ic_action_search">@drawable/ic_action_search_light</item>
+        <item name="ic_action_add">@drawable/ic_action_add_light</item>
+        <item name="ic_action_today">@drawable/ic_action_today_light</item>
+        <item name="ic_action_sort">@drawable/ic_action_sort_light</item>
+        <item name="ic_action_filter">@drawable/ic_action_filter_light</item>
+        <item name="ic_action_refresh">@drawable/ic_action_refresh_light</item>
+        <item name="ic_action_done">@drawable/ic_action_done_light</item>
+        <item name="ic_action_arrow_right">@drawable/ic_action_arrow_right_light</item>
+		<item name="ic_action_arrow_left">@drawable/ic_action_arrow_left_light</item>
+		<item name="ic_action_shuffle">@drawable/ic_action_shuffle_light</item>
+		<item name="ic_action_clear">@drawable/ic_action_clear_light</item>
+        <item name="ic_action_share">@drawable/ic_action_share_light</item>
+        <item name="ic_action_delete">@drawable/ic_action_delete_light</item>
+        <item name="ic_action_select_all">@drawable/ic_action_select_all_light</item>
+        <item name="ic_action_save">@drawable/ic_action_save_light</item>
+        <item name="ic_action_create">@drawable/ic_action_create_light</item>
+        <item name="ic_action_visibility">@drawable/ic_action_visibility_light</item>
+        <item name="ic_action_get_app">@drawable/ic_action_get_app_light</item>
+        <item name="ic_action_folder">@drawable/ic_action_folder_light</item>
+		<item name="ic_action_cloud_download">@drawable/ic_action_cloud_download_light</item>
+		<item name="ic_action_text_format">@drawable/ic_action_text_format_light</item>
+        <item name="ic_action_spellcheck">@drawable/ic_action_spellcheck_light</item>
+        <item name="ic_action_subject">@drawable/ic_action_subject_light</item>
+        <item name="ic_action_checkbox">@drawable/checkbox_menu_icon_light</item>
+
+		<item name="ic_action_home">@drawable/ic_action_home_light</item>
+        <item name="ic_action_book">@drawable/ic_action_book_light</item>
+        <item name="ic_action_find_in_page">@drawable/ic_action_find_in_page_light</item>
+        <item name="ic_action_group_work">@drawable/ic_action_group_work_light</item>
+        <item name="ic_action_tag">@drawable/ic_action_tag_light</item>
+        <item name="ic_action_help">@drawable/ic_action_help_light</item>
+        <item name="ic_action_settings">@drawable/ic_action_settings_light</item>
+		<item name="ic_action_debug">@drawable/ic_action_debug_light</item>
+	</style>
+</resources>

@@ -9,10 +9,14 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\Casey\\Documents\\Android\\scripturememory_keystore')
+//            storeFile file('C:\\Users\\Casey\\Documents\\Android\\scripturememory_keystore')
+//            keyAlias 'scripturememory_keystore'
+//            storePassword 'TwXlvX08'
+//            keyPassword 'TwXlvX08'
+            storeFile file('/Users/casey/Documents/code/android/Scripture-Now/scripturememory_keystore')
             keyAlias 'scripturememory_keystore'
-            storePassword 'TwXlvX08'
             keyPassword 'TwXlvX08'
+            storePassword 'TwXlvX08'
         }
     }
     buildTypes {
@@ -30,15 +34,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:cardview-v7:22.2.0'
     compile 'com.android.support:support-v4:22.2.0'
     compile 'com.github.nirhart:parallaxscroll:1.0'
     compile 'com.larswerkman:HoloColorPicker:1.4'
     compile 'org.jsoup:jsoup:1.7.2'
-
-    compile project(":common")
-
-    compile 'com.github.cjbrooks12:AndroidBibleTools:v0.2.23@aar'
+    compile project(':common')
+    compile 'com.github.cjbrooks12:AndroidBibleTools:v0.2.26@aar'
 }

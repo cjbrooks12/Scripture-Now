@@ -270,13 +270,12 @@ public class BibleVerseAdapter extends BaseAdapter {
         private void initialize(Passage passage) {
             this.passage = passage;
 			if(passage == null) {
-				reference.setText("NULL OBJECT");
 				return;
 			}
 
             reference.setText(passage.getReference().toString());
             verseText.setText(passage.getText());
-            version.setText(passage.getBible().getAbbreviation());
+            version.setText(passage.getBible().getAbbreviation().toUpperCase());
 
             String passageBookCode = passage.getReference().book.getAbbreviation();
 			if(passageBookCode != null) passageBookCode = passageBookCode.replaceFirst("(\\d)", "$1");

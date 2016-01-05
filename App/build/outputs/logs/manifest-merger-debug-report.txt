@@ -1,0 +1,232 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:2:1-118:12
+	package
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:4:5-46
+	android:versionName
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:6:5-32
+	xmlns:tools
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:3:2-48
+	android:versionCode
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:5:5-29
+		INJECTED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml
+		INJECTED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:9:5-67
+MERGED from [com.github.cjbrooks12:AndroidBibleTools:v0.2.26] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.26/AndroidManifest.xml:11:5-67
+MERGED from [com.github.cjbrooks12:AndroidBibleTools:v0.2.26] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.26/AndroidManifest.xml:11:5-67
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:9:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:10:5-79
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:10:22-76
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:11:5-81
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:11:22-78
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:12:5-81
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:12:22-78
+application
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:14:5-116:19
+MERGED from [com.android.support:appcompat-v7:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:cardview-v7:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.2.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/AndroidManifest.xml:22:5-20
+MERGED from [com.github.nirhart:parallaxscroll:1.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.github.nirhart/parallaxscroll/1.0/AndroidManifest.xml:11:5-20
+MERGED from [Scripture-Now:common:unspecified] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/Scripture-Now/common/unspecified/AndroidManifest.xml:9:5-12:19
+MERGED from [com.android.support:appcompat-v7:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:18:9-41
+	android:allowBackup
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:16:9-35
+	android:icon
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:17:9-45
+	android:theme
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:19:9-43
+	tools:replace
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:15:3-32
+receiver#com.caseybrooks.scripturememory.nowcards.main.MainBroadcasts$DismissVerseReceiver
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:22:9-25:40
+	android:enabled
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:24:13-35
+	android:exported
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:25:13-37
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:23:13-78
+receiver#com.caseybrooks.scripturememory.nowcards.main.MainBroadcasts$PreviousVerseReceiver
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:26:3-29:31
+	android:enabled
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:28:4-26
+	android:exported
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:29:4-28
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:27:4-70
+receiver#com.caseybrooks.scripturememory.nowcards.main.MainBroadcasts$NextVerseReceiver
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:30:9-33:40
+	android:enabled
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:32:13-35
+	android:exported
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:33:13-37
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:31:13-75
+receiver#com.caseybrooks.scripturememory.nowcards.main.MainBroadcasts$RandomVerseReceiver
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:34:3-37:31
+	android:enabled
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:36:4-26
+	android:exported
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:37:4-28
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:35:4-68
+receiver#com.caseybrooks.scripturememory.nowcards.main.MainBroadcasts$TextFullReceiver
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:38:3-41:31
+	android:enabled
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:40:4-26
+	android:exported
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:41:4-28
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:39:4-65
+receiver#com.caseybrooks.scripturememory.nowcards.main.MainWidget
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:42:9-51:20
+	android:label
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:44:13-45
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:43:13-53
+intent-filter#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:45:13-47:29
+action#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:46:17-84
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:46:25-81
+meta-data#android.appwidget.provider
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:48:13-50:66
+	android:resource
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:50:17-63
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:49:17-58
+receiver#com.caseybrooks.scripturememory.nowcards.votd.VOTDBroadcasts$VOTDAlarmReceiver
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:54:9-57:40
+	android:enabled
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:56:13-35
+	android:exported
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:57:13-37
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:55:13-75
+receiver#com.caseybrooks.scripturememory.nowcards.votd.VOTDBroadcasts$VOTDSaveVerseReceiver
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:58:9-61:40
+	android:enabled
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:60:13-35
+	android:exported
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:61:13-37
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:59:13-79
+receiver#com.caseybrooks.scripturememory.nowcards.votd.VOTDBroadcasts$VOTDNotificationDismissedReceiver
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:62:3-65:31
+	android:enabled
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:64:4-26
+	android:exported
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:65:4-28
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:63:4-82
+receiver#com.caseybrooks.scripturememory.nowcards.votd.VOTDWidget
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:66:9-75:20
+	android:label
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:68:13-51
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:67:13-53
+receiver#com.caseybrooks.scripturememory.misc.CacheCleaner$CacheCleanerAlarmReceiver
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:76:9-79:40
+	android:enabled
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:78:13-35
+	android:exported
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:79:13-37
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:77:13-72
+receiver#com.caseybrooks.scripturememory.misc.AppOnBootReceiver
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:81:9-88:20
+	android:enabled
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:83:13-35
+	android:exported
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:84:13-37
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:82:13-82
+intent-filter#android.intent.action.BOOT_COMPLETED
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:85:13-87:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:86:17-79
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:86:25-76
+activity#com.caseybrooks.scripturememory.activities.MainActivity
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:91:9-107:20
+	android:label
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:94:13-45
+	android:launchMode
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:95:13-44
+	android:windowSoftInputMode
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:96:13-67
+	android:configChanges
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:93:13-59
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:92:13-52
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:97:13-101:29
+action#android.intent.action.MAIN
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:98:17-69
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:98:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:100:17-77
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:100:27-74
+intent-filter#android.intent.action.SEND+android.intent.category.DEFAULT
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:102:13-106:29
+action#android.intent.action.SEND
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:103:17-69
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:103:25-66
+category#android.intent.category.DEFAULT
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:104:17-76
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:104:27-73
+data
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:105:17-55
+	android:mimeType
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:105:23-52
+activity#com.caseybrooks.scripturememory.activities.DetailActivity
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:108:9-115:20
+	android:label
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:110:13-45
+	android:parentActivityName
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:111:13-66
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:109:13-54
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:112:13-114:91
+	android:value
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:114:17-88
+	android:name
+		ADDED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml:113:17-63
+uses-sdk
+INJECTED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:cardview-v7:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.2.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/AndroidManifest.xml:20:5-43
+MERGED from [com.github.nirhart:parallaxscroll:1.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.github.nirhart/parallaxscroll/1.0/AndroidManifest.xml:7:5-9:41
+MERGED from [com.larswerkman:HoloColorPicker:1.4] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.larswerkman/HoloColorPicker/1.4/AndroidManifest.xml:3:5-72
+MERGED from [Scripture-Now:common:unspecified] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/Scripture-Now/common/unspecified/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:appcompat-v7:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:22.2.0] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/AndroidManifest.xml:20:5-43
+MERGED from [com.github.cjbrooks12:AndroidBibleTools:v0.2.26] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.26/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.cjbrooks12:AndroidBibleTools:v0.2.26] /Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.26/AndroidManifest.xml:7:5-9:41
+	android:targetSdkVersion
+		INJECTED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml
+		INJECTED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml
+		INJECTED from /Users/casey/Documents/code/android/Scripture-Now/App/src/main/AndroidManifest.xml

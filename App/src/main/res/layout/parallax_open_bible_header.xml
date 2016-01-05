@@ -10,11 +10,11 @@
         android:id="@+id/a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textColor="@color/text_primary_dark"
         android:text="What does the Bible say about..."/>
     <AutoCompleteTextView

@@ -257,7 +257,11 @@ public class VerseDB {
         builder.setBible(bible);
         builder.parseReference(c.getString(c.getColumnIndex(KEY_VERSES_REFERENCE)));
 
-        Passage passage = new Passage(builder.create());
+        Reference reference = builder.create();
+
+        reference.book.setLocation(MetaSettings.getBookOrder(context, reference.book.getName()));
+
+        Passage passage = new Passage(reference);
         passage.setBible(bible);
 		passage.getMetadata().putInt(DefaultMetaData.ID, c.getInt(c.getColumnIndex(KEY_VERSES_ID)));
 		passage.setText(c.getString(c.getColumnIndex(KEY_VERSES_VERSE)));
@@ -294,6 +298,8 @@ public class VerseDB {
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
 
+        MetaSettings.putBookOrder(context, passage.getReference().book.getName(), passage.getReference().book.getLocation());
+
         //ensure tags on this verse are up-to-date
         Tag[] tags = passage.getTags();
         String tag_string = ",";
@@ -321,6 +327,8 @@ public class VerseDB {
         values.put(KEY_VERSES_VERSION, passage.getBible().getAbbreviation());
         values.put(KEY_VERSES_DATE_MODIFIED, Calendar.getInstance().getTimeInMillis());
         values.put(KEY_VERSES_STATE, passage.getMetadata().getInt(DefaultMetaData.STATE));
+
+        MetaSettings.putBookOrder(context, passage.getReference().book.getName(), passage.getReference().book.getLocation());
 
         //ensure tags on this verse are up-to-date
 		Tag[] tags = passage.getTags();

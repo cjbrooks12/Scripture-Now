@@ -132,4 +132,13 @@ public class MetaSettings {
     public static void putUserLearnedDrawer(Context context, boolean value) {
         context.getSharedPreferences(settings_file, 0).edit().putBoolean(USER_LEARNED_DRAWER, value).commit();
     }
+
+    //Terrible hack to preserve book ordering until I implement a better structure
+    public static void putBookOrder(Context context, String bookName, int bookOrder) {
+        context.getSharedPreferences(settings_file, 0).edit().putInt(bookName, bookOrder).commit();
+    }
+
+    public static int getBookOrder(Context context, String bookName) {
+        return context.getSharedPreferences(settings_file, 0).getInt(bookName, Integer.MAX_VALUE);
+    }
 }

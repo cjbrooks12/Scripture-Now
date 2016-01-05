@@ -22,6 +22,8 @@ import android.view.ViewConfiguration;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.caseybrooks.androidbibletools.basic.Bible;
+import com.caseybrooks.androidbibletools.basic.Book;
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
@@ -130,7 +132,12 @@ public class MainActivity extends AppCompatActivity implements NavigationCallbac
             int version = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
 
 			if(version > 27) {
-				MetaSettings.putBibleVersion(context, new ABSBible(null, null));
+                ABSBible bible = new ABSBible(null, null);
+				MetaSettings.putBibleVersion(context, bible);
+
+                for(Book book : bible.getBooks()) {
+                    MetaSettings.putBookOrder(context, book.getName(), book.getLocation());
+                }
 			}
 
             //we have updated the app
@@ -139,6 +146,13 @@ public class MainActivity extends AppCompatActivity implements NavigationCallbac
                 CacheCleaner.setAlarm(context);
 
 				MainSettings.putDisplayMode(context, MainSettings.getDisplayMode(context) - 1);
+
+                //initialize the settings for Book names by setting them all according to
+                //those in the ESV and trusting that it will work with most of the verses
+                //that people have saved
+                for(Book book : new Bible().getBooks()) {
+                    MetaSettings.putBookOrder(context, book.getName(), book.getLocation());
+                }
 
                 String state = Environment.getExternalStorageState();
                 if (Environment.MEDIA_MOUNTED.equals(state)) {

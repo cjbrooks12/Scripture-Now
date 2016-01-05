@@ -8,6 +8,7 @@ import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.widget.IVerseViewListener;
 import com.caseybrooks.androidbibletools.widget.LoadState;
+import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.misc.QuickNotification;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
@@ -42,7 +43,12 @@ public class VOTDBroadcasts {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if(VOTDSettings.isEnabled(context)) {
-				VOTDNotification.getInstance(context).create();
+                if(Util.isConnected(context)) {
+                    VOTDNotification.getInstance(context).create();
+                }
+                else {
+                    VOTDNotification.getInstance(context).createOffline();
+                }
 			}
 		}
 	}

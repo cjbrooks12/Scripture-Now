@@ -347,11 +347,11 @@ public class VerseListFragment extends ListFragment {
                 loaderThread = new PopulateBibleVerses();
 				loaderThread.execute();
                 return true;
-//            case R.id.menu_list_sort_canonical:
-//                MetaSettings.putSortBy(context, 1);
-//                loaderThread = new PopulateBibleVerses();
-//				loaderThread.execute();
-//                return true;
+            case R.id.menu_list_sort_canonical:
+                MetaSettings.putSortBy(context, 1);
+                loaderThread = new PopulateBibleVerses();
+				loaderThread.execute();
+                return true;
             case R.id.menu_list_sort_alphabetically:
                 MetaSettings.putSortBy(context, 2);
                 loaderThread = new PopulateBibleVerses();
@@ -766,9 +766,7 @@ public class VerseListFragment extends ListFragment {
                 db.close();
                 if(mActionMode != null) mActionMode.finish();
                 dialog.dismiss();
-				if(loaderThread == null) {
-					loaderThread = new PopulateBibleVerses();
-				}
+                loaderThread = new PopulateBibleVerses();
 				loaderThread.execute();
             }
         });
@@ -821,7 +819,8 @@ public class VerseListFragment extends ListFragment {
                     db.close();
                     dialog.dismiss();
                     if(mActionMode != null) mActionMode.finish();
-                    bibleVerseAdapter.notifyDataSetChanged();
+                    loaderThread = new PopulateBibleVerses();
+                    loaderThread.execute();
 
                     String toastMessage = "Tag '" + text + "' added to ";
                     if(items.size() > 1) toastMessage += items.size() + " verses";

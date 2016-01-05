@@ -75,6 +75,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_toLeftOf="@+id/overflow"
                 android:layout_toStartOf="@+id/overflow"
+                android:singleLine="true"
                 android:fontFamily="sans-serif-light"
                 android:textSize="20sp" />
 

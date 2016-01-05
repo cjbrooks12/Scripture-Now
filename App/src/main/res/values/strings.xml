@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="bibles_org">mDaM8REZFo6itplNpcv1ls8J5PkwEz1wbhJ7p9po</string>
+
     <!-- Single Strings -->
     <string name="app_name">Scripture Now</string>
     <string name="title_activity_changelog">Changelog</string>

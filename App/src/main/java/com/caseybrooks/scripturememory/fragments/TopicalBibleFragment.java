@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.text.Editable;
@@ -33,7 +32,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +41,10 @@ import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.providers.openbible.OpenBibleInfo;
 import com.caseybrooks.common.features.NavigationCallbacks;
+import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
-import com.caseybrooks.common.features.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
-import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,9 +110,14 @@ public class TopicalBibleFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = searchEditText.getText().toString();
-                if (text.length() > 1) {
-                    new SearchVerseAsync().execute(text);
+                if(Util.isConnected(context)) {
+                    String text = searchEditText.getText().toString();
+                    if (text.length() > 1) {
+                        new SearchVerseAsync().execute(text);
+                    }
+                }
+                else {
+                    Toast.makeText(context, "Cannot search, no internet connection", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -123,10 +125,16 @@ public class TopicalBibleFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String text = searchEditText.getText().toString();
-                    if (text.length() > 1) {
-                        new SearchVerseAsync().execute(text);
-                        return true;
+                    if(Util.isConnected(context)) {
+                        String text = searchEditText.getText().toString();
+                        if (text.length() > 1) {
+                            new SearchVerseAsync().execute(text);
+                            return true;
+                        }
+                    }
+                    else {
+                        Toast.makeText(context, "Cannot search, no internet connection", Toast.LENGTH_SHORT).show();
+                        return false;
                     }
                 }
                 return false;
@@ -153,7 +161,7 @@ public class TopicalBibleFragment extends Fragment {
 
             }
         });
-        suggestionsAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1);
+        suggestionsAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1);
         searchEditText.setAdapter(suggestionsAdapter);
         searchEditText.addTextChangedListener(new TextWatcher() {
             Character searchedChar;
@@ -166,8 +174,10 @@ public class TopicalBibleFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int i, int i2, int i3) {
                 if(searchedChar == null || (s.length() > 0 && s.charAt(0) != searchedChar)) {
-                    new GetSuggestionsAsync().execute(s.charAt(0));
-                    searchedChar = s.charAt(0);
+                    if(Util.isConnected(context)) {
+                        new GetSuggestionsAsync().execute(s.charAt(0));
+                        searchedChar = s.charAt(0);
+                    }
                 }
             }
 
@@ -180,7 +190,12 @@ public class TopicalBibleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String s = suggestionsAdapter.getItem(position);
-                new SearchVerseAsync().execute(s);
+                if(Util.isConnected(context)) {
+                    new SearchVerseAsync().execute(s);
+                }
+                else {
+                    Toast.makeText(context, "Cannot search, no internet connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -282,11 +297,11 @@ public class TopicalBibleFragment extends Fragment {
                     adapter.notifyDataSetChanged();
 
                     return true;
-				case R.id.contextual_open_bible_redownload:
-					ABSPassage[] passagesArray = new ABSPassage[adapter.getSelectedItems().size()];
-					adapter.getSelectedItems().toArray(passagesArray);
-					new RedownloadAsync().execute(passagesArray);
-					return true;
+//				case R.id.contextual_open_bible_redownload:
+//					ABSPassage[] passagesArray = new ABSPassage[adapter.getSelectedItems().size()];
+//					adapter.getSelectedItems().toArray(passagesArray);
+//					new RedownloadAsync().execute(passagesArray);
+//					return true;
                 case R.id.contextual_open_bible_save:
                     save(adapter.getSelectedItems());
                     return true;
@@ -744,49 +759,54 @@ public class TopicalBibleFragment extends Fragment {
 //Perform actions of groups of verses selected from the list of retrieved verses
 //------------------------------------------------------------------------------
 
-    private class RedownloadAsync extends AsyncTask<ABSPassage, ABSPassage, Void> {
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			progress.setVisibility(View.VISIBLE);
-			progress.setIndeterminate(true);
-			progress.setProgress(0);
-		}
-
-		@Override
-		protected void onPostExecute(Void aVoid) {
-			super.onPostExecute(aVoid);
-			adapter.notifyDataSetChanged();
-			progress.setVisibility(View.GONE);
-		}
-
-        @Override
-        protected void onProgressUpdate(ABSPassage... values) {
-            super.onProgressUpdate(values);
-            adapter.notifyDataSetChanged();
-			progress.setIndeterminate(false);
-			progress.setProgress(progress.getProgress() + 1);
-        }
-
-        @Override
-        protected Void doInBackground(ABSPassage... params) {
-			progress.setMax(params.length);
-
-            for(ABSPassage passage : params) {
-                try {
-                    passage.setBible(MetaSettings.getBibleVersion(context));
-                    passage.parseDocument(passage.getDocument());
-					publishProgress(passage);
-                }
-                catch(IOException ioe) {
-                    ioe.printStackTrace();
-                }
-            }
-
-            return null;
-        }
-    }
+//    private class RedownloadAsync extends AsyncTask<ABSPassage, ABSPassage, Void> {
+//
+//		@Override
+//		protected void onPreExecute() {
+//			super.onPreExecute();
+//			progress.setVisibility(View.VISIBLE);
+//			progress.setIndeterminate(true);
+//			progress.setProgress(0);
+//		}
+//
+//		@Override
+//		protected void onPostExecute(Void aVoid) {
+//			super.onPostExecute(aVoid);
+//			adapter.notifyDataSetChanged();
+//			progress.setVisibility(View.GONE);
+//		}
+//
+//        @Override
+//        protected void onProgressUpdate(ABSPassage... values) {
+//            super.onProgressUpdate(values);
+//            adapter.notifyDataSetChanged();
+//			progress.setIndeterminate(false);
+//			progress.setProgress(progress.getProgress() + 1);
+//        }
+//
+//        @Override
+//        protected Void doInBackground(ABSPassage... params) {
+////			progress.post(new Runnable() {
+////                @Override
+////                public void run() {
+////                    progress.setMax(params.length);
+////                }
+////            };
+//
+//            for(ABSPassage passage : params) {
+//                try {
+//                    passage.setBible(MetaSettings.getBibleVersion(context));
+//                    passage.parseDocument(passage.getDocument());
+//					publishProgress(passage);
+//                }
+//                catch(IOException ioe) {
+//                    ioe.printStackTrace();
+//                }
+//            }
+//
+//            return null;
+//        }
+//    }
 
     //TODO: get helpful feedback about which verses to add in the popup and a count of verses added in a toast
     public void save(final ArrayList<ABSPassage> verses) {

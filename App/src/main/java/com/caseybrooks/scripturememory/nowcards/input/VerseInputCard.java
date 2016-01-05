@@ -46,6 +46,8 @@ public class VerseInputCard extends FrameLayout implements IReferencePickerListe
 	ImageView saveVerse;
 	ImageView showTags;
 
+    Bible selectedBible;
+
 	boolean downloadAfterChecking = false;
 
 //Constructors and Initialization
@@ -127,6 +129,7 @@ public class VerseInputCard extends FrameLayout implements IReferencePickerListe
 				else {
 					Passage passage = new Passage(ref);
 					passage.setText(verseView.getText().toString());
+                    if(selectedBible != null) passage.setBible(selectedBible);
 
 					editTags.performValidation();
 					if(editTags.getText().length() > 0) {
@@ -189,6 +192,7 @@ public class VerseInputCard extends FrameLayout implements IReferencePickerListe
 
 	@Override
 	public boolean onBibleLoaded(Bible bible, LoadState loadState) {
+        selectedBible = bible;
 		return false;
 	}
 

@@ -142,7 +142,7 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 			color = getResources().getColor(R.color.ribbon_other);
 			break;
 		default:
-			color = getResources().getColor(R.color.ribbon_nt);
+			color = getResources().getColor(R.color.primary);
 		}
 
 		mCallbacks.setToolBar(title, color);
@@ -200,15 +200,20 @@ public class BibleReaderFragment extends Fragment implements IReferencePickerLis
 	}
 
 	@Override
-	public boolean onVerseLoaded(final AbstractVerse verse, LoadState state) {
+	public boolean onVerseLoaded(final AbstractVerse verse, final LoadState state) {
 		verseView.post(new Runnable() {
 			@Override
 			public void run() {
-				progress.setVisibility(View.GONE);
-				verseView.setText(Html.fromHtml(
-						verse.getRawText() +
-						"<small>" + ((ABSBible) verse.getBible()).getCopyright() + "</small>")
-				);
+                if(state == LoadState.Cached || state == LoadState.Downloaded) {
+                    progress.setVisibility(View.GONE);
+                    verseView.setText(Html.fromHtml(
+                                    verse.getRawText() +
+                                            "<small>" + ((ABSBible) verse.getBible()).getCopyright() + "</small>")
+                    );
+                }
+                else {
+                    verseView.setText("Cannot download text at this time, check your internet connection and try again");
+                }
 			}
 		});
 		return true;

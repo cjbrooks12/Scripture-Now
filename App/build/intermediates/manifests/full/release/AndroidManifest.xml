@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.caseybrooks.scripturememory"
-    android:versionCode="27"
-    android:versionName="3.0.6" >
+    android:versionCode="28"
+    android:versionName="3.1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -42,14 +42,6 @@
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name="com.caseybrooks.scripturememory.nowcards.main.MainBroadcasts$MainBootReceiver"
-            android:enabled="true"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver
             android:name="com.caseybrooks.scripturememory.nowcards.main.MainWidget"
             android:label="SN! - Main Verse" >
             <intent-filter>
@@ -75,14 +67,6 @@
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name="com.caseybrooks.scripturememory.nowcards.votd.VOTDBroadcasts$VOTDBootReceiver"
-            android:enabled="true"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver
             android:name="com.caseybrooks.scripturememory.nowcards.votd.VOTDWidget"
             android:label="SN! - Verse of the Day" >
             <intent-filter>
@@ -97,6 +81,14 @@
             android:name="com.caseybrooks.scripturememory.misc.CacheCleaner$CacheCleanerAlarmReceiver"
             android:enabled="true"
             android:exported="false" />
+        <receiver
+            android:name="com.caseybrooks.scripturememory.misc.AppOnBootReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <!-- Activities -->
         <activity

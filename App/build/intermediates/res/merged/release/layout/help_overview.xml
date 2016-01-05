@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="General Overview"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Scripture Now is an Android app designed to be a useful tool for memorizing Scripture from the Holy Bible. It also aims to help find new verses to memorize, and to glorify God by being an app that looks great and is a pleasure to use, having been created with a love and passion that reflect such love for Jesus Christ."/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Passive Memorization"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Every other Scripture memory app on the market focuses on an active form of memorization, creating lots of game and ways to focus on these verses to memorize while you are using the app, but offer little to no help outside of the app. Scripture Now takes a different approach, one that is less active, more of a gentle reminder.\n\nI was inspired when I saw my friends memorizing Scripture by writing their verses down on places they look at multiple times a day: on their hand, their notebook, their bathroom mirror. Whenever they would see these places, they would be reminded of the verse and could take but a moment to read it and try to commit it to memory. It was so simple, and yet there was nothing like it on the market, so I got to work, and the result is Scripture Now! "/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Help Finding Verses"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Memorizing verses is wonderful, but what if you have trouble finding verses to memorize? In addition to being a wonderful tool for memorization, Scripture Now aims to be a great tool for finding verses. By including a Verse of the Day, a topical search engine, numerous packs of hand-selected verses, and the ability to automatically download the text of a verse, Scripture Now is the best resource for finding verses to commit to your heart."/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Good Design"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="As the sole developer of Scripture Now, I believe that God has given me a special gift in application development. Taking a programming class in college was the direct result of my life being changed through salvation, and that class eventually got me interested in Android development. And I believe that God wants me to not just use my gift for His glory, but to pour my heart and soul into the use of this gift for His glory. He deserves my utmost, and that means no cutting corners when it comes to quality. Scripture Now was created from day one with an eye for design, and while my talents with programming and design have improved significantly since it was first released in November 2013, the heart behind it all has not changed, which is to make the best app that I can as an act of worship to our God." />
+    </LinearLayout>
+</ScrollView><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/help_overview.xml -->

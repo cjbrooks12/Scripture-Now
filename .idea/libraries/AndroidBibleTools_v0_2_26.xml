@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="AndroidBibleTools-v0.2.26">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.26/res" />
+      <root url="jar://$PROJECT_DIR$/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.26/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
