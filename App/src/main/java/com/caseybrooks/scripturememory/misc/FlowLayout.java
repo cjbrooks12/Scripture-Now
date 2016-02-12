@@ -15,6 +15,7 @@ import java.util.List;
 
 //https://nishantvnair.wordpress.com/2010/09/28/flowlayout-in-android/
 
+//TODO: Implement "flowing" logic in a RecyclerView LayoutManager
 public class FlowLayout extends ViewGroup {
     public static final int DEFAULT_HORIZONTAL_SPACING = 5;
     public static final int DEFAULT_VERTICAL_SPACING = 5;

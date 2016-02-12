@@ -8,7 +8,7 @@ import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.widget.IVerseViewListener;
 import com.caseybrooks.androidbibletools.widget.LoadState;
-import com.caseybrooks.common.features.Util;
+import com.caseybrooks.common.Util;
 import com.caseybrooks.scripturememory.fragments.DashboardFragment;
 import com.caseybrooks.scripturememory.misc.QuickNotification;
 import com.caseybrooks.scripturememory.nowcards.main.MainNotification;
@@ -31,7 +31,7 @@ public class VOTDBroadcasts {
 			MainNotification.getInstance(context).create().show();
 		}
 
-		//update the notification to ensure it has the text that is in the database
+		//update the notification to ensure it has the text that is in the ic_database
 		if(VOTDSettings.isActive(context)) {
 			VOTDNotification.getInstance(context).create().show();
 		}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"/>
+
+    <Button
+        android:id="@+id/set_votd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set VOTD time"/>
+
+    <Button
+        android:id="@+id/cancel_votd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel VOTD"/>
+
+
+    <Button
+        android:id="@+id/set_recurring_alarm_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Start time"/>
+
+    <Button
+        android:id="@+id/set_recurring_alarm_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel VOTD"/>
+
+
+
+</LinearLayout>
+

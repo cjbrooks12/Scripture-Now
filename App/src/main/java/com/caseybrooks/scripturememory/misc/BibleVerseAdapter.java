@@ -25,6 +25,7 @@ import com.caseybrooks.scripturememory.R;
 
 import java.util.ArrayList;
 
+//TODO: replace with RecyclerView adapter
 public class BibleVerseAdapter extends BaseAdapter {
     Context context;
     ListView lv;

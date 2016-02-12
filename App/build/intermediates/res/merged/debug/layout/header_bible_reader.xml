@@ -47,4 +47,4 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:src="@drawable/ic_action_clear_dark" />
-</RelativeLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/header_bible_reader.xml -->
+</RelativeLayout>

@@ -107,4 +107,4 @@
             android:textSize="18sp"
             android:text="NO, THANKS"/>
     </RelativeLayout>
-</RelativeLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/popup_rate_app.xml -->
+</RelativeLayout>

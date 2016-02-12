@@ -8,4 +8,4 @@
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen|keyguard"
     android:initialKeyguardLayout="@layout/widget_main_verse">
-</appwidget-provider><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/xml/main_verse_widget_info.xml -->
+</appwidget-provider>

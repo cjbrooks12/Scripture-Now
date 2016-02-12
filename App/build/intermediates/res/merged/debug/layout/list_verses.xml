@@ -128,4 +128,4 @@
             android:layout_below="@+id/ref_icon_layout" />
 
     </RelativeLayout>
-</android.support.v7.widget.CardView><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/list_verses.xml -->
+</android.support.v7.widget.CardView>

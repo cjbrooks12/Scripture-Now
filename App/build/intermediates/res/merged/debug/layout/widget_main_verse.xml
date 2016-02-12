@@ -91,4 +91,4 @@
 			android:textColor="@android:color/white"
 			android:fontFamily="sans-serif-light" />
 	</RelativeLayout>
-</LinearLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/widget_main_verse.xml -->
+</LinearLayout>

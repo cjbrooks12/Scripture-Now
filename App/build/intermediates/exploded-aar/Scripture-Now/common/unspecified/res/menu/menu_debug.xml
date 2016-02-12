@@ -5,11 +5,9 @@
 	<item
 		android:id="@+id/menu_debug_clear"
 		app:showAsAction="ifRoom"
-		android:icon="@drawable/ic_action_delete_dark"
 		android:title="Clear all"/>
 	<item
 		android:id="@+id/menu_debug_refresh"
 		app:showAsAction="ifRoom"
-		android:icon="@drawable/ic_action_refresh_dark"
 		android:title="Refresh"/>
-</menu><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/common/src/main/res/menu/menu_debug.xml -->
+</menu>

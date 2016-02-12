@@ -161,4 +161,4 @@
             android:layout_marginRight="16dp"
             android:text="Single verses can have their state changed by adjusting the slider at the bottom of the Edit screen. The bar's color changes and the text tells you the state that the verse is in. The state is automatically updated as the slider changes. You can also change the state of groups of verses together on the list screen by clicking the verse's icon to multiselect, then selecting the option to change state. You change the state by adjusting the slider, just as in the Edit screen, except the state is only saved when you hit &quot;Save State&quot;" />
     </LinearLayout>
-</ScrollView><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/help_memorization_state.xml -->
+</ScrollView>

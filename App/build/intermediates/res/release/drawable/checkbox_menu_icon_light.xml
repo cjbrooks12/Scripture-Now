@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-	<item
-		android:state_checked="true"
-		android:state_focused="true"
-		android:drawable="@drawable/ic_action_checkbox_checked_light" />
-	<item android:drawable="@drawable/ic_action_checkbox_unchecked_light" />
-</selector><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/common/src/main/res/drawable/checkbox_menu_icon_light.xml --><!-- From: file:/C:/Users/Casey/Documents/android/scripturememory/App/build/intermediates/exploded-aar/scripturememory/common/unspecified/res/drawable/checkbox_menu_icon_light.xml -->

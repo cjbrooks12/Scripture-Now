@@ -4,5 +4,5 @@
 	android:shape="rectangle"
 	android:dither="true">
 	<corners android:radius="16dp" />
-	<solid android:color="#33000000" />
-</shape><!-- From: file:/home/jitpack/build/app/src/main/res/drawable/bg_oval_32.xml --><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.26/res/drawable/bg_oval_32.xml -->
+	<solid android:color="#25000000" />
+</shape><!-- From: file:/home/jitpack/build/app/src/main/res/drawable/bg_oval_32.xml -->

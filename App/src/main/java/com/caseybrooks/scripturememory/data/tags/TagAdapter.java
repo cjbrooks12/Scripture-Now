@@ -12,11 +12,12 @@ import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.scripturememory.R;
-import com.caseybrooks.common.features.Util;
+import com.caseybrooks.common.Util;
 import com.caseybrooks.scripturememory.data.VerseDB;
 
 import java.util.ArrayList;
 
+//TODO: replace with Recyclerview adapter
 public class TagAdapter extends BaseAdapter implements ListAdapter {
 	Context context;
 	ArrayList<Tag> tags;

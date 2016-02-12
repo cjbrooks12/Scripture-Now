@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.caseybrooks.androidbibletools.basic.Bible;
 import com.caseybrooks.androidbibletools.basic.Book;
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
-import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.fragments.BibleReaderFragment;
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationCallbac
 		}
 	}
 
-	//do not support the old backups or old database any longer. If users haven't
+	//do not support the old backups or old ic_database any longer. If users haven't
 	//upgraded by now, then they must not care enough about their verses, and their
 	//complaints are not important to the developement of the app.
 	private void onFirstTime() {

@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.caseybrooks.common.features.NavigationCallbacks;
-
 public class DebugDatabaseFragment extends Fragment {
 	Context context;
 	NavigationCallbacks mCallbacks;

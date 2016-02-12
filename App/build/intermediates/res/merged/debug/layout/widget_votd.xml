@@ -61,4 +61,3 @@
         android:layout_below="@+id/widget_votd_reference"
         android:text="@string/verse" />
 </RelativeLayout>
-<!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/widget_votd.xml -->

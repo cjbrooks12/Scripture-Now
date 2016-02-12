@@ -5,4 +5,4 @@
         android:duration="500"
         android:fromXDelta="100%"
         android:toXDelta="0%" />
-</set><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/anim/slide_in_right.xml -->
+</set>

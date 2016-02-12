@@ -20,4 +20,4 @@
 		android:id="@+id/mainFragmentContainer"
         android:foreground="?android:windowContentOverlay">
     </FrameLayout>
-</LinearLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/activity_detail.xml -->
+</LinearLayout>

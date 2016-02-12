@@ -27,4 +27,3 @@
         android:icon="@drawable/ic_action_delete_dark"
         android:title="Delete" />
 </menu>
-<!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/menu/contextual_list.xml -->

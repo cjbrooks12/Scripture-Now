@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ThemeBase.Dark" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="color_background">@color/background_dark</item>
+        <item name="color_card">@color/card_dark</item>
+        <item name="color_card_header">@color/card_header_dark</item>
+
+        <item name="theme_name">Dark</item>
+        <item name="toolbar_theme">@style/ThemeBase.Dark.PopupOverlay</item>
+        <item name="popup_theme">@style/ThemeBase.Dark.PopupOverlay</item>
+        <item name="popupMenuStyle">@style/ThemeBase.Dark.PopupMenuOverlay</item>
+
+        <item name="android:textColorPrimary">@color/text_color_primary_dark</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
+        <item name="icon_color">@color/text_color_secondary_dark</item>
+
+        <item name="preferenceTheme">@style/ThemeBase.Dark.PreferenceThemeOverlay</item>
+    </style>
+
+    <style name="ThemeBase.Dark.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ThemeBase.Dark.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+
+    <style name="ThemeBase.Dark.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark"></style>
+
+    <style name="ThemeBase.Dark.PopupMenuOverlay" parent="Widget.AppCompat.PopupMenu.Overflow"></style>
+
+    <style name="ThemeBase.Dark.PreferenceThemeOverlay" parent="PreferenceThemeOverlay.v14.Material"></style>
+</resources>

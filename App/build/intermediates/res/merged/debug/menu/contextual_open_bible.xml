@@ -18,4 +18,3 @@
         android:icon="@drawable/ic_action_save_dark"
         android:title="Save Verses" />
 </menu>
-<!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/menu/contextual_open_bible.xml -->

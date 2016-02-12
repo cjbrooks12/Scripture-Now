@@ -28,9 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Tag;
-import com.caseybrooks.common.features.NavListItem;
-import com.caseybrooks.common.features.NavigationCallbacks;
-import com.caseybrooks.common.features.Util;
+import com.caseybrooks.common.Util;
 import com.caseybrooks.scripturememory.BuildConfig;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;

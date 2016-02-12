@@ -39,4 +39,3 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"/>
 </android.support.v4.widget.DrawerLayout>
-<!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/activity_main.xml -->

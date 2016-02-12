@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:title="Preferences">
         <ListPreference
@@ -9,7 +10,9 @@
             android:summary="?attr/theme_name"
             android:dialogTitle="App Theme"
             android:defaultValue="Theme_Light" />
-        <com.caseybrooks.androidbibletools.widget.biblepicker.BiblePickerPreference />
+        <Preference
+            android:key="PREF_BIBLE_PICKER"
+            android:title="Select Bible" />
         <ListPreference
             android:key="PREF_DEFAULT_SCREEN_GROUP"
             android:title="Default Screen"
@@ -60,4 +63,4 @@
             </intent>
         </Preference>
     </PreferenceCategory>
-</PreferenceScreen><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/xml/settings.xml -->
+</PreferenceScreen>

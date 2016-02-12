@@ -8,4 +8,4 @@
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen|keyguard"
     android:initialKeyguardLayout="@layout/widget_votd">
-</appwidget-provider><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/xml/votdwidget_info.xml -->
+</appwidget-provider>

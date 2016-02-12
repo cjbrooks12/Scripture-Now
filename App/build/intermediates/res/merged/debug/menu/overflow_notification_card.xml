@@ -13,4 +13,3 @@
         android:id="@+id/context_notification_card_reset_random"
         android:title="Reset Random Words"/>
 </menu>
-<!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/menu/overflow_notification_card.xml -->

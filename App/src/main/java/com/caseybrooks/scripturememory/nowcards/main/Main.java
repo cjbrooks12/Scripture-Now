@@ -29,9 +29,9 @@ import java.util.Random;
  * done.
  *
  * In addition, note that every time the Main class is loaded the verse is pulled
- * from the database, not every time the verse is accessed, for performance reasons.
+ * from the ic_database, not every time the verse is accessed, for performance reasons.
  * This means that there is a possibility of data not being synced corrected if
- * the database updates if you don't create a new instance of Main at the correct
+ * the ic_database updates if you don't create a new instance of Main at the correct
  * time. It is fine to have one instance for one method, for example, but don't
  * keep a single instance of Main as a member of a class, because it's scope is
  * too large and would make keeping it up to date difficult.

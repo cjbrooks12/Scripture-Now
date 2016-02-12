@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@drawable/selected_item_background">
+
+    <TextView
+        android:id="@+id/book_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|left"
+        android:background="@drawable/selected_item_background"/>
+
+</LinearLayout><!-- From: file:/home/jitpack/build/app/src/main/res/layout/verse_picker_book_item.xml -->

@@ -84,4 +84,4 @@
             android:layout_marginRight="16dp"
             android:text="From one of the verse lists, you can click a verse's icon to begin multiselecting verses. One of the batch actions is to add a tag to all selected verses, which will open a dialog which functions exactly the same as the single-verse dialog on the Edit screen." />
     </LinearLayout>
-</ScrollView><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/help_tags.xml -->
+</ScrollView>

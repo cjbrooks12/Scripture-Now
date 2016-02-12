@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="Notifications">
+        <PreferenceScreen
+            android:title="Main Notifications">
+            <CheckBoxPreference
+                android:key="main_enabled"
+                android:title="Main Notification"
+                android:summary="Show a daily notification for the Verse of the Day"/>
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:title="Verse of the Day">
+            <CheckBoxPreference
+                android:key="votd_enabled"
+                android:title="Show VOTD Notifications"
+                android:summary="Show a daily notification for the Verse of the Day"/>
+            <com.caseybrooks.common.pickers.TimePickerPreference
+                android:key="votd_time"
+                android:title="Set Time"
+                android:summary="Show VOTD at {0}:{1}{2} every day"
+                android:dependency="votd_enabled"/>
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:title="Scheduled Notifications">
+            <CheckBoxPreference
+                android:key="schedule_enabled"
+                android:title="Start Time"
+                android:summary="Enable scheduled notifications"/>
+            <com.caseybrooks.common.pickers.TimePickerPreference
+                android:key="schedule_start"
+                android:title="Start Time"
+                android:summary="Start sending notifications after {0}:{1}{2}"
+                android:dependency="schedule_enabled"/>
+            <com.caseybrooks.common.pickers.TimePickerPreference
+                android:key="schedule_end"
+                android:title="End Time"
+                android:summary="Stop sending notifications by {0}:{1}{2}"
+                android:dependency="schedule_enabled"/>
+            <com.caseybrooks.common.pickers.TimePickerPreference
+                android:key="schedule_interval"
+                android:title="Interval"
+                android:summary="Show a notification every {0} hours and {1} minutes"
+                android:dependency="schedule_enabled"
+                app:is24hour="1"/>
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Preferences">
+
+        <ListPreference
+            android:key="APP_THEME"
+            android:title="Theme"
+            android:entries="@array/themes"
+            android:entryValues="@array/themes"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Go all sorts of deeper!">
+        <PreferenceScreen
+            android:title="We must go deeper!">
+            <Preference
+                android:key="deeper1"
+                android:title="Go Deeper 1"
+                android:summary="Send deeper" />
+            <PreferenceScreen
+                android:title="We must go deeper!">
+                <Preference
+                    android:key="deeper2"
+                    android:title="Go Deeper 2"
+                    android:summary="Send deeper"/>
+                <PreferenceScreen
+                    android:title="We must go deeper!">
+                    <Preference
+                        android:key="deeper3"
+                        android:title="Go Deeper 3"
+                        android:summary="Send deeper"/>
+                    <PreferenceScreen
+                        android:title="We must go deeper!">
+                        <Preference
+                            android:key="deeper4"
+                            android:title="Go Deeper 4"
+                            android:summary="Send deeper"/>
+                        <PreferenceScreen
+                            android:title="We must go deeper!">
+                            <Preference
+                                android:key="deeper5"
+                                android:title="Go Deeper 5"
+                                android:summary="Send deeper"/>
+                            <PreferenceScreen
+                                android:title="We must go deeper!">
+                                <Preference
+                                    android:key="deeper6"
+                                    android:title="Go Deeper 6"
+                                    android:summary="Send deeper"/>
+                                <PreferenceScreen
+                                    android:title="We must go deeper!">
+                                    <Preference
+                                        android:key="deeper7"
+                                        android:title="Go Deeper 7"
+                                        android:summary="Send deeper"/>
+                                    <PreferenceScreen
+                                        android:title="We must go deeper!">
+                                        <Preference
+                                            android:key="deeper8"
+                                            android:title="Go Deeper 8"
+                                            android:summary="Send deeper"/>
+                                        <PreferenceScreen
+                                            android:title="We must go deeper!">
+                                            <Preference
+                                                android:key="deeper9"
+                                                android:title="Go Deeper 9"
+                                                android:summary="Send deeper"/>
+                                            <PreferenceScreen
+                                                android:title="We must go deeper!">
+                                                <Preference
+                                                    android:key="deeper10"
+                                                    android:title="Go Deeper 10"
+                                                    android:summary="Send deeper"/>
+                                            </PreferenceScreen>
+                                        </PreferenceScreen>
+                                    </PreferenceScreen>
+                                </PreferenceScreen>
+                            </PreferenceScreen>
+                        </PreferenceScreen>
+                    </PreferenceScreen>
+                </PreferenceScreen>
+            </PreferenceScreen>
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>

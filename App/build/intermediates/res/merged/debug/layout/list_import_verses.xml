@@ -53,4 +53,4 @@
             android:layout_marginBottom="4dp"
             android:textStyle="italic" />
     </LinearLayout>
-</RelativeLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/list_import_verses.xml -->
+</RelativeLayout>

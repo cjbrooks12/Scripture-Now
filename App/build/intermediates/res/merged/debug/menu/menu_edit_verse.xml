@@ -21,4 +21,3 @@
         android:icon="@drawable/ic_action_share_dark"
         android:title="Share..." />
 </menu>
-<!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/menu/menu_edit_verse.xml -->

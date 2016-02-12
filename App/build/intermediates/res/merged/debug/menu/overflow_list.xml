@@ -16,4 +16,3 @@
         android:id="@+id/context_list_delete"
         android:title="Delete" />
 </menu>
-<!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/menu/overflow_list.xml -->

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.caseybrooks.scripturememory"
-    android:versionCode="27"
-    android:versionName="3.0.6" >
+    android:versionCode="28"
+    android:versionName="3.1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="22" />
+        android:minSdkVersion="16"
+        android:targetSdkVersion="23" />
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />

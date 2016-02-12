@@ -32,7 +32,7 @@ public class ScriptureNow {
 	public static Passage getNextStateVerse(Context context) {
 		Random randomizer = new Random(Calendar.getInstance().getTimeInMillis());
 
-		//get a list of verses from the database
+		//get a list of verses from the ic_database
 		VerseDB db = new VerseDB(context);
 		int count = 10; //give it 5 attemps to get a list that isn't empty
 		ArrayList<Passage> selectedPassages;
@@ -51,7 +51,7 @@ public class ScriptureNow {
 			else if(weightedList >= currentSomeShare && weightedList <= currentNoneShare) list = VerseDB.CURRENT_NONE;
 			else list = VerseDB.ALL_VERSES;
 
-			//if we have exhausted all attempts, just try to get all the verses from the database
+			//if we have exhausted all attempts, just try to get all the verses from the ic_database
 			if(count == 0) {
 				db.open();
 				selectedPassages = db.getAllVerses();
@@ -82,14 +82,14 @@ public class ScriptureNow {
 		else return selectedPassages.get(randomizer.nextInt(selectedPassages.size()));
 	}
 
-	/** Gets a random verse from a random tag in the database. Because there is
+	/** Gets a random verse from a random tag in the ic_database. Because there is
 	 * no way to know which tags exist, all tags are weighted evenly, and selection
 	 * is fully random.
 	 * */
 //	public static Passage getNextTagVerse(Context context) {
 //		Random randomizer = new Random(Calendar.getInstance().getTimeInMillis());
 //
-//		//get a list of verses from the database
+//		//get a list of verses from the ic_database
 //		VerseDB db = new VerseDB(context);
 //
 //		db.open();

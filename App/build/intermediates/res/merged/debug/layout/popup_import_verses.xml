@@ -100,4 +100,4 @@
             android:textSize="18sp"
             android:text="CANCEL"/>
     </RelativeLayout>
-</RelativeLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/popup_import_verses.xml -->
+</RelativeLayout>

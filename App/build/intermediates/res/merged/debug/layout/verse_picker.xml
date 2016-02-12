@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:textSize="28sp"
+        android:text="Select Verse" />
+
+    <TextView
+        android:id="@+id/selected_bible_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/editReference"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:background="@drawable/bg_oval_32"
+        android:singleLine="true"
+        android:gravity="center_vertical"
+        android:hint="No Reference Selected" />
+
+    <Button
+        android:id="@+id/selection_mode_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selection Mode"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#91000000"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabGravity="fill"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="top"
+            android:background="?attr/dividerHorizontal"/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/book_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fastScrollEnabled="true" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/chapter_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fastScrollEnabled="true" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/verse_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fastScrollEnabled="true" />
+        </android.support.v4.view.ViewPager>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="?attr/dividerHorizontal"/>
+    </FrameLayout>
+
+</LinearLayout><!-- From: file:/home/jitpack/build/app/src/main/res/layout/verse_picker.xml -->

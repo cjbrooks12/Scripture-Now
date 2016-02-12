@@ -2,74 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/Scripture-Now/common/unspecified/jars/classes.jar"
+        jar="/Users/casey/Documents/android/Scripture-Now/scripturenow/build/intermediates/exploded-aar/Scripture-Now/common/unspecified/jars/classes.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="886cfc16a5ddeb50428e0dea087d3368c84c8c0b">
-        <dex dex="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/pre-dexed/release/classes-788f9ce625e9081c303e2b74d6c4c35109578c42.jar" />
-    </item>
-    <item
-        jar="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.2.26/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="7996c1c6ac05c3b2fba47579cfb3cdfee803b21f">
-        <dex dex="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/pre-dexed/release/classes-cd6fe492675102a36fcfb9b875543adb06eb7641.jar" />
-    </item>
-    <item
-        jar="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="97f7e239e86ef994de894818fdd8a71d2e89d6aa">
-        <dex dex="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/pre-dexed/release/classes-4a7b6e7c2e1859e133f24478860a3f436e1ccbbf.jar" />
-    </item>
-    <item
-        jar="/Users/casey/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/pre-dexed/release/support-annotations-22.2.0-306b3b435bd8f2f7b05ec568992780b633b48b2d.jar" />
-    </item>
-    <item
-        jar="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/pre-dexed/release/internal_impl-22.2.0-704d80981ce1b938d046f579628279212cd005cc.jar" />
-    </item>
-    <item
-        jar="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.larswerkman/HoloColorPicker/1.4/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="5d5a825cbf0f67237377034c2c4edf9ba7e60fbe">
-        <dex dex="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/pre-dexed/release/classes-ab991075c922bf0c67bb1b85148290913176e5db.jar" />
-    </item>
-    <item
-        jar="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.github.nirhart/parallaxscroll/1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="2574796fab3c6145ca6170821badd305f5e03669">
-        <dex dex="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/pre-dexed/release/classes-15229dfc3d437526a28d22ead71a64cb5580ec6f.jar" />
-    </item>
-    <item
-        jar="/Users/casey/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.7.2/d7e275ba05aa380ca254f72d0c0ffebaedc3adcf/jsoup-1.7.2.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d7e275ba05aa380ca254f72d0c0ffebaedc3adcf">
-        <dex dex="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/pre-dexed/release/jsoup-1.7.2-3158b77b3ef69d1bc2fe0121ca6df56462e1ecbc.jar" />
-    </item>
-    <item
-        jar="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/pre-dexed/release/classes-cad232d828400e29dfaf07a139b1635118c8ea62.jar" />
-    </item>
-    <item
-        jar="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="/Users/casey/Documents/code/android/Scripture-Now/App/build/intermediates/pre-dexed/release/classes-7687b05ad1a6e26a57cae361975d4a7ed0303726.jar" />
+        revision="23.0.2"
+        sha1="bc6144ee6c504f3d4286cfac7cae064ffab15cf0">
+        <dex dex="/Users/casey/Documents/android/Scripture-Now/scripturenow/build/intermediates/pre-dexed/debug/Scripture-Now-common-unspecified_3140683d81091516ee17a161d285026b65e18a94.jar" />
     </item>
 
 </items>

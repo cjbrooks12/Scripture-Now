@@ -28,7 +28,6 @@ import com.caseybrooks.androidbibletools.widget.IVerseViewListener;
 import com.caseybrooks.androidbibletools.widget.LoadState;
 import com.caseybrooks.androidbibletools.widget.ReferencePicker;
 import com.caseybrooks.androidbibletools.widget.VerseView;
-import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 
 public class BibleReaderFragment extends Fragment implements IReferencePickerListener, IVerseViewListener {

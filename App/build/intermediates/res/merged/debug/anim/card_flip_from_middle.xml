@@ -8,4 +8,4 @@
         android:fromYScale="1.0" android:toYScale="1.0"
         android:pivotY="50%"
         android:duration="500" />
-</set><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/anim/card_flip_from_middle.xml -->
+</set>

@@ -44,4 +44,4 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignBottom="@id/discoverEditText"/>
-</RelativeLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/parallax_open_bible_header.xml -->
+</RelativeLayout>

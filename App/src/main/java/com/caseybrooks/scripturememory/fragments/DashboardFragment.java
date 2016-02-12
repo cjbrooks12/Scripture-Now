@@ -20,8 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.caseybrooks.common.features.NavigationCallbacks;
-import com.caseybrooks.common.features.Util;
+import com.caseybrooks.common.Util;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.nowcards.input.VerseInputCard;

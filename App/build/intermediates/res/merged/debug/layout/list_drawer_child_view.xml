@@ -38,4 +38,4 @@
         android:paddingLeft="16dp"
         android:textSize="18sp" />
 
-</LinearLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/list_drawer_child_view.xml -->
+</LinearLayout>

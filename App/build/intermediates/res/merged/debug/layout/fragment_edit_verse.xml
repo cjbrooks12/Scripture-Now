@@ -116,4 +116,4 @@
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/fragment_edit_verse.xml -->
+</RelativeLayout>

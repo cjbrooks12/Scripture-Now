@@ -3,4 +3,4 @@
 	android:exitFadeDuration="@android:integer/config_shortAnimTime">
 	<item android:state_pressed="true" android:drawable="@color/primary_text_default_material_light" />
 	<item android:drawable="@color/android:transparent" />
-</selector><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/drawable/bg_transparent_hard_edge.xml -->
+</selector>

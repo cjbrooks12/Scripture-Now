@@ -38,4 +38,3 @@
         android:textSize="@dimen/title_text_size"
         android:text="Scripture Now!"/>
 </RelativeLayout>
-<!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/parallax_drawer_header.xml -->

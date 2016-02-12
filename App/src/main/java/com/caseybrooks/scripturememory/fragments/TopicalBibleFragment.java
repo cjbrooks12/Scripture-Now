@@ -40,8 +40,7 @@ import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.providers.openbible.OpenBibleInfo;
-import com.caseybrooks.common.features.NavigationCallbacks;
-import com.caseybrooks.common.features.Util;
+import com.caseybrooks.common.Util;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.MetaSettings;
 import com.caseybrooks.scripturememory.data.VerseDB;
@@ -415,7 +414,7 @@ public class TopicalBibleFragment extends Fragment {
             return passage;
         }
 
-        //items do not yet exist in the database, so do not have ids
+        //items do not yet exist in the ic_database, so do not have ids
         @Override
         public long getItemId(int position) {
             return 0;

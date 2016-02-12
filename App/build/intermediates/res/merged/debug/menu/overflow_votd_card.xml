@@ -13,4 +13,4 @@
     <item
         android:id="@+id/overflow_votd_card_post"
         android:title="Set as Notification"/>
-</menu><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/menu/overflow_votd_card.xml -->
+</menu>

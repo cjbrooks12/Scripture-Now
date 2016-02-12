@@ -25,4 +25,4 @@
 		android:layout_marginBottom="8dp"
 		android:layout_marginLeft="16dp"
 		android:text="17kb"/>
-</LinearLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/common/src/main/res/layout/debug_cache_list_item.xml -->
+</LinearLayout>

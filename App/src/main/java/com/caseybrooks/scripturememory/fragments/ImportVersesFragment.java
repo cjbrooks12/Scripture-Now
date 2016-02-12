@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -30,7 +29,6 @@ import com.caseybrooks.androidbibletools.basic.Passage;
 import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
 

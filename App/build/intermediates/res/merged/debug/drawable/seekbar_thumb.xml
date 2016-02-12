@@ -5,4 +5,3 @@
     <item android:state_selected="true" android:drawable="@drawable/seekbar_thumb_focused" />
     <item android:drawable="@drawable/seekbar_thumb_normal" />
 </selector>
-<!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/drawable/seekbar_thumb.xml -->

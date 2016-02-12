@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.defaults.DefaultMetaData;
-import com.caseybrooks.common.features.NavigationCallbacks;
 import com.caseybrooks.scripturememory.R;
 import com.caseybrooks.scripturememory.data.VerseDB;
 import com.caseybrooks.scripturememory.fragments.VerseListFragment;

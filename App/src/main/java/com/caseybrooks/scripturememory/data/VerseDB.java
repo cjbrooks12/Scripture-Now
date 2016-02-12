@@ -39,14 +39,14 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 /**
- * Redesigned verses database, designed to replace VersesDatabase class
+ * Redesigned verses ic_database, designed to replace VersesDatabase class
  * Supports multiple tables with tagging, ranking state of verse memorization,
  * colors, verse version, when the verse was added/modified
  */
 public class VerseDB {
 //Database Bookkeeping Information
 //------------------------------------------------------------------------------
-    //global database information
+    //global ic_database information
     private static final String DATABASE_NAME = "verses_db";
     private static final int DATABASE_VERSION = 1;
     private DbHelper helper;
@@ -213,7 +213,7 @@ public class VerseDB {
         return this;
     }
 
-    //dumps the entire database
+    //dumps the entire ic_database
     public void clear() {
         helper = new DbHelper(context);
         db = helper.getWritableDatabase();

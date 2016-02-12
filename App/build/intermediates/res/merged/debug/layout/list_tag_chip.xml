@@ -36,4 +36,4 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:textSize="14sp"/>
-</RelativeLayout><!-- From: file:/Users/casey/Documents/code/android/Scripture-Now/App/src/main/res/layout/list_tag_chip.xml -->
+</RelativeLayout>
