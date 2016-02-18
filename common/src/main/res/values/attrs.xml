@@ -26,6 +26,11 @@
         <attr name="menu"/>
     </declare-styleable>
 
+    <declare-styleable name="CardView">
+        <attr name="title"/>
+        <attr name="menu"/>
+    </declare-styleable>
+
 
 
 </resources>

@@ -65,12 +65,11 @@ public class AppSettings {
         context.getSharedPreferences(settings_file, 0).edit().putInt(DEFAULT_FEATURE_ID, id).commit();
     }
 
-    //TODO: restore this functionality so that users can pick what they want to open to everytime they start the apps
+    //TODO: restore this functionality so that users can pick what they want to open to every time they start the apps
     public static Pair<AppFeature, Integer> getDefaultFeature(Context context) {
-//        AppFeature feature = AppFeature.getFeatureForId(context.getSharedPreferences(settings_file, 0).getInt(DEFAULT_FEATURE, 0));
-//        int id = context.getSharedPreferences(settings_file, 0).getInt(DEFAULT_FEATURE_ID, -1);
-//        return new Pair<AppFeature, Integer>(feature, id);
-        return new Pair<>(AppFeature.LastVisited, 0);
+        AppFeature feature = AppFeature.getFeatureForId(context.getSharedPreferences(settings_file, 0).getInt(DEFAULT_FEATURE, 0));
+        int id = context.getSharedPreferences(settings_file, 0).getInt(DEFAULT_FEATURE_ID, -1);
+        return new Pair<>(feature, id);
     }
 
     public static boolean isDailyNotificationEnabled(Context context) {

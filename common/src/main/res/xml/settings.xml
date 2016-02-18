@@ -6,14 +6,6 @@
     <PreferenceCategory
         android:title="Notifications">
         <PreferenceScreen
-            android:title="Main Notifications">
-            <CheckBoxPreference
-                android:key="main_enabled"
-                android:title="Main Notification"
-                android:summary="Show a daily notification for the Verse of the Day"/>
-        </PreferenceScreen>
-
-        <PreferenceScreen
             android:title="Verse of the Day">
             <CheckBoxPreference
                 android:key="votd_enabled"
@@ -60,80 +52,14 @@
             android:entries="@array/themes"
             android:entryValues="@array/themes"/>
 
-    </PreferenceCategory>
+        <ListPreference
+            android:key="DEFAULT_FEATURE"
+            android:title="Default Screen"/>
+        <ListPreference
+            android:key="DEFAULT_FEATURE_ID"
+            android:title="Screen Item"
+            android:enabled="false"/>
 
-    <PreferenceCategory
-        android:title="Go all sorts of deeper!">
-        <PreferenceScreen
-            android:title="We must go deeper!">
-            <Preference
-                android:key="deeper1"
-                android:title="Go Deeper 1"
-                android:summary="Send deeper" />
-            <PreferenceScreen
-                android:title="We must go deeper!">
-                <Preference
-                    android:key="deeper2"
-                    android:title="Go Deeper 2"
-                    android:summary="Send deeper"/>
-                <PreferenceScreen
-                    android:title="We must go deeper!">
-                    <Preference
-                        android:key="deeper3"
-                        android:title="Go Deeper 3"
-                        android:summary="Send deeper"/>
-                    <PreferenceScreen
-                        android:title="We must go deeper!">
-                        <Preference
-                            android:key="deeper4"
-                            android:title="Go Deeper 4"
-                            android:summary="Send deeper"/>
-                        <PreferenceScreen
-                            android:title="We must go deeper!">
-                            <Preference
-                                android:key="deeper5"
-                                android:title="Go Deeper 5"
-                                android:summary="Send deeper"/>
-                            <PreferenceScreen
-                                android:title="We must go deeper!">
-                                <Preference
-                                    android:key="deeper6"
-                                    android:title="Go Deeper 6"
-                                    android:summary="Send deeper"/>
-                                <PreferenceScreen
-                                    android:title="We must go deeper!">
-                                    <Preference
-                                        android:key="deeper7"
-                                        android:title="Go Deeper 7"
-                                        android:summary="Send deeper"/>
-                                    <PreferenceScreen
-                                        android:title="We must go deeper!">
-                                        <Preference
-                                            android:key="deeper8"
-                                            android:title="Go Deeper 8"
-                                            android:summary="Send deeper"/>
-                                        <PreferenceScreen
-                                            android:title="We must go deeper!">
-                                            <Preference
-                                                android:key="deeper9"
-                                                android:title="Go Deeper 9"
-                                                android:summary="Send deeper"/>
-                                            <PreferenceScreen
-                                                android:title="We must go deeper!">
-                                                <Preference
-                                                    android:key="deeper10"
-                                                    android:title="Go Deeper 10"
-                                                    android:summary="Send deeper"/>
-                                            </PreferenceScreen>
-                                        </PreferenceScreen>
-                                    </PreferenceScreen>
-                                </PreferenceScreen>
-                            </PreferenceScreen>
-                        </PreferenceScreen>
-                    </PreferenceScreen>
-                </PreferenceScreen>
-            </PreferenceScreen>
-        </PreferenceScreen>
     </PreferenceCategory>
 
 </PreferenceScreen>

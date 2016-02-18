@@ -92,7 +92,7 @@ public class PreferenceFragmentBase extends PreferenceFragmentCompat implements 
         return false;
     }
 
-    //Logging
+//Logging
 //--------------------------------------------------------------------------------------------------
     public void LogI(String message, Object... params) {
         Log.i(TAG, Util.formatString(message, params));

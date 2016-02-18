@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.TypedArray;
+import android.support.annotation.MenuRes;
 import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.view.View;
 import com.caseybrooks.common.R;
 
 public class MenuWidget extends TintableImageView {
-    int menuResourceId;
+    @MenuRes int menuResourceId;
     boolean forceOverflow;
     PopupMenu.OnMenuItemClickListener menuItemClickListener;
 
@@ -95,9 +96,13 @@ public class MenuWidget extends TintableImageView {
         this.menuItemClickListener = menuItemClickListener;
     }
 
-    public void setMenuResource(int menuResourceId) {
+    public void setMenuResource(@MenuRes int menuResourceId) {
         this.menuResourceId = menuResourceId;
         setupMenu();
+    }
+
+    public @MenuRes int getMenuResource() {
+        return this.menuResourceId;
     }
 
     public void forceOverflow(boolean forceOverflow) {

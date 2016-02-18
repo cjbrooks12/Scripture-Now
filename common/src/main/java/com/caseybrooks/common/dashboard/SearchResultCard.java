@@ -3,7 +3,7 @@ package com.caseybrooks.common.dashboard;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.FrameLayout;
+import android.view.View;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.ABT;
@@ -16,8 +16,9 @@ import com.caseybrooks.androidbibletools.widget.VerseView;
 import com.caseybrooks.common.R;
 import com.caseybrooks.common.app.ActivityBase;
 import com.caseybrooks.common.app.Util;
+import com.caseybrooks.common.widget.CardView;
 
-public class SearchResultCard extends FrameLayout {
+public class SearchResultCard extends CardView {
     String reference;
 
     Bible bible;
@@ -45,12 +46,16 @@ public class SearchResultCard extends FrameLayout {
     }
 
     private void initialize(AttributeSet attrs) {
-        LayoutInflater.from(getContext()).inflate(R.layout.card_search_result, this);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.card_search_result, null);
+        addView(view);
+        
+        setTitle("Search Result");
+        setMenuResource(R.menu.card_search_result);
 
-        searchReference = (TextView) findViewById(R.id.search_reference);
-        searchText = (VerseView) findViewById(R.id.search_text);
+        searchReference = (TextView) view.findViewById(R.id.search_reference);
+        searchText = (VerseView) view.findViewById(R.id.search_text);
 
-        bible = ABT.getInstance(getContext()).getSelectedBible(null);
+        bible = ABT.getInstance(getContext()).getSavedBible(null);
 
         if(bible instanceof Downloadable) {
             searchIsReady = false;

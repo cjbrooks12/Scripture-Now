@@ -60,7 +60,7 @@ public enum AppFeature {
     Edit(               "Edit",                                                                 1001),
 
     //Not actually a true "feature" but a convenience marker for settings
-    LastVisited("", 0);
+    LastVisited(        "Last Visited",                                                         0);
 
     private final String title;
     private final int iconResId;

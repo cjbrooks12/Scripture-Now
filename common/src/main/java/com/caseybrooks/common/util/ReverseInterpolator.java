@@ -1,9 +1,9 @@
-package com.caseybrooks.common.widget;
+package com.caseybrooks.common.util;
 
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
 
-class ReverseInterpolator implements Interpolator {
+public class ReverseInterpolator implements Interpolator {
 
     private Interpolator interpolator;
 

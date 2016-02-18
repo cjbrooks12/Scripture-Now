@@ -25,6 +25,12 @@ $RECYCLE.BIN/
 .AppleDouble
 .LSOverride
 
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+/build
+
 # Icon must ends with two \r.
 Icon
 

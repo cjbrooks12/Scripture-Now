@@ -1,4 +1,4 @@
-package com.caseybrooks.common.widget;
+package com.caseybrooks.common.util;
 
 import android.content.Context;
 import android.graphics.Canvas;
