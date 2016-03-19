@@ -1,4 +1,4 @@
-package com.caseybrooks.openbible;
+package com.caseybrooks.openbiblebeta;
 
 import android.os.Bundle;
 
