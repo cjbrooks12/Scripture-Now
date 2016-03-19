@@ -14,4 +14,8 @@
         android:id="@+id/save"
         android:title="Save"
         android:icon="@drawable/ic_save"/>
+    <item
+        android:id="@+id/practice"
+        android:title="Practice"
+        android:icon="@drawable/ic_flashcards"/>
 </menu>

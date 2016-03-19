@@ -16,10 +16,10 @@ import java.util.List;
  * Taken and modified from https://github.com/ApmeM/android-flowlayout to better suit my needs
  *
  * MAJOR MODIFICATIONS:
- *      -Make this all a one-class layoutmanager, so that it might later be shared in a Gist
+ *      **DONE** Make this all a one-class layoutmanager, so that it might later be shared in a Gist
  *      -Replace normal view Gravity with Alignment that matches what one would expect from text alignment
- *      -Make rows all the minimum height necessary rather than evenly spaced throughout the available space
- *      -Enabled scrolling when the available height is less than the necessary height
+ *      **DONE** Make rows all the minimum height necessary rather than evenly spaced throughout the available space
+ *      **DONE** Enabled scrolling when the available height is less than the necessary height
  *      -Original did not handle any kind of view recycling, so that is implemented here as well
  */
 public class FlowLayoutManager extends RecyclerView.LayoutManager {
@@ -29,6 +29,9 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
 
     private int maxLineWidth;
     private int maxLineHeight;
+
+    private int maxScrollAmount;
+    private int scrollAmount;
 
     public FlowLayoutManager(Context context) {
         this.context = context;
@@ -46,6 +49,7 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
         detachAndScrapAttachedViews(recycler);
 
+        scrollAmount = 0;
         views.clear();
         lines.clear();
         for(int i = 0; i < this.getItemCount(); i++) {
@@ -76,9 +80,19 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
         }
 
         LineDefinition currentLine = lines.get(lines.size() - 1);
-        int contentThickness = currentLine.offsetY + currentLine.height;
+        int contentHeight = currentLine.offsetY + currentLine.height;
         int realControlLength = maxLineWidth;
-        int realControlThickness = Math.min(contentThickness, maxLineHeight);
+        int realControlThickness = Math.min(contentHeight, maxLineHeight);
+
+        Log.i("FlowLayoutManager", Util.formatString("realCOntrolThickness={0}, getHeight()={1}, contentHeight={2}", realControlThickness, getHeight(), contentHeight));
+
+
+        if(getHeight() > contentHeight) {
+            maxScrollAmount = 0;
+        }
+        else {
+            maxScrollAmount = getHeight() - contentHeight;
+        }
 
         applyGravityToLines(realControlLength, realControlThickness);
         applyPositionsToLines();
@@ -108,12 +122,12 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
      * Calculate where the lines should go, and where the children should go in those lines
      */
     public void calculateLinesAndChildPosition() {
-        int prevLinesThickness = 0;
+        int previousLineOffsetY = scrollAmount;
         final int linesCount = lines.size();
         for(int i = 0; i < linesCount; i++) {
             final LineDefinition line = lines.get(i);
-            line.offsetY = prevLinesThickness;
-            prevLinesThickness += line.height;
+            line.offsetY = previousLineOffsetY;
+            previousLineOffsetY += line.height;
             int prevChildThickness = 0;
             final List<ViewDefinition> childViews = line.getViews();
             final int childCount = childViews.size();
@@ -287,5 +301,52 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
         public List<ViewDefinition> getViews() {
             return views;
         }
+    }
+
+    @Override
+    public boolean canScrollVertically() {
+        //We do allow scrolling
+        return true;
+    }
+
+    @Override
+    public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
+        //content is too short to scroll
+        if(maxScrollAmount == 0)
+            return 0;
+
+        int actualDy;
+
+        int scrollCase;
+
+        int previousScrollAmount = scrollAmount;
+        scrollAmount -= dy;
+
+        //attempting to scroll before the beginning of the items
+        if(scrollAmount >= 0) {
+            scrollCase = 0;
+
+            actualDy = -previousScrollAmount;
+            scrollAmount = 0;
+        }
+        //attempting to scroll past the end of the items
+        else if(scrollAmount <= maxScrollAmount) {
+            scrollCase = 1;
+
+            actualDy = maxScrollAmount - previousScrollAmount;
+            scrollAmount = maxScrollAmount;
+        }
+        //handle the actual scrolling
+        else {
+            scrollCase = 2;
+
+            actualDy = dy;
+        }
+
+        Log.i("FlowLayoutManager", Util.formatString("Scrolling: scrollCase={0}, dy={1}, actualDy={2}, maxScrollAmount={3}, scrollAmount={4}", scrollCase, dy, actualDy, maxScrollAmount, scrollAmount));
+
+        calculateLinesAndChildPosition();
+        applyPositionsToLines();
+        return actualDy;
     }
 }

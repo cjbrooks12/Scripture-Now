@@ -55,7 +55,7 @@ public class TopicalBibleFragment extends FragmentBase implements OnResponseList
     }
 
     @Override
-    public void responseFinished() {
+    public void responseFinished(boolean success) {
         ((ActivityBase) getActivity()).setActivityProgress(0);
         Snackbar.make(((ActivityBase) getActivity()).getCoordinatorLayout(), topicalSearch.getPassages().size() + " passages for '" + topicalSearch.getSearchTerm() + "'", Snackbar.LENGTH_LONG).show();
 
@@ -141,7 +141,7 @@ public class TopicalBibleFragment extends FragmentBase implements OnResponseList
                     Toast.makeText(getContext(), "Upvoting " + passage.getReference().toString(), Toast.LENGTH_SHORT).show();
                     passage.upvote(new OnResponseListener() {
                         @Override
-                        public void responseFinished() {
+                        public void responseFinished(boolean success) {
                             passage.getMetadata().putInt("UPVOTES", passage.getMetadata().getInt("UPVOTES", 0) + 1);
                             recyclerView.getAdapter().notifyDataSetChanged();
                         }
@@ -156,7 +156,7 @@ public class TopicalBibleFragment extends FragmentBase implements OnResponseList
 
                     passage.downvote(new OnResponseListener() {
                         @Override
-                        public void responseFinished() {
+                        public void responseFinished(boolean success) {
                             passage.getMetadata().putInt("UPVOTES", passage.getMetadata().getInt("UPVOTES", 0) - 1);
                             recyclerView.getAdapter().notifyDataSetChanged();
                         }

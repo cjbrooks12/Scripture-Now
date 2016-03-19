@@ -2,7 +2,9 @@ package com.caseybrooks.common.dashboard;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.widget.VerseView;
 import com.caseybrooks.common.R;
 import com.caseybrooks.common.app.ActivityBase;
+import com.caseybrooks.common.app.AppFeature;
 import com.caseybrooks.common.app.Util;
 import com.caseybrooks.common.widget.CardView;
 
@@ -22,6 +25,7 @@ public class SearchResultCard extends CardView {
     String reference;
 
     Bible bible;
+    ABSPassage passage;
     boolean searchIsReady;
     boolean searchPending;
 
@@ -57,13 +61,17 @@ public class SearchResultCard extends CardView {
 
         bible = ABT.getInstance(getContext()).getSavedBible(null);
 
+        if(bible != null)
+            Log.i("SearchResultCard", "Bible is not null");
+
         if(bible instanceof Downloadable) {
             searchIsReady = false;
             ((Downloadable) bible).download(new OnResponseListener() {
                 @Override
-                public void responseFinished() {
+                public void responseFinished(boolean success) {
                     searchIsReady = true;
                     if(searchPending) {
+                        Log.i("SearchResultCard", "pending search starting");
                         searchReference();
                     }
                 }
@@ -72,6 +80,16 @@ public class SearchResultCard extends CardView {
         else {
             searchIsReady = true;
         }
+    }
+
+    @Override
+    public boolean onOverflowMenuItemClick(MenuItem item) {
+
+        if(item.getItemId() == R.id.practice) {
+            getActivityBase().selectAppFeature(AppFeature.Practice, passage);
+        }
+
+        return super.onOverflowMenuItemClick(item);
     }
 
     public void setReference(String reference) {
@@ -86,8 +104,10 @@ public class SearchResultCard extends CardView {
 
     public void searchReference() {
         Reference.Builder builder = new Reference.Builder();
-        builder.setBible(bible);
         builder.setFlag(Reference.Builder.PREVENT_AUTO_ADD_VERSES_FLAG);
+        if(bible != null)
+            builder.setBible(bible);
+
         builder.parseReference(reference);
 
         final Reference ref = builder.create();
@@ -95,13 +115,15 @@ public class SearchResultCard extends CardView {
         if(builder.checkFlag(Reference.Builder.PARSE_SUCCESS)) {
             ((ActivityBase) getContext()).setActivityProgress(-1);
 
-            final ABSPassage passage = new ABSPassage(ref);
+            passage = new ABSPassage(ref);
             passage.download(new OnResponseListener() {
                 @Override
-                public void responseFinished() {
-                    searchReference.setText(ref.toString());
-                    searchText.setText(passage.getFormattedText());
-                    ((ActivityBase) getContext()).setActivityProgress(0);
+                public void responseFinished(boolean success) {
+                    if(success) {
+                        searchReference.setText(ref.toString());
+                        searchText.setText(passage.getFormattedText());
+                        ((ActivityBase) getContext()).setActivityProgress(0);
+                    }
                 }
             });
         }
@@ -110,5 +132,6 @@ public class SearchResultCard extends CardView {
             searchText.setText(Util.formatString("'{0}' could not be found in the selected bible '{1}'. Do you want to add it anyway with your own text?", ref.toString(), bible.getAbbreviation()));
         }
         searchPending = false;
+
     }
 }

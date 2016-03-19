@@ -58,6 +58,7 @@ public enum AppFeature {
 
     //inner features that are managed in the same way but should never show up in the main drawer
     Edit(               "Edit",                                                                 1001),
+    Practice(           "Practice",                                                             1002),
 
     //Not actually a true "feature" but a convenience marker for settings
     LastVisited(        "Last Visited",                                                         0);

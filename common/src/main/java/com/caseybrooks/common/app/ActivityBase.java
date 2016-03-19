@@ -25,6 +25,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.caseybrooks.androidbibletools.ABT;
+import com.caseybrooks.androidbibletools.basic.AbstractVerse;
+import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.common.BuildConfig;
 import com.caseybrooks.common.R;
 import com.caseybrooks.common.fragments.BibleReaderFragment;
@@ -33,6 +35,7 @@ import com.caseybrooks.common.fragments.DebugCache;
 import com.caseybrooks.common.fragments.DebugDatabase;
 import com.caseybrooks.common.fragments.DebugPreferences;
 import com.caseybrooks.common.fragments.EditVerseFragment;
+import com.caseybrooks.common.fragments.games.PracticeFragment;
 import com.caseybrooks.common.fragments.HelpFragment;
 import com.caseybrooks.common.fragments.PrayersFragment;
 import com.caseybrooks.common.fragments.SettingsFragment;
@@ -109,7 +112,9 @@ public class ActivityBase extends AppCompatActivity implements
 
     //Method stub that will get called the first time an app is installed
     public void onFirstInstall() {
-
+        ABSBible initialBible = new ABSBible();
+        initialBible.setId("eng-ESV");
+        ABT.getInstance(this).saveBible(initialBible, null);
     }
 
     //TODO: implement check of the current app version so we can prompt the user to update
@@ -138,7 +143,7 @@ public class ActivityBase extends AppCompatActivity implements
         return searchbox;
     }
 
-    //Setup activity's theme and features
+//Setup activity's theme and features
 //--------------------------------------------------------------------------------------------------
     public void setTheme() {
         if(AppSettings.getAppTheme(this).equals("Light"))
@@ -272,11 +277,16 @@ public class ActivityBase extends AppCompatActivity implements
         selectAppFeature(feature, childId);
     }
 
-    public final void selectAppFeature(AppFeature feature) {
-        selectAppFeature(feature, 0);
+
+    public final void selectAppFeature(AppFeature feature, Object args) {
+        selectAppFeature(feature, 0, args);
     }
 
-    public final void selectAppFeature(AppFeature feature, int id) {
+    public final void selectAppFeature(AppFeature feature) {
+        selectAppFeature(feature, 0, null);
+    }
+
+    public final void selectAppFeature(AppFeature feature, int id, Object appFeatureArgs) {
         drawer.closeDrawer(GravityCompat.START);
 
         if(feature == selectedFeature && id == selectedFeatureId)
@@ -317,6 +327,12 @@ public class ActivityBase extends AppCompatActivity implements
         case Edit:
             fragment = EditVerseFragment.newInstance(id);
             break;
+        case Practice:
+            if(appFeatureArgs != null && appFeatureArgs instanceof AbstractVerse) {
+                fragment = PracticeFragment.newInstance((AbstractVerse) appFeatureArgs);
+                break;
+            }
+            return;
         case DebugDatabase:
             fragment = DebugDatabase.newInstance();
             break;
@@ -402,7 +418,7 @@ public class ActivityBase extends AppCompatActivity implements
 //Monitor network
 //--------------------------------------------------------------------------------------------------
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         connectionReceiver = new NetworkConnectionReceiver();
 
@@ -412,7 +428,7 @@ public class ActivityBase extends AppCompatActivity implements
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         unregisterReceiver(connectionReceiver);
     }

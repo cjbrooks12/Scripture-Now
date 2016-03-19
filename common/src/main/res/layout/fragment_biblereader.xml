@@ -18,6 +18,7 @@
             android:fontFamily="serif"
             android:textSize="16sp"
             android:padding="8dp"
+            android:textIsSelectable="true"
             app:verseDisplay="unformatted|html"
             app:verseClass="com.caseybrooks.androidbibletools.providers.abs.ABSPassage"/>
     </android.support.v4.widget.NestedScrollView>
@@ -32,7 +33,7 @@
         android:layout_margin="16dp"
         app:layout_anchor="@+id/textLayout"
         app:layout_anchorGravity="bottom|left|end"
-        app:layout_behavior="com.caseybrooks.common.widget.ScrollAwareFABBehavior"
+        app:layout_behavior="com.caseybrooks.common.util.ScrollAwareFABBehavior"
         app:backgroundTint="#ffffff"/>
 
     <android.support.design.widget.FloatingActionButton
@@ -45,7 +46,7 @@
         android:layout_margin="16dp"
         app:layout_anchor="@+id/textLayout"
         app:layout_anchorGravity="bottom|right|end"
-        app:layout_behavior="com.caseybrooks.common.widget.ScrollAwareFABBehavior"
+        app:layout_behavior="com.caseybrooks.common.util.ScrollAwareFABBehavior"
         app:backgroundTint="#ffffff"/>
 </android.support.design.widget.CoordinatorLayout>
 

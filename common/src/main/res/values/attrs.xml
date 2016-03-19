@@ -31,6 +31,14 @@
         <attr name="menu"/>
     </declare-styleable>
 
-
+    <declare-styleable name="SplitPaneLayout">
+        <attr name="orientation">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <attr name="splitterPosition" format="dimension"/>
+        <attr name="splitterDrawable" format="reference|color"/>
+        <attr name="splitterThumbDrawable" format="reference"/>
+    </declare-styleable>
 
 </resources>

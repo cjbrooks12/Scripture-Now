@@ -3,14 +3,17 @@ package com.caseybrooks.common.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.MenuRes;
+import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.caseybrooks.common.R;
+import com.caseybrooks.common.app.ActivityBase;
 
 public class CardView extends FrameLayout {
     FrameLayout viewLayout;
@@ -44,8 +47,18 @@ public class CardView extends FrameLayout {
 
         title.setText(a.getString(R.styleable.CardView_title));
         menuWidget.setMenuResource(a.getResourceId(R.styleable.CardView_menu, 0));
+        menuWidget.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return onOverflowMenuItemClick(item);
+            }
+        });
 
         a.recycle();
+    }
+
+    public boolean onOverflowMenuItemClick(MenuItem item) {
+        return false;
     }
 
     public void setTitle(String title) {
@@ -79,5 +92,9 @@ public class CardView extends FrameLayout {
     @Override
     public ViewGroup.LayoutParams getLayoutParams() {
         return super.getLayoutParams();
+    }
+
+    public ActivityBase getActivityBase() {
+        return (ActivityBase) getContext();
     }
 }

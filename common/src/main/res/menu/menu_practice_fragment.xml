@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/shuffle"
+        android:title="Shuffle"
+        android:icon="@drawable/ic_shuffle"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/reset"
+        android:title="Reset"
+        android:icon="@drawable/ic_refresh"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/skip"
+        android:title="Skip"
+        android:icon="@drawable/ic_skip_forward"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/settings"
+        android:title="Settings"
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="ifRoom"/>
+</menu>

@@ -83,7 +83,7 @@ public class BibleReaderFragment extends FragmentBase {
                 final ABSPassage passage = new ABSPassage(reference.create());
                 passage.download(new OnResponseListener() {
                     @Override
-                    public void responseFinished() {
+                    public void responseFinished(boolean success) {
                         ABT.getInstance(getContext()).saveVerse(passage, "bible_reader_fragment");
                         verseView.setVerse(passage);
                     }
@@ -102,7 +102,7 @@ public class BibleReaderFragment extends FragmentBase {
                 getActivityBase().getToolbar().setSubtitle(passage.getReference().toString());
                 passage.download(new OnResponseListener() {
                     @Override
-                    public void responseFinished() {
+                    public void responseFinished(boolean success) {
                         ABT.getInstance(getContext()).saveVerse(passage, "bible_reader_fragment");
                         verseView.setVerse(passage);
                     }
@@ -121,7 +121,7 @@ public class BibleReaderFragment extends FragmentBase {
                 getActivityBase().getToolbar().setSubtitle(passage.getReference().toString());
                 passage.download(new OnResponseListener() {
                     @Override
-                    public void responseFinished() {
+                    public void responseFinished(boolean success) {
                         ABT.getInstance(getContext()).saveVerse(passage, "bible_reader_fragment");
                         verseView.setVerse(passage);
                     }
@@ -143,10 +143,10 @@ public class BibleReaderFragment extends FragmentBase {
 
             ((ABSBible) savedPassage.getReference().getBible()).download(new OnResponseListener() {
                 @Override
-                public void responseFinished() {
+                public void responseFinished(boolean success) {
                     savedPassage.download(new OnResponseListener() {
                         @Override
-                        public void responseFinished() {
+                        public void responseFinished(boolean success) {
                             verseView.setVerse(savedPassage);
                             next.setEnabled(true);
                             previous.setEnabled(true);

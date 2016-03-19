@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
@@ -131,5 +132,12 @@ public class Util {
             return false;
         else
             return true;
+    }
+
+    public static class CancelDialogAction implements DialogInterface.OnClickListener{
+        @Override
+        public void onClick (DialogInterface dialog, int which){
+            dialog.cancel();
+        }
     }
 }

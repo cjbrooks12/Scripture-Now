@@ -68,7 +68,9 @@ public class FragmentBase extends Fragment implements ActivityBaseFragment, Sear
 
     @Override
     public boolean shouldAddToBackStack() {
-        return true;
+        return (getFeatureForFragment() != null)
+                ? getFeatureForFragment().first.isTopLevel()
+                : true;
     }
 
 //Make fragments easily searchable

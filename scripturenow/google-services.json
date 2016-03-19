@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_id": "scripture-now",
+    "project_number": "248332739568",
+    "name": "scripture-now"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248332739568:android:260a9fb52efb9c50",
+        "client_id": "android:com.caseybrooks.scripturememorybeta",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.caseybrooks.scripturememorybeta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

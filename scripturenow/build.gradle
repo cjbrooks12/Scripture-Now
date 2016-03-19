@@ -4,6 +4,10 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.caseybrooks.scripturememorybeta"
         minSdkVersion 16
@@ -21,5 +25,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile project(':common')
 }
+
+apply plugin: 'com.google.gms.google-services'
