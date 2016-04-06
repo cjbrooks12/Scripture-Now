@@ -36,58 +36,64 @@ import com.caseybrooks.common.R;
  * an id of 0 will tell the app to open the last top-level screen that was viewed.
  */
 public enum AppFeature {
-    //Enum              Name                    Icon                            HasChildren     id
+    //Enum              Name                    Icon                            Has Children    Supports FAB    id
 
     //Top-level features
-    Dashboard(          "Dashboard",            R.drawable.ic_home,             false,          1),
-    Read(               "Read",                 R.drawable.ic_local_library,    false,          2),
-    Discover(           "Discover",             R.drawable.ic_find_in_page,     false,          4),
-    Search(             "Topical Search",       R.drawable.ic_search,           false,          5),
-    Topics(             "Topics List",          R.drawable.ic_list,             false,          6),
-    MemorizationState(  "Memorization State",   R.drawable.ic_group_work,       true,           7),
-    Tags(               "Tags",                 R.drawable.ic_label,            true,           8),
-    Help(               "Help",                 R.drawable.ic_help,             false,          9),
-    Settings(           "Settings",             R.drawable.ic_settings,         false,          10),
-    Prayers(            "Prayers",              R.drawable.ic_thumb_up,         false,          11),
-    Debug(              "Debug",                R.drawable.ic_bug_report,       true,           12),
+    Dashboard(          "Dashboard",            R.drawable.ic_home,             false,          true,           1),
+    Read(               "Read",                 R.drawable.ic_local_library,    false,          false,          2),
+    Discover(           "Discover",             R.drawable.ic_find_in_page,     true,           false,          4),
+    MemorizationState(  "Memorization State",   R.drawable.ic_group_work,       true,           false,          7),
+    Tags(               "Tags",                 R.drawable.ic_tag,              true,           false,          8),
+    Help(               "Help",                 R.drawable.ic_help,             false,          false,          9),
+    Settings(           "Settings",             R.drawable.ic_settings,         false,          false,          10),
+    Prayers(            "Prayers",              R.drawable.ic_thumb_up,         false,          true,           11),
+    Debug(              "Debug",                R.drawable.ic_bug_report,       true,           false,          12),
 
     //Some features are top-level but as subitems of another. Functionally the same as top-level, but can't have children
-    DebugDatabase(      "Debug Database",       R.drawable.ic_database,                         101),
-    DebugPreferences(   "Debug Preferences",    R.drawable.ic_key,                              102),
-    DebugCache(         "Debug Cache",          R.drawable.ic_file,                             103),
+    DebugDatabase(      "Debug Database",       R.drawable.ic_database,                         false,          101),
+    DebugPreferences(   "Debug Preferences",    R.drawable.ic_key,                              false,          102),
+    DebugCache(         "Debug Cache",          R.drawable.ic_file,                             false,          103),
+    TopicalBible(       "Topical Bible",        R.drawable.ic_search,                           false,          104),
+    TopicsList(         "Topics List",          R.drawable.ic_list,                             false,          105),
+    ImportVerses(       "Import Verses",        R.drawable.ic_import,                           false,          106),
 
     //inner features that are managed in the same way but should never show up in the main drawer
-    Edit(               "Edit",                                                                 1001),
-    Practice(           "Practice",                                                             1002),
+    Edit(               "Edit",                                                                 false,          1001),
+    Practice(           "Practice",                                                             false,          1002),
+    Flashcards(         "Flashcards",                                                           false,          1003),
 
     //Not actually a true "feature" but a convenience marker for settings
-    LastVisited(        "Last Visited",                                                         0);
+    LastVisited(        "Last Visited",                                                         false,          0);
 
     private final String title;
     private final int iconResId;
     private final boolean hasChildren;
+    private final boolean supportsFAB;
     private final boolean isTopLevel;
     private final int id;
 
-    AppFeature(String title, int iconResId, boolean hasChildren, int id) {
+    AppFeature(String title, int iconResId, boolean hasChildren, boolean supportsFAB, int id) {
         this.title = title;
         this.iconResId = iconResId;
+        this.supportsFAB = supportsFAB;
         this.hasChildren = hasChildren;
         this.isTopLevel = true;
         this.id = id;
     }
 
-    AppFeature(String title, int iconResId, int id) {
+    AppFeature(String title, int iconResId, boolean supportsFAB, int id) {
         this.title = title;
         this.iconResId = iconResId;
+        this.supportsFAB = supportsFAB;
         this.hasChildren = false;
         this.isTopLevel = true;
         this.id = id;
     }
 
-    AppFeature(String title, int id) {
+    AppFeature(String title, boolean supportsFAB, int id) {
         this.title = title;
         this.iconResId = 0;
+        this.supportsFAB = supportsFAB;
         this.hasChildren = false;
         this.isTopLevel = false;
         this.id = id;
@@ -99,6 +105,10 @@ public enum AppFeature {
 
     public int getIconResId() {
         return iconResId;
+    }
+
+    public boolean supportsFAB() {
+        return supportsFAB;
     }
 
     public boolean hasChildren() {

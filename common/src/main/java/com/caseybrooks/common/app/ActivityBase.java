@@ -4,12 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,22 +33,28 @@ import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.common.BuildConfig;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.fragments.BibleReaderFragment;
-import com.caseybrooks.common.fragments.DashboardFragment;
-import com.caseybrooks.common.fragments.DebugCache;
-import com.caseybrooks.common.fragments.DebugDatabase;
-import com.caseybrooks.common.fragments.DebugPreferences;
-import com.caseybrooks.common.fragments.EditVerseFragment;
-import com.caseybrooks.common.fragments.games.PracticeFragment;
-import com.caseybrooks.common.fragments.HelpFragment;
-import com.caseybrooks.common.fragments.PrayersFragment;
-import com.caseybrooks.common.fragments.SettingsFragment;
-import com.caseybrooks.common.fragments.TopicalBibleFragment;
-import com.caseybrooks.common.fragments.TopicsListFragment;
-import com.caseybrooks.common.fragments.VerseListFragment;
+import com.caseybrooks.common.features.BibleReaderFragment;
+import com.caseybrooks.common.features.dashboard.DashboardFeature;
+import com.caseybrooks.common.features.dashboard.DashboardFragment;
+import com.caseybrooks.common.features.DebugCache;
+import com.caseybrooks.common.features.DebugDatabase;
+import com.caseybrooks.common.features.DebugPreferences;
+import com.caseybrooks.common.features.EditVerseFragment;
+import com.caseybrooks.common.features.FlashcardFragment;
+import com.caseybrooks.common.features.HelpFragment;
+import com.caseybrooks.common.features.SettingsFragment;
+import com.caseybrooks.common.features.TopicalBibleFragment;
+import com.caseybrooks.common.features.TopicsListFragment;
+import com.caseybrooks.common.features.VerseListFragment;
+import com.caseybrooks.common.features.practice.PracticeFragment;
+import com.caseybrooks.common.features.prayers.PrayersFragment;
+import com.caseybrooks.common.util.Util;
 import com.caseybrooks.common.widget.SearchBox;
 
 import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class ActivityBase extends AppCompatActivity implements
         ExpandableNavigationView.OnExpandableNavigationItemSelectedListener,
@@ -52,6 +62,7 @@ public class ActivityBase extends AppCompatActivity implements
     public String TAG = getClass().getSimpleName();
 
     private CoordinatorLayout coordinatorLayout;
+    private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private ProgressBar progressbar;
     private ExpandableNavigationView navView;
@@ -61,6 +72,7 @@ public class ActivityBase extends AppCompatActivity implements
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private NetworkConnectionReceiver connectionReceiver;
+    private FloatingActionButton floatingActionButton;
 
     private boolean wasDisconnected = false;
     private AppFeature selectedFeature;
@@ -75,6 +87,7 @@ public class ActivityBase extends AppCompatActivity implements
         setSupportActionBar(toolbar);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         progressbar = (ProgressBar) findViewById(R.id.progress);
         navView = (ExpandableNavigationView) findViewById(R.id.expandableNavigationView);
         navView.setExpandableNavigationItemSelectedListener(this);
@@ -91,6 +104,14 @@ public class ActivityBase extends AppCompatActivity implements
         );
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFABPressed();
+            }
+        });
 
         ABT.getInstance(this)
                 .getMetadata().putString("ABS_ApiKey", "mDaM8REZFo6itplNpcv1ls8J5PkwEz1wbhJ7p9po");
@@ -153,7 +174,7 @@ public class ActivityBase extends AppCompatActivity implements
     }
 
     private void setupFeatures() {
-        ArrayList<AppFeature> features = getFeatures();
+        ArrayList<AppFeature> features = getAppFeatures();
         if(features != null && features.size() > 0) {
             if(isDebug())
                 features.add(AppFeature.Debug);
@@ -193,15 +214,28 @@ public class ActivityBase extends AppCompatActivity implements
     }
 
     public ArrayList<ExpandableNavigationView.NavChildItem> getChildrenForFeature(AppFeature feature) {
-        if(feature == AppFeature.Debug) {
+        if(feature == AppFeature.Discover) {
             ArrayList<ExpandableNavigationView.NavChildItem> children = new ArrayList<>();
 
-            for(AppFeature debugFeature : new AppFeature[] { AppFeature.DebugDatabase, AppFeature.DebugPreferences, AppFeature.DebugCache }) {
+            for(AppFeature debugFeature : new AppFeature[] { AppFeature.TopicalBible, AppFeature.TopicsList, AppFeature.ImportVerses }) {
                 ExpandableNavigationView.NavChildItem debugItem = new ExpandableNavigationView.NavChildItem();
                 debugItem.appFeature = debugFeature;
                 debugItem.subitemText = debugFeature.getTitle();
                 debugItem.subitemIcon = debugFeature.getIconResId();
-                debugItem.subitemIconColor = Color.RED;
+                debugItem.subitemCount = 0;
+                children.add(debugItem);
+            }
+
+            return children;
+        }
+        if(feature == AppFeature.Debug) {
+            ArrayList<ExpandableNavigationView.NavChildItem> children = new ArrayList<>();
+
+            for(AppFeature debugFeature : new AppFeature[] {AppFeature.DebugDatabase, AppFeature.DebugPreferences, AppFeature.DebugCache}) {
+                ExpandableNavigationView.NavChildItem debugItem = new ExpandableNavigationView.NavChildItem();
+                debugItem.appFeature = debugFeature;
+                debugItem.subitemText = debugFeature.getTitle();
+                debugItem.subitemIcon = debugFeature.getIconResId();
                 debugItem.subitemCount = 0;
                 children.add(debugItem);
             }
@@ -242,15 +276,15 @@ public class ActivityBase extends AppCompatActivity implements
         }
     }
 
-    public void setToolBar(String name, int color) {
-
-    }
-
 //Get important components of the activity's UI
 //--------------------------------------------------------------------------------------------------
 
-    public ArrayList<AppFeature> getFeatures() {
-        return null;
+    public ArrayList<AppFeature> getAppFeatures() {
+        return new ArrayList<>();
+    }
+
+    public ArrayList<DashboardFeature> getDashboardFeatures() {
+        return new ArrayList<>();
     }
 
     public CoordinatorLayout getCoordinatorLayout() {
@@ -259,6 +293,11 @@ public class ActivityBase extends AppCompatActivity implements
 
     public Toolbar getToolbar() {
         return toolbar;
+    }
+
+    public static Realm getRealm(Context context) {
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(context).build();
+        return Realm.getInstance(realmConfig);
     }
 
     public boolean isDebug() {
@@ -276,7 +315,6 @@ public class ActivityBase extends AppCompatActivity implements
     public void onChildSelected(AppFeature feature, int childId) {
         selectAppFeature(feature, childId);
     }
-
 
     public final void selectAppFeature(AppFeature feature, Object args) {
         selectAppFeature(feature, 0, args);
@@ -300,13 +338,13 @@ public class ActivityBase extends AppCompatActivity implements
         case Read:
             fragment = BibleReaderFragment.newInstance();
             break;
-        case Discover:
+        case TopicalBible:
             fragment = TopicalBibleFragment.newInstance();
             break;
-        case Search:
-            fragment = TopicalBibleFragment.newInstance();
+        case TopicsList:
+            fragment = TopicsListFragment.newInstance();
             break;
-        case Topics:
+        case ImportVerses:
             fragment = TopicsListFragment.newInstance();
             break;
         case MemorizationState:
@@ -325,14 +363,20 @@ public class ActivityBase extends AppCompatActivity implements
             fragment = PrayersFragment.newInstance();
             break;
         case Edit:
-            fragment = EditVerseFragment.newInstance(id);
-            break;
+            if(appFeatureArgs != null && appFeatureArgs instanceof AbstractVerse) {
+                fragment = EditVerseFragment.newInstance((AbstractVerse) appFeatureArgs);
+                break;
+            }
+            return;
         case Practice:
             if(appFeatureArgs != null && appFeatureArgs instanceof AbstractVerse) {
                 fragment = PracticeFragment.newInstance((AbstractVerse) appFeatureArgs);
                 break;
             }
             return;
+        case Flashcards:
+            fragment = FlashcardFragment.newInstance();
+            break;
         case DebugDatabase:
             fragment = DebugDatabase.newInstance();
             break;
@@ -373,8 +417,6 @@ public class ActivityBase extends AppCompatActivity implements
                 }
             }
 
-            getSupportActionBar().setTitle(selectedFeature.getTitle());
-            getToolbar().setSubtitle(null);
             navView.setSelectedFeature(selectedFeature, selectedFeatureId);
 
             if(selectedFeature == null || selectedFeature.isTopLevel()) {
@@ -385,10 +427,12 @@ public class ActivityBase extends AppCompatActivity implements
                 drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.START);
                 toggle.setDrawerIndicatorEnabled(false);
             }
-        }
 
-        if(searchbox.isRevealed()) {
-            searchbox.hideInstant(this);
+            if(searchbox.isRevealed()) {
+                searchbox.hideInstant(this);
+            }
+
+            setupDecor();
         }
     }
 
@@ -412,6 +456,48 @@ public class ActivityBase extends AppCompatActivity implements
             drawer.closeDrawer(GravityCompat.START);
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.START);
             toggle.setDrawerIndicatorEnabled(false);
+        }
+    }
+
+    /**
+     * Sets the decor of the app for the current screen. This includes the toolbar title, subtitle,
+     * and color, floating action button visibility, icon, and status bar color.
+     */
+    public void setupDecor() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG);
+        if(fragment instanceof ActivityBaseFragment) {
+            final ActivityBaseFragment baseFragment = (ActivityBaseFragment) fragment;
+            final Pair<AppFeature, Integer> feature = baseFragment.getFeatureForFragment();
+            if(feature != null) {
+                final int color = baseFragment.getDecorColor();
+                //setup statusbar
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setStatusBarColor(Util.lighten(color, 0.7f));
+                }
+
+                //setup toolbar
+                appBarLayout.setBackgroundColor(color);
+                getSupportActionBar().setTitle(selectedFeature.getTitle());
+                getToolbar().setBackgroundColor(color);
+                getToolbar().setSubtitle(null);
+
+                //setup floating action button
+                //Hide it, then if it is supported, show it with new parameters
+                floatingActionButton.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                    @Override
+                    public void onHidden(FloatingActionButton fab) {
+                        super.onHidden(fab);
+
+                        if(feature.first.supportsFAB()) {
+                            floatingActionButton.setImageResource(baseFragment.getFABIcon());
+                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
+                            floatingActionButton.setRippleColor(Util.lighten(color, 1.5f));
+                            floatingActionButton.show();
+                            Log.i(TAG, Util.formatString("selectedFeature title '{0}' supports FAB", selectedFeature.getTitle()));
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -499,6 +585,8 @@ public class ActivityBase extends AppCompatActivity implements
         snackbar.show();
     }
 
+//Handle back button, back arrow or floating action button presses, or delegate to fragments
+//--------------------------------------------------------------------------------------------------
     @Override
     public void onBackPressed() {
         if(searchbox.isRevealed()) {
@@ -532,13 +620,12 @@ public class ActivityBase extends AppCompatActivity implements
         getSupportFragmentManager().popBackStack();
     }
 
-//Logging
-//--------------------------------------------------------------------------------------------------
-    public void LogI(String message, Object... params) {
-        Log.i(TAG, Util.formatString(message, params));
-    }
-
-    public void LogE(String message, Object... params) {
-        Log.e(TAG, Util.formatString(message, params));
+    void onFABPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG);
+        if(fragment instanceof ActivityBaseFragment) {
+            boolean isFinished = ((ActivityBaseFragment) fragment).onFABPressed();
+            if(isFinished)
+                return;
+        }
     }
 }

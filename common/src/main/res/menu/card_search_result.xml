@@ -9,7 +9,7 @@
     <item
         android:id="@+id/add_tag"
         android:title="Add Tag"
-        android:icon="@drawable/ic_label"/>
+        android:icon="@drawable/ic_tag"/>
     <item
         android:id="@+id/save"
         android:title="Save"
@@ -17,5 +17,9 @@
     <item
         android:id="@+id/practice"
         android:title="Practice"
+        android:icon="@drawable/ic_flashcards"/>
+    <item
+        android:id="@+id/flashcards"
+        android:title="Flashcards"
         android:icon="@drawable/ic_flashcards"/>
 </menu>

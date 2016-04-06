@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.caseybrooks.common.features.prayers.PrayerModel"/>
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="24dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Title"
+                    android:inputType="textCapWords"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:addTextChangedListener="@{model.onTitleChanged}"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description"
+                    android:inputType="textCapSentences"
+                    android:addTextChangedListener="@{model.onDescriptionChanged}"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/answered"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answered"
+                android:onCheckedChanged="@{model.checkboxChanged}"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/answerNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Answer Notes"
+                    android:inputType="textCapSentences"
+                    android:addTextChangedListener="@{model.onAnswerNotesChanged}"
+                    android:visibility="@{model.answered ? View.VISIBLE : View.GONE}"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <RadioGroup
+                android:id="@+id/dayOfWeekRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onCheckedChanged="@{model.radioButtonChanged}">
+
+                <RadioButton
+                    android:id="@+id/radio_sunday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sunday"/>
+
+                <RadioButton
+                    android:id="@+id/radio_monday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Monday"/>
+
+                <RadioButton
+                    android:id="@+id/radio_tuesday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tuesday"/>
+
+                <RadioButton
+                    android:id="@+id/radio_wednesday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wednesday"/>
+
+                <RadioButton
+                    android:id="@+id/radio_thursday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thursday"/>
+
+                <RadioButton
+                    android:id="@+id/radio_friday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Friday"/>
+
+                <RadioButton
+                    android:id="@+id/radio_saturday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Saturday"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

@@ -5,7 +5,7 @@
         <import type="android.view.View"/>
         <variable
             name="settingsModel"
-            type="com.caseybrooks.common.fragments.games.PracticeFragmentSettingsModel"/>
+            type="com.caseybrooks.common.features.practice.PracticeFragmentSettingsModel"/>
     </data>
     <ScrollView
         android:layout_width="match_parent"

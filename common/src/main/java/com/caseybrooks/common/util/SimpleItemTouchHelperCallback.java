@@ -5,14 +5,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import com.caseybrooks.common.util.ItemTouchHelperAdapter;
-import com.caseybrooks.common.util.ItemTouchHelperViewHolder;
-
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     public static final float ALPHA_FULL = 1.0f;
 
     private final ItemTouchHelperAdapter mAdapter;
+    private boolean isLongPressDragEnabled;
+    private boolean isItemViewSwipeEnabled;
 
     public SimpleItemTouchHelperCallback(ItemTouchHelperAdapter adapter) {
         mAdapter = adapter;
@@ -20,12 +19,20 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean isLongPressDragEnabled() {
-        return true;
+        return isLongPressDragEnabled;
     }
 
     @Override
     public boolean isItemViewSwipeEnabled() {
-        return true;
+        return isItemViewSwipeEnabled;
+    }
+
+    public void setIsLongPressDragEnabled(boolean isLongPressDragEnabled) {
+        this.isLongPressDragEnabled = isLongPressDragEnabled;
+    }
+
+    public void setIsItemViewSwipeEnabled(boolean isItemViewSwipeEnabled) {
+        this.isItemViewSwipeEnabled = isItemViewSwipeEnabled;
     }
 
     @Override

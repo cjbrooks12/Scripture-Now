@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
-import com.caseybrooks.common.app.Util;
+import com.caseybrooks.common.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;

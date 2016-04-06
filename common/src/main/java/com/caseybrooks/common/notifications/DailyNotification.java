@@ -10,15 +10,19 @@ import android.content.Intent;
 import android.util.Log;
 import android.util.Pair;
 
-import com.caseybrooks.common.app.AppSettings;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.Util;
-import com.caseybrooks.common.prayers.Prayer;
-import com.caseybrooks.common.prayers.PrayerProvider;
+import com.caseybrooks.common.app.AppSettings;
+import com.caseybrooks.common.util.Util;
+import com.caseybrooks.common.features.prayers.RealmPrayer;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Random;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 public class DailyNotification {
 
@@ -61,13 +65,26 @@ public class DailyNotification {
     }
 
     public static Notification getNotification(Context context) {
-        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+        Random random = new Random(Calendar.getInstance().getTimeInMillis());
 
-        Prayer prayer = PrayerProvider.getPrayerForDay(context, day);
-        Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentTitle("Daily Prayer");
-        builder.setContentText(prayer.getTitle() + " - " + prayer.getDescription());
-        builder.setSmallIcon(R.drawable.ic_clock_alert);
-        return builder.build();
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(context).build();
+        Realm realm = Realm.getInstance(realmConfig);
+        RealmResults<RealmPrayer> prayerList = realm.where(RealmPrayer.class).equalTo("dayOfWeek", Calendar.getInstance().get(Calendar.DAY_OF_WEEK)).findAll();
+
+        if(prayerList.size() > 0) {
+            RealmPrayer prayer = prayerList.get(random.nextInt(prayerList.size()));
+            Notification.Builder builder = new Notification.Builder(context);
+            builder.setContentTitle("Random RealmPrayer");
+            builder.setContentText(prayer.getTitle() + " - " + prayer.getDescription());
+            builder.setSmallIcon(R.drawable.ic_clock_alert);
+            return builder.build();
+        }
+        else {
+            Notification.Builder builder = new Notification.Builder(context);
+            builder.setContentTitle("Random RealmPrayer");
+            builder.setContentText("No saved prayers!");
+            builder.setSmallIcon(R.drawable.ic_clock_alert);
+            return builder.build();
+        }
     }
 }

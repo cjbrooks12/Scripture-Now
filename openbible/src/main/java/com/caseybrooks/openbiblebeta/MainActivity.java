@@ -44,10 +44,10 @@ public class MainActivity extends ActivityBase {
     }
 
     @Override
-    public ArrayList<AppFeature> getFeatures() {
+    public ArrayList<AppFeature> getAppFeatures() {
         ArrayList<AppFeature> featuresList = new ArrayList<>();
-        featuresList.add(AppFeature.Search);
-        featuresList.add(AppFeature.Topics);
+        featuresList.add(AppFeature.TopicalBible);
+        featuresList.add(AppFeature.TopicsList);
         featuresList.add(AppFeature.Help);
         featuresList.add(AppFeature.Settings);
 
@@ -62,6 +62,6 @@ public class MainActivity extends ActivityBase {
     @Override
     public void onFirstInstall() {
         super.onFirstInstall();
-        AppSettings.putSelectedFeature(this, AppFeature.Search, 0);
+        AppSettings.putSelectedFeature(this, AppFeature.TopicalBible, 0);
     }
 }

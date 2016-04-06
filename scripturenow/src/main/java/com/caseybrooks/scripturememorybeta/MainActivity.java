@@ -8,6 +8,7 @@ import android.util.Log;
 import com.caseybrooks.common.app.ActivityBase;
 import com.caseybrooks.common.app.AppFeature;
 import com.caseybrooks.common.app.AppSettings;
+import com.caseybrooks.common.features.dashboard.DashboardFeature;
 import com.caseybrooks.common.app.ExpandableNavigationView;
 import com.caseybrooks.scripturememorybeta.gcm.RegistrationIntentService;
 import com.google.android.gms.common.ConnectionResult;
@@ -47,15 +48,27 @@ public class MainActivity extends ActivityBase {
     }
 
     @Override
-    public ArrayList<AppFeature> getFeatures() {
-        ArrayList<AppFeature> featuresList = new ArrayList<>();
+    public ArrayList<AppFeature> getAppFeatures() {
+        ArrayList<AppFeature> featuresList = super.getAppFeatures();
         featuresList.add(AppFeature.Dashboard);
         featuresList.add(AppFeature.Read);
         featuresList.add(AppFeature.Discover);
         featuresList.add(AppFeature.MemorizationState);
         featuresList.add(AppFeature.Tags);
+        featuresList.add(AppFeature.Prayers);
         featuresList.add(AppFeature.Help);
         featuresList.add(AppFeature.Settings);
+
+        return featuresList;
+    }
+
+    @Override
+    public ArrayList<DashboardFeature> getDashboardFeatures() {
+        ArrayList<DashboardFeature> featuresList = super.getDashboardFeatures();
+        featuresList.add(DashboardFeature.NotificationVerse);
+        featuresList.add(DashboardFeature.AddVerse);
+        featuresList.add(DashboardFeature.AddPrayer);
+        featuresList.add(DashboardFeature.Changelog);
 
         return featuresList;
     }

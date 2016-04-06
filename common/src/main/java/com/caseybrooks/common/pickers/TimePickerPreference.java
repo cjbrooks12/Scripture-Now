@@ -11,7 +11,7 @@ import android.widget.TimePicker;
 
 import com.caseybrooks.common.app.AppSettings;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.Util;
+import com.caseybrooks.common.util.Util;
 
 public class TimePickerPreference extends Preference implements
         Preference.OnPreferenceClickListener,

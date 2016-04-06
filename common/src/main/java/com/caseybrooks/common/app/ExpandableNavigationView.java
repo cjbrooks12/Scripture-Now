@@ -21,6 +21,7 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.caseybrooks.common.util.HeaderDecoration;
 import com.caseybrooks.common.R;
+import com.caseybrooks.common.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;

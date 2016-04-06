@@ -1,16 +1,18 @@
 package com.caseybrooks.common.app;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-
 import com.caseybrooks.common.R;
+import com.caseybrooks.common.util.Util;
 import com.caseybrooks.common.widget.SearchBox;
 
 public class FragmentBase extends Fragment implements ActivityBaseFragment, SearchBox.SearchBoxListener {
@@ -33,6 +35,14 @@ public class FragmentBase extends Fragment implements ActivityBaseFragment, Sear
     }
 
     @Override
+    public int getDecorColor() {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = getActivityBase().getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        return typedValue.data;
+    }
+
+    @Override
     public boolean onBackButtonPressed() {
         return false;
     }
@@ -40,6 +50,16 @@ public class FragmentBase extends Fragment implements ActivityBaseFragment, Sear
     @Override
     public boolean onBackArrowPressed() {
         return false;
+    }
+
+    @Override
+    public boolean onFABPressed() {
+        return false;
+    }
+
+    @Override
+    public int getFABIcon() {
+        return 0;
     }
 
     @Override

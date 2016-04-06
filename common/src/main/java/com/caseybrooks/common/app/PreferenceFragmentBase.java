@@ -1,11 +1,14 @@
 package com.caseybrooks.common.app;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
-import android.util.Log;
 import android.util.Pair;
+import android.util.TypedValue;
+
+import com.caseybrooks.common.R;
 
 import java.util.Stack;
 
@@ -69,8 +72,26 @@ public class PreferenceFragmentBase extends PreferenceFragmentCompat implements 
     }
 
     @Override
+    public boolean onFABPressed() {
+        return false;
+    }
+
+    @Override
+    public int getFABIcon() {
+        return 0;
+    }
+
+    @Override
     public Pair<AppFeature, Integer> getFeatureForFragment() {
         return null;
+    }
+
+    @Override
+    public int getDecorColor() {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = getActivityBase().getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        return typedValue.data;
     }
 
     @Override
@@ -90,15 +111,5 @@ public class PreferenceFragmentBase extends PreferenceFragmentCompat implements 
     @Override
     public boolean usesSearchBox() {
         return false;
-    }
-
-//Logging
-//--------------------------------------------------------------------------------------------------
-    public void LogI(String message, Object... params) {
-        Log.i(TAG, Util.formatString(message, params));
-    }
-
-    public void LogE(String message, Object... params) {
-        Log.e(TAG, Util.formatString(message, params));
     }
 }

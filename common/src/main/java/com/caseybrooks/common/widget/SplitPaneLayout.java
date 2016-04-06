@@ -9,16 +9,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.PaintDrawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.Util;
 import com.caseybrooks.common.util.SemiCircleDrawable;
 
 public class SplitPaneLayout extends ViewGroup {
