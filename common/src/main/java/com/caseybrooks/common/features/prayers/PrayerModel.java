@@ -1,13 +1,11 @@
 package com.caseybrooks.common.features.prayers;
 
-import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.CompoundButton;
-import android.widget.RadioGroup;
 
 import com.caseybrooks.common.BR;
 import com.caseybrooks.common.R;
@@ -15,13 +13,16 @@ import com.caseybrooks.common.app.ActivityBase;
 import com.caseybrooks.common.databinding.DialogNewPrayerBinding;
 import com.caseybrooks.common.util.SimpleTextWatcher;
 import com.caseybrooks.common.util.Util;
+import com.touchboarder.weekdaysbuttons.WeekdaysDataItem;
+import com.touchboarder.weekdaysbuttons.WeekdaysDataSource;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import io.realm.Realm;
 
-public class PrayerModel extends BaseObservable {
-    Context context;
+public class PrayerModel extends BaseObservable implements WeekdaysDataSource.Callback {
+    ActivityBase context;
     DialogNewPrayerBinding binding;
 
     String title;
@@ -29,10 +30,11 @@ public class PrayerModel extends BaseObservable {
     int dayOfWeek;
     boolean answered;
     String answerNotes;
+    WeekdaysDataSource weekdays;
 
     RealmPrayer prayer;
 
-    public PrayerModel(@NonNull Context context) {
+    public PrayerModel(@NonNull ActivityBase context) {
         this.context = context;
         prayer = new RealmPrayer();
     }
@@ -42,27 +44,10 @@ public class PrayerModel extends BaseObservable {
         this.binding.title.setText(getTitle());
         this.binding.description.setText(getDescription());
 
-        if(getDayOfWeek() == Calendar.SUNDAY) {
-            this.binding.dayOfWeekRadioGroup.check(R.id.radio_sunday);
-        }
-        else if(getDayOfWeek() == Calendar.MONDAY) {
-            this.binding.dayOfWeekRadioGroup.check(R.id.radio_monday);
-        }
-        else if(getDayOfWeek() == Calendar.TUESDAY) {
-            this.binding.dayOfWeekRadioGroup.check(R.id.radio_tuesday);
-        }
-        else if(getDayOfWeek() == Calendar.WEDNESDAY) {
-            this.binding.dayOfWeekRadioGroup.check(R.id.radio_wednesday);
-        }
-        else if(getDayOfWeek() == Calendar.THURSDAY) {
-            this.binding.dayOfWeekRadioGroup.check(R.id.radio_thursday);
-        }
-        else if(getDayOfWeek() == Calendar.FRIDAY) {
-            this.binding.dayOfWeekRadioGroup.check(R.id.radio_friday);
-        }
-        else if(getDayOfWeek() == Calendar.SATURDAY) {
-            this.binding.dayOfWeekRadioGroup.check(R.id.radio_saturday);
-        }
+        weekdays = new WeekdaysDataSource(context, R.id.weekdays_recycler_view, binding.getRoot());
+        weekdays.setNumberOfLetters(2);
+        weekdays.setFontBaseSize(16);
+        weekdays.start(this);
     }
 
     public void modifyPrayer(RealmPrayer prayer) {
@@ -143,33 +128,19 @@ public class PrayerModel extends BaseObservable {
         }
     };
 
-    public void radioButtonChanged(RadioGroup group, int checkedId) {
-        if(checkedId == R.id.radio_sunday) {
-            setDayOfWeek(Calendar.SUNDAY);
-        }
-        else if(checkedId == R.id.radio_monday) {
-            setDayOfWeek(Calendar.MONDAY);
-        }
-        else if(checkedId == R.id.radio_tuesday) {
-            setDayOfWeek(Calendar.TUESDAY);
-        }
-        else if(checkedId == R.id.radio_wednesday) {
-            setDayOfWeek(Calendar.WEDNESDAY);
-        }
-        else if(checkedId == R.id.radio_thursday) {
-            setDayOfWeek(Calendar.THURSDAY);
-        }
-        else if(checkedId == R.id.radio_friday) {
-            setDayOfWeek(Calendar.FRIDAY);
-        }
-        else if(checkedId == R.id.radio_saturday) {
-            setDayOfWeek(Calendar.SATURDAY);
-        }
-    }
-
     public void checkboxChanged(CompoundButton buttonView, boolean isChecked) {
         setAnswered(isChecked);
         notifyPropertyChanged(BR.answered);
+    }
+
+    @Override
+    public void onWeekdaysItemClicked(int attachId, WeekdaysDataItem item) {
+
+    }
+
+    @Override
+    public void onWeekdaysSelected(int attachId, ArrayList<WeekdaysDataItem> items) {
+
     }
 
     public void clear() {

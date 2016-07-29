@@ -35,6 +35,7 @@ import com.caseybrooks.common.R;
  * which screen to show by default when first opening the app. Since a valid id opens that screen,
  * an id of 0 will tell the app to open the last top-level screen that was viewed.
  */
+// TODO: make this only define features with their fragments and their IDs
 public enum AppFeature {
     //Enum              Name                    Icon                            Has Children    Supports FAB    id
 

@@ -15,6 +15,14 @@
             <option value="$PROJECT_DIR$/scripturenow" />
           </set>
         </option>
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/openbible" />
+            <option value="$PROJECT_DIR$/scripturenow" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>

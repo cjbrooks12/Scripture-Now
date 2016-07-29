@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.caseybrooks.common.features.prayers.PrayerSchedulerModel"/>
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="24dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notification Time Range"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="?attr/colorAccent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <com.caseybrooks.common.widget.TimePicker
+                    android:id="@+id/startTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    app:trackColor="?attr/colorPrimary"
+                    app:textColor="?android:attr/textColorPrimary"
+                    app:thumbColor="?attr/colorAccent"
+                    app:title="Start"
+                    app:initHour="8"
+                    app:initMin="0"
+                    app:onTimeChanged="@{model.onStartTimeChanged}"
+                    app:quantize="30"/>
+                <com.caseybrooks.common.widget.TimePicker
+                    android:id="@+id/endTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    app:trackColor="?attr/colorPrimary"
+                    app:textColor="?android:attr/textColorPrimary"
+                    app:thumbColor="?attr/colorAccent"
+                    app:title="End"
+                    app:initHour="18"
+                    app:initMin="0"
+                    app:onTimeChanged="@{model.onEndTimeChanged}"
+                    app:quantize="30"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notifications Per Day"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="?attr/colorAccent"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+                <SeekBar
+                    android:id="@+id/notificationsPerDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/wordCountText"
+                    android:onProgressChanged="@{model.notificationsPerDayChanged}"/>
+
+                <TextView
+                    android:id="@+id/wordCountText"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_horizontal|right"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text='@{"(" + Integer.toString(model.notificationCount) + ")"}'/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

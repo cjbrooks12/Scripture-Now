@@ -19,10 +19,11 @@
         android:theme="@style/ThemeBase.Light">
 
         <receiver android:name="com.caseybrooks.common.notifications.ScheduledNotification$ScheduledNotificationReceiver" />
-        <receiver android:name="com.caseybrooks.common.notifications.DailyNotification$DailyNotificationReceiver" />
+        <receiver android:name="com.caseybrooks.common.features.votd.VerseOfTheDayNotification$VerseOfTheDayNotificationReceiver" />
+        <receiver android:name="com.caseybrooks.common.features.joshuaproject.JoshuaProjectNotification$JoshuaProjectNotificationReceiver"/>
 
         <receiver
-            android:name="com.caseybrooks.common.notifications.OnBootReceiver"
+            android:name="com.caseybrooks.common.util.OnBootReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

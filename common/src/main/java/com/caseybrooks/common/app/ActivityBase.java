@@ -33,19 +33,17 @@ import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import com.caseybrooks.androidbibletools.providers.abs.ABSBible;
 import com.caseybrooks.common.BuildConfig;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.features.BibleReaderFragment;
-import com.caseybrooks.common.features.dashboard.DashboardFeature;
-import com.caseybrooks.common.features.dashboard.DashboardFragment;
-import com.caseybrooks.common.features.DebugCache;
-import com.caseybrooks.common.features.DebugDatabase;
-import com.caseybrooks.common.features.DebugPreferences;
-import com.caseybrooks.common.features.EditVerseFragment;
-import com.caseybrooks.common.features.FlashcardFragment;
-import com.caseybrooks.common.features.HelpFragment;
-import com.caseybrooks.common.features.SettingsFragment;
-import com.caseybrooks.common.features.TopicalBibleFragment;
-import com.caseybrooks.common.features.TopicsListFragment;
-import com.caseybrooks.common.features.VerseListFragment;
+import com.caseybrooks.common.features.biblereader.BibleReaderFragment;
+import com.caseybrooks.common.features.debug.DebugCache;
+import com.caseybrooks.common.features.debug.DebugDatabase;
+import com.caseybrooks.common.features.debug.DebugPreferences;
+import com.caseybrooks.common.features.verses.EditVerseFragment;
+import com.caseybrooks.common.features.flashcards.FlashcardFragment;
+import com.caseybrooks.common.features.help.HelpFragment;
+import com.caseybrooks.common.features.settings.SettingsFragment;
+import com.caseybrooks.common.features.topicalbible.TopicalBibleFragment;
+import com.caseybrooks.common.features.topicalbible.TopicsListFragment;
+import com.caseybrooks.common.features.verses.VerseListFragment;
 import com.caseybrooks.common.features.practice.PracticeFragment;
 import com.caseybrooks.common.features.prayers.PrayersFragment;
 import com.caseybrooks.common.util.Util;
@@ -114,7 +112,9 @@ public class ActivityBase extends AppCompatActivity implements
         });
 
         ABT.getInstance(this)
-                .getMetadata().putString("ABS_ApiKey", "mDaM8REZFo6itplNpcv1ls8J5PkwEz1wbhJ7p9po");
+                .getMetadata().putString("ABS_ApiKey", getResources().getString(R.string.bibles_org_key));
+        ABT.getInstance(this)
+                .getMetadata().putString("JoshuaProject_ApiKey", getResources().getString(R.string.joshua_project_key));
 
         if(AppSettings.isFirstInstall(this)) {
             AppSettings.putFirstInstall(this, false);

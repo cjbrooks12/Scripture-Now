@@ -45,6 +45,12 @@
                     android:addTextChangedListener="@{model.onDescriptionChanged}"/>
             </android.support.design.widget.TextInputLayout>
 
+            <include
+                layout="@layout/weekdays_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                />
+
             <CheckBox
                 android:id="@+id/answered"
                 android:layout_width="match_parent"
@@ -65,56 +71,6 @@
                     android:addTextChangedListener="@{model.onAnswerNotesChanged}"
                     android:visibility="@{model.answered ? View.VISIBLE : View.GONE}"/>
             </android.support.design.widget.TextInputLayout>
-
-            <RadioGroup
-                android:id="@+id/dayOfWeekRadioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onCheckedChanged="@{model.radioButtonChanged}">
-
-                <RadioButton
-                    android:id="@+id/radio_sunday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Sunday"/>
-
-                <RadioButton
-                    android:id="@+id/radio_monday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Monday"/>
-
-                <RadioButton
-                    android:id="@+id/radio_tuesday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tuesday"/>
-
-                <RadioButton
-                    android:id="@+id/radio_wednesday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Wednesday"/>
-
-                <RadioButton
-                    android:id="@+id/radio_thursday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Thursday"/>
-
-                <RadioButton
-                    android:id="@+id/radio_friday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Friday"/>
-
-                <RadioButton
-                    android:id="@+id/radio_saturday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Saturday"/>
-
-            </RadioGroup>
 
         </LinearLayout>
     </ScrollView>

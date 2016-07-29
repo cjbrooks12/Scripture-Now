@@ -22,6 +22,7 @@
         <item name="icon_color">@color/text_color_secondary_dark</item>
 
         <item name="preferenceTheme">@style/ThemeBase.Dark.PreferenceThemeOverlay</item>
+
     </style>
 
     <style name="ThemeBase.Dark.NoActionBar">
@@ -36,4 +37,5 @@
     <style name="ThemeBase.Dark.PopupMenuOverlay" parent="Widget.AppCompat.PopupMenu.Overflow"></style>
 
     <style name="ThemeBase.Dark.PreferenceThemeOverlay" parent="PreferenceThemeOverlay.v14.Material"></style>
+
 </resources>

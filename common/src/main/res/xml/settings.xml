@@ -16,30 +16,31 @@
                 android:title="Set Time"
                 android:summary="Show VOTD at {0}:{1}{2} every day"
                 android:dependency="votd_enabled"/>
+            <com.caseybrooks.common.pickers.RingtonePreference
+            android:key="votd_sound"
+                android:dependency="votd_enabled"
+                android:title="Notification Sound"
+                android:ringtoneType="notification"
+                android:defaultValue="content://settings/system/notification_sound"/>
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:title="Scheduled Notifications">
+            android:title="Joshua Project">
             <CheckBoxPreference
-                android:key="schedule_enabled"
-                android:title="Start Time"
-                android:summary="Enable scheduled notifications"/>
+                android:key="jp_enabled"
+                android:title="Show Notifications"
+                android:summary="Show a daily notification to pray for the Unreached People Group of the Day"/>
             <com.caseybrooks.common.pickers.TimePickerPreference
-                android:key="schedule_start"
-                android:title="Start Time"
-                android:summary="Start sending notifications after {0}:{1}{2}"
-                android:dependency="schedule_enabled"/>
-            <com.caseybrooks.common.pickers.TimePickerPreference
-                android:key="schedule_end"
-                android:title="End Time"
-                android:summary="Stop sending notifications by {0}:{1}{2}"
-                android:dependency="schedule_enabled"/>
-            <com.caseybrooks.common.pickers.TimePickerPreference
-                android:key="schedule_interval"
-                android:title="Interval"
-                android:summary="Show a notification every {0} hours and {1} minutes"
-                android:dependency="schedule_enabled"
-                app:is24hour="1"/>
+                android:key="jp_time"
+                android:title="Set Time"
+                android:summary="Show Joshua Project at {0}:{1}{2} every day"
+                android:dependency="jp_enabled"/>
+            <com.caseybrooks.common.pickers.RingtonePreference
+                android:key="jp_sound"
+                android:dependency="jp_enabled"
+                android:title="Notification Sound"
+                android:ringtoneType="notification"
+                android:defaultValue="content://settings/system/notification_sound"/>
         </PreferenceScreen>
     </PreferenceCategory>
 
@@ -57,7 +58,7 @@
             android:title="Default Screen"/>
         <ListPreference
             android:key="DEFAULT_FEATURE_ID"
-            android:title="Screen Item"
+            android:title="Default Screen Item"
             android:enabled="false"/>
 
     </PreferenceCategory>

@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/newPrayer"
-        android:title="New Prayer"
-        app:showAsAction="never"/>
+        android:id="@+id/setupSchedule"
+        android:title="Setup Schedule"
+        android:icon="@drawable/ic_schedule"
+        app:showAsAction="ifRoom"/>
 
 </menu>

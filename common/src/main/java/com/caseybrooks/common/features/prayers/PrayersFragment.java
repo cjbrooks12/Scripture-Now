@@ -21,6 +21,7 @@ import com.caseybrooks.common.app.ActivityBase;
 import com.caseybrooks.common.app.AppFeature;
 import com.caseybrooks.common.app.FragmentBase;
 import com.caseybrooks.common.databinding.DialogNewPrayerBinding;
+import com.caseybrooks.common.databinding.DialogPrayerScheduleBinding;
 import com.caseybrooks.common.util.CancelDialogAction;
 import com.caseybrooks.common.util.Util;
 import com.caseybrooks.common.widget.CardView;
@@ -40,7 +41,9 @@ public class PrayersFragment extends FragmentBase {
     RecyclerView realmRecyclerView;
     PrayerAdapter adapter;
     RealmResults<RealmPrayer> prayerList;
+
     PrayerModel prayerModel;
+    PrayerSchedulerModel prayerSchedulerModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class PrayersFragment extends FragmentBase {
         adapter = new PrayerAdapter();
         realmRecyclerView.setAdapter(adapter);
 
-        prayerModel = new PrayerModel(getContext());
+        prayerModel = new PrayerModel(getActivityBase());
 
         return view;
     }
@@ -80,9 +83,9 @@ public class PrayersFragment extends FragmentBase {
 
     public void newPrayer() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivityBase());
-        builder.setTitle("Add RealmPrayer Request");
+        builder.setTitle("Add Prayer Request");
 
-        prayerModel = new PrayerModel(getContext());
+        prayerModel = new PrayerModel(getActivityBase());
 
         DialogNewPrayerBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(getActivityBase()),
@@ -123,7 +126,7 @@ public class PrayersFragment extends FragmentBase {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivityBase());
         builder.setTitle("Edit Prayer Request");
 
-        prayerModel = new PrayerModel(getContext());
+        prayerModel = new PrayerModel(getActivityBase());
 
         DialogNewPrayerBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(getActivityBase()),
@@ -165,6 +168,28 @@ public class PrayersFragment extends FragmentBase {
         builder.create().show();
     }
 
+    public void setupSchedule() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivityBase());
+        builder.setTitle("Prayer Schedule");
+
+        prayerSchedulerModel = new PrayerSchedulerModel(getContext());
+
+        DialogPrayerScheduleBinding binding = DataBindingUtil.inflate(
+                LayoutInflater.from(getActivityBase()),
+                R.layout.dialog_prayer_schedule,
+                null, false);
+        binding.setModel(prayerSchedulerModel);
+
+        View view = binding.getRoot();
+
+        prayerSchedulerModel.initializeBinding(binding);
+
+        builder.setView(view);
+        builder.setNegativeButton("Close", new CancelDialogAction());
+
+        builder.create().show();
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_prayers_fragment, menu);
@@ -174,8 +199,8 @@ public class PrayersFragment extends FragmentBase {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.newPrayer) {
-            newPrayer();
+        if(item.getItemId() == R.id.setupSchedule) {
+            setupSchedule();
             return true;
         }
         else {
@@ -260,7 +285,9 @@ public class PrayersFragment extends FragmentBase {
 
     @Override
     public boolean onFABPressed() {
-        return super.onFABPressed();
+        newPrayer();
+
+        return true;
     }
 
     @Override

@@ -71,12 +71,24 @@ public class AppSettings {
         return new Pair<>(feature, id);
     }
 
-    public static boolean isDailyNotificationEnabled(Context context) {
-        return context.getSharedPreferences(SettingsFile, 0).getBoolean("votd_enabled", false);
+    public static boolean isVerseOfTheDayNotificationEnabled(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("votd_enabled", false);
+    }
+
+    public static String getVOTDSound(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString("votd_sound", "DEFAULT_SOUND");
+    }
+
+    public static boolean isJoshuaProjectNotificationEnabled(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("jp_enabled", false);
+    }
+
+    public static String getJPSound(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString("jp_sound", "DEFAULT_SOUND");
     }
 
     public static boolean isScheduledNotificationEnabled(Context context) {
-        return context.getSharedPreferences(SettingsFile, 0).getBoolean("schedule_enabled", false);
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("schedule_enabled", false);
     }
 
     public static void putTime(Context context, String key, int hour, int minute) {

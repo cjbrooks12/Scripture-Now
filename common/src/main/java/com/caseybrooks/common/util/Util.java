@@ -102,7 +102,7 @@ public class Util {
         futureTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
         futureTime.set(Calendar.MINUTE, minute);
 
-        if(futureTime.getTimeInMillis() < now.getTimeInMillis())
+        if((futureTime.getTimeInMillis() <= now.getTimeInMillis()) || (now.get(Calendar.HOUR_OF_DAY) == hourOfDay && now.get(Calendar.MINUTE) == minute))
             futureTime.add(Calendar.DATE, 1);
 
         return futureTime.getTimeInMillis();
