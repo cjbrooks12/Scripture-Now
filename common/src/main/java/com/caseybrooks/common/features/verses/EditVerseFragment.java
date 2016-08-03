@@ -14,8 +14,8 @@ import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.basic.Tag;
 import com.caseybrooks.androidbibletools.providers.simple.SimplePassage;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.AppFeature;
-import com.caseybrooks.common.app.FragmentBase;
+import com.caseybrooks.common.app.fragment.AppFeature;
+import com.caseybrooks.common.app.fragment.FragmentBase;
 import com.caseybrooks.common.widget.FlowLayoutManager;
 
 public class EditVerseFragment extends FragmentBase {

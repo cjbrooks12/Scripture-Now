@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.caseybrooks.common.app.AppFeature;
-import com.caseybrooks.common.app.FragmentBase;
+import com.caseybrooks.common.app.fragment.AppFeature;
+import com.caseybrooks.common.app.fragment.FragmentBase;
 import com.caseybrooks.common.R;
 
 public class TopicsListFragment extends FragmentBase {

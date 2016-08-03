@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.ActivityBase;
+import com.caseybrooks.common.app.activity.ActivityBase;
 import com.google.android.gms.gcm.GcmListenerService;
 
 public class MyGcmListenerService extends GcmListenerService {

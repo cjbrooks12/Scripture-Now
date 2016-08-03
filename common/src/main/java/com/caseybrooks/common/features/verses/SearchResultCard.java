@@ -15,10 +15,10 @@ import com.caseybrooks.androidbibletools.data.OnResponseListener;
 import com.caseybrooks.androidbibletools.providers.abs.ABSPassage;
 import com.caseybrooks.androidbibletools.widget.VerseView;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.ActivityBase;
-import com.caseybrooks.common.app.AppFeature;
-import com.caseybrooks.common.app.DashboardFeature;
-import com.caseybrooks.common.app.DashboardCardBase;
+import com.caseybrooks.common.app.activity.ActivityBase;
+import com.caseybrooks.common.app.fragment.AppFeature;
+import com.caseybrooks.common.app.dashboard.DashboardFeature;
+import com.caseybrooks.common.app.dashboard.DashboardCardBase;
 import com.caseybrooks.common.util.Util;
 
 public class SearchResultCard extends DashboardCardBase {

@@ -17,9 +17,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.ActivityBase;
-import com.caseybrooks.common.app.AppFeature;
-import com.caseybrooks.common.app.FragmentBase;
+import com.caseybrooks.common.app.activity.ActivityBase;
+import com.caseybrooks.common.app.fragment.AppFeature;
+import com.caseybrooks.common.app.fragment.FragmentBase;
 import com.caseybrooks.common.databinding.DialogNewPrayerBinding;
 import com.caseybrooks.common.databinding.DialogPrayerScheduleBinding;
 import com.caseybrooks.common.util.CancelDialogAction;

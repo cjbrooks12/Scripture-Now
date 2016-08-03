@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.caseybrooks.common.R;
+import com.caseybrooks.common.app.fragment.ActivityBaseFragment;
 import com.caseybrooks.common.util.ReverseInterpolator;
 
 import io.codetail.animation.SupportAnimator;
@@ -31,18 +32,12 @@ import io.codetail.animation.ViewAnimationUtils;
 //TODO: add button to complete search manually
 //TODO: add button to clear query
 public class SearchBox extends RelativeLayout {
-    public interface SearchBoxListener {
-        boolean onSearch(String query);
-        void onQueryChanged(String query);
-        boolean onSearchMenuItemSelected(MenuItem selectedItem);
-    }
-
     MenuWidget menuWidget;
     ArrowDrawableToggle arrow;
     View searchRoot;
     EditText editText;
 
-    SearchBoxListener listener;
+    ActivityBaseFragment listener;
 
     String hint;
     boolean isOpen, isRevealed;
@@ -125,7 +120,7 @@ public class SearchBox extends RelativeLayout {
                     setIsOpen(false);
 
                     if(listener != null) {
-                        return listener.onSearch(query);
+                        return listener.onSearchSubmitted(query);
                     }
                 }
                 return false;
@@ -152,6 +147,10 @@ public class SearchBox extends RelativeLayout {
                 return false;
             }
         });
+
+        if(context instanceof ActivityBaseFragment) {
+            this.listener = (ActivityBaseFragment) context;
+        }
 
         setIsOpen(false);
     }
@@ -305,9 +304,5 @@ public class SearchBox extends RelativeLayout {
 
     public void setMenuResource(int menuResourceId) {
         menuWidget.setMenuResource(menuResourceId);
-    }
-
-    public void setSearchBoxListener(SearchBoxListener listener) {
-        this.listener = listener;
     }
 }

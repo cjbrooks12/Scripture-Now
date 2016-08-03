@@ -6,10 +6,10 @@ import android.support.v7.preference.Preference;
 import android.util.Pair;
 
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.AppFeature;
+import com.caseybrooks.common.app.fragment.AppFeature;
 import com.caseybrooks.common.app.AppSettings;
 import com.caseybrooks.common.app.ExpandableNavigationView;
-import com.caseybrooks.common.app.PreferenceFragmentBase;
+import com.caseybrooks.common.app.fragment.PreferenceFragmentBase;
 import com.caseybrooks.common.features.joshuaproject.JoshuaProjectNotification;
 import com.caseybrooks.common.features.votd.VerseOfTheDayNotification;
 import com.caseybrooks.common.pickers.RingtonePreference;

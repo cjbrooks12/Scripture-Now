@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.caseybrooks.common.app.ActivityBase;
-import com.caseybrooks.common.app.AppFeature;
+import com.caseybrooks.common.app.activity.ActivityBase;
+import com.caseybrooks.common.app.fragment.AppFeature;
 import com.caseybrooks.common.app.AppSettings;
 import com.caseybrooks.openbiblebeta.gcm.RegistrationIntentService;
 import com.google.android.gms.common.ConnectionResult;

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Pair;
 
+import com.caseybrooks.common.app.fragment.AppFeature;
+
 public class AppSettings {
     public static final String SettingsFile = "my_settings";
 

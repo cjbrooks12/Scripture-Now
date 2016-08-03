@@ -9,7 +9,7 @@ import android.widget.CompoundButton;
 
 import com.caseybrooks.common.BR;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.ActivityBase;
+import com.caseybrooks.common.app.activity.ActivityBase;
 import com.caseybrooks.common.databinding.DialogNewPrayerBinding;
 import com.caseybrooks.common.util.SimpleTextWatcher;
 import com.caseybrooks.common.util.Util;

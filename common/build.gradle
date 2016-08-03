@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 23
@@ -37,7 +36,7 @@ dependencies {
     compile 'com.android.support:preference-v14:23.1.1'
     compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
     compile 'com.github.wenchaojiang:AndroidSwipeableCardStack:34d9a57183'
-    compile 'com.github.TouchBoarder:weekdays-buttons-bar:v0.2-alpha'
+    compile 'com.github.TouchBoarder:weekdays-buttons-bar:v1.0.2'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
 }
 

@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +22,10 @@ import com.caseybrooks.androidbibletools.widget.VersePicker;
 import com.caseybrooks.androidbibletools.widget.VersePickerDialog;
 import com.caseybrooks.androidbibletools.widget.VerseView;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.AppFeature;
-import com.caseybrooks.common.app.FragmentBase;
+import com.caseybrooks.common.app.fragment.ActivityBaseFragment;
+import com.caseybrooks.common.app.fragment.AppFeature;
+import com.caseybrooks.common.app.fragment.FragmentBase;
+import com.caseybrooks.common.app.FeatureConfiguration;
 
 //TODO: (ABT) Restyle selectionMode button
 //TODO: (ABT) use flags for defaults within Builder to know how to display a Reference with .toString()
@@ -37,6 +37,47 @@ public class BibleReaderFragment extends FragmentBase {
         fragment.setArguments(data);
         return fragment;
     }
+
+    public static FeatureConfiguration getConfiguration() {
+        return new FeatureConfiguration() {
+            @Override
+            public Pair<AppFeature, Integer> getFragmentFeature() {
+                return new Pair<>(AppFeature.Read, 0);
+            }
+
+            @Override
+            public Class<? extends ActivityBaseFragment> getFragmentClass() {
+                return BibleReaderFragment.class;
+            }
+
+            @Override
+            public String getNavigationTitle() {
+                return "Read";
+            }
+
+            @Override
+            public int getNavigationIcon() {
+                return R.drawable.ic_home;
+            }
+
+            @Override
+            public String getTitle() {
+                return "Bible";
+            }
+
+            @Override
+            public int getMenuResource() {
+                return R.menu.search_lookup_verse;
+            }
+        };
+    }
+
+    public FeatureConfiguration getInstanceConfiguration() {
+        return getConfiguration();
+    }
+
+// Data Members
+//--------------------------------------------------------------------------------------------------
 
     BiblePickerDialog biblePicker;
     VersePickerDialog versePicker;
@@ -155,18 +196,6 @@ public class BibleReaderFragment extends FragmentBase {
                 }
             });
         }
-    }
-
-    @Override
-    public Pair<AppFeature, Integer> getFeatureForFragment() {
-        return new Pair<>(AppFeature.Read, 0);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_lookup_verse, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

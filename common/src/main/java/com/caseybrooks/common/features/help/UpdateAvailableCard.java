@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.DashboardFeature;
-import com.caseybrooks.common.app.DashboardCardBase;
+import com.caseybrooks.common.app.dashboard.DashboardFeature;
+import com.caseybrooks.common.app.dashboard.DashboardCardBase;
 
 public class UpdateAvailableCard extends DashboardCardBase {
 

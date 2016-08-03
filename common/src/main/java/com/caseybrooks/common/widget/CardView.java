@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.ActivityBase;
+import com.caseybrooks.common.app.activity.ActivityBase;
 
 public class CardView extends FrameLayout {
     FrameLayout viewLayout;

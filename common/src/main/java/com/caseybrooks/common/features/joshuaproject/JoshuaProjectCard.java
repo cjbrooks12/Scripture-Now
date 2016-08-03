@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.caseybrooks.androidbibletools.data.OnResponseListener;
 import com.caseybrooks.androidbibletools.providers.joshuaproject.JoshuaProject;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.DashboardCardBase;
-import com.caseybrooks.common.app.DashboardFeature;
+import com.caseybrooks.common.app.dashboard.DashboardCardBase;
+import com.caseybrooks.common.app.dashboard.DashboardFeature;
 import com.caseybrooks.common.util.Util;
 
 public class JoshuaProjectCard extends DashboardCardBase {

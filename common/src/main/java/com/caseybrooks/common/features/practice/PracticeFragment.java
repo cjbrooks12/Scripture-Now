@@ -27,9 +27,11 @@ import com.caseybrooks.androidbibletools.basic.AbstractVerse;
 import com.caseybrooks.androidbibletools.basic.Reference;
 import com.caseybrooks.androidbibletools.providers.simple.SimplePassage;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.AppFeature;
-import com.caseybrooks.common.app.FragmentBase;
 import com.caseybrooks.common.app.WordStyle;
+import com.caseybrooks.common.app.fragment.ActivityBaseFragment;
+import com.caseybrooks.common.app.fragment.AppFeature;
+import com.caseybrooks.common.app.fragment.FragmentBase;
+import com.caseybrooks.common.app.FeatureConfiguration;
 import com.caseybrooks.common.databinding.DialogPracticefragmentSettingsBinding;
 import com.caseybrooks.common.util.CancelDialogAction;
 import com.caseybrooks.common.util.GridSpacingItemDecoration;
@@ -53,12 +55,35 @@ public class PracticeFragment extends FragmentBase implements PracticeFragmentSe
         return fragment;
     }
 
-    @Override
-    public Pair<AppFeature, Integer> getFeatureForFragment() {
-        return new Pair<>(AppFeature.Practice, 0);
+    public static FeatureConfiguration getConfiguration() {
+        return new FeatureConfiguration() {
+            @Override
+            public Pair<AppFeature, Integer> getFragmentFeature() {
+                return new Pair<>(AppFeature.Practice, 0);
+            }
+
+            @Override
+            public Class<? extends ActivityBaseFragment> getFragmentClass() {
+                return PracticeFragment.class;
+            }
+
+            @Override
+            public String getTitle() {
+                return "Scripture Writer";
+            }
+
+        };
     }
 
-//Data Members
+    public FeatureConfiguration getInstanceConfiguration() {
+        return getConfiguration();
+    }
+
+// Data Members
+//--------------------------------------------------------------------------------------------------
+
+
+    //Data Members
 //--------------------------------------------------------------------------------------------------
     private static class WordStatus {
         public String word;

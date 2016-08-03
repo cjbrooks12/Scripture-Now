@@ -8,7 +8,6 @@ import com.caseybrooks.common.app.AppSettings;
 import com.caseybrooks.common.features.joshuaproject.JoshuaProjectNotification;
 import com.caseybrooks.common.features.votd.VerseOfTheDayNotification;
 
-// TODO: Register all notification in app config
 public class OnBootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -5,10 +5,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.caseybrooks.common.app.ActivityBase;
-import com.caseybrooks.common.app.AppFeature;
+import com.caseybrooks.common.app.activity.ActivityBase;
+import com.caseybrooks.common.app.fragment.AppFeature;
 import com.caseybrooks.common.app.AppSettings;
-import com.caseybrooks.common.app.DashboardFeature;
+import com.caseybrooks.common.app.dashboard.DashboardFeature;
 import com.caseybrooks.common.app.ExpandableNavigationView;
 import com.caseybrooks.scripturememorybeta.gcm.RegistrationIntentService;
 import com.google.android.gms.common.ConnectionResult;
@@ -65,7 +65,7 @@ public class MainActivity extends ActivityBase {
     @Override
     public ArrayList<DashboardFeature> getDashboardFeatures() {
         ArrayList<DashboardFeature> featuresList = super.getDashboardFeatures();
-        featuresList.add(DashboardFeature.NotificationVerse);
+        featuresList.add(DashboardFeature.MemoryVerse);
         featuresList.add(DashboardFeature.VerseOfTheDay);
         featuresList.add(DashboardFeature.JoshuaProjectPrayer);
 //        featuresList.add(DashboardFeature.AddVerse);

@@ -1,22 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="dummy_prayer_titles">
-        <item>My Church</item>
-        <item>Family</item>
-        <item>Lauren and PACN</item>
-        <item>Josh and the World Race</item>
-        <item>The Nations</item>
-        <item>My Struggles</item>
-        <item>My Life with Lauren</item>
-    </string-array>
 
-    <string-array name="dummy_prayer_descriptions">
-        <item>Pray for my church</item>
-        <item>Pray for my family</item>
-        <item>Pray for Lauren and PACN</item>
-        <item>Pray for Josh and the World Race</item>
-        <item>Pray for my the nations to know Jesus</item>
-        <item>Pray for help with my struggles</item>
-        <item>Pray for my future spent with Lauren as my wife</item>
-    </string-array>
 </resources>

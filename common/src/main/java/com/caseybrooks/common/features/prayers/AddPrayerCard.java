@@ -9,8 +9,8 @@ import android.view.View;
 
 import com.caseybrooks.common.R;
 import com.caseybrooks.common.databinding.DialogNewPrayerBinding;
-import com.caseybrooks.common.app.DashboardCardBase;
-import com.caseybrooks.common.app.DashboardFeature;
+import com.caseybrooks.common.app.dashboard.DashboardCardBase;
+import com.caseybrooks.common.app.dashboard.DashboardFeature;
 
 public class AddPrayerCard extends DashboardCardBase {
     PrayerModel prayerModel;

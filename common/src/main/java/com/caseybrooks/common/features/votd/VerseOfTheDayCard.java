@@ -6,17 +6,17 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.caseybrooks.androidbibletools.data.OnResponseListener;
-import com.caseybrooks.androidbibletools.providers.votd.VerseOfTheDay;
+import com.caseybrooks.androidbibletools.widget.VerseView;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.DashboardFeature;
-import com.caseybrooks.common.app.DashboardCardBase;
+import com.caseybrooks.common.app.dashboard.DashboardCardBase;
+import com.caseybrooks.common.app.dashboard.DashboardFeature;
 
 public class VerseOfTheDayCard extends DashboardCardBase {
 
-    VerseOfTheDay verseOfTheDay;
+    VerseOfTheDayService service;
 
     TextView reference;
-    TextView text;
+    VerseView text;
 
     public VerseOfTheDayCard(Context context) {
         super(context);
@@ -25,21 +25,21 @@ public class VerseOfTheDayCard extends DashboardCardBase {
     }
 
     private void initialize() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.card_verse_of_the_day, null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.votd_dashcard, null);
         addView(view);
 
         setTitle(getFeatureForView().getTitle());
 
         reference = (TextView) view.findViewById(R.id.reference);
-        text = (TextView) view.findViewById(R.id.text);
+        text = (VerseView) view.findViewById(R.id.verse);
 
-        verseOfTheDay = new VerseOfTheDay();
-        verseOfTheDay.download(new OnResponseListener() {
+        service = new VerseOfTheDayService();
+        service.run(new OnResponseListener() {
             @Override
             public void responseFinished(boolean b) {
                 if(b) {
-                    reference.setText(verseOfTheDay.getPassage().getReference().toString());
-                    text.setText(verseOfTheDay.getPassage().getText());
+                    reference.setText(service.getVerseOfTheDay().getPassage().getReference().toString());
+                    text.setText(service.getVerseOfTheDay().getPassage().getText());
                 }
                 else {
                     reference.setText("Cannot load verse");

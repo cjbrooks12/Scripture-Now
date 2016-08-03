@@ -12,8 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.AppFeature;
-import com.caseybrooks.common.app.FragmentBase;
+import com.caseybrooks.common.app.fragment.ActivityBaseFragment;
+import com.caseybrooks.common.app.fragment.AppFeature;
+import com.caseybrooks.common.app.fragment.FragmentBase;
+import com.caseybrooks.common.app.FeatureConfiguration;
 import com.wenchao.cardstack.CardStack;
 
 public class FlashcardFragment extends FragmentBase implements CardStack.CardEventListener {
@@ -24,11 +26,30 @@ public class FlashcardFragment extends FragmentBase implements CardStack.CardEve
         return fragment;
     }
 
-    @Override
-    public Pair<AppFeature, Integer> getFeatureForFragment() {
-        return new Pair<>(AppFeature.Practice, 0);
+    public static FeatureConfiguration getConfiguration() {
+        return new FeatureConfiguration() {
+            @Override
+            public Pair<AppFeature, Integer> getFragmentFeature() {
+                return new Pair<>(AppFeature.Flashcards, 0);
+            }
+
+            @Override
+            public Class<? extends ActivityBaseFragment> getFragmentClass() {
+                return FlashcardFragment.class;
+            }
+
+            @Override
+            public String getTitle() {
+                return "Flashcards";
+            }
+        };
     }
 
+    public FeatureConfiguration getInstanceConfiguration() {
+        return getConfiguration();
+    }
+
+// Data Members
 //--------------------------------------------------------------------------------------------------
 
     private static class Flashcard {
