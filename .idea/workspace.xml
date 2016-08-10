@@ -18,106 +18,102 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="882ceb1e-74d4-44a2-a58a-6f779e58625b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/FeatureConfiguration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardBaseView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/clog.g4" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/src/main/res/layout/votd_widget.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/DashboardBaseView.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogDateTime.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable-hdpi-v11/ic_joshua_project.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable-mdpi-v11/ic_joshua_project.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable-mdpi/ic_joshua_project.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable-xhdpi-v11/ic_joshua_project.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable-xxhdpi-v11/ic_joshua_project.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable-xxhdpi/ic_joshua_project.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable-xxxhdpi-v11/ic_joshua_project.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable-xxxhdpi/ic_joshua_project.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/bg_circle_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_bookmark.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_bug_report.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_database.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_file.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_find_in_page.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_group_work.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_help.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_import.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_key.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_list.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_local_library.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/drawable/ic_plus.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/debug_cache_list_item.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/debug_shared_preferences_list_item.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_debugpreferences.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/menu/activity_main_drawer.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/menu/menu_dashboard.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/menu/menu_debug.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/ActivityBase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/ActivityBase.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/ActivityBaseFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/ActivityBaseFragment.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/AppFeature.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/AppFeature.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/DashboardCardBase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardCardBase.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/DashboardFeature.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFeature.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/DashboardFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFragment.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/FragmentBase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentBase.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/PreferenceFragmentBase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/PreferenceFragmentBase.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugCache.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugCacheFragment.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugDatabase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugDatabaseFragment.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugPreferences.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugPreferencesFragment.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogTime.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogTimestamp.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/card_verse_of_the_day.xml" afterPath="$PROJECT_DIR$/common/src/main/res/layout/votd_dashcard.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/dashboard/DashboardCardConfiguration.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/dashboard/DashboardFeatureConfiguration.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardBaseView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardConfiguration.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFeature.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/ActivityBaseFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/AppFeature.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/PreferenceFragmentBase.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/widgets/WidgetReceiver.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/biblereader/BibleReaderFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugCacheFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugDatabaseFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugPreferencesFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/flashcards/FlashcardFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/ChangelogCard.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/HelpFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/UpdateAvailableCard.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/joshuaproject/JoshuaProjectCard.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/joshuaproject/JoshuaProjectNotification.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/memoryverse/MemoryVerseCard.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/practice/PracticeFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/practice/PracticeFragmentSettingsModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/AddPrayerCard.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayerModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayerNotification.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayerOfTheDayCard.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayerSchedulerModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayersFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/RealmPrayer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/settings/SettingsFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/topicalbible/TopicalBibleFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/topicalbible/TopicsListFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/AddVerseCard.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/EditVerseFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/ImportVersesFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/SearchResultCard.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/VerseListFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogDate.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogTimestamp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/card_joshua_project.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/card_search_result.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/dialog_new_prayer.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/dialog_practicefragment_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/dialog_prayer_schedule.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_biblereader.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_debugcache.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_debugdatabase.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_editverse.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_flashcards.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_help.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_importverses.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_practice.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_prayers.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_topicalbible.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_topicslist.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/fragment_verselist.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/itemview_debugpreferences.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/itemview_prayer.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/itemview_topicalbible.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/res/layout/memory_verse_card.xml" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardCardBase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/dashboard/DashboardCardBase.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/dashboard/DashboardFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Scripture-Now.iml" afterPath="$PROJECT_DIR$/Scripture-Now.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/build.gradle" afterPath="$PROJECT_DIR$/common/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/common.iml" afterPath="$PROJECT_DIR$/common/common.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/AppSettings.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/AppSettings.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/ExpandableNavigationView.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/ExpandableNavigationView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/biblereader/BibleReaderFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/biblereader/BibleReaderFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/flashcards/FlashcardFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/flashcards/FlashcardFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/ChangelogCard.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/ChangelogCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/HelpFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/HelpFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/UpdateAvailableCard.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/UpdateAvailableCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/joshuaproject/JoshuaProjectCard.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/joshuaproject/JoshuaProjectCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/memoryverse/MemoryVerseCard.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/memoryverse/MemoryVerseCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/practice/PracticeFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/practice/PracticeFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/AddPrayerCard.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/AddPrayerCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayerModel.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayerModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayerOfTheDayCard.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayerOfTheDayCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayersFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/prayers/PrayersFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/settings/SettingsFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/settings/SettingsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/topicalbible/TopicalBibleFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/topicalbible/TopicalBibleFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/topicalbible/TopicsListFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/topicalbible/TopicsListFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/AddVerseCard.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/AddVerseCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/EditVerseFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/EditVerseFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/ImportVersesFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/ImportVersesFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/SearchResultCard.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/SearchResultCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/VerseListFragment.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/verses/VerseListFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/FeatureConfiguration.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/FeatureConfiguration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/ActivityBase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/ActivityBase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/DrawerFeature.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/DrawerFeature.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/application/ApplicationBase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/application/ApplicationBase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentBase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentBase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentConfiguration.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentConfiguration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/notifications/NotificationBase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/notifications/NotificationBase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/widgets/WidgetBase.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/widgets/WidgetBase.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayCard.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayCard.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayNotification.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayNotification.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/OnBootReceiver.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/OnBootReceiver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/Util.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/Util.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/Clog.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/Clog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/ClogFormatter.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/ClogFormatter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/ClogLogger.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/ClogLogger.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogClass.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogClass.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogDate.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogDate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/CardView.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/CardView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogD.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogD.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogE.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogE.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogI.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogV.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogV.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogW.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogW.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogWTF.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogWTF.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/SearchBox.java" afterPath="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/SearchBox.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/common/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/common/src/main/res/values/dimens.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/res/values/dummy.xml" afterPath="$PROJECT_DIR$/common/src/main/res/values/dummy.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/common/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openbible/build.gradle" afterPath="$PROJECT_DIR$/openbible/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/src/main/res/layout/drawer_header_view.xml" afterPath="$PROJECT_DIR$/common/src/main/res/layout/drawer_header_view.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openbible/openbible.iml" afterPath="$PROJECT_DIR$/openbible/openbible.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openbible/src/main/java/com/caseybrooks/openbiblebeta/MainActivity.java" afterPath="$PROJECT_DIR$/openbible/src/main/java/com/caseybrooks/openbiblebeta/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openbible/src/main/java/com/caseybrooks/openbiblebeta/gcm/MyGcmListenerService.java" afterPath="$PROJECT_DIR$/openbible/src/main/java/com/caseybrooks/openbiblebeta/gcm/MyGcmListenerService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripturenow/build.gradle" afterPath="$PROJECT_DIR$/scripturenow/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripturenow/scripturenow.iml" afterPath="$PROJECT_DIR$/scripturenow/scripturenow.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripturenow/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/scripturenow/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripturenow/src/main/java/com/caseybrooks/scripturememorybeta/MainActivity.java" afterPath="$PROJECT_DIR$/scripturenow/src/main/java/com/caseybrooks/scripturememorybeta/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripturenow/src/main/java/com/caseybrooks/scripturememorybeta/gcm/MyGcmListenerService.java" afterPath="$PROJECT_DIR$/scripturenow/src/main/java/com/caseybrooks/scripturememorybeta/gcm/MyGcmListenerService.java" />
     </list>
     <ignored path="Scripture-Now.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -152,43 +148,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="FeatureConfiguration.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/FeatureConfiguration.java">
+      <file leaf-file-name="ExpandableNavigationView.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/ExpandableNavigationView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
+            <state relative-caret-position="298">
+              <caret line="68" column="30" selection-start-line="68" selection-start-column="30" selection-end-line="68" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DrawerFeature.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/DrawerFeature.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-              <folding>
-                <element signature="e#273#274#0" expanded="true" />
-                <element signature="e#301#302#0" expanded="true" />
-                <element signature="e#329#330#0" expanded="true" />
-                <element signature="e#356#357#0" expanded="true" />
-                <element signature="e#385#386#0" expanded="true" />
-                <element signature="e#413#414#0" expanded="true" />
-                <element signature="e#466#467#0" expanded="true" />
-                <element signature="e#497#498#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FragmentConfiguration.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentConfiguration.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -797,6 +764,11 @@
                 <option name="name" value="testReleaseUnitTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare com.bignerdranch.android:expandablerecyclerview:2.1.1" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareComBignerdranchAndroidExpandablerecyclerview211Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="mergeDebugShaders" />
               </ExternalTaskPojo>
@@ -842,11 +814,6 @@
                 <option name="description" value="Prepare com.android.support:preference-v7:23.1.1" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="prepareComAndroidSupportPreferenceV72311Library" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare com.bignerdranch.android:expandablerecyclerview:1.0.3" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareComBignerdranchAndroidExpandablerecyclerview103Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -1262,6 +1229,11 @@
                 <option name="name" value="prepareComAndroidDatabindingAdapters12Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare com.bignerdranch.android:expandablerecyclerview:2.1.1" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
+                <option name="name" value="prepareComBignerdranchAndroidExpandablerecyclerview211Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
                 <option name="name" value="mergeDebugShaders" />
               </ExternalTaskPojo>
@@ -1377,11 +1349,6 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
                 <option name="name" value="mergeReleaseJniLibFolders" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare com.bignerdranch.android:expandablerecyclerview:1.0.3" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="prepareComBignerdranchAndroidExpandablerecyclerview103Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
@@ -1999,6 +1966,11 @@
                 <option name="name" value="prepareComAndroidDatabindingAdapters12Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare com.bignerdranch.android:expandablerecyclerview:2.1.1" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/openbible" />
+                <option name="name" value="prepareComBignerdranchAndroidExpandablerecyclerview211Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/openbible" />
                 <option name="name" value="mergeDebugShaders" />
               </ExternalTaskPojo>
@@ -2102,11 +2074,6 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/openbible" />
                 <option name="name" value="mergeReleaseJniLibFolders" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare com.bignerdranch.android:expandablerecyclerview:1.0.3" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/openbible" />
-                <option name="name" value="prepareComBignerdranchAndroidExpandablerecyclerview103Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/openbible" />
@@ -2751,6 +2718,11 @@
                 <option name="name" value="prepareComAndroidDatabindingAdapters12Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare com.bignerdranch.android:expandablerecyclerview:2.1.1" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/scripturenow" />
+                <option name="name" value="prepareComBignerdranchAndroidExpandablerecyclerview211Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/scripturenow" />
                 <option name="name" value="mergeDebugShaders" />
               </ExternalTaskPojo>
@@ -2854,11 +2826,6 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/scripturenow" />
                 <option name="name" value="mergeReleaseJniLibFolders" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare com.bignerdranch.android:expandablerecyclerview:1.0.3" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/scripturenow" />
-                <option name="name" value="prepareComBignerdranchAndroidExpandablerecyclerview103Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/scripturenow" />
@@ -3352,7 +3319,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="7350417174000" />
+        <entry key="$PROJECT_DIR$" value="7351109910000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -4115,57 +4082,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogDate.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogClass.java" />
-        <option value="$PROJECT_DIR$/common/src/main/res/layout/widget_votd.xml" />
-        <option value="$PROJECT_DIR$/scripturenow/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/common/src/main/res/layout/votd_widget.xml" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/AppWidgetBase.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayService.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayWidget.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/Clog.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayNotification.java" />
-        <option value="$PROJECT_DIR$/openbible/build/intermediates/data-binding-layout-out/debug/layout/preference_list_fragment.xml" />
-        <option value="$PROJECT_DIR$/common/src/main/res/layout/memory_verse_card.xml" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayCard.java" />
-        <option value="$PROJECT_DIR$/common/src/main/res/layout/votd_dashcard.xml" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/memoryverse/MemoryVerseCard.java" />
-        <option value="$PROJECT_DIR$/common/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.3.9/jars/classes.jar!/com/caseybrooks/androidbibletools/widget/VerseView.class" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/DashboardFeature.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardBaseView.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardCardBase.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFeature.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/application/ApplicationBase.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardConfiguration.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/PermissionManager.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/SearchBox.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/AppFeature.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/ActivityBaseFragment.java" />
-        <option value="$PROJECT_DIR$/scripturenow/build.gradle" />
-        <option value="$PROJECT_DIR$/openbible/build.gradle" />
-        <option value="$PROJECT_DIR$/common/build.gradle" />
-        <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/ActivityBase.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentBase.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFragment.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/PreferenceFragmentBase.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/biblereader/BibleReaderFragment.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugCacheFragment.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugPreferencesFragment.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugDatabaseFragment.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/flashcards/FlashcardFragment.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/ChangelogCard.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/HelpFragment.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/practice/PracticeFragment.java" />
         <option value="$PROJECT_DIR$/common/src/main/res/xml/votd_widget_info.xml" />
         <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/widgets/WidgetReceiver.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/OnBootReceiver.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/notifications/NotificationBase.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/widgets/WidgetBase.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FeatureConfiguration.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardBaseView.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDaySettings.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/application/ApplicationBase.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/notifications/NotificationDispatcher.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/notifications/NotificationConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/ActivityBaseFragment.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFragmentConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/notifications/NotificationBase.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/widgets/WidgetConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/widgets/WidgetBase.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardCardBase.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardCardConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayCard.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/AppFeature.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayNotification.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/PreferenceFragmentBase.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/gcm/MyGcmListenerService.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/gcm/RegistrationIntentService.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/ClogLogger.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogD.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogE.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogI.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogV.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogW.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogWTF.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogClass.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogDate.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/Clog.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/SearchBox.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/OnBootReceiver.java" />
+        <option value="$PROJECT_DIR$/common/src/main/res/layout/drawer_header_view.xml" />
+        <option value="$PROJECT_DIR$/openbible/src/main/java/com/caseybrooks/openbiblebeta/MainActivity.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentBase.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayFeatureConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFragment.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFeatureConfiguration.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/FeatureConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/DefaultFeatureConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/Util.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/LastVisitedFeatureConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/ActivityBase.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/AppSettings.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/dashboard/DashboardFeatureConfiguration.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/dashboard/DashboardFragment.java" />
+        <option value="$PROJECT_DIR$/common/build.gradle" />
         <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/DrawerFeature.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/ExpandableNavigationView.java" />
       </list>
     </option>
   </component>
@@ -4245,6 +4212,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
@@ -4300,91 +4269,15 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="votd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Scripture-Now" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Scripture-Now" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Scripture-Now" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="activity" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane">
         <subPane />
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -4393,7 +4286,7 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23_x86" />
     <property name="android.project.structure.last.selected" value="clog" />
     <property name="android.project.structure.proportion" value="0.15" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="device.picker.selection" value="VS9854G5e5c2cb3" />
     <property name="ToolWindowAndroid Monitor.ShowToolbar" value="false" />
@@ -4401,8 +4294,12 @@
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/gcm" />
+      <recent name="$PROJECT_DIR$/common/src/main/res/drawable" />
+      <recent name="$PROJECT_DIR$/common/src/main/res/layout" />
+      <recent name="$PROJECT_DIR$/common/src/main/res/menu" />
+      <recent name="$PROJECT_DIR$/common/src/main/res/color" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.caseyjbrooks.searchbox" />
@@ -4413,21 +4310,17 @@
       <recent name="com.caseybrooks.common.fragments" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.caseybrooks.common.app.features" />
       <recent name="com.caseybrooks.common.util.clog.loggers" />
       <recent name="com.caseybrooks.common.pickers" />
       <recent name="com.caseybrooks.common.notifications" />
       <recent name="com.caseybrooks.common.features.dashboard" />
-      <recent name="com.caseybrooks.common.dashboard" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/common/src/main/res/drawable" />
-      <recent name="$PROJECT_DIR$/common/src/main/res/layout" />
-      <recent name="$PROJECT_DIR$/common/src/main/res/menu" />
-      <recent name="$PROJECT_DIR$/common/src/main/res/color" />
-      <recent name="$PROJECT_DIR$/common/src/main/res" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog" />
     </key>
   </component>
-  <component name="RunManager" selected="Android App.scripturenow">
+  <component name="RunManager" selected="Android App.openbible">
     <configuration default="false" name="Clog" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -4713,7 +4606,7 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="false" name="openbible" type="AndroidRunConfigurationType" factoryName="Android App">
+    <configuration default="false" name="openbible" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="openbible" />
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
@@ -4727,7 +4620,7 @@
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
       <option name="DEBUGGER_TYPE" value="Auto" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="true" />
       <option name="PREFERRED_AVD" value="" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
@@ -5010,10 +4903,9 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904148" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32754344" sideWeight="0.4978701" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27543426" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27543426" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27825466" sideWeight="0.4939577" order="0" side_tool="false" content_ui="combo" />
@@ -5028,6 +4920,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904148" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32754344" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -5049,427 +4942,382 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayService.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogV.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state relative-caret-position="210">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayWidget.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogW.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="38" column="26" selection-start-line="38" selection-start-column="26" selection-end-line="38" selection-end-column="26" />
+        <state relative-caret-position="240">
+          <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayNotification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripturenow/build/intermediates/data-binding-layout-out/debug/layout/preference_list_fragment.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/openbible/build/intermediates/data-binding-layout-out/debug/layout/preference_list_fragment.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/Clog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="38" column="17" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/res/layout/votd_dashcard.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayCard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/common/build/intermediates/exploded-aar/com.github.cjbrooks12/AndroidBibleTools/v0.3.9/jars/classes.jar!/com/caseybrooks/androidbibletools/widget/VerseView.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-915">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/res/layout/memory_verse_card.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/res/layout/card_search_result.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/loggers/ClogWTF.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
-          <caret line="18" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="28" selection-end-column="15" />
+          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/memoryverse/MemoryVerseCard.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="44" column="38" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
+        <state relative-caret-position="105">
+          <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardCardBase.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogDate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="150">
+          <caret line="14" column="41" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/AppSettings.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/formatters/ClogTimestamp.java" />
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/clog/Clog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/ArrowDrawableToggle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardBaseView.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/CardView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/FABMenuWIdget.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/FlowLayoutManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/SearchBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="153" column="0" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/MenuWidget.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-720">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/SplitPaneLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1110">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/TimePicker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/TintableImageView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/CancelDialogAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/GridSpacingItemDecoration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/SimpleTextWatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/SimpleItemTouchHelperCallback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/SemiCircleDrawable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/ScrollAwareFABBehavior.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/ReverseInterpolator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/OnBootReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/ItemTouchHelperViewHolder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripturenow/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/ItemTouchHelperAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/res/layout/dialog_new_prayer.xml" />
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/HeaderDecoration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="37" column="28" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.4.0/support-v4-23.4.0-sources.jar!/android/support/v4/app/FragmentManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="127" column="21" selection-start-line="127" selection-start-column="21" selection-end-line="127" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/res/layout/drawer_header_view.xml">
+      <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1155">
-          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+        <state relative-caret-position="75">
+          <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/openbible/src/main/java/com/caseybrooks/openbiblebeta/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="48" column="49" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="49" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/PermissionManager.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/AppFeature.java" />
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentBase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+        <state relative-caret-position="171">
+          <caret line="62" column="55" selection-start-line="62" selection-start-column="55" selection-end-line="62" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/votd/VerseOfTheDayFeatureConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/application/ApplicationBase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/res/drawable/ic_group_work.xml" />
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/widget/SearchBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="628">
-          <caret line="152" column="9" selection-start-line="152" selection-start-column="9" selection-end-line="152" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFeature.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-          <folding>
-            <element signature="e#557#575#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripturenow/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/openbible/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="60">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/ActivityBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2115">
-          <caret line="193" column="9" selection-start-line="193" selection-start-column="9" selection-end-line="193" selection-end-column="9" />
-          <folding>
-            <element signature="e#10743#10744#0" expanded="true" />
-            <element signature="e#10773#10774#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/AppFeature.java">
+    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/java/lang/reflect/Method.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
-          <caret line="41" column="13" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="13" />
+          <caret line="367" column="67" selection-start-line="367" selection-start-column="19" selection-end-line="367" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/PreferenceFragmentBase.java">
+    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/java/lang/Class.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1230">
-          <caret line="96" column="5" selection-start-line="96" selection-start-column="5" selection-end-line="96" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="100" column="5" selection-start-line="100" selection-start-column="5" selection-end-line="100" selection-end-column="5" />
-          <folding>
-            <element signature="e#2552#2553#0" expanded="true" />
-            <element signature="e#2580#2581#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/ActivityBaseFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/biblereader/BibleReaderFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="76" column="5" selection-start-line="40" selection-start-column="4" selection-end-line="76" selection-end-column="5" />
+        <state relative-caret-position="-14520">
+          <caret line="583" column="18" selection-start-line="583" selection-start-column="18" selection-end-line="583" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/dashboard/DashboardFragment.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/LastVisitedFeatureConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="84" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugCacheFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugDatabaseFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/flashcards/FlashcardFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/ChangelogCard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="36" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/help/HelpFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="36" column="28" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/debug/DebugPreferencesFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="63" column="0" selection-start-line="27" selection-start-column="4" selection-end-line="63" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1810#1811#0" expanded="false" />
-            <element signature="e#1851#1852#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/res/xml/settings.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/features/practice/PracticeFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="45" column="68" selection-start-line="45" selection-start-column="61" selection-end-line="45" selection-end-column="68" />
+        <state relative-caret-position="180">
+          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/res/xml/votd_widget_info.xml">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/AppSettings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/OnBootReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/widgets/WidgetReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/widgets/WidgetBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/notifications/NotificationBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="394">
+          <caret line="60" column="98" selection-start-line="60" selection-start-column="98" selection-end-line="60" selection-end-column="98" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/fragment/FragmentConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="90">
+          <caret line="7" column="77" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="77" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#357#358#0" expanded="true" />
+            <element signature="e#384#385#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/FeatureConfiguration.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/util/Util.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
+        <state relative-caret-position="283">
+          <caret line="166" column="0" selection-start-line="166" selection-start-column="0" selection-end-line="166" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/DefaultFeatureConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="41" selection-start-line="2" selection-start-column="41" selection-end-line="2" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/dashboard/DashboardFeatureConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="11" column="75" selection-start-line="11" selection-start-column="75" selection-end-line="11" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/dashboard/DashboardCardConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/FeatureConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="33" column="38" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/dashboard/DashboardFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="162" column="5" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/features/dashboard/DashboardCardBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" column="66" selection-start-line="36" selection-start-column="66" selection-end-line="36" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/DrawerFeature.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        <state relative-caret-position="585">
+          <caret line="55" column="5" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
           <folding>
-            <element signature="e#273#274#0" expanded="true" />
-            <element signature="e#301#302#0" expanded="true" />
-            <element signature="e#329#330#0" expanded="true" />
-            <element signature="e#356#357#0" expanded="true" />
-            <element signature="e#385#386#0" expanded="true" />
-            <element signature="e#413#414#0" expanded="true" />
-            <element signature="e#466#467#0" expanded="true" />
-            <element signature="e#497#498#0" expanded="true" />
+            <element signature="e#2159#2160#0" expanded="true" />
+            <element signature="e#2190#2191#0" expanded="true" />
+            <element signature="e#2248#2249#0" expanded="true" />
+            <element signature="e#2276#2277#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/activity/ActivityBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="919">
+          <caret line="225" column="0" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/caseybrooks/common/app/ExpandableNavigationView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="68" column="30" selection-start-line="68" selection-start-column="30" selection-end-line="68" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

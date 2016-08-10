@@ -8,8 +8,8 @@ import android.widget.TextView;
 import com.caseybrooks.androidbibletools.data.OnResponseListener;
 import com.caseybrooks.androidbibletools.widget.VerseView;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.dashboard.DashboardCardBase;
-import com.caseybrooks.common.app.dashboard.DashboardFeature;
+import com.caseybrooks.common.app.features.dashboard.DashboardCardBase;
+import com.caseybrooks.common.app.features.dashboard.DashboardCardConfiguration;
 
 public class VerseOfTheDayCard extends DashboardCardBase {
 
@@ -28,7 +28,7 @@ public class VerseOfTheDayCard extends DashboardCardBase {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.votd_dashcard, null);
         addView(view);
 
-        setTitle(getFeatureForView().getTitle());
+        setTitle(getConfiguration().getTitle());
 
         reference = (TextView) view.findViewById(R.id.reference);
         text = (VerseView) view.findViewById(R.id.verse);
@@ -52,7 +52,21 @@ public class VerseOfTheDayCard extends DashboardCardBase {
     }
 
     @Override
-    public DashboardFeature getFeatureForView() {
-        return DashboardFeature.VerseOfTheDay;
+    public DashboardCardConfiguration getConfiguration() {
+        return configuration;
     }
+
+    public static DashboardCardConfiguration configuration = new DashboardCardConfiguration() {
+        public String getTitle() {
+            return "Verse of the Day";
+        }
+
+        public Class<? extends DashboardCardBase> getCardClass() {
+            return VerseOfTheDayCard.class;
+        }
+
+        public int getRelativePosition() {
+            return 100;
+        }
+    };
 }

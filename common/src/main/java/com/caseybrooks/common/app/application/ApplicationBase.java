@@ -1,4 +1,14 @@
 package com.caseybrooks.common.app.application;
 
-public class ApplicationBase {
+import android.app.Application;
+
+import com.caseybrooks.common.app.activity.ActivityBase;
+
+public class ApplicationBase extends Application {
+
+    public Class<? extends ActivityBase> getActivityClass() {
+        return ActivityBase.class;
+    }
+
+
 }

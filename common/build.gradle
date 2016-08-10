@@ -34,7 +34,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:preference-v7:23.1.1'
     compile 'com.android.support:preference-v14:23.1.1'
-    compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
+    compile 'com.bignerdranch.android:expandablerecyclerview:2.1.1'
     compile 'com.github.wenchaojiang:AndroidSwipeableCardStack:34d9a57183'
     compile 'com.github.TouchBoarder:weekdays-buttons-bar:v1.0.2'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'

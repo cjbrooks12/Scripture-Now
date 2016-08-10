@@ -1,4 +1,6 @@
 package com.caseybrooks.common.app.notifications;
 
-public class NotificationBase {
+public abstract class NotificationBase {
+    public abstract AppFeature getAppFeature();
+    public abstract NotificationConfiguration getConfiguration();
 }

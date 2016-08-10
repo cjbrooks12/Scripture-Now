@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.caseybrooks.common.app.activity.ActivityBase;
-import com.caseybrooks.common.app.fragment.AppFeature;
-import com.caseybrooks.common.app.AppSettings;
 import com.caseybrooks.openbiblebeta.gcm.RegistrationIntentService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -46,10 +44,8 @@ public class MainActivity extends ActivityBase {
     @Override
     public ArrayList<AppFeature> getAppFeatures() {
         ArrayList<AppFeature> featuresList = new ArrayList<>();
-        featuresList.add(AppFeature.TopicalBible);
-        featuresList.add(AppFeature.TopicsList);
-        featuresList.add(AppFeature.Help);
-        featuresList.add(AppFeature.Settings);
+        featuresList.add(AppFeature.Dashboard);
+        featuresList.add(AppFeature.VerseOfTheDay);
 
         return featuresList;
     }
@@ -57,11 +53,5 @@ public class MainActivity extends ActivityBase {
     @Override
     public boolean isDebug() {
         return BuildConfig.DEBUG;
-    }
-
-    @Override
-    public void onFirstInstall() {
-        super.onFirstInstall();
-        AppSettings.putSelectedFeature(this, AppFeature.TopicalBible, 0);
     }
 }

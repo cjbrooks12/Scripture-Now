@@ -1,5 +1,6 @@
 package com.caseybrooks.common.util.clog;
 
 public interface ClogLogger {
-    void log(String tag, String message);
+    int log(String tag, String message);
+    int log(String tag, String message, Throwable throwable);
 }

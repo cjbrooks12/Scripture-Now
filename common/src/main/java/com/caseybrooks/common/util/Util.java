@@ -11,9 +11,15 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.FloatRange;
+import android.support.annotation.NonNull;
 import android.view.Display;
 import android.view.animation.DecelerateInterpolator;
 
+import com.caseybrooks.common.app.FeatureConfiguration;
+import com.caseybrooks.common.util.clog.Clog;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -149,5 +155,44 @@ public class Util {
 
     public static float dp(Context context, int dp) {
         return context.getResources().getDisplayMetrics().density * dp;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    public static FeatureConfiguration findFeatureConfiguration(@NonNull Context context, @NonNull Class<? extends FeatureConfiguration> c) {
+        try {
+            Method getInstanceMethod = c.getDeclaredMethod("getInstance", Context.class);
+
+            if(getInstanceMethod.getReturnType().equals(FeatureConfiguration.class)) {
+                return (FeatureConfiguration) getInstanceMethod.invoke(null, context);
+            }
+            else {
+                return null;
+            }
+        }
+        catch(NoSuchMethodException e) {
+            Clog.e("find feature", "feature does not contain a static method called 'getInstance(Context context)'");
+            e.printStackTrace();
+            return null;
+        }
+        catch(InvocationTargetException e) {
+            Clog.e("find feature", "An exception was thrown while calling this class's static 'getInstance(Context context)' method");
+            e.printStackTrace();
+            return null;
+        }
+        catch(IllegalAccessException e) {
+            Clog.e("find feature", "A static method called 'getInstance(Context context)' is not accessible");
+            e.printStackTrace();
+            return null;
+        }
     }
 }

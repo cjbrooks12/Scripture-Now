@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -33,17 +35,14 @@ import com.caseybrooks.common.BuildConfig;
 import com.caseybrooks.common.R;
 import com.caseybrooks.common.app.AppSettings;
 import com.caseybrooks.common.app.ExpandableNavigationView;
-import com.caseybrooks.common.app.dashboard.DashboardFeature;
-import com.caseybrooks.common.app.fragment.ActivityBaseFragment;
-import com.caseybrooks.common.app.fragment.AppFeature;
+import com.caseybrooks.common.app.FeatureConfiguration;
 import com.caseybrooks.common.app.fragment.FragmentBase;
+import com.caseybrooks.common.app.fragment.FragmentConfiguration;
 import com.caseybrooks.common.util.Util;
 import com.caseybrooks.common.widget.SearchBox;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-
-import static android.R.attr.id;
 
 public class ActivityBase extends AppCompatActivity implements
         ExpandableNavigationView.OnExpandableNavigationItemSelectedListener,
@@ -64,8 +63,7 @@ public class ActivityBase extends AppCompatActivity implements
     private FloatingActionButton floatingActionButton;
 
     private boolean wasDisconnected = false;
-    private AppFeature selectedFeature;
-    private int selectedFeatureId;
+    private DrawerFeature selectedFeature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +117,7 @@ public class ActivityBase extends AppCompatActivity implements
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
         setupFeatures();
-        selectDefaultFeature();
+//        selectDefaultFeature();
     }
 
     //Method stub that will get called the first time an app is installed
@@ -164,78 +162,38 @@ public class ActivityBase extends AppCompatActivity implements
     }
 
     private void setupFeatures() {
-        ArrayList<AppFeature> features = getAppFeatures();
-        if(features != null && features.size() > 0) {
-            if(isDebug())
-                features.add(AppFeature.Debug);
-
-            setDrawerEnabled(true);
-
-            ArrayList<ExpandableNavigationView.NavParentItem> parents = new ArrayList<>();
-            for(AppFeature feature : features) {
-                ExpandableNavigationView.NavParentItem parent = new ExpandableNavigationView.NavParentItem();
-                parent.itemText = feature.getConfiguration().getNavigationTitle();
-                parent.itemIconResId = feature.getConfiguration().getNavigationIcon();
-                parent.appFeature = feature;
-
-                if(feature.getConfiguration().hasNavigationChildren()) {
-                    ArrayList<ExpandableNavigationView.NavChildItem> featureChildren = getChildrenForFeature(feature);
-                    parent.setNavChildItemList(featureChildren);
-                }
-                else {
-                    parent.setNavChildItemList(new ArrayList<ExpandableNavigationView.NavChildItem>());
-                }
-                parents.add(parent);
-            }
-            navView.setContent(parents);
-        }
-        else {
+        ArrayList<Pair<Class<? extends FeatureConfiguration>, Boolean>> features = getAppFeatures();
+        if(features == null || features.size() == 0) {
             setDrawerEnabled(false);
+            return;
         }
-    }
 
-    private void selectDefaultFeature() {
-        Pair<AppFeature, Integer> feature = AppSettings.getDefaultFeature(this);
-
-        if(feature.first == AppFeature.LastVisited)
-            feature = AppSettings.getSelectedFeature(this);
-
-        selectAppFeature(feature.first, feature.second);
-    }
-
-    public ArrayList<ExpandableNavigationView.NavChildItem> getChildrenForFeature(AppFeature feature) {
-        if(feature == AppFeature.Discover) {
-            ArrayList<ExpandableNavigationView.NavChildItem> children = new ArrayList<>();
-
-            for(AppFeature debugFeature : new AppFeature[] { AppFeature.TopicalBible, AppFeature.TopicsList, AppFeature.ImportVerses }) {
-                ExpandableNavigationView.NavChildItem debugItem = new ExpandableNavigationView.NavChildItem();
-                debugItem.appFeature = debugFeature;
-                debugItem.subitemText = debugFeature.getConfiguration().getTitle();
-                debugItem.subitemIcon = debugFeature.getConfiguration().getNavigationIcon();
-                debugItem.subitemCount = 0;
-                children.add(debugItem);
+        ArrayList<DrawerFeature> parents = new ArrayList<>();
+        for(Pair<Class<? extends FeatureConfiguration>, Boolean> feature : features) {
+            // The listed feature claims to have a drawer feature. Find it and add it to the drawer list
+            if(feature.second) {
+                FeatureConfiguration featureConfiguration = Util.findFeatureConfiguration(this, feature.first);
+                if(featureConfiguration != null) {
+                    FragmentConfiguration fragmentConfiguration = featureConfiguration.getFragmentConfiguration(this);
+                    if(fragmentConfiguration != null && fragmentConfiguration.getDrawerFeature() != null) {
+                        parents.add(fragmentConfiguration.getDrawerFeature());
+                    }
+                }
             }
-
-            return children;
         }
-        if(feature == AppFeature.Debug) {
-            ArrayList<ExpandableNavigationView.NavChildItem> children = new ArrayList<>();
-
-            for(AppFeature debugFeature : new AppFeature[] {AppFeature.DebugDatabase, AppFeature.DebugPreferences, AppFeature.DebugCache}) {
-                ExpandableNavigationView.NavChildItem debugItem = new ExpandableNavigationView.NavChildItem();
-                debugItem.appFeature = debugFeature;
-                debugItem.subitemText = debugFeature.getConfiguration().getTitle();
-                debugItem.subitemIcon = debugFeature.getConfiguration().getNavigationIcon();
-                debugItem.subitemCount = 0;
-                children.add(debugItem);
-            }
-
-            return children;
-        }
-        else {
-            return new ArrayList<>();
-        }
+        navView.setDrawerFeatures(parents);
     }
+
+//    private void selectDefaultFeature() {
+//        DrawerFeature feature = AppSettings.getDefaultFeature(this);
+//
+//        if(feature.getFeatureConfiguration().getClass() == LastVisitedFeatureConfiguration.class)
+//            feature = AppSettings.getSelectedFeature(this);
+//
+//        selectFeature(feature);
+//    }
+
+
 
 //Set look and features of the Toolbar
 //--------------------------------------------------------------------------------------------------
@@ -269,11 +227,7 @@ public class ActivityBase extends AppCompatActivity implements
 //Get important components of the activity's UI
 //--------------------------------------------------------------------------------------------------
 
-    public ArrayList<AppFeature> getAppFeatures() {
-        return new ArrayList<>();
-    }
-
-    public ArrayList<DashboardFeature> getDashboardFeatures() {
+    public ArrayList<Pair<Class<? extends FeatureConfiguration>, Boolean>> getAppFeatures() {
         return new ArrayList<>();
     }
 
@@ -291,36 +245,22 @@ public class ActivityBase extends AppCompatActivity implements
 
 //Select app features
 //--------------------------------------------------------------------------------------------------
-    @Override
-    public void onParentSelected(AppFeature feature) {
-        selectAppFeature(feature);
+
+    public final void selectFeature(DrawerFeature feature) {
+        selectFeature(feature, new Bundle());
     }
 
-    @Override
-    public void onChildSelected(AppFeature feature, int childId) {
-        selectAppFeature(feature, childId);
-    }
-
-    public final void selectAppFeature(AppFeature feature) {
-        selectAppFeature(feature, new Bundle());
-    }
-
-    public final void selectAppFeature(AppFeature feature, long id) {
-        Bundle args = new Bundle();
-        args.putLong("id", id);
-
-        selectAppFeature(feature, args);
-    }
-
-    public final void selectAppFeature(AppFeature feature, Bundle args) {
+    public final void selectFeature(DrawerFeature feature, Bundle args) {
         drawer.closeDrawer(GravityCompat.START);
 
-        if(feature == selectedFeature && id == selectedFeatureId)
+        if(feature.equals(selectedFeature))
             return;
+        else
+            selectedFeature = feature;
 
         Fragment fragment;
 
-        Class<? extends ActivityBaseFragment> fragmentClass = feature.getConfiguration().getFragmentClass();
+        Class<? extends FragmentBase> fragmentClass = feature.getFeatureConfiguration().getFragmentConfiguration(this).getFragmentClass();
         try {
             Method method = fragmentClass.getMethod("newInstance", Bundle.class);
             fragment = (Fragment) method.invoke(null, args);
@@ -346,22 +286,17 @@ public class ActivityBase extends AppCompatActivity implements
         }
         else {
             Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG);
-            if(fragment instanceof ActivityBaseFragment) {
-                ActivityBaseFragment baseFragment = (ActivityBaseFragment) fragment;
-                Pair<AppFeature, Integer> feature = baseFragment.getInstanceConfiguration().getFragmentFeature();
-                if(feature != null) {
-                    selectedFeature = feature.first;
-                    selectedFeatureId = feature.second;
-
-                    if(baseFragment.getInstanceConfiguration().shouldAddToBackStack()) {
-                        AppSettings.putSelectedFeature(this, feature.first, feature.second);
-                    }
+            if(fragment instanceof FragmentBase) {
+                FragmentBase baseFragment = (FragmentBase) fragment;
+                FragmentConfiguration fragmentConfiguration = baseFragment.getConfiguration();
+                if(fragmentConfiguration != null && fragmentConfiguration.shouldAddToBackstack()) {
+                    AppSettings.putLastVisitedFeature(this, fragmentConfiguration.getFeatureConfigurationClass());
                 }
             }
 
-            navView.setSelectedFeature(selectedFeature, selectedFeatureId);
+            navView.setSelectedFeature(selectedFeature);
 
-            if(selectedFeature == null || selectedFeature.getConfiguration().isTopLevel()) {
+            if(selectedFeature == null || selectedFeature.getFeatureConfiguration().getFragmentConfiguration(this).isTopLevel()) {
                 drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.START);
                 toggle.setDrawerIndicatorEnabled(true);
             }
@@ -407,38 +342,47 @@ public class ActivityBase extends AppCompatActivity implements
      */
     public void setupDecor() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG);
-        if(fragment instanceof ActivityBaseFragment) {
-            final ActivityBaseFragment baseFragment = (ActivityBaseFragment) fragment;
-            final Pair<AppFeature, Integer> feature = baseFragment.getInstanceConfiguration().getFragmentFeature();
-            if(feature != null) {
-                final int color = baseFragment.getInstanceConfiguration().getDecorColor();
-                //setup statusbar
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    getWindow().setStatusBarColor(Util.lighten(color, 0.7f));
-                }
+        if(fragment instanceof FragmentBase) {
+            final FragmentBase baseFragment = (FragmentBase) fragment;
 
-                //setup toolbar
-                appBarLayout.setBackgroundColor(color);
-                getSupportActionBar().setTitle(feature.first.getConfiguration().getTitle());
-                getToolbar().setBackgroundColor(color);
-                getToolbar().setSubtitle(null);
 
-                //setup floating action button
-                //Hide it, then if it is supported, show it with new parameters
-                floatingActionButton.hide(new FloatingActionButton.OnVisibilityChangedListener() {
-                    @Override
-                    public void onHidden(FloatingActionButton fab) {
-                        super.onHidden(fab);
+            int themeColor = baseFragment.getConfiguration().getDecorColor();
 
-                        if(feature.first.getConfiguration().usesFAB()) {
-                            floatingActionButton.setImageResource(baseFragment.getInstanceConfiguration().getFABIcon());
-                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
-                            floatingActionButton.setRippleColor(Util.lighten(color, 1.5f));
-                            floatingActionButton.show();
-                        }
-                    }
-                });
+            if(themeColor == 0) {
+                TypedValue typedValue = new TypedValue();
+                Resources.Theme theme = getTheme();
+                theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+                themeColor = typedValue.data;
             }
+
+            final int color = themeColor;
+
+            //setup statusbar
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(Util.lighten(color, 0.7f));
+            }
+
+            //setup toolbar
+            appBarLayout.setBackgroundColor(color);
+            getSupportActionBar().setTitle(baseFragment.getConfiguration().getTitle());
+            getToolbar().setBackgroundColor(color);
+            getToolbar().setSubtitle(null);
+
+            //setup floating action button
+            //Hide it, then if it is supported, show it with new parameters
+            floatingActionButton.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                @Override
+                public void onHidden(FloatingActionButton fab) {
+                    super.onHidden(fab);
+
+                    if(baseFragment.getConfiguration().usesFAB()) {
+                        floatingActionButton.setImageResource(baseFragment.getConfiguration().getFABIcon());
+                        floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
+                        floatingActionButton.setRippleColor(Util.lighten(color, 1.5f));
+                        floatingActionButton.show();
+                    }
+                }
+            });
         }
     }
 
@@ -498,8 +442,8 @@ public class ActivityBase extends AppCompatActivity implements
 
     void onNetworkConnected() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG);
-        if(fragment instanceof ActivityBaseFragment) {
-            boolean isFinished = ((ActivityBaseFragment) fragment).onNetworkConnected();
+        if(fragment instanceof FragmentBase) {
+            boolean isFinished = ((FragmentBase) fragment).onNetworkConnected();
             if(isFinished)
                 return;
         }
@@ -509,8 +453,8 @@ public class ActivityBase extends AppCompatActivity implements
 
     void onNetworkDisconnected() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG);
-        if(fragment instanceof ActivityBaseFragment) {
-            boolean isFinished = ((ActivityBaseFragment) fragment).onNetworkDisconnected();
+        if(fragment instanceof FragmentBase) {
+            boolean isFinished = ((FragmentBase) fragment).onNetworkDisconnected();
             if(isFinished)
                 return;
         }
@@ -541,8 +485,8 @@ public class ActivityBase extends AppCompatActivity implements
         }
 
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG);
-        if(fragment instanceof ActivityBaseFragment) {
-            boolean isFinished = ((ActivityBaseFragment) fragment).onBackButtonPressed();
+        if(fragment instanceof FragmentBase) {
+            boolean isFinished = ((FragmentBase) fragment).onBackButtonPressed();
             if(isFinished)
                 return;
         }
@@ -552,8 +496,8 @@ public class ActivityBase extends AppCompatActivity implements
 
     void onBackArrowPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG);
-        if(fragment instanceof ActivityBaseFragment) {
-            boolean isFinished = ((ActivityBaseFragment) fragment).onBackArrowPressed();
+        if(fragment instanceof FragmentBase) {
+            boolean isFinished = ((FragmentBase) fragment).onBackArrowPressed();
             if(isFinished)
                 return;
         }
@@ -563,8 +507,8 @@ public class ActivityBase extends AppCompatActivity implements
 
     void onFABPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG);
-        if(fragment instanceof ActivityBaseFragment) {
-            boolean isFinished = ((ActivityBaseFragment) fragment).onFABPressed();
+        if(fragment instanceof FragmentBase) {
+            boolean isFinished = ((FragmentBase) fragment).onFABPressed();
             if(isFinished)
                 return;
         }

@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.caseybrooks.common.app.activity.ActivityBase;
-import com.caseybrooks.common.app.fragment.AppFeature;
 import com.caseybrooks.common.app.AppSettings;
-import com.caseybrooks.common.app.dashboard.DashboardFeature;
 import com.caseybrooks.common.app.ExpandableNavigationView;
 import com.caseybrooks.scripturememorybeta.gcm.RegistrationIntentService;
 import com.google.android.gms.common.ConnectionResult;

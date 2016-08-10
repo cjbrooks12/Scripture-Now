@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -16,15 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
-import com.caseybrooks.common.app.fragment.AppFeature;
-import com.caseybrooks.common.util.HeaderDecoration;
 import com.caseybrooks.common.R;
+import com.caseybrooks.common.app.activity.DrawerFeature;
+import com.caseybrooks.common.util.HeaderDecoration;
 import com.caseybrooks.common.util.Util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ExpandableNavigationView extends LinearLayout {
@@ -34,8 +34,7 @@ public class ExpandableNavigationView extends LinearLayout {
     NavExpandableRecyclerViewAdapter adapter;
     OnExpandableNavigationItemSelectedListener listener;
 
-    AppFeature selectedFeature;
-    int selectedFeatureId;
+    DrawerFeature selectedFeature;
 
 //Constructors and Initialization
 //--------------------------------------------------------------------------------------------------
@@ -65,11 +64,8 @@ public class ExpandableNavigationView extends LinearLayout {
         recyclerView.addItemDecoration(builder.build());
     }
 
-    public void setContent(List<NavParentItem> items) {
-        List<ParentObject> objects = new ArrayList<>();
-        objects.addAll(items);
-        adapter = new NavExpandableRecyclerViewAdapter(getContext(), objects);
-
+    public void setDrawerFeatures(List<DrawerFeature> items) {
+        adapter = new NavExpandableRecyclerViewAdapter(items);
         recyclerView.setAdapter(adapter);
     }
 
@@ -77,42 +73,19 @@ public class ExpandableNavigationView extends LinearLayout {
         this.listener = listener;
     }
 
-    public void setSelectedFeature(AppFeature selectedFeature, int selectedFeatureId) {
+    public void setSelectedFeature(DrawerFeature selectedFeature) {
         this.selectedFeature = selectedFeature;
-        this.selectedFeatureId = selectedFeatureId;
         adapter.notifyDataSetChanged();
     }
 
-    //Parent views
+//Parent views
 //--------------------------------------------------------------------------------------------------
-
-    public static class NavParentItem implements ParentObject {
-        public String itemText;
-        public int itemIconResId;
-        public List<Object> children;
-        public AppFeature appFeature;
-
-        @Override
-        public List<Object> getChildObjectList() {
-            return children;
-        }
-
-        @Override
-        public void setChildObjectList(List<Object> list) {
-            children = list;
-        }
-
-        public void setNavChildItemList(List<NavChildItem> list) {
-            children = new ArrayList<>();
-            children.addAll(list);
-        }
-    }
 
     private class NavParentViewHolder extends ParentViewHolder {
         public View root;
         public ImageView itemIcon;
         public TextView itemText;
-        NavParentItem parent;
+        DrawerFeature parent;
 
         public NavParentViewHolder(View itemView) {
             super(itemView);
@@ -122,47 +95,34 @@ public class ExpandableNavigationView extends LinearLayout {
         }
 
         public void onBind(Object object) {
-            parent = (NavParentItem) object;
-            ColorStateList textColor = getResources().getColorStateList(R.color.text_color_primary_light);
-//            itemText.setTextColor(textColor);
+            parent = (DrawerFeature) object;
+//            ColorStateList textColor = getResources().getColorStateList(R.color.text_color_primary_light);
 
-
-
-
-            if(parent.appFeature == selectedFeature)
+            if(parent.equals(selectedFeature))
                 root.setSelected(true);
             else
                 root.setSelected(false);
 
-            if(!TextUtils.isEmpty(parent.itemText))
-                itemText.setText(parent.itemText);
+            if(!TextUtils.isEmpty(parent.getTitle()))
+                itemText.setText(parent.getTitle());
             else
                 itemText.setText(null);
 
-            if(parent.itemIconResId != 0)
-                itemIcon.setImageResource(parent.itemIconResId);
+            if(parent.getIcon() != 0)
+                itemIcon.setImageResource(parent.getIcon());
         }
 
         @Override
         public void onClick(View v) {
-            if(parent.appFeature.hasChildren())
+            if(parent.getChildItemList() != null && parent.getChildItemList().size() > 0)
                 super.onClick(v);
             else if(listener != null)
-                listener.onParentSelected(parent.appFeature);
+                listener.selectFeature(parent);
         }
     }
 
 //Child views
 //--------------------------------------------------------------------------------------------------
-
-    public static class NavChildItem {
-        public String subitemText;
-        public int subitemCount;
-        public int subitemIcon;
-        public int subitemIconColor;
-        public AppFeature appFeature;
-        public int appFeatureId;
-    }
 
     public class NavChildViewHolder extends ChildViewHolder {
         public View root;
@@ -179,32 +139,32 @@ public class ExpandableNavigationView extends LinearLayout {
         }
 
         public void onBind(Object object) {
-            final NavChildItem child = (NavChildItem) object;
+            final DrawerFeature child = (DrawerFeature) object;
 
-            if(child.appFeature == selectedFeature && child.appFeatureId == selectedFeatureId)
+            if(child.equals(selectedFeature))
                 root.setSelected(true);
             else
                 root.setSelected(false);
 
-            if(!TextUtils.isEmpty(child.subitemText))
-                subitemText.setText(child.subitemText);
+            if(!TextUtils.isEmpty(child.getTitle()))
+                subitemText.setText(child.getTitle());
             else
                 subitemText.setText(null);
 
-            if(child.subitemCount != 0)
-                subitemIconText.setText(Integer.toString(child.subitemCount));
+            if(child.getCount() != 0)
+                subitemIconText.setText(Integer.toString(child.getCount()));
             else
                 subitemIconText.setText(null);
 
-            if(child.subitemIcon != 0)
-                subitemIcon.setImageResource(child.subitemIcon);
+            if(child.getCount() != 0)
+                subitemIcon.setImageResource(child.getCount());
             else
                 subitemIcon.setImageResource(R.drawable.ic_circle);
 
             boolean shouldUseLightFont;
-            if(child.subitemIconColor != 0) {
-                subitemIcon.setColorFilter(child.subitemIconColor, PorterDuff.Mode.SRC_IN);
-                shouldUseLightFont = Util.shouldUseLightFont(child.subitemIconColor);
+            if(child.getColor() != 0) {
+                subitemIcon.setColorFilter(child.getColor(), PorterDuff.Mode.SRC_IN);
+                shouldUseLightFont = Util.shouldUseLightFont(child.getColor());
             }
             else {
                 subitemIcon.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
@@ -224,38 +184,37 @@ public class ExpandableNavigationView extends LinearLayout {
                 @Override
                 public void onClick(View v) {
                     if(listener != null)
-                        listener.onChildSelected(child.appFeature, child.appFeatureId);
+                        listener.selectFeature(child);
                 }
             });
         }
-
-
     }
 
 //Complete Adapter
 //--------------------------------------------------------------------------------------------------
 
     public class NavExpandableRecyclerViewAdapter extends ExpandableRecyclerAdapter<NavParentViewHolder, NavChildViewHolder> {
-        public NavExpandableRecyclerViewAdapter(Context context, List<ParentObject> parentItemList) {
-            super(context, parentItemList);
+        public NavExpandableRecyclerViewAdapter(@NonNull List<? extends ParentListItem> parentItemList) {
+            super(parentItemList);
         }
 
         @Override
         public NavParentViewHolder onCreateParentViewHolder(ViewGroup viewGroup) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.nav_parent_view, viewGroup, false);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.nav_parent_view, viewGroup, false);
             return new NavParentViewHolder(view);
         }
 
         @Override
         public NavChildViewHolder onCreateChildViewHolder(ViewGroup viewGroup) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.nav_child_view, viewGroup, false);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.nav_child_view, viewGroup, false);
             return new NavChildViewHolder(view);
         }
 
         @Override
-        public void onBindParentViewHolder(NavParentViewHolder navParentViewHolder, int i, Object o) {
-            navParentViewHolder.onBind(o);
+        public void onBindParentViewHolder(NavParentViewHolder parentViewHolder, int position, ParentListItem parentListItem) {
+            parentViewHolder.onBind(parentListItem);
         }
+
 
         @Override
         public void onBindChildViewHolder(NavChildViewHolder navChildViewHolder, int i, Object o) {
@@ -264,7 +223,6 @@ public class ExpandableNavigationView extends LinearLayout {
     }
 
     public interface OnExpandableNavigationItemSelectedListener {
-        void onParentSelected(AppFeature feature);
-        void onChildSelected(AppFeature feature, int childId);
+        void selectFeature(DrawerFeature feature);
     }
 }

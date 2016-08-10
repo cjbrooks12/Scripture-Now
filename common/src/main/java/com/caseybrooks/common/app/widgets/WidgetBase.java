@@ -1,4 +1,6 @@
 package com.caseybrooks.common.app.widgets;
 
-public class WidgetBase {
+public abstract class WidgetBase {
+    public abstract AppFeature getAppFeature();
+    public abstract WidgetConfiguration getConfiguration();
 }

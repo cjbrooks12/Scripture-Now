@@ -1,19 +1,104 @@
 package com.caseybrooks.common.util.clog;
 
-import com.caseybrooks.common.util.clog.formatters.ClogTimestamp;
+import android.util.Log;
+
+import com.caseybrooks.common.util.clog.formatters.ClogClass;
+import com.caseybrooks.common.util.clog.formatters.ClogDate;
+import com.caseybrooks.common.util.clog.loggers.ClogD;
+import com.caseybrooks.common.util.clog.loggers.ClogE;
+import com.caseybrooks.common.util.clog.loggers.ClogI;
+import com.caseybrooks.common.util.clog.loggers.ClogV;
+import com.caseybrooks.common.util.clog.loggers.ClogW;
+import com.caseybrooks.common.util.clog.loggers.ClogWTF;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.lang.Integer.parseInt;
+
 public class Clog {
-    static HashMap<String, ClogFormatter> formatters = new HashMap<>();
+    private static HashMap<String, ClogFormatter> formatters = new HashMap<>();
+    private static HashMap<String, ClogLogger> loggers = new HashMap<>();
     static {
+
+        // initialize default formatters
         formatters = new HashMap<>();
-        formatters.put("timestamp", new ClogTimestamp());
+        formatters.put("date", new ClogDate());
+        formatters.put("class", new ClogClass());
+
+        formatters.put("d", new ClogD());
+        formatters.put("e", new ClogE());
+        formatters.put("i", new ClogI());
+        formatters.put("v", new ClogV());
+        formatters.put("w", new ClogW());
+        formatters.put("wtf", new ClogWTF());
+
+        // initialize default loggers
+        loggers = new HashMap<>();
+        loggers.put("d", new ClogD());
+        loggers.put("e", new ClogE());
+        loggers.put("i", new ClogI());
+        loggers.put("v", new ClogV());
+        loggers.put("w", new ClogW());
+        loggers.put("wtf", new ClogWTF());
     }
 
+    private Clog() {
+    }
+
+    public static int w(String tag, Throwable throwable)                                        { return log("wtf", tag, getStackTraceString(throwable)); }
+    public static int wtf(String tag, Throwable throwable)                                      { return log("wtf", tag, Log.getStackTraceString(throwable)); }
+
+    public static int d(String tag, String formatString, Object... args)                        { return log("d", tag, formatString, args); }
+    public static int e(String tag, String formatString, Object... args)                        { return log("e", tag, formatString, args); }
+    public static int i(String tag, String formatString, Object... args)                        { return log("i", tag, formatString, args); }
+    public static int v(String tag, String formatString, Object... args)                        { return log("v", tag, formatString, args); }
+    public static int w(String tag, String formatString, Object... args)                        { return log("w", tag, formatString, args); }
+    public static int wtf(String tag, String formatString, Object... args)                      { return log("wtf", tag, formatString, args); }
+
+    public static int d(String tag, String formatString, Throwable throwable, Object... args)   { return log("d", tag, formatString, throwable, args); }
+    public static int e(String tag, String formatString, Throwable throwable, Object... args)   { return log("e", tag, formatString, throwable, args); }
+    public static int i(String tag, String formatString, Throwable throwable, Object... args)   { return log("i", tag, formatString, throwable, args); }
+    public static int v(String tag, String formatString, Throwable throwable, Object... args)   { return log("v", tag, formatString, throwable, args); }
+    public static int w(String tag, String formatString, Throwable throwable, Object... args)   { return log("w", tag, formatString, throwable, args); }
+    public static int wtf(String tag, String formatString, Throwable throwable, Object... args) { return log("wtf", tag, formatString, throwable, args); }
+
+    public static String getStackTraceString(Throwable throwable) { return Log.getStackTraceString(throwable); }
+    public static boolean isLoggable(String tag, int level) { return Log.isLoggable(tag, level); }
+    public static int println(int priority, String tag, String message) { return Log.println(priority, tag, message); }
+
+    public static int log(String logger, String tag, String message, Object... args) {
+        String formattedMessage = formatString(message, args);
+
+        if(loggers.containsKey(logger)) {
+            return loggers.get(logger).log(tag, formattedMessage);
+        }
+        else {
+            return new ClogW().log(tag, "" + formattedMessage + " (cannot find default logger with tag '" + logger + "')");
+        }
+    }
+
+    public static int log(String logger, String tag, String message, Throwable throwable, Object... args) {
+        String formattedMessage = formatString(message, args);
+
+        if(loggers.containsKey(logger)) {
+            return loggers.get(logger).log(tag, formattedMessage, throwable);
+        }
+        else {
+            return new ClogW().log(tag, "" + formattedMessage + " (cannot find logger with tag '" + logger + "')");
+        }
+    }
+
+
+
+
+
+
+
+//String format parser
+//--------------------------------------------------------------------------------------------------
     public static String formatString(String message, Object... params) {
         if(params != null && params.length > 0) {
 
@@ -35,7 +120,7 @@ public class Clog {
                 String[] bodyPieces = token.split("\\|");
                 Object objectToPrint = getObjectToFormat(bodyPieces[0].trim(), params);
                 if(bodyPieces.length > 1) {
-                    output += formatObject(objectToPrint, bodyPieces).toString();
+                    output += formatObject(objectToPrint, bodyPieces, params).toString();
                 }
                 else {
                     output += objectToPrint.toString();
@@ -55,7 +140,7 @@ public class Clog {
 
     private static Object getObjectToFormat(String indexPiece, Object[] params) {
         if(indexPiece.matches("^\\$\\d+$")) {
-            int objectIndex = Integer.parseInt(indexPiece.substring(1)) - 1;
+            int objectIndex = parseInt(indexPiece.substring(1)) - 1;
 
             if(objectIndex >= 0 && objectIndex < params.length) {
                 return params[objectIndex];
@@ -72,7 +157,31 @@ public class Clog {
         }
     }
 
-    private static Object formatObject(Object objectToPrint, String[] formatterPieces) {
+    private static Object getParameter(String token, Object[] params) {
+        if(token.matches("^\\$\\d+$")) {
+            int objectLiteral = parseInt(token.substring(1)) - 1;
+
+            if(objectLiteral >= 0 && objectLiteral < params.length) {
+                return params[objectLiteral];
+            }
+            else {
+                return null;
+            }
+        }
+        else if(token.matches("^'.*'$")) {
+            return token.substring(1, token.length() - 1);
+        }
+        else if(token.toLowerCase().equals("true")) {
+            return true;
+        }
+        else if(token.toLowerCase().equals("false")) {
+            return false;
+        }
+
+        return null;
+    }
+
+    private static Object formatObject(Object objectToPrint, String[] formatterPieces, Object[] params) {
         String[] formatterKeys = Arrays.copyOfRange(formatterPieces, 1, formatterPieces.length);
 
         Object formattedObject = objectToPrint;
@@ -91,6 +200,12 @@ public class Clog {
                 }
                 else {
                     paramsArray = new String[] { paramsString };
+                }
+
+                Object[] parsedParamsArray = new Object[paramsArray.length];
+
+                for(int i = 0; i < paramsArray.length; i++) {
+                    parsedParamsArray[i] = getParameter(paramsArray[i], params);
                 }
 
                 formatterKey = formatterKey.replaceAll("\\((.*)\\)", "").trim();

@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import com.caseybrooks.common.R;
 import com.caseybrooks.common.app.activity.ActivityBase;
 
-public abstract class FragmentBase extends Fragment implements ActivityBaseFragment {
+public class FragmentBase extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -18,32 +18,26 @@ public abstract class FragmentBase extends Fragment implements ActivityBaseFragm
         setHasOptionsMenu(true);
     }
 
-    @Override
     public ActivityBase getActivityBase() {
         return (ActivityBase) super.getActivity();
     }
 
-    @Override
     public boolean onBackButtonPressed() {
         return false;
     }
 
-    @Override
     public boolean onBackArrowPressed() {
         return false;
     }
 
-    @Override
     public boolean onFABPressed() {
         return false;
     }
 
-    @Override
     public boolean onNetworkConnected() {
         return false;
     }
 
-    @Override
     public boolean onNetworkDisconnected() {
         return false;
     }
@@ -62,11 +56,13 @@ public abstract class FragmentBase extends Fragment implements ActivityBaseFragm
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if(getInstanceConfiguration().usesSearchbox()) {
+        if(getConfiguration().usesSearchbox()) {
             inflater.inflate(R.menu.menu_searchable, menu);
         }
 
-        inflater.inflate(getInstanceConfiguration().getMenuResource(), menu);
+        if(getConfiguration().getMenuResource() != 0) {
+            inflater.inflate(getConfiguration().getMenuResource(), menu);
+        }
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -77,7 +73,7 @@ public abstract class FragmentBase extends Fragment implements ActivityBaseFragm
             if(getActivityBase().getSearchbox().isRevealed())
                 getActivityBase().closeSearch();
             else
-                getActivityBase().openSearch(getInstanceConfiguration().getSearchboxHint(), getInstanceConfiguration().getSearchboxMenuResource());
+                getActivityBase().openSearch(getConfiguration().getSearchboxHint(), getConfiguration().getSearchboxMenuResource());
 
             return true;
         }
@@ -85,18 +81,19 @@ public abstract class FragmentBase extends Fragment implements ActivityBaseFragm
         return false;
     }
 
-    @Override
     public boolean onSearchSubmitted(String query) {
         return false;
     }
 
-    @Override
     public void onQueryChanged(String query) {
 
     }
 
-    @Override
     public boolean onSearchMenuItemSelected(MenuItem selectedItem) {
         return false;
+    }
+
+    public FragmentConfiguration getConfiguration() {
+        return null;
     }
 }

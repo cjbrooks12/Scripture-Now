@@ -4,8 +4,6 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Pair;
 
-import com.caseybrooks.common.app.fragment.AppFeature;
-
 public class AppSettings {
     public static final String SettingsFile = "my_settings";
 
@@ -48,54 +46,49 @@ public class AppSettings {
     }
 
     public static void putAppVersion(Context context, int value) {
-        context.getSharedPreferences(SettingsFile, 0).edit().putInt(CURRENT_VERSION, value).commit();
+        context.getSharedPreferences(SettingsFile, 0).edit().putInt(CURRENT_VERSION, value).apply();
     }
 
-    public static void putSelectedFeature(Context context, AppFeature feature, int id) {
-        context.getSharedPreferences(SettingsFile, 0).edit().putInt(SELECTED_FEATURE, feature.getId()).commit();
-        context.getSharedPreferences(SettingsFile, 0).edit().putInt(SELECTED_FEATURE_ID, id).commit();
+    public static void putLastVisitedFeature(Context context, FeatureConfiguration feature) {
+        if(feature == null) {
+            context.getSharedPreferences(SettingsFile, 0).edit().remove(SELECTED_FEATURE).apply();
+        }
+        else {
+            context.getSharedPreferences(SettingsFile, 0).edit().putString(SELECTED_FEATURE, feature.getClass().getName()).apply();
+        }
     }
 
-    public static Pair<AppFeature, Integer> getSelectedFeature(Context context) {
-        AppFeature feature = AppFeature.getFeatureForId(context.getSharedPreferences(SettingsFile, 0).getInt(SELECTED_FEATURE, 0));
-        int id = context.getSharedPreferences(SettingsFile, 0).getInt(SELECTED_FEATURE_ID, -1);
-        return new Pair<>(feature, id);
+    public static void putLastVisitedFeature(Context context, Class<? extends FeatureConfiguration> feature) {
+        if(feature == null) {
+            context.getSharedPreferences(SettingsFile, 0).edit().remove(SELECTED_FEATURE).apply();
+        }
+        else {
+            context.getSharedPreferences(SettingsFile, 0).edit().putString(SELECTED_FEATURE, feature.getClass().getName()).apply();
+        }
     }
 
-    public static void putDefaultFeature(Context context, AppFeature feature, int id) {
-        context.getSharedPreferences(SettingsFile, 0).edit().putInt(DEFAULT_FEATURE, feature.getId()).commit();
-        context.getSharedPreferences(SettingsFile, 0).edit().putInt(DEFAULT_FEATURE_ID, id).commit();
-    }
-
-    public static Pair<AppFeature, Integer> getDefaultFeature(Context context) {
-        AppFeature feature = AppFeature.getFeatureForId(context.getSharedPreferences(SettingsFile, 0).getInt(DEFAULT_FEATURE, 0));
-        int id = context.getSharedPreferences(SettingsFile, 0).getInt(DEFAULT_FEATURE_ID, -1);
-        return new Pair<>(feature, id);
-    }
-
-    public static boolean isVerseOfTheDayNotificationEnabled(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("votd_enabled", false);
-    }
-
-    public static String getVOTDSound(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString("votd_sound", "DEFAULT_SOUND");
-    }
-
-    public static boolean isJoshuaProjectNotificationEnabled(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("jp_enabled", false);
-    }
-
-    public static String getJPSound(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString("jp_sound", "DEFAULT_SOUND");
-    }
-
-    public static boolean isScheduledNotificationEnabled(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("schedule_enabled", false);
+    public static Class<? extends FeatureConfiguration> getLastVisitedFeature(Context context) {
+        try {
+            return Class
+                .forName(context.getSharedPreferences(SettingsFile, 0).getString(SELECTED_FEATURE, null))
+                .asSubclass(FeatureConfiguration.class);
+        }
+        catch(ClassNotFoundException cnfe) {
+            cnfe.printStackTrace();
+            return null;
+        }
+        catch(ClassCastException cce) {
+            cce.printStackTrace();
+            return null;
+        }
     }
 
     public static void putTime(Context context, String key, int hour, int minute) {
-        context.getSharedPreferences(SettingsFile, 0).edit().putInt(TIME_HOUR + "_" + key, hour).commit();
-        context.getSharedPreferences(SettingsFile, 0).edit().putInt(TIME_MINUTE + "_" + key, minute).commit();
+        context.getSharedPreferences(SettingsFile, 0)
+                .edit()
+                .putInt(TIME_HOUR + "_" + key, hour)
+                .putInt(TIME_MINUTE + "_" + key, minute)
+                .apply();
     }
 
     public static Pair<Integer, Integer> getTime(Context context, String key) {
