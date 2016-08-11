@@ -3,6 +3,15 @@
 
     <item
         is-multidex="true"
+        jar="/Users/cbrooks/Documents/android/Scripture-Now/openbible/build/intermediates/exploded-aar/com.bignerdranch.android/expandablerecyclerview/2.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="23.0.2"
+        sha1="60430e47e1fb0be5502390f96a0a4c7f0b4fcb3e">
+        <dex dex="/Users/cbrooks/Documents/android/Scripture-Now/openbible/build/intermediates/transforms/dex/debug/folders/1000/10/com.bignerdranch.android-expandablerecyclerview-2.1.1_e37be910e92b6200df7db537a891f40157e8f083/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/cbrooks/Documents/android/Scripture-Now/openbible/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.4.0/jars/classes.jar"
         jumboMode="true"
         optimize="false"
@@ -169,7 +178,7 @@
         jumboMode="true"
         optimize="false"
         revision="23.0.2"
-        sha1="744830472dbf284cd7ba14fa2022d6eff5638a68">
+        sha1="ce4f1ec618d078908b4188226052fd06460bc355">
         <dex dex="/Users/cbrooks/Documents/android/Scripture-Now/openbible/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_0e69840ddb97a84e9f7722973da3a96e32adb781/classes.dex" />
     </item>
     <item
@@ -232,7 +241,7 @@
         jumboMode="true"
         optimize="false"
         revision="23.0.2"
-        sha1="82c010f192c3b3ca2b3f5d201fc801efdc1d30a0">
+        sha1="1e721d002703b2f7ed547e8dbca5956f2690bcd0">
         <dex dex="/Users/cbrooks/Documents/android/Scripture-Now/openbible/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_21144bf3dbdd0f884db2b743d8f1d7d6ad9dc28f/classes.dex" />
     </item>
     <item
@@ -441,15 +450,6 @@
         revision="23.0.2"
         sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
         <dex dex="/Users/cbrooks/Documents/android/Scripture-Now/scripturenow/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-8.4.0_76d66489d56834f4967e0f200a575845f767ac83/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/cbrooks/Documents/android/Scripture-Now/openbible/build/intermediates/exploded-aar/com.bignerdranch.android/expandablerecyclerview/1.0.3/jars/classes.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.2"
-        sha1="f5eeb4583102dd6771ab71bc8f0c6965548dd3e0">
-        <dex dex="/Users/cbrooks/Documents/android/Scripture-Now/openbible/build/intermediates/transforms/dex/debug/folders/1000/10/com.bignerdranch.android-expandablerecyclerview-1.0.3_52044cd3ec200d030f40988c105e493ccec09b97/classes.dex" />
     </item>
     <item
         is-multidex="true"

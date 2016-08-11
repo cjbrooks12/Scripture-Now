@@ -1,6 +1,7 @@
 package com.caseybrooks.common.app.notifications;
 
+import android.support.annotation.NonNull;
+
 public abstract class NotificationBase {
-    public abstract AppFeature getAppFeature();
-    public abstract NotificationConfiguration getConfiguration();
+    public abstract @NonNull Class<? extends NotificationConfiguration> getNotificationConfigurationClass();
 }

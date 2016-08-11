@@ -117,7 +117,7 @@ public class ExpandableNavigationView extends LinearLayout {
             if(parent.getChildItemList() != null && parent.getChildItemList().size() > 0)
                 super.onClick(v);
             else if(listener != null)
-                listener.selectFeature(parent);
+                listener.selectFragment(parent);
         }
     }
 
@@ -156,8 +156,8 @@ public class ExpandableNavigationView extends LinearLayout {
             else
                 subitemIconText.setText(null);
 
-            if(child.getCount() != 0)
-                subitemIcon.setImageResource(child.getCount());
+            if(child.getIcon() != 0)
+                subitemIcon.setImageResource(child.getIcon());
             else
                 subitemIcon.setImageResource(R.drawable.ic_circle);
 
@@ -184,7 +184,7 @@ public class ExpandableNavigationView extends LinearLayout {
                 @Override
                 public void onClick(View v) {
                     if(listener != null)
-                        listener.selectFeature(child);
+                        listener.selectFragment(child);
                 }
             });
         }
@@ -223,6 +223,6 @@ public class ExpandableNavigationView extends LinearLayout {
     }
 
     public interface OnExpandableNavigationItemSelectedListener {
-        void selectFeature(DrawerFeature feature);
+        void selectFragment(DrawerFeature feature);
     }
 }

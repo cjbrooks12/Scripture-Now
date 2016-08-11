@@ -3,13 +3,12 @@ package com.caseybrooks.common.app.activity;
 import android.support.annotation.NonNull;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
-import com.caseybrooks.common.app.FeatureConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DrawerFeature implements ParentListItem {
-    private final FeatureConfiguration feature;
+    private final Class< ? extends FeatureConfiguration> featureClass;
 
     private final String title;
     private final int icon;
@@ -19,16 +18,16 @@ public class DrawerFeature implements ParentListItem {
     private int count;
     private ArrayList<DrawerFeature> children;
 
-    public DrawerFeature(@NonNull FeatureConfiguration feature, String title, int icon) {
-        this(feature, title, icon, 0, 0);
+    public DrawerFeature(@NonNull Class< ? extends FeatureConfiguration> featureClass, String title, int icon) {
+        this(featureClass, title, icon, 0, 0);
     }
 
-    public DrawerFeature(@NonNull FeatureConfiguration feature, String title, int icon, int id) {
-        this(feature, title, icon, id, 0);
+    public DrawerFeature(@NonNull Class< ? extends FeatureConfiguration> featureClass, String title, int icon, int id) {
+        this(featureClass, title, icon, id, 0);
     }
 
-    public DrawerFeature(@NonNull FeatureConfiguration feature, String title, int icon, int id, int color) {
-        this.feature = feature;
+    public DrawerFeature(@NonNull Class< ? extends FeatureConfiguration> featureClass, String title, int icon, int id, int color) {
+        this.featureClass = featureClass;
         this.title = title;
         this.icon = icon;
         this.id = id;
@@ -63,8 +62,8 @@ public class DrawerFeature implements ParentListItem {
         this.children = children;
     }
 
-    public FeatureConfiguration getFeatureConfiguration() {
-        return feature;
+    public Class<? extends FeatureConfiguration> getFeatureClass() {
+        return featureClass;
     }
 
     @Override
@@ -75,13 +74,13 @@ public class DrawerFeature implements ParentListItem {
         DrawerFeature that = (DrawerFeature) o;
 
         if (id != that.id) return false;
-        return feature.equals(that.feature);
+        return featureClass.equals(that.featureClass);
 
     }
 
     @Override
     public int hashCode() {
-        int result = feature.hashCode();
+        int result = featureClass.hashCode();
         result = 31 * result + id;
         return result;
     }

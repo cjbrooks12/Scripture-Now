@@ -1,15 +1,15 @@
 package com.caseybrooks.openbiblebeta;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.caseybrooks.common.app.activity.ActivityBase;
-import com.caseybrooks.openbiblebeta.gcm.RegistrationIntentService;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-
-import java.util.ArrayList;
+import com.caseybrooks.common.app.activity.FeatureProvider;
+import com.caseybrooks.common.app.dashboard.DashboardFeatureConfiguration;
+import com.caseybrooks.common.features.debug.DebugFeatureConfiguration;
+import com.caseybrooks.common.features.discover.DiscoverFeatureConfiguration;
+import com.caseybrooks.common.features.feature1.FeatureOneConfiguration;
+import com.caseybrooks.common.features.feature2.FeatureTwoConfiguration;
+import com.caseybrooks.common.features.feature3.FeatureThreeConfiguration;
 
 public class MainActivity extends ActivityBase {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -17,37 +17,22 @@ public class MainActivity extends ActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if(checkPlayServices()) {
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }
-    }
-
-    private boolean checkPlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if(resultCode != ConnectionResult.SUCCESS) {
-            if(apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
-            }
-            else {
-                Log.i(TAG, "This device is not supported.");
-                finish();
-            }
-            return false;
-        }
-        return true;
     }
 
     @Override
-    public ArrayList<AppFeature> getAppFeatures() {
-        ArrayList<AppFeature> featuresList = new ArrayList<>();
-        featuresList.add(AppFeature.Dashboard);
-        featuresList.add(AppFeature.VerseOfTheDay);
+    protected void initializeFeatures() {
+        FeatureProvider provider = FeatureProvider.getInstance(this);
 
-        return featuresList;
+        provider.addFeature(new DashboardFeatureConfiguration(this));
+        provider.addFeature(new DiscoverFeatureConfiguration(this));
+
+        provider.addFeature(new FeatureOneConfiguration(this));
+        provider.addFeature(new FeatureTwoConfiguration(this));
+        provider.addFeature(new FeatureThreeConfiguration(this));
+
+        if(isDebug()) {
+            provider.addFeature(new DebugFeatureConfiguration(this));
+        }
     }
 
     @Override
