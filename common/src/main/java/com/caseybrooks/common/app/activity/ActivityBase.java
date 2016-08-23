@@ -1,13 +1,23 @@
 package com.caseybrooks.common.app.activity;
 
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.caseybrooks.androidbibletools.ABT;
 import com.caseybrooks.common.BuildConfig;
@@ -16,24 +26,30 @@ import com.caseybrooks.common.app.AppSettings;
 import com.caseybrooks.common.app.ExpandableNavigationView;
 import com.caseybrooks.common.app.fragment.FragmentBase;
 import com.caseybrooks.common.app.fragment.FragmentConfiguration;
+import com.caseybrooks.common.util.Util;
 import com.caseybrooks.common.util.clog.Clog;
 
 import java.lang.reflect.Method;
 import java.util.Calendar;
 
 public abstract class ActivityBase extends AppCompatActivity implements
-        ExpandableNavigationView.OnExpandableNavigationItemSelectedListener {
+        ExpandableNavigationView.OnExpandableNavigationItemSelectedListener,
+        FragmentManager.OnBackStackChangedListener {
     public String TAG = getClass().getSimpleName();
 
     private CoordinatorLayout coordinatorLayout;
     private Toolbar toolbar;
     private ExpandableNavigationView navView;
 
+    AppBarLayout appBarLayout;
 
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
 
     private FragmentConfiguration selectedFragment;
+
+    private ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +63,9 @@ public abstract class ActivityBase extends AppCompatActivity implements
         navView = (ExpandableNavigationView) findViewById(R.id.expandableNavigationView);
         navView.setExpandableNavigationItemSelectedListener(this);
 
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
+
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this,
@@ -54,9 +73,27 @@ public abstract class ActivityBase extends AppCompatActivity implements
                 toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close
-        );
+        ) {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    int statusBarColor = getWindow().getStatusBarColor();
+                    int translucentstatusBarColor = Color.argb(
+                            (int) (255 - (slideOffset*255)),
+                            Color.red(statusBarColor),
+                            Color.green(statusBarColor),
+                            Color.blue(statusBarColor));
+
+                    getWindow().setStatusBarColor(translucentstatusBarColor);
+                }
+            }
+        };
         drawer.addDrawerListener(toggle);
+
         toggle.syncState();
+
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
 
         Calendar time1 = Calendar.getInstance();
 
@@ -66,6 +103,7 @@ public abstract class ActivityBase extends AppCompatActivity implements
                 .getMetadata().putString("JoshuaProject_ApiKey", getResources().getString(R.string.joshua_project_key));
         Calendar time2 = Calendar.getInstance();
 
+        FeatureProvider.getInstance(this).clearFeatures();
         initializeFeatures();
         Calendar time3 = Calendar.getInstance();
 
@@ -101,7 +139,7 @@ public abstract class ActivityBase extends AppCompatActivity implements
     }
 
     private void selectDefaultFeature() {
-//        selectFragment(FeatureProvider.getInstance(this).getDefaultFeature());
+        selectFragment(FeatureProvider.getInstance(this).getDefaultFeature());
     }
 
     public CoordinatorLayout getCoordinatorLayout() {
@@ -121,15 +159,33 @@ public abstract class ActivityBase extends AppCompatActivity implements
 
     @Override
     public void selectFragment(DrawerFeature feature) {
-        selectFragment(FeatureProvider.getInstance(this).findFeatureConfiguration(feature.getFeatureClass()));
+        FeatureConfiguration targetFeature = FeatureProvider.getInstance(this).findFeatureConfiguration(feature.getFeatureClass());
+        if(targetFeature == null) {
+            Clog.i("Target FeatureConfiguration is null");
+            return;
+        }
+
+        FragmentConfiguration targetFragment = FeatureProvider.getInstance(this).findFragmentConfiguration(targetFeature.getFragmentConfigurationClass());
+        if(targetFragment == null) {
+            Clog.i("Target FragmentConfiguration is null");
+            return;
+        }
+
+        Bundle args = new Bundle();
+        args.putLong("id", feature.getId());
+        args.putInt("color", feature.getColor());
+
+        selectFragment(targetFragment, args);
     }
 
     public void selectFragment(FeatureConfiguration feature) {
-        selectFragment(FeatureProvider.getInstance(this).findFragmentConfiguration(feature.getFragmentConfigurationClass()));
+        selectFragment(feature, new Bundle());
     }
 
     public void selectFragment(FeatureConfiguration feature, Bundle args) {
-        selectFragment(FeatureProvider.getInstance(this).findFragmentConfiguration(feature.getFragmentConfigurationClass()), args);
+        if(feature != null && feature.getFragmentConfigurationClass() != null) {
+            selectFragment(FeatureProvider.getInstance(this).findFragmentConfiguration(feature.getFragmentConfigurationClass()), args);
+        }
     }
 
     public final void selectFragment(FragmentConfiguration feature) {
@@ -167,5 +223,78 @@ public abstract class ActivityBase extends AppCompatActivity implements
                     .addToBackStack(null)
                     .commit();
         }
+
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        setupDecor();
+    }
+
+    public void setupDecor() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG);
+        if(fragment instanceof FragmentBase) {
+            FragmentConfiguration fragmentConfiguration = ((FragmentBase) fragment).getInstanceConfiguration();
+
+            if(fragmentConfiguration == null) {
+                fragmentConfiguration = selectedFragment;
+            }
+
+            int themeColor = fragmentConfiguration.getDecorColor();
+
+            if(themeColor == 0) {
+                TypedValue typedValue = new TypedValue();
+                Resources.Theme theme = getTheme();
+                theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+                themeColor = typedValue.data;
+            }
+
+            final int color = themeColor;
+
+            //setup toolbar
+            getToolbar().setBackgroundColor(color);
+            getToolbar().setTitle(fragmentConfiguration.getTitle());
+            getToolbar().setSubtitle(fragmentConfiguration.getSubtitle());
+
+            //setup statusbar
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                int statusBarColor = Util.lighten(color, 0.7f);
+                getWindow().setStatusBarColor(statusBarColor);
+            }
+
+            //color progressbar
+            progressBar.getIndeterminateDrawable().setColorFilter(new PorterDuffColorFilter(themeColor, PorterDuff.Mode.SRC_IN));
+            progressBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(themeColor, PorterDuff.Mode.SRC_IN));
+        }
+    }
+
+
+
+
+
+
+
+
+
+    public void setActivityProgress(int progress) {
+        if(progress == 0) {
+            progressBar.setVisibility(View.GONE);
+        }
+        else {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        if(progress < 0) {
+            progressBar.setIndeterminate(true);
+        }
+        else {
+            progressBar.setIndeterminate(false);
+        }
+
+        progressBar.setProgress(Math.min(progress, 100));
+    }
+
+    public int getActivityProgress() {
+        return progressBar.getProgress();
     }
 }

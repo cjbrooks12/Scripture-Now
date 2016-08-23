@@ -36,8 +36,6 @@ public class FeatureProvider {
         dashboardCards = new ArrayList<>();
     }
 
-
-
 // Data Members
 //--------------------------------------------------------------------------------------------------
     private final Context applicationContext;
@@ -52,10 +50,17 @@ public class FeatureProvider {
 
     private FeatureConfiguration defaultFeature;
 
+    // TODO: Go through each feature and configuration and manually delete them.
+    public void clearFeatures() {
+        appFeatures = new ArrayList<>();
+        fragments = new ArrayList<>();
+        drawerFeatures = new ArrayList<>();
+        dashboardCards = new ArrayList<>();
+    }
+
 // Set up application features through the top-level FeatureConfiguration objects. When requested,
 //    they will serve up the class of the appropriate configuration object, which we will create if
 //    necessary, then cache and return.
-
     public void addFeature(@NonNull FeatureConfiguration newFeature) {
         for(int i = 0; i < appFeatures.size(); i++) {
             if(appFeatures.get(i).equals(newFeature)) {
@@ -147,7 +152,12 @@ public class FeatureProvider {
         return featureConfiguration;
     }
 
-    public @Nullable FragmentConfiguration findFragmentConfiguration(@NonNull Class<? extends FragmentConfiguration> c) {
+    public @Nullable FragmentConfiguration findFragmentConfiguration(Class<? extends FragmentConfiguration> c) {
+        if(c == null) {
+            Clog.e("findFragmentConfiguration", "FragmentConfiguration class cannot be null");
+            return null;
+        }
+
         FragmentConfiguration fragmentConfiguration = null;
 
         // check cache for already-created feature

@@ -150,4 +150,13 @@ public class Util {
     public static float dp(Context context, int dp) {
         return context.getResources().getDisplayMetrics().density * dp;
     }
+
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 }

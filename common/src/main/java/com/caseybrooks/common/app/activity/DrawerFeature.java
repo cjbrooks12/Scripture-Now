@@ -7,6 +7,7 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 import java.util.ArrayList;
 import java.util.List;
 
+// Should really just be an instance of FeatureCOnfiguration, or else wrap it... Something to think about.
 public class DrawerFeature implements ParentListItem {
     private final Class< ? extends FeatureConfiguration> featureClass;
 

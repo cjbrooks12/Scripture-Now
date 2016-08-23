@@ -6,7 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     tools:openDrawer="start">
 
     <android.support.design.widget.CoordinatorLayout
@@ -32,6 +32,13 @@
                 android:layout_height="wrap_content"
                 app:menu="@menu/menu_bible_reader_fragment"/>
 
+        </android.support.design.widget.AppBarLayout>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <ProgressBar
                 android:id="@+id/progress"
                 android:layout_width="match_parent"
@@ -39,14 +46,11 @@
                 android:layout_marginTop="-7dp"
                 android:layout_marginBottom="-7dp"
                 android:max="100"
+                android:progress="0"
                 android:visibility="invisible"
+                android:layout_gravity="top"
                 style="?android:attr/progressBarStyleHorizontal"/>
-        </android.support.design.widget.AppBarLayout>
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </FrameLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
@@ -54,14 +58,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            app:fabSize="normal"/>
+            app:fabSize="normal"
+            android:visibility="gone"/>
     </android.support.design.widget.CoordinatorLayout>
 
     <com.caseybrooks.common.app.ExpandableNavigationView
         android:id="@+id/expandableNavigationView"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:background="@color/forest_green_light"/>
+        android:fitsSystemWindows="false"/>
 </android.support.v4.widget.DrawerLayout>

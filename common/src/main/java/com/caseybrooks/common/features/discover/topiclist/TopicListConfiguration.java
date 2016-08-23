@@ -15,12 +15,11 @@ public class TopicListConfiguration extends FeatureConfiguration {
 
     @Override
     public DrawerFeature getDrawerFeature() {
-        return new DrawerFeature(TopicListConfiguration.class, "Topic List", R.drawable.ic_bible);
+        return new DrawerFeature(TopicListConfiguration.class, "Topic List", R.drawable.ic_topic_list);
     }
 
     @Override
     public Class<? extends FragmentConfiguration> getFragmentConfigurationClass() {
         return TopicListFragment.TopicListFragmentConfiguration.class;
     }
-
 }

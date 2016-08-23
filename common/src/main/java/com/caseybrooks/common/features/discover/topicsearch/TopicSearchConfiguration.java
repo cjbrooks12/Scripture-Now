@@ -15,7 +15,7 @@ public class TopicSearchConfiguration extends FeatureConfiguration {
 
     @Override
     public DrawerFeature getDrawerFeature() {
-        return new DrawerFeature(TopicSearchConfiguration.class, "Topic Search", R.drawable.ic_bible);
+        return new DrawerFeature(TopicSearchConfiguration.class, "Topic Search", R.drawable.ic_search);
     }
 
     @Override

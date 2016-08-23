@@ -9,7 +9,6 @@ import com.caseybrooks.common.app.activity.FeatureProvider;
 import com.caseybrooks.common.features.debug.cache.DebugCacheConfiguration;
 import com.caseybrooks.common.features.debug.database.DebugDatabaseConfiguration;
 import com.caseybrooks.common.features.debug.preferences.DebugPreferencesConfiguration;
-import com.caseybrooks.common.features.feature2.FeatureTwoConfiguration;
 
 import java.util.ArrayList;
 
@@ -21,7 +20,7 @@ public class DebugFeatureConfiguration extends FeatureConfiguration {
 
     @Override
     public DrawerFeature getDrawerFeature() {
-        DrawerFeature feature = new DrawerFeature(FeatureTwoConfiguration.class, "Debug", R.drawable.ic_debug);
+        DrawerFeature feature = new DrawerFeature(DebugFeatureConfiguration.class, "Debug", R.drawable.ic_debug);
 
         ArrayList<DrawerFeature> children = new ArrayList<>();
         children.add(FeatureProvider.getInstance(getContext()).findFeatureConfiguration(DebugCacheConfiguration.class).getDrawerFeature());

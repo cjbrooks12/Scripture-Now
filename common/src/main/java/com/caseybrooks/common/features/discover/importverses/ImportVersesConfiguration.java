@@ -15,7 +15,7 @@ public class ImportVersesConfiguration extends FeatureConfiguration {
 
     @Override
     public DrawerFeature getDrawerFeature() {
-        return new DrawerFeature(ImportVersesConfiguration.class, "Import Verses", R.drawable.ic_bible);
+        return new DrawerFeature(ImportVersesConfiguration.class, "Import Verses", R.drawable.ic_import);
     }
 
     @Override

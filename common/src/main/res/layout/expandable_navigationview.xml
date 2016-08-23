@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#DE000000"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -16,4 +11,10 @@
         android:layout_height="match_parent"
         android:background="?attr/color_background"/>
 
-</LinearLayout>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="#8A000000"-->
+        <!--android:layout_gravity="top"/>-->
+
+</FrameLayout>

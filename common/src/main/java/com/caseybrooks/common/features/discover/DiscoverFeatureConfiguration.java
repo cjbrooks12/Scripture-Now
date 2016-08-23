@@ -9,7 +9,6 @@ import com.caseybrooks.common.app.activity.FeatureProvider;
 import com.caseybrooks.common.features.discover.importverses.ImportVersesConfiguration;
 import com.caseybrooks.common.features.discover.topiclist.TopicListConfiguration;
 import com.caseybrooks.common.features.discover.topicsearch.TopicSearchConfiguration;
-import com.caseybrooks.common.features.feature2.FeatureTwoConfiguration;
 
 import java.util.ArrayList;
 
@@ -21,7 +20,7 @@ public class DiscoverFeatureConfiguration extends FeatureConfiguration {
 
     @Override
     public DrawerFeature getDrawerFeature() {
-        DrawerFeature feature = new DrawerFeature(FeatureTwoConfiguration.class, "Discover", R.drawable.ic_flashcards);
+        DrawerFeature feature = new DrawerFeature(DiscoverFeatureConfiguration.class, "Discover", R.drawable.ic_discover);
 
         ArrayList<DrawerFeature> children = new ArrayList<>();
         children.add(FeatureProvider.getInstance(getContext()).findFeatureConfiguration(TopicSearchConfiguration.class).getDrawerFeature());

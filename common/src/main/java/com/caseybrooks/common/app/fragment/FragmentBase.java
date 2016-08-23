@@ -9,6 +9,8 @@ import com.caseybrooks.common.app.activity.ActivityBase;
 
 public abstract class FragmentBase extends Fragment {
 
+    protected FragmentConfiguration instanceConfiguration;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +19,10 @@ public abstract class FragmentBase extends Fragment {
 
     public ActivityBase getActivityBase() {
         return (ActivityBase) super.getActivity();
+    }
+
+    public FragmentConfiguration getInstanceConfiguration() {
+        return instanceConfiguration;
     }
 
     @Override

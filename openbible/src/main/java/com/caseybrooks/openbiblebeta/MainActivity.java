@@ -4,15 +4,13 @@ import android.os.Bundle;
 
 import com.caseybrooks.common.app.activity.ActivityBase;
 import com.caseybrooks.common.app.activity.FeatureProvider;
-import com.caseybrooks.common.app.dashboard.DashboardFeatureConfiguration;
 import com.caseybrooks.common.features.debug.DebugFeatureConfiguration;
-import com.caseybrooks.common.features.discover.DiscoverFeatureConfiguration;
-import com.caseybrooks.common.features.feature1.FeatureOneConfiguration;
-import com.caseybrooks.common.features.feature2.FeatureTwoConfiguration;
-import com.caseybrooks.common.features.feature3.FeatureThreeConfiguration;
+import com.caseybrooks.common.features.discover.topiclist.TopicListConfiguration;
+import com.caseybrooks.common.features.discover.topicsearch.TopicSearchConfiguration;
+import com.caseybrooks.common.features.help.HelpFeatureConfiguration;
+import com.caseybrooks.common.features.settings.SettingsFeatureConfiguration;
 
 public class MainActivity extends ActivityBase {
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +21,11 @@ public class MainActivity extends ActivityBase {
     protected void initializeFeatures() {
         FeatureProvider provider = FeatureProvider.getInstance(this);
 
-        provider.addFeature(new DashboardFeatureConfiguration(this));
-        provider.addFeature(new DiscoverFeatureConfiguration(this));
+        provider.addFeature(new TopicSearchConfiguration(this));
+        provider.addFeature(new TopicListConfiguration(this));
 
-        provider.addFeature(new FeatureOneConfiguration(this));
-        provider.addFeature(new FeatureTwoConfiguration(this));
-        provider.addFeature(new FeatureThreeConfiguration(this));
+        provider.addFeature(new HelpFeatureConfiguration(this));
+        provider.addFeature(new SettingsFeatureConfiguration(this));
 
         if(isDebug()) {
             provider.addFeature(new DebugFeatureConfiguration(this));

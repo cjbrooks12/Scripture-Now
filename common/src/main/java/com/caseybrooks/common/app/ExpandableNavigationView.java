@@ -2,7 +2,6 @@ package com.caseybrooks.common.app;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +23,7 @@ import com.caseybrooks.common.R;
 import com.caseybrooks.common.app.activity.DrawerFeature;
 import com.caseybrooks.common.util.HeaderDecoration;
 import com.caseybrooks.common.util.Util;
+import com.caseybrooks.common.util.clog.Clog;
 
 import java.util.List;
 
@@ -35,6 +35,8 @@ public class ExpandableNavigationView extends LinearLayout {
     OnExpandableNavigationItemSelectedListener listener;
 
     DrawerFeature selectedFeature;
+
+    ColorStateList defaultIconColor;
 
 //Constructors and Initialization
 //--------------------------------------------------------------------------------------------------
@@ -55,11 +57,22 @@ public class ExpandableNavigationView extends LinearLayout {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), VERTICAL, false));
 
+
+        View headerView = LayoutInflater.from(getContext()).inflate(R.layout.drawer_header_view, null);
+        View statusBarSpacer = headerView.findViewById(R.id.statusBarSpacer);
+
+        int height = Util.getStatusBarHeight(getContext());
+        Clog.i("Height: {{$1}}", height);
+
+        statusBarSpacer.getLayoutParams().height = height - ((int) (Util.dp(getContext(), 1) / 2));
+        statusBarSpacer.requestLayout();
+
         HeaderDecoration.Builder builder = new HeaderDecoration.Builder(getContext());
         builder.dropShadowDp(2);
-        builder.inflate(R.layout.drawer_header_view);
+        builder.setView(headerView);
         builder.parallax(0.5f);
         builder.scrollsHorizontally(false);
+        builder.columns(1);
 
         recyclerView.addItemDecoration(builder.build());
     }
@@ -71,11 +84,6 @@ public class ExpandableNavigationView extends LinearLayout {
 
     public void setExpandableNavigationItemSelectedListener(OnExpandableNavigationItemSelectedListener listener) {
         this.listener = listener;
-    }
-
-    public void setSelectedFeature(DrawerFeature selectedFeature) {
-        this.selectedFeature = selectedFeature;
-        adapter.notifyDataSetChanged();
     }
 
 //Parent views
@@ -96,7 +104,6 @@ public class ExpandableNavigationView extends LinearLayout {
 
         public void onBind(Object object) {
             parent = (DrawerFeature) object;
-//            ColorStateList textColor = getResources().getColorStateList(R.color.text_color_primary_light);
 
             if(parent.equals(selectedFeature))
                 root.setSelected(true);
@@ -110,6 +117,14 @@ public class ExpandableNavigationView extends LinearLayout {
 
             if(parent.getIcon() != 0)
                 itemIcon.setImageResource(parent.getIcon());
+
+            if(parent.getColor() != 0) {
+                itemIcon.setColorFilter(parent.getColor(), PorterDuff.Mode.SRC_IN);
+            }
+            else {
+                int color = getResources().getColorStateList(R.color.text_color_secondary_light).getDefaultColor();
+                itemIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            }
         }
 
         @Override
@@ -167,7 +182,8 @@ public class ExpandableNavigationView extends LinearLayout {
                 shouldUseLightFont = Util.shouldUseLightFont(child.getColor());
             }
             else {
-                subitemIcon.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
+                int color = getResources().getColorStateList(R.color.text_color_secondary_light).getDefaultColor();
+                subitemIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN);
                 shouldUseLightFont = true;
             }
 
@@ -187,6 +203,8 @@ public class ExpandableNavigationView extends LinearLayout {
                         listener.selectFragment(child);
                 }
             });
+
+            root.invalidate();
         }
     }
 
