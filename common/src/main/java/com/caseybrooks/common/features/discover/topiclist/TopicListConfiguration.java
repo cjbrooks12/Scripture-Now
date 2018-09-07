@@ -3,9 +3,9 @@ package com.caseybrooks.common.features.discover.topiclist;
 import android.content.Context;
 
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.activity.DrawerFeature;
-import com.caseybrooks.common.app.activity.FeatureConfiguration;
-import com.caseybrooks.common.app.fragment.FragmentConfiguration;
+import com.caseyjbrooks.zion.app.activity.DrawerFeature;
+import com.caseyjbrooks.zion.app.activity.FeatureConfiguration;
+import com.caseyjbrooks.zion.app.fragment.FragmentConfiguration;
 
 public class TopicListConfiguration extends FeatureConfiguration {
 

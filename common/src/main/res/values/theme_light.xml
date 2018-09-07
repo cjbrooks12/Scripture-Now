@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="ThemeBase.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="ScriptureNow.Light" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionModeOverlay">true</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -13,27 +13,27 @@
         <item name="color_card_header">@color/card_header_light</item>
 
         <item name="theme_name">Light</item>
-        <item name="toolbar_theme">@style/ThemeBase.Light.AppBarOverlay</item>
-        <item name="popup_theme">@style/ThemeBase.Light.PopupOverlay</item>
-        <item name="popupMenuStyle">@style/ThemeBase.Light.PopupMenuOverlay</item>
+        <item name="toolbar_theme">@style/ScriptureNow.Light.AppBarOverlay</item>
+        <item name="popup_theme">@style/ScriptureNow.Light.PopupOverlay</item>
+        <item name="popupMenuStyle">@style/ScriptureNow.Light.PopupMenuOverlay</item>
 
         <item name="android:textColorPrimary">@color/text_color_primary_light</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="icon_color">@color/text_color_secondary_light</item>
 
-        <item name="preferenceTheme">@style/ThemeBase.Light.PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/ScriptureNow.Light.PreferenceThemeOverlay</item>
     </style>
 
-    <style name="ThemeBase.Light.NoActionBar">
+    <style name="ScriptureNow.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ThemeBase.Light.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+    <style name="ScriptureNow.Light.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
 
-    <style name="ThemeBase.Light.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"></style>
+    <style name="ScriptureNow.Light.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"></style>
 
-    <style name="ThemeBase.Light.PopupMenuOverlay" parent="Widget.AppCompat.Light.PopupMenu.Overflow"></style>
+    <style name="ScriptureNow.Light.PopupMenuOverlay" parent="Widget.AppCompat.Light.PopupMenu.Overflow"></style>
 
-    <style name="ThemeBase.Light.PreferenceThemeOverlay" parent="PreferenceThemeOverlay.v14.Material"></style>
+    <style name="ScriptureNow.Light.PreferenceThemeOverlay" parent="PreferenceThemeOverlay.v14.Material"></style>
 </resources>

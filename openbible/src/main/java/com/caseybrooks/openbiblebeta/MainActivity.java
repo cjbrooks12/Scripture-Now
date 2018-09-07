@@ -2,13 +2,14 @@ package com.caseybrooks.openbiblebeta;
 
 import android.os.Bundle;
 
-import com.caseybrooks.common.app.activity.ActivityBase;
-import com.caseybrooks.common.app.activity.FeatureProvider;
+import com.caseybrooks.androidbibletools.ABT;
 import com.caseybrooks.common.features.debug.DebugFeatureConfiguration;
 import com.caseybrooks.common.features.discover.topiclist.TopicListConfiguration;
 import com.caseybrooks.common.features.discover.topicsearch.TopicSearchConfiguration;
 import com.caseybrooks.common.features.help.HelpFeatureConfiguration;
 import com.caseybrooks.common.features.settings.SettingsFeatureConfiguration;
+import com.caseyjbrooks.zion.app.activity.ActivityBase;
+import com.caseyjbrooks.zion.app.activity.FeatureProvider;
 
 public class MainActivity extends ActivityBase {
 
@@ -30,9 +31,13 @@ public class MainActivity extends ActivityBase {
         if(isDebug()) {
             provider.addFeature(new DebugFeatureConfiguration(this));
         }
+
+        ABT.getInstance(this)
+                .getMetadata().putString("ABS_ApiKey", getResources().getString(R.string.bibles_org_key));
+        ABT.getInstance(this)
+                .getMetadata().putString("JoshuaProject_ApiKey", getResources().getString(R.string.joshua_project_key));
     }
 
-    @Override
     public boolean isDebug() {
         return BuildConfig.DEBUG;
     }

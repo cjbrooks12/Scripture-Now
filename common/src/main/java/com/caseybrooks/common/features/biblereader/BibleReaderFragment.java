@@ -25,9 +25,9 @@ import com.caseybrooks.androidbibletools.widget.VersePicker;
 import com.caseybrooks.androidbibletools.widget.VersePickerDialog;
 import com.caseybrooks.androidbibletools.widget.VerseView;
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.activity.FeatureConfiguration;
-import com.caseybrooks.common.app.fragment.FragmentBase;
-import com.caseybrooks.common.app.fragment.FragmentConfiguration;
+import com.caseyjbrooks.zion.app.activity.FeatureConfiguration;
+import com.caseyjbrooks.zion.app.fragment.FragmentBase;
+import com.caseyjbrooks.zion.app.fragment.FragmentConfiguration;
 
 public class BibleReaderFragment extends FragmentBase {
 

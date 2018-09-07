@@ -3,8 +3,8 @@ package com.caseybrooks.common.features.verses;
 import android.content.Context;
 
 import com.caseybrooks.common.R;
-import com.caseybrooks.common.app.activity.DrawerFeature;
-import com.caseybrooks.common.app.activity.FeatureConfiguration;
+import com.caseyjbrooks.zion.app.activity.DrawerFeature;
+import com.caseyjbrooks.zion.app.activity.FeatureConfiguration;
 
 public class MemorizationStateFeatureConfiguration extends FeatureConfiguration {
 

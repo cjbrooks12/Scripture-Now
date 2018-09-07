@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.caseybrooks.common.app.activity.FeatureConfiguration;
-import com.caseybrooks.common.app.fragment.FragmentBase;
-import com.caseybrooks.common.app.fragment.FragmentConfiguration;
+import com.caseyjbrooks.zion.app.activity.FeatureConfiguration;
+import com.caseyjbrooks.zion.app.fragment.FragmentBase;
+import com.caseyjbrooks.zion.app.fragment.FragmentConfiguration;
 
 public class DebugDatabaseFragment extends FragmentBase {
 

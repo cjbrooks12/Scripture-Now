@@ -28,6 +28,7 @@ dependencies {
         transitive = true;
     }
     compile 'com.github.cjbrooks12:Clog:master-SNAPSHOT@aar'
+    compile 'com.github.cjbrooks12:Zion:778713a7a2@aar'
 
     compile('com.github.ozodrukh:CircularReveal:1.3.1@aar') {
         transitive = true;
