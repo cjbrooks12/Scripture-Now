@@ -1,25 +1,67 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
-
-    defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 22
+    compileSdkVersion 27
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 27
+    }
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 27
+        multiDexEnabled true
+        versionName "1.0.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'org.jsoup:jsoup:1.7.2'
+    api fileTree(dir: "libs", include: ["*.jar"])
 
-    compile 'com.github.cjbrooks12:AndroidBibleTools:v0.2.26@aar'
+    testImplementation "android.arch.core:core-testing:1.1.1"
+    testImplementation "android.arch.persistence.room:testing:1.0.0"
+
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+
+    api "android.arch.lifecycle:common-java8:1.1.1"
+    api "android.arch.lifecycle:extensions:1.1.1"
+    api "android.arch.paging:runtime:1.0.0-rc1"
+    api "android.arch.persistence.room:runtime:1.0.0"
+    api "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    api "com.android.support:cardview-v7:${supportLibraryVersion}"
+    api "com.android.support:design:${supportLibraryVersion}"
+    api "com.android.support:recyclerview-v7:${supportLibraryVersion}"
+    api "com.android.support:support-v4:${supportLibraryVersion}"
+    api "com.squareup.okhttp3:logging-interceptor:3.9.1"
+    api "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+    api "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    api "com.squareup.retrofit2:retrofit-mock:${retrofitVersion}"
+    api "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    api "net.sourceforge.streamsupport:streamsupport-atomic:${streamSupportVersion}"
+    api "net.sourceforge.streamsupport:streamsupport-cfuture:${streamSupportVersion}"
+    api "net.sourceforge.streamsupport:streamsupport-flow:${streamSupportVersion}"
+    api "net.sourceforge.streamsupport:streamsupport-literal:${streamSupportVersion}"
+    api "net.sourceforge.streamsupport:streamsupport:${streamSupportVersion}"
+    api "org.greenrobot:eventbus:3.0.0"
+    api "com.android.support.constraint:constraint-layout:1.1.0"
+    api "com.eden:AndroidClog:2.0.2"
+    api "com.eden:Common:1.5.3"
+    api "io.reactivex.rxjava2:rxandroid:2.0.2"
+    api "io.reactivex.rxjava2:rxjava:2.1.10"
+    debugApi "com.amitshekhar.android:debug-db:1.0.3"
+
+    api "android.arch.paging:runtime:1.0.0-rc1"
+    api "android.arch.persistence.room:runtime:1.0.0"
+    api "com.android.support.constraint:constraint-layout:1.1.0"
+
+    api 'org.jsoup:jsoup:1.11.3'
+
+    api 'com.github.nirhart:parallaxscroll:1.0'
+    api 'com.larswerkman:HoloColorPicker:1.4'
+    api 'com.github.cjbrooks12:AndroidBibleTools:v0.2.28@aar'
 }
